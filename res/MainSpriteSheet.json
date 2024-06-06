@@ -1,0 +1,22 @@
+{ "frames": {
+   "MainSpriteSheet.png": {
+    "frame": { "x": 0, "y": 0, "w": 645, "h": 1746 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 645, "h": 1746 },
+    "sourceSize": { "w": 645, "h": 1746 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-trial",
+  "format": "I8",
+  "size": { "w": 645, "h": 1746 },
+  "scale": "1",
+  "slices": [
+   { "name": "Dragon-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 27, "y": 16, "w": 16, "h": 16 } }] }
+  ]
+ }
+}
