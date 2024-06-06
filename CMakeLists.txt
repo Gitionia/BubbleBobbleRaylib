@@ -3,4 +3,4 @@ project(BubbleBobbleRaylib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(BubbleBobbleRaylib main.cpp)
+add_executable(BubbleBobbleRaylib src/main.cpp)
