@@ -14,12 +14,12 @@ Window::~Window()
 	CloseWindow();
 }
 
-bool Window::isOpen()
+bool Window::IsOpen()
 {
 	return !WindowShouldClose();
 }
 
-void Window::init()
+void Window::Init()
 {
 	InitWindow(width, height, title);
 }

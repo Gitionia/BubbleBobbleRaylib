@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 
 #include "../ecs/Systems.h"
 #include "entt/entt.hpp"

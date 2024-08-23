@@ -7,8 +7,8 @@ public:
 	Window(int width, int height, const char* title);
 	~Window();
 
-	bool isOpen();
-	void init();
+	bool IsOpen();
+	void Init();
 
 private:
 	int width;
