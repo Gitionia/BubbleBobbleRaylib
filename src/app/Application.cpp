@@ -43,6 +43,8 @@ void Application::run()
 			}
 			std::cout << level[i] << ", ";
 		}
+
+		delete[] level;
 	}
 
 	Rectangle rect1 {0,0,10,10};
