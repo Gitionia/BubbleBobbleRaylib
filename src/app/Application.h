@@ -13,7 +13,7 @@ struct ApplicationParameters {
 
 class Application {
 public:
-	Application(const ApplicationParameters& parameters);
+	explicit Application(const ApplicationParameters& parameters);
 	~Application();
 	void run();
 
