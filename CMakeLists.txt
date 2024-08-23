@@ -14,6 +14,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/ecs/Systems.cpp
         src/graphics/RendererSystem.cpp
         src/graphics/Window.cpp
+        src/graphics/Sprites.h
+        src/graphics/Sprites.cpp
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)

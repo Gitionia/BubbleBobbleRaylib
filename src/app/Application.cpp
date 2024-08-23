@@ -17,7 +17,7 @@ Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), systemRunner(registry)
 {
 	window.Init();
-	systemRunner.InitSystems();
+	spriteManager.LoadSprites();
 }
 
 Application::~Application() = default;
@@ -47,8 +47,8 @@ void Application::run()
 		delete[] level;
 	}
 
-	Rectangle rect1 {0,0,10,10};
 	{
+		Rectangle rect1 {0,0,10,10};
 		std::ifstream f("res/MainSpriteSheet.json");
 		nlohmann::json data = nlohmann::json::parse(f);
 
@@ -69,19 +69,19 @@ void Application::run()
 	registry.emplace<Position>(createdEntity, 100, 100);
 	registry.emplace<Velocity>(createdEntity, 1, 2);
 	registry.emplace<BallSize>(createdEntity, 40);
-	registry.emplace<Sprite>(createdEntity, rect1);
+	registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
 
 	createdEntity = registry.create();
 	registry.emplace<Position>(createdEntity, 400, 300);
 	registry.emplace<Velocity>(createdEntity, 2, -1);
 	registry.emplace<BallSize>(createdEntity, 50);
-	registry.emplace<Sprite>(createdEntity, rect1);
+	registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
 
 	createdEntity = registry.create();
 	registry.emplace<Position>(createdEntity, 300, 200);
 	registry.emplace<Velocity>(createdEntity, -1, 1);
 	registry.emplace<BallSize>(createdEntity, 30);
-	registry.emplace<Sprite>(createdEntity, rect1);
+	registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
 
 
 	while (window.IsOpen()) {

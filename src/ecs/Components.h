@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../graphics/Sprites.h"
 #include "raylib.h"
 
 struct Position {
@@ -14,6 +15,6 @@ struct BallSize {
 	int radius;
 };
 
-struct Sprite {
-	Rectangle coords;
+struct RenderData {
+	Sprite sprite;
 };

@@ -3,13 +3,8 @@
 #include "../ecs/Components.h"
 
 RendererSystem::RendererSystem(entt::registry& registry)
-	: registry(registry), mainSpriteSheet()
+	: registry(registry)
 {
-}
-
-RendererSystem::~RendererSystem()
-{
-	UnloadTexture(mainSpriteSheet);
 }
 
 void RendererSystem::update() const
@@ -20,21 +15,16 @@ void RendererSystem::update() const
 
 	ClearBackground(RAYWHITE);
 
-	auto viewRenderer = registry.view<Position, BallSize, Sprite>();
+	auto viewRenderer = registry.view<Position, BallSize, RenderData>();
 	for (auto entity : viewRenderer) {
-		auto [pos, size, sprite] = viewRenderer.get(entity);
+		auto [pos, size, renderData] = viewRenderer.get(entity);
 
 		//DrawCircleV(Vector2(pos.x, pos.y), (float)size.radius, MAROON);
 
-		DrawTextureRec(mainSpriteSheet, sprite.coords, { (float)pos.x, (float)pos.y}, WHITE);
+		DrawTextureRec(renderData.sprite.spriteSheet, renderData.sprite.coords, { (float)pos.x, (float)pos.y}, WHITE);
 	}
 
 	DrawFPS(10, 10);
 
 	EndDrawing();
-}
-
-void RendererSystem::init()
-{
-	mainSpriteSheet = LoadTexture("res/MainSpriteSheet.png");
 }

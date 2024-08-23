@@ -3,6 +3,7 @@
 #include "../ecs/Systems.h"
 #include "entt/entt.hpp"
 #include "../graphics/Window.h"
+#include "../graphics/Sprites.h"
 
 struct ApplicationParameters {
 	int width = 640;
@@ -18,6 +19,7 @@ public:
 
 private:
 	Window window;
+	SpriteManager spriteManager{};
 	entt::registry registry;
 	SystemRunner systemRunner;
 };
