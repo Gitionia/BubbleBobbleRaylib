@@ -3,4 +3,37 @@ project(BubbleBobbleRaylib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(BubbleBobbleRaylib src/main.cpp)
+#set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
+#set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
+
+add_subdirectory(src)
+add_executable(BubbleBobbleRaylib src/app/main.cpp
+        src/app/Application.cpp
+        src/app/Application.h
+        src/physics/PhysicsSystem.cpp
+        src/ecs/Systems.cpp
+        src/graphics/RendererSystem.cpp
+        src/graphics/Window.cpp
+)
+
+target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
+target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
+target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
+target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
+
+find_package(glfw3 CONFIG REQUIRED)
+target_link_libraries(BubbleBobbleRaylib PRIVATE glfw)
+find_package(EnTT CONFIG REQUIRED)
+target_link_libraries(BubbleBobbleRaylib PRIVATE EnTT::EnTT)
+find_package(raylib REQUIRED)
+target_link_libraries(BubbleBobbleRaylib PRIVATE raylib)
+find_package(nlohmann_json CONFIG REQUIRED)
+target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
+
+
+file(COPY res/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res)
+file(COPY res/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res)
+file(COPY res/levels/Level1.json DESTINATION ${CMAKE_BINARY_DIR}/res/levels)
+
+
+

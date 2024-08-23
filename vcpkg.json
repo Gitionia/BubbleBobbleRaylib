@@ -14,5 +14,11 @@
   }, {
     "name" : "vcpkg-cmake",
     "version>=" : "2024-04-18"
+  }, {
+    "name" : "entt",
+    "version>=" : "3.13.2"
+  }, {
+    "name" : "nlohmann-json",
+    "version>=" : "3.11.3"
   } ]
 }

@@ -1,5 +1,7 @@
 #pragma once
+#include <iostream>
 
+#include "../ecs/Systems.h"
 #include "entt/entt.hpp"
 #include "../graphics/Window.h"
 
@@ -10,6 +12,7 @@ public:
 	void run();
 
 private:
-	entt::registry registry;
 	Window window;
+	entt::registry registry;
+	SystemRunner systemRunner;
 };

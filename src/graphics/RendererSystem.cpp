@@ -3,7 +3,7 @@
 #include "../ecs/Components.h"
 
 RendererSystem::RendererSystem(entt::registry& registry)
-	: registry(registry), mainSpriteSheet(LoadTexture("res/MainSpriteSheet.png"))
+	: registry(registry), mainSpriteSheet()
 {
 }
 
@@ -12,7 +12,7 @@ RendererSystem::~RendererSystem()
 	UnloadTexture(mainSpriteSheet);
 }
 
-void RendererSystem::update()
+void RendererSystem::update() const
 {
 	const int ballRadius = 30;
 
@@ -32,4 +32,9 @@ void RendererSystem::update()
 	DrawFPS(10, 10);
 
 	EndDrawing();
+}
+
+void RendererSystem::init()
+{
+	mainSpriteSheet = LoadTexture("res/MainSpriteSheet.png");
 }

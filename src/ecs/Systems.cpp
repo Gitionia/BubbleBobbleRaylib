@@ -1,17 +1,17 @@
 #include "Systems.h"
 
-#include "../physics/PhysicsSystem.h"
-#include "../graphics/RendererSystem.h"
 
-PhysicsSystem physicsSystem;
-RendererSystem renderSystem;
-
-void initECSSystems(entt::registry& registry) {
-	physicsSystem.setRegistry(registry);
-	renderSystem.setRegistry(registry);
+SystemRunner::SystemRunner(entt::registry &registry)
+	: physicsSystem(registry), renderSystem(registry)
+{
 }
 
-void updateECSSystems() {
+void SystemRunner::InitSystems() {
+	renderSystem.init();
+}
+
+void SystemRunner::UpdateSystems() const {
 	physicsSystem.update();
 	renderSystem.update();
 }
+

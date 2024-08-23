@@ -1,6 +1,6 @@
 #include "PhysicsSystem.h"
-#include "../ecs/Components.h"
 
+#include "../ecs/Components.h"
 #include "raylib.h"
 
 PhysicsSystem::PhysicsSystem(entt::registry& registry)
@@ -8,7 +8,7 @@ PhysicsSystem::PhysicsSystem(entt::registry& registry)
 {
 }
 
-void PhysicsSystem::update()
+void PhysicsSystem::update() const
 {
 	auto view = registry.view<Position, Velocity, BallSize>();
 	for (auto entity : view) {

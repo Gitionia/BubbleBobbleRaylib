@@ -1,9 +1,8 @@
 #include "Application.h"
 
+
 #include "../ecs/Components.h"
 #include "../ecs/Systems.h"
-#include "../graphics/RendererSystem.h"
-#include "../physics/PhysicsSystem.h"
 
 #include <iostream>
 #include <filesystem>
@@ -15,14 +14,13 @@
 #include <nlohmann/json.hpp>
 
 Application::Application()
-	: window(640, 480, "Bubble Bobble")
+	: systemRunner(registry), window(640, 480, "Bubble Bobble")
 {
 	window.init();
+	systemRunner.InitSystems();
 }
 
-Application::~Application()
-{
-}
+Application::~Application() = default;
 
 void Application::run()
 {
@@ -47,7 +45,7 @@ void Application::run()
 		}
 	}
 
-	Rectangle rect1;
+	Rectangle rect1 {0,0,10,10};
 	{
 		std::ifstream f("res/MainSpriteSheet.json");
 		nlohmann::json data = nlohmann::json::parse(f);
@@ -59,32 +57,30 @@ void Application::run()
 			auto bounds = slice.find("keys").value().at(0).find("bounds").value();
 			Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
 			rect1 = rect;
-			//std::cout << name << ", x:" << rect.x << ", y:" << rect.y << ", width:" << rect.width << ", height:" << rect.height << std::endl;
+			std::cout << name << ", x:" << rect.x << ", y:" << rect.y << ", width:" << rect.width << ", height:" << rect.height << std::endl;
 		}
 	}
 
-	//return;
 
-	initECSSystems(registry);
 
-	auto entity = registry.create();
-	registry.emplace<Position>(entity, 100, 100);
-	registry.emplace<Velocity>(entity, 1, 2);
-	registry.emplace<BallSize>(entity, 40);
-	registry.emplace<Sprite>(entity, rect1);
-	
-	entity = registry.create();
-	registry.emplace<Position>(entity, 400, 300);
-	registry.emplace<Velocity>(entity, 2, -1);
-	registry.emplace<BallSize>(entity, 50);
-	registry.emplace<Sprite>(entity, rect1);
+	auto createdEntity = registry.create();
+	registry.emplace<Position>(createdEntity, 100, 100);
+	registry.emplace<Velocity>(createdEntity, 1, 2);
+	registry.emplace<BallSize>(createdEntity, 40);
+	registry.emplace<Sprite>(createdEntity, rect1);
 
-	entity = registry.create();
-	registry.emplace<Position>(entity, 300, 200);
-	registry.emplace<Velocity>(entity, -1, 1);
-	registry.emplace<BallSize>(entity, 30);
-	registry.emplace<Sprite>(entity, rect1);
-	
+	createdEntity = registry.create();
+	registry.emplace<Position>(createdEntity, 400, 300);
+	registry.emplace<Velocity>(createdEntity, 2, -1);
+	registry.emplace<BallSize>(createdEntity, 50);
+	registry.emplace<Sprite>(createdEntity, rect1);
+
+	createdEntity = registry.create();
+	registry.emplace<Position>(createdEntity, 300, 200);
+	registry.emplace<Velocity>(createdEntity, -1, 1);
+	registry.emplace<BallSize>(createdEntity, 30);
+	registry.emplace<Sprite>(createdEntity, rect1);
+
 
 	while (window.isOpen()) {
 		auto view = registry.view<Position, Velocity, BallSize>();
@@ -100,6 +96,6 @@ void Application::run()
 
 		}
 
-		updateECSSystems();
+		systemRunner.UpdateSystems();
 	}
 }
