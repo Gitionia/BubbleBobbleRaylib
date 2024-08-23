@@ -5,9 +5,15 @@
 #include "entt/entt.hpp"
 #include "../graphics/Window.h"
 
+struct ApplicationParameters {
+	int width = 640;
+	int height = 480;
+	const char* title = "Bubble Bobble";
+};
+
 class Application {
 public:
-	Application();
+	Application(const ApplicationParameters& parameters);
 	~Application();
 	void run();
 

@@ -13,8 +13,8 @@
 
 #include <nlohmann/json.hpp>
 
-Application::Application()
-	: systemRunner(registry), window(640, 480, "Bubble Bobble")
+Application::Application(const ApplicationParameters& parameters)
+	: window(parameters.width, parameters.height, parameters.title), systemRunner(registry)
 {
 	window.init();
 	systemRunner.InitSystems();

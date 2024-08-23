@@ -5,7 +5,7 @@
 
 
 int main() {
-	auto* app = new Application();
+	auto* app = new Application({});
 	app->run();
 	delete app;
 
