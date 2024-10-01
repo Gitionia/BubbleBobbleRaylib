@@ -20,5 +20,5 @@ public:
 
 private:
 	Texture2D mainSpriteSheet;
-	std::pmr::unordered_map<std::string, std::string> spriteMap;
+	std::unordered_map<std::string, Sprite> spriteMap;
 };
