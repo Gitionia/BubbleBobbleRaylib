@@ -33,8 +33,8 @@ find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 
 
-file(COPY res/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res)
-file(COPY res/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res)
+file(COPY res/sprites/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
+file(COPY res/sprites/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
 file(COPY res/levels/Level1.json DESTINATION ${CMAKE_BINARY_DIR}/res/levels)
 
 

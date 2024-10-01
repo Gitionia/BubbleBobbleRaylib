@@ -25,11 +25,11 @@ SpriteManager::~SpriteManager()
  */
 void SpriteManager::LoadSprites()
 {
-	mainSpriteSheet = LoadTexture("res/MainSpriteSheet.png");
+	mainSpriteSheet = LoadTexture("res/sprites/MainSpriteSheet.png");
 
 
 	Rectangle rect1 {0,0,10,10};
-	std::ifstream f("res/MainSpriteSheet.json");
+	std::ifstream f("res/sprites/MainSpriteSheet.json");
 	nlohmann::json data = nlohmann::json::parse(f);
 
 	auto slices = data.find("meta").value().find("slices").value();
