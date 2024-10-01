@@ -10,7 +10,8 @@
 #include "nlohmann/json.hpp"
 
 SpriteManager::SpriteManager()
-	: mainSpriteSheet(), spriteMap() {
+	: mainSpriteSheet(), spriteMap()
+{
 }
 
 SpriteManager::~SpriteManager()
@@ -18,6 +19,10 @@ SpriteManager::~SpriteManager()
 	UnloadTexture(mainSpriteSheet);
 }
 
+/**
+ * Needs to be called before GetSprite(...) can be used.
+ * Loads sprites from sprite sheets into spritemap.
+ */
 void SpriteManager::LoadSprites()
 {
 	mainSpriteSheet = LoadTexture("res/MainSpriteSheet.png");
