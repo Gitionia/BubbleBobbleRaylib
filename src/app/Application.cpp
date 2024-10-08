@@ -47,24 +47,6 @@ void Application::run()
 		delete[] level;
 	}
 
-	{
-		Rectangle rect1 {0,0,10,10};
-		std::ifstream f("res/MainSpriteSheet.json");
-		nlohmann::json data = nlohmann::json::parse(f);
-
-		auto slices = data.find("meta").value().find("slices").value();
-
-		for (const auto& slice : slices) {
-			auto name = slice.find("name").value();
-			auto bounds = slice.find("keys").value().at(0).find("bounds").value();
-			Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
-			rect1 = rect;
-			std::cout << name << ", x:" << rect.x << ", y:" << rect.y << ", width:" << rect.width << ", height:" << rect.height << std::endl;
-		}
-	}
-
-
-
 	auto createdEntity = registry.create();
 	registry.emplace<Position>(createdEntity, 100, 100);
 	registry.emplace<Velocity>(createdEntity, 1, 2);
@@ -82,6 +64,9 @@ void Application::run()
 	registry.emplace<Velocity>(createdEntity, -1, 1);
 	registry.emplace<BallSize>(createdEntity, 30);
 	registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
+
+
+
 
 
 	while (window.IsOpen()) {

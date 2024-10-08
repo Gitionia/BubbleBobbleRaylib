@@ -32,6 +32,12 @@ target_link_libraries(BubbleBobbleRaylib PRIVATE raylib)
 find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 
+add_custom_target(Copy_Resources
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${PROJECT_SOURCE_DIR}/res"
+        $<TARGET_FILE_DIR:BubbleBobbleRaylib>/res
+)
+add_dependencies(BubbleBobbleRaylib Copy_Resources)
 
 file(COPY res/sprites/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
 file(COPY res/sprites/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
