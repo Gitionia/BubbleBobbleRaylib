@@ -15,9 +15,9 @@ void RendererSystem::update() const
 
 	ClearBackground(RAYWHITE);
 
-	auto viewRenderer = registry.view<Position, BallSize, RenderData>();
+	auto viewRenderer = registry.view<Position, RenderData>();
 	for (auto entity : viewRenderer) {
-		auto [pos, size, renderData] = viewRenderer.get(entity);
+		auto [pos, renderData] = viewRenderer.get(entity);
 
 		//DrawCircleV(Vector2(pos.x, pos.y), (float)size.radius, MAROON);
 

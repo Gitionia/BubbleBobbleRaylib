@@ -4,6 +4,8 @@
 #include "../ecs/Components.h"
 #include "../ecs/Systems.h"
 
+#include "../behavior/Level.h"
+
 #include <iostream>
 #include <filesystem>
 #include <fstream>
@@ -24,6 +26,8 @@ Application::~Application() = default;
 
 void Application::run()
 {
+	constexpr int tileSize = 16;
+
 	{
 		std::ifstream f("res/levels/Level1.json");
 		nlohmann::json data = nlohmann::json::parse(f);
@@ -34,17 +38,20 @@ void Application::run()
 
 		if (levelData.size() != 26 * 28) throw "Invalid Size of leveldata";
 
-		bool* level = new bool[26 * 28];
+		LevelLayout level;
 		for (int i = 0; i < levelData.size(); i++) {
-			level[i] = (bool)(int)levelData.at(i);
-
-			if (i % 28 == 0 && i > 0) {
-				std::cout << std::endl;
-			}
-			std::cout << level[i] << ", ";
+			level.SetTile(i, (bool)(int)levelData.at(i));
 		}
 
-		delete[] level;
+		for (int x = 0; x < LevelLayout::WIDTH; ++x) {
+			for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+				if (level.Get(x, y)) {
+					auto createdEntity = registry.create();
+					registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
+					registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
+				}
+			}
+		}
 	}
 
 	auto createdEntity = registry.create();
