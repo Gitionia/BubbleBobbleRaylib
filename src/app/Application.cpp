@@ -28,31 +28,18 @@ void Application::run()
 {
 	constexpr int tileSize = 16;
 
-	{
-		std::ifstream f("res/levels/Level1.json");
-		nlohmann::json data = nlohmann::json::parse(f);
-		auto layers = data.find("layers").value();
-		auto levelData = layers.at(0).find("data").value();
-		std::cout << levelData << std::endl;
+	LevelLayout level = LoadLevel("res/levels/Level1.json");
 
-
-		if (levelData.size() != 26 * 28) throw "Invalid Size of leveldata";
-
-		LevelLayout level;
-		for (int i = 0; i < levelData.size(); i++) {
-			level.SetTile(i, (bool)(int)levelData.at(i));
-		}
-
-		for (int x = 0; x < LevelLayout::WIDTH; ++x) {
-			for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
-				if (level.Get(x, y)) {
-					auto createdEntity = registry.create();
-					registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
-					registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
-				}
+	for (int x = 0; x < LevelLayout::WIDTH; ++x) {
+		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+			if (level.Get(x, y)) {
+				auto createdEntity = registry.create();
+				registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
+				registry.emplace<RenderData>(createdEntity, spriteManager.GetSprite("Dragon-Idle-1"));
 			}
 		}
 	}
+
 
 	auto createdEntity = registry.create();
 	registry.emplace<Position>(createdEntity, 100, 100);
