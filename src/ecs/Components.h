@@ -17,4 +17,10 @@ struct BallSize {
 
 struct RenderData {
 	Sprite sprite;
+	Vector2 scale;
+
+	RenderData(const Sprite& sprite, const Vector2& scale)
+		: sprite(sprite), scale(scale) {}
+	explicit RenderData(const Sprite& sprite)
+		: sprite(sprite), scale({1, 1}) {}
 };
