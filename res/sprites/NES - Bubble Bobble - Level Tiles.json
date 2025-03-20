@@ -1,0 +1,22 @@
+{ "frames": {
+   "NES - Bubble Bobble - Level Tiles.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 504, "h": 564 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 504, "h": 564 },
+    "sourceSize": { "w": 504, "h": 564 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.x-dev",
+  "format": "I8",
+  "size": { "w": 504, "h": 564 },
+  "scale": "1",
+  "slices": [
+   { "name": "Level1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 39, "y": 26, "w": 16, "h": 16 } }] },
+   { "name": "Level2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 39, "y": 45, "w": 16, "h": 16 } }] }
+  ]
+ }
+}
