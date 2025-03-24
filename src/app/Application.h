@@ -15,7 +15,7 @@ class Application {
 public:
 	explicit Application(const ApplicationParameters& parameters);
 	~Application();
-	void run();
+	void Run();
 
 private:
 	Window window;

@@ -2,7 +2,7 @@
 
 int main() {
 	auto* app = new Application({});
-	app->run();
+	app->Run();
 	delete app;
 
 	return 0;

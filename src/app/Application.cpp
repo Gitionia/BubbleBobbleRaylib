@@ -24,7 +24,7 @@ Application::Application(const ApplicationParameters& parameters)
 
 Application::~Application() = default;
 
-void Application::run()
+void Application::Run()
 {
 	constexpr int tileSize = 16;
 

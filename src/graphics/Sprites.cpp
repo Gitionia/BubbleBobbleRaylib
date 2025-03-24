@@ -41,10 +41,10 @@ void SpriteManager::addSpritesToSpriteMap(Texture2D& spriteSheet, const std::str
 	for (const auto& slice : slices) {
 		auto name = slice.find("name").value();
 		auto bounds = slice.find("keys").value().at(0).find("bounds").value();
+
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
 		Sprite sprite = { spriteSheet, rect};
 		spriteMap.insert({name, sprite});
-		std::cout << name << ", x:" << rect.x << ", y:" << rect.y << ", width:" << rect.width << ", height:" << rect.height << std::endl;
 	}
 }
 
