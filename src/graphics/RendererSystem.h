@@ -8,7 +8,7 @@ public:
 
 	explicit RendererSystem(entt::registry& registry);
 
-	void update() const;
+	void Update() const;
 
 public:
 	static constexpr int SCALE_SIZE = 2;

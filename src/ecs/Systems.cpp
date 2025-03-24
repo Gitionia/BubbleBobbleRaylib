@@ -7,7 +7,7 @@ SystemRunner::SystemRunner(entt::registry &registry)
 }
 
 void SystemRunner::UpdateSystems() const {
-	physicsSystem.update();
-	renderSystem.update();
+	physicsSystem.Update();
+	renderSystem.Update();
 }
 

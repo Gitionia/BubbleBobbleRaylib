@@ -6,7 +6,7 @@ class DragonBehaviorSystem {
 public:
 	explicit DragonBehaviorSystem(entt::registry& registry);
 
-	void update() const;
+	void Update() const;
 
 private:
 	entt::registry& registry;

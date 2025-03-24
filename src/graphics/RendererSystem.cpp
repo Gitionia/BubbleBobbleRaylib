@@ -10,7 +10,7 @@ RendererSystem::RendererSystem(entt::registry& registry)
 {
 }
 
-void RendererSystem::update() const
+void RendererSystem::Update() const
 {
 	const int ballRadius = 30;
 

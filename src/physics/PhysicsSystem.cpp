@@ -8,7 +8,7 @@ PhysicsSystem::PhysicsSystem(entt::registry& registry)
 {
 }
 
-void PhysicsSystem::update() const
+void PhysicsSystem::Update() const
 {
 	auto view = registry.view<Position, Velocity, BallSize>();
 	for (auto entity : view) {
