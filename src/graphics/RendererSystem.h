@@ -10,6 +10,8 @@ public:
 
 	void update() const;
 
+public:
+	static constexpr int SCALE_SIZE = 2;
 private:
 	entt::registry& registry;
 };

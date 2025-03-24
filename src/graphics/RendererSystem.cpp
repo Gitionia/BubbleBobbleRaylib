@@ -1,6 +1,9 @@
 #include "RendererSystem.h"
 #include <raylib.h>
+#include <raymath.h>
 #include "../ecs/Components.h"
+
+#include "../Utilities.h"
 
 RendererSystem::RendererSystem(entt::registry& registry)
 	: registry(registry)
@@ -24,7 +27,8 @@ void RendererSystem::update() const
 		// DrawTextureRec(renderData.sprite.spriteSheet, renderData.sprite.coords, { (float)pos.x, (float)pos.y}, WHITE);
 
 		DrawTexturePro(renderData.sprite.spriteSheet, renderData.sprite.coords,
-			{ (float)pos.x, (float)pos.y, renderData.sprite.coords.width * renderData.scale.x, renderData.sprite.coords.height * renderData.scale.y}, {0,0}, 0, WHITE);
+			ScaleRect({ (float)pos.x, (float)pos.y, renderData.sprite.coords.width * renderData.scale.x, renderData.sprite.coords.height * renderData.scale.y}, SCALE_SIZE),
+			{0,0}, 0, WHITE);
 	}
 
 	DrawFPS(10, 10);
