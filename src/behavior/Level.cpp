@@ -4,7 +4,7 @@ void LevelLayout::SetTile(int index, bool value) {
 	data[index] = value;
 }
 
-bool LevelLayout::Get(int x, int y) {
+bool LevelLayout::Get(int x, int y) const {
 	int index = x + y * WIDTH;
 	return data[index];
 }

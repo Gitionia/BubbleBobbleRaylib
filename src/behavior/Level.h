@@ -11,7 +11,7 @@ public:
 	LevelLayout() = default;
 
 	void SetTile(int index, bool value);
-	bool Get(int x, int y);
+	bool Get(int x, int y) const;
 
 public:
 	static constexpr int WIDTH = 28;
