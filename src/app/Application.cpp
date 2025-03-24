@@ -35,7 +35,7 @@ void Application::run()
 			if (level.Get(x, y)) {
 				auto createdEntity = registry.create();
 				registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
-				RenderData data = {spriteManager.GetSprite("Dragon-Idle-1"), {2, 2}};
+				RenderData data = {spriteManager.GetSprite("Dragon-Idle-1"), {1, 1}};
 				registry.emplace<RenderData>(createdEntity, data);
 			}
 		}
