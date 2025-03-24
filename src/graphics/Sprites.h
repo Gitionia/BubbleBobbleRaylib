@@ -15,10 +15,13 @@ public:
 	~SpriteManager();
 
 	void LoadSprites();
-
 	Sprite& GetSprite(const std::string& name);
 
 private:
+	void addSpritesToSpriteMap(Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
+
+private:
 	Texture2D mainSpriteSheet;
+	Texture2D levelTilesSpriteSheet;
 	std::unordered_map<std::string, Sprite> spriteMap;
 };

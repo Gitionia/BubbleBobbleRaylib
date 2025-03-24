@@ -10,7 +10,7 @@
 #include "nlohmann/json.hpp"
 
 SpriteManager::SpriteManager()
-	: mainSpriteSheet(), spriteMap()
+	: mainSpriteSheet(), levelTilesSpriteSheet(), spriteMap()
 {
 }
 
@@ -26,10 +26,14 @@ SpriteManager::~SpriteManager()
 void SpriteManager::LoadSprites()
 {
 	mainSpriteSheet = LoadTexture("res/sprites/MainSpriteSheet.png");
+	addSpritesToSpriteMap(mainSpriteSheet, "res/sprites/MainSpriteSheet.json");
 
+	levelTilesSpriteSheet = LoadTexture("res/sprites/LevelTiles.png");
+	addSpritesToSpriteMap(levelTilesSpriteSheet, "res/sprites/LevelTiles.json");
+}
 
-	Rectangle rect1 {0,0,10,10};
-	std::ifstream f("res/sprites/MainSpriteSheet.json");
+void SpriteManager::addSpritesToSpriteMap(Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
+	std::ifstream f(sliceInformationFilepath);
 	nlohmann::json data = nlohmann::json::parse(f);
 
 	auto slices = data.find("meta").value().find("slices").value();
@@ -38,8 +42,7 @@ void SpriteManager::LoadSprites()
 		auto name = slice.find("name").value();
 		auto bounds = slice.find("keys").value().at(0).find("bounds").value();
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
-		rect1 = rect;
-		Sprite sprite = { mainSpriteSheet, rect};
+		Sprite sprite = { spriteSheet, rect};
 		spriteMap.insert({name, sprite});
 		std::cout << name << ", x:" << rect.x << ", y:" << rect.y << ", width:" << rect.width << ", height:" << rect.height << std::endl;
 	}
