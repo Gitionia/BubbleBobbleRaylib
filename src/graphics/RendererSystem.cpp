@@ -13,7 +13,7 @@ void RendererSystem::update() const
 
 	BeginDrawing();
 
-	ClearBackground(RAYWHITE);
+	ClearBackground(BLACK);
 
 	auto viewRenderer = registry.view<Position, RenderData>();
 	for (auto entity : viewRenderer) {
