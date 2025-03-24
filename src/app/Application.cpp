@@ -42,24 +42,9 @@ void Application::Run()
 	}
 
 
-	auto createdEntity = registry.create();
-	registry.emplace<Position>(createdEntity, 100, 100);
-	registry.emplace<Velocity>(createdEntity, 1, 2);
-	registry.emplace<BallSize>(createdEntity, 40);
-	registry.emplace<RenderData>(createdEntity, RenderData(spriteManager.GetSprite("Dragon-Idle-1")));
-
-	createdEntity = registry.create();
-	registry.emplace<Position>(createdEntity, 400, 300);
-	registry.emplace<Velocity>(createdEntity, 2, -1);
-	registry.emplace<BallSize>(createdEntity, 50);
-	registry.emplace<RenderData>(createdEntity, RenderData(spriteManager.GetSprite("Dragon-Idle-1")));
-
-	createdEntity = registry.create();
-	registry.emplace<Position>(createdEntity, 300, 200);
-	registry.emplace<Velocity>(createdEntity, -1, 1);
-	registry.emplace<BallSize>(createdEntity, 30);
-	registry.emplace<RenderData>(createdEntity, RenderData(spriteManager.GetSprite("Dragon-Idle-1")));
-
+	auto dragon = registry.create();
+	registry.emplace<Position>(dragon, 100, 100);
+	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSprite("Dragon-Idle-1")));
 
 
 
