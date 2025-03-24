@@ -15,6 +15,10 @@ struct BallSize {
 	int radius;
 };
 
+struct DragonComponent {
+	int state;
+};
+
 struct RenderData {
 	Sprite sprite;
 	Vector2 scale;

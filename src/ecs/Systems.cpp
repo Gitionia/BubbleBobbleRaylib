@@ -9,5 +9,6 @@ SystemRunner::SystemRunner(entt::registry &registry)
 void SystemRunner::UpdateSystems() const {
 	physicsSystem.Update();
 	renderSystem.Update();
+	dragonBehaviorSystem.Update();
 }
 

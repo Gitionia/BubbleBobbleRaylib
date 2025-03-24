@@ -44,6 +44,7 @@ void Application::Run()
 
 	auto dragon = registry.create();
 	registry.emplace<Position>(dragon, 100, 100);
+	registry.emplace<DragonComponent>(dragon, 0);
 	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSprite("Dragon-Idle-1")));
 
 
