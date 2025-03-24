@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 
 
+#include "../behavior/DragonBehaviorSystem.h"
 #include "../physics/PhysicsSystem.h"
 #include "../graphics/RendererSystem.h"
 
@@ -16,4 +17,5 @@ public:
 private:
 	PhysicsSystem physicsSystem;
 	RendererSystem renderSystem;
+	DragonBehaviorSystem dragonBehaviorSystem;
 };

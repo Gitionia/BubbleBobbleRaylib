@@ -2,7 +2,7 @@
 
 
 SystemRunner::SystemRunner(entt::registry &registry)
-	: physicsSystem(registry), renderSystem(registry)
+	: physicsSystem(registry), renderSystem(registry), dragonBehaviorSystem(registry)
 {
 }
 
