@@ -7,6 +7,10 @@
 struct Sprite {
 	Texture2D& spriteSheet;
 	Rectangle coords;
+	bool flipX = false;
+	bool flipY = false;
+
+	Rectangle GetCoordsWithOrientation() const;
 };
 
 class SpriteManager {
@@ -15,7 +19,8 @@ public:
 	~SpriteManager();
 
 	void LoadSprites();
-	Sprite& GetSprite(const std::string& name);
+
+	Sprite GetSprite(const std::string &name) const;
 
 private:
 	void addSpritesToSpriteMap(Texture2D& spriteSheet, const std::string& sliceInformationFilepath);

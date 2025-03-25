@@ -9,6 +9,13 @@
 
 #include "nlohmann/json.hpp"
 
+Rectangle Sprite::GetCoordsWithOrientation() const {
+	Rectangle rect = coords;
+	if (flipX) rect.width *= -1;
+	if (flipY) rect.height *= -1;
+	return rect;
+}
+
 SpriteManager::SpriteManager()
 	: mainSpriteSheet(), levelTilesSpriteSheet(), spriteMap()
 {
@@ -48,7 +55,7 @@ void SpriteManager::addSpritesToSpriteMap(Texture2D& spriteSheet, const std::str
 	}
 }
 
-Sprite& SpriteManager::GetSprite(const std::string& name) {
+Sprite SpriteManager::GetSprite(const std::string &name) const {
 	return spriteMap.at(name);
 }
 
