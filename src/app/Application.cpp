@@ -37,6 +37,8 @@ void Application::Run()
 				registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
 				RenderData data = {spriteManager.GetSprite("Level1"), {1, 1}};
 				registry.emplace<RenderData>(createdEntity, data);
+				registry.emplace<LevelTileTag>(createdEntity);
+				registry.emplace<Collider>(createdEntity, 16, 16, 0, 0);
 			}
 		}
 	}
@@ -46,6 +48,7 @@ void Application::Run()
 	registry.emplace<Position>(dragon, 100, 100);
 	registry.emplace<DragonComponent>(dragon, 0);
 	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSprite("Dragon-Idle-1"), {2, 2}));
+	registry.emplace<Collider>(dragon, 32, 16, 0, 16);
 
 
 
