@@ -4,7 +4,6 @@
 
 
 #include "../behavior/DragonBehaviorSystem.h"
-#include "../physics/PhysicsSystem.h"
 #include "../graphics/RendererSystem.h"
 
 class SystemRunner
@@ -15,7 +14,6 @@ public:
 	void UpdateSystems() const;
 
 private:
-	PhysicsSystem physicsSystem;
 	RendererSystem renderSystem;
 	DragonBehaviorSystem dragonBehaviorSystem;
 };

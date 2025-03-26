@@ -2,12 +2,11 @@
 
 
 SystemRunner::SystemRunner(entt::registry &registry)
-	: physicsSystem(registry), renderSystem(registry), dragonBehaviorSystem(registry)
+	: renderSystem(registry), dragonBehaviorSystem(registry)
 {
 }
 
 void SystemRunner::UpdateSystems() const {
-	physicsSystem.Update();
 	renderSystem.Update();
 	dragonBehaviorSystem.Update();
 }

@@ -10,7 +10,6 @@ add_subdirectory(src)
 add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/app/Application.cpp
         src/app/Application.h
-        src/physics/PhysicsSystem.cpp
         src/ecs/Systems.cpp
         src/graphics/RendererSystem.cpp
         src/graphics/Window.cpp
@@ -22,6 +21,7 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/Utilities.cpp
         src/behavior/DragonBehaviorSystem.cpp
         src/behavior/DragonBehaviorSystem.h
+        src/behavior/Physics.h
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
