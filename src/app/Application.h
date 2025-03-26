@@ -6,7 +6,7 @@
 #include "../graphics/Sprites.h"
 
 struct ApplicationParameters {
-	int width = 32*28;
+	int width = 32*32;
 	int height = 32*26;
 	const char* title = "Bubble Bobble";
 };
