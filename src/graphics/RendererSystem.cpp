@@ -10,15 +10,9 @@ RendererSystem::RendererSystem(entt::registry& registry)
 {
 }
 
-void RendererSystem::Update() const
-{
-	const int ballRadius = 30;
-
-	BeginDrawing();
-
-	ClearBackground(BLACK);
-
-	auto viewRenderer = registry.view<Position, RenderData>();
+template<typename Tag>
+void renderAllWithTag(const entt::registry& registry) {
+	auto viewRenderer = registry.view<Position, RenderData, Tag>();
 	for (auto entity : viewRenderer) {
 		auto [pos, renderData] = viewRenderer.get(entity);
 
@@ -27,9 +21,22 @@ void RendererSystem::Update() const
 		// DrawTextureRec(renderData.sprite.spriteSheet, renderData.sprite.coords, { (float)pos.x, (float)pos.y}, WHITE);
 
 		DrawTexturePro(renderData.sprite.spriteSheet, renderData.sprite.GetCoordsWithOrientation(),
-			ScaleRect({ (float)pos.x, (float)pos.y, renderData.sprite.coords.width * renderData.scale.x, renderData.sprite.coords.height * renderData.scale.y}, SCALE_SIZE),
+			ScaleRect({ (float)pos.x, (float)pos.y, renderData.sprite.coords.width * renderData.scale.x, renderData.sprite.coords.height * renderData.scale.y}, RendererSystem::SCALE_SIZE),
 			{0,0}, 0, WHITE);
 	}
+}
+
+void RendererSystem::Update() const
+{
+	const int ballRadius = 30;
+
+	BeginDrawing();
+
+	ClearBackground(BLACK);
+
+
+	renderAllWithTag<LevelTileTag>(registry);
+	renderAllWithTag<DragonTag>(registry);
 
 	DrawFPS(10, 10);
 

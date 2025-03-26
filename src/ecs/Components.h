@@ -39,3 +39,4 @@ struct RenderData {
 
 
 struct LevelTileTag {};
+struct DragonTag {};

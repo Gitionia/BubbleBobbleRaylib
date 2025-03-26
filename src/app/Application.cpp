@@ -49,6 +49,7 @@ void Application::Run()
 	registry.emplace<DragonComponent>(dragon, 0);
 	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSprite("Dragon-Idle-1"), {2, 2}));
 	registry.emplace<Collider>(dragon, 32, 16, 0, 16);
+	registry.emplace<DragonTag>(dragon);
 
 
 
