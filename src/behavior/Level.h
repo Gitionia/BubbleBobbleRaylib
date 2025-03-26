@@ -21,7 +21,7 @@ private:
 };
 
 inline LevelLayout LoadLevel(const std::string& filepath) {
-	std::ifstream f("res/levels/Level1.json");
+	std::ifstream f(filepath);
 	nlohmann::json data = nlohmann::json::parse(f);
 	auto layers = data.find("layers").value();
 	auto levelData = layers.at(0).find("data").value();

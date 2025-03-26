@@ -22,8 +22,11 @@ struct Collider {
 	int offsetX, offsetY;
 };
 
-struct DragonComponent {
-	int state;
+struct WalkingActorComponent {
+	bool isJumping = false;
+	bool ignoreCollisions = false;
+	// number of frames left for the jump
+	int jumpFrameCount = 0;
 };
 
 
