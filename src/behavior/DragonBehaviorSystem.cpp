@@ -27,6 +27,9 @@ void DragonBehaviorSystem::Update() const {
 		int fallSpeed = 2;
 		int JUMP_FRAME_COUNT = 5 * 18 / jumpSpeed;
 
+		int BOTTEM_WARP_POS = 27 * 16;
+		int TOP_WARP_POS = 30 * 16;
+
 
 		float deadZone = 0.4f;
 		if (useGamepad && IsGamepadAvailable(0)) {
@@ -55,7 +58,15 @@ void DragonBehaviorSystem::Update() const {
 		// 		actor.ignoreCollisions = false;
 		// 	}
 		// }
-		actor.ignoreCollisions = collidesWithWall(registry, pos, collider);
+
+		// Above and below the level the dragon should ignore collisions.
+		// Above includes all y-positions where the dragon would be standing on the
+		// top of the level or above that.
+		if (pos.y > 24 * 16 || pos.y <= -2 * 16) {
+			actor.ignoreCollisions = true;
+		} else {
+			actor.ignoreCollisions = collidesWithWall(registry, pos, collider);
+		}
 
 		// check if grounded
 		bool isGrounded = false;
@@ -90,6 +101,9 @@ void DragonBehaviorSystem::Update() const {
 		if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
 			pos.x -= velx;
 		}
+		pos.x = std::max(2 * 16, pos.x);
+		pos.x = std::min(28 * 16, pos.x);
+
 
 		pos.y += vely;
 		if (!actor.isJumping) {
@@ -97,8 +111,8 @@ void DragonBehaviorSystem::Update() const {
 				pos.y -= vely;
 			}
 
-			if (pos.y >= 27 * 16) {
-				pos.y -= 30 * 16;
+			if (pos.y >= BOTTEM_WARP_POS) {
+				pos.y -= TOP_WARP_POS;
 			}
 		}
 	}
