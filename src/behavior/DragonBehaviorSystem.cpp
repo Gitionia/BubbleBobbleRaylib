@@ -17,14 +17,14 @@ void DragonBehaviorSystem::Update() const {
 	for (auto entity : view) {
 		auto [pos, actor, renderData, collider] = view.get(entity);
 
-		int moveSpeed = 2;
 		bool useGamepad = true;
 
 		int velx = 0;
 		int vely = 0;
 		bool jump = (IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
-		int jumpSpeed = 1;
-		int fallSpeed = 1;
+		int moveSpeed = 1;
+		int jumpSpeed = 2;
+		int fallSpeed = 2;
 		int JUMP_FRAME_COUNT = 5 * 18 / jumpSpeed;
 
 
