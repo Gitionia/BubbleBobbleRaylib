@@ -50,6 +50,7 @@ void Application::Run()
 	int rows[] = {0, 1, 30, 31};
 	for (int x : rows) {
 		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+			// Here tile creation could be more leightweight (e.g. remove Collider)
 			createTile(registry, spriteManager, x, y, tileSize);
 		}
 	}
