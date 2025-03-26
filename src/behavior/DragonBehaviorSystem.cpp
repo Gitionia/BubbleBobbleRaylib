@@ -96,6 +96,10 @@ void DragonBehaviorSystem::Update() const {
 			if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
 				pos.y -= vely;
 			}
+
+			if (pos.y >= 27 * 16) {
+				pos.y -= 30 * 16;
+			}
 		}
 	}
 

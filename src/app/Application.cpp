@@ -35,7 +35,7 @@ void Application::Run()
 			if (level.Get(x, y)) {
 				auto createdEntity = registry.create();
 				registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
-				RenderData data = {spriteManager.GetSprite("Level2"), {1, 1}};
+				RenderData data = {spriteManager.GetSprite("Level1"), {1, 1}};
 				registry.emplace<RenderData>(createdEntity, data);
 				registry.emplace<LevelTileTag>(createdEntity);
 				registry.emplace<Collider>(createdEntity, 16, 16, 0, 0);
