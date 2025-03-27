@@ -18,6 +18,7 @@ SpriteManager::SpriteManager()
 SpriteManager::~SpriteManager()
 {
 	UnloadTexture(mainSpriteSheet);
+	UnloadTexture(levelTilesSpriteSheet);
 }
 
 /**
