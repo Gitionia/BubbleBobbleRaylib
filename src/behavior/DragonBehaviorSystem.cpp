@@ -42,9 +42,9 @@ void DragonBehaviorSystem::Update() {
 			}
 		}
 		if (velx > 0) {
-			renderData.sprite.flipX = true;
+			renderData.flipX = true;
 		} else if (velx < 0) {
-			renderData.sprite.flipX = false;
+			renderData.flipX = false;
 		}
 
 		// check if should restore collision detection

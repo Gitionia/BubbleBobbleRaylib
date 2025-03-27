@@ -7,10 +7,6 @@
 struct Sprite {
 	Texture2D& spriteSheet;
 	Rectangle coords;
-	bool flipX = false;
-	bool flipY = false;
-
-	Rectangle GetCoordsWithOrientation() const;
 };
 
 class SpriteManager {

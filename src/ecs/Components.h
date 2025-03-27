@@ -33,6 +33,15 @@ struct WalkingActorComponent {
 struct RenderData {
 	Sprite sprite;
 	Vector2 scale;
+	bool flipX = false;
+	bool flipY = false;
+
+	Rectangle GetCoordsWithOrientation() const {
+		Rectangle rect = sprite.coords;
+		if (flipX) rect.width *= -1;
+		if (flipY) rect.height *= -1;
+		return rect;
+	}
 
 	RenderData(const Sprite& sprite, const Vector2& scale)
 		: sprite(sprite), scale(scale) {}

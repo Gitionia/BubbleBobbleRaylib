@@ -9,12 +9,6 @@
 
 #include "nlohmann/json.hpp"
 
-Rectangle Sprite::GetCoordsWithOrientation() const {
-	Rectangle rect = coords;
-	if (flipX) rect.width *= -1;
-	if (flipY) rect.height *= -1;
-	return rect;
-}
 
 SpriteManager::SpriteManager()
 	: mainSpriteSheet(), levelTilesSpriteSheet(), spriteMap()

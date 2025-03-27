@@ -15,7 +15,7 @@ void renderAllWithTag(const entt::registry& registry) {
 
 		// DrawTextureRec(renderData.sprite.spriteSheet, renderData.sprite.coords, { (float)pos.x, (float)pos.y}, WHITE);
 
-		DrawTexturePro(renderData.sprite.spriteSheet, renderData.sprite.GetCoordsWithOrientation(),
+		DrawTexturePro(renderData.sprite.spriteSheet, renderData.GetCoordsWithOrientation(),
 			ScaleRect({ (float)pos.x, (float)pos.y, renderData.sprite.coords.width * renderData.scale.x, renderData.sprite.coords.height * renderData.scale.y}, RendererSystem::SCALE_SIZE),
 			{0,0}, 0, WHITE);
 	}
