@@ -25,6 +25,7 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/Physics.cpp
         src/ecs/SystemBase.cpp
         src/ecs/SystemBase.h
+        src/app/Config.h
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)

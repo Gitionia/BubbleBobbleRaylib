@@ -4,6 +4,7 @@
 
 #include "../ecs/Components.h"
 #include "Physics.h"
+#include "../app/Config.h"
 
 void DragonBehaviorSystem::Update() {
 	SetGamepadMappings("0300000032150000290a000001010000,Razer Wolverine V2,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,crc:3361");
@@ -17,13 +18,13 @@ void DragonBehaviorSystem::Update() {
 		int velx = 0;
 		int vely = 0;
 		bool jump = (IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
-		int moveSpeed = 1;
-		int jumpSpeed = 2;
-		int fallSpeed = 2;
-		int JUMP_FRAME_COUNT = 5 * 18 / jumpSpeed;
+		int moveSpeed = UNITS_PER_BLOCK / 16;
+		int jumpSpeed = UNITS_PER_BLOCK / 8;
+		int fallSpeed = UNITS_PER_BLOCK / 8;
+		int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.1f) / jumpSpeed;
 
-		int BOTTEM_WARP_POS = 27 * 16;
-		int TOP_WARP_POS = 30 * 16;
+		int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
+		int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
 
 
 		float deadZone = 0.4f;
@@ -57,7 +58,7 @@ void DragonBehaviorSystem::Update() {
 		// Above and below the level the dragon should ignore collisions.
 		// Above includes all y-positions where the dragon would be standing on the
 		// top of the level or above that.
-		if (pos.y > 24 * 16 || pos.y <= -2 * 16) {
+		if (pos.y > 24 * UNITS_PER_BLOCK || pos.y <= -2 * UNITS_PER_BLOCK) {
 			actor.ignoreCollisions = true;
 		} else {
 			actor.ignoreCollisions = collidesWithWall(registry, pos, collider);
@@ -96,8 +97,8 @@ void DragonBehaviorSystem::Update() {
 		if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
 			pos.x -= velx;
 		}
-		pos.x = std::max(2 * 16, pos.x);
-		pos.x = std::min(28 * 16, pos.x);
+		pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
+		pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
 
 
 		pos.y += vely;

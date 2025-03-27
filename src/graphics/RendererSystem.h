@@ -3,6 +3,7 @@
 #include "entt/entt.hpp"
 #include "raylib.h"
 #include "../ecs/SystemBase.h"
+#include "../app/Config.h"
 
 class RendererSystem : public SystemBase {
 	SYSTEM_DEF(RendererSystem)
@@ -13,7 +14,4 @@ public:
 private:
 	template<typename Tag>
 	void renderAllWithTag();
-
-public:
-	static constexpr int SCALE_SIZE = 2;
 };
