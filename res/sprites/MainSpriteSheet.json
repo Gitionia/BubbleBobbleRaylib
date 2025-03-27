@@ -15,8 +15,9 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
-   { "name": "Dragon_Idle_1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon_Idle_2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 27, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 27, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Idle-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Bubble-Green-Shoot-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 10, "y": 1054, "w": 6, "h": 8 } }] },
    { "name": "Bubble-Green-Shoot-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 26, "y": 1053, "w": 10, "h": 10 } }] },
    { "name": "Bubble-Green-Shoot-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 1050, "w": 14, "h": 16 } }] },
