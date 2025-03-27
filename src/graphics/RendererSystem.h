@@ -10,6 +10,10 @@ class RendererSystem : public SystemBase {
 public:
 	void Update() override;
 
+private:
+	template<typename Tag>
+	void renderAllWithTag();
+
 public:
 	static constexpr int SCALE_SIZE = 2;
 };

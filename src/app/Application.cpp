@@ -27,7 +27,7 @@ Application::~Application() = default;
 void createTile(entt::registry& registry, const SpriteManager& spriteManager, int x, int y, int tileSize) {
 	auto createdEntity = registry.create();
 	registry.emplace<Position>(createdEntity, x * tileSize, y * tileSize);
-	RenderData data = {spriteManager.GetSprite("Level1"), {1, 1}};
+	RenderData data = {spriteManager.GetSpriteHandle("Level1"), {1, 1}};
 	registry.emplace<RenderData>(createdEntity, data);
 	registry.emplace<LevelTileTag>(createdEntity);
 	registry.emplace<Collider>(createdEntity, 16, 16, 0, 0);
@@ -58,7 +58,7 @@ void Application::Run()
 
 	auto dragon = registry.create();
 	registry.emplace<Position>(dragon, 100, 100);
-	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSprite("Dragon-Idle-1"), {2, 2}));
+	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
 	registry.emplace<Collider>(dragon, 32, 16, 0, 16);
 	registry.emplace<WalkingActorComponent>(dragon);
 	registry.emplace<DragonTag>(dragon);

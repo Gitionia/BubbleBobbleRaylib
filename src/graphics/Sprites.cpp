@@ -11,7 +11,7 @@
 
 
 SpriteManager::SpriteManager()
-	: mainSpriteSheet(), levelTilesSpriteSheet(), spriteMap()
+	: mainSpriteSheet(), levelTilesSpriteSheet()
 {
 }
 
@@ -34,7 +34,7 @@ void SpriteManager::LoadSprites()
 	addSpritesToSpriteMap(levelTilesSpriteSheet, "res/sprites/LevelTiles.json");
 }
 
-void SpriteManager::addSpritesToSpriteMap(Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
+void SpriteManager::addSpritesToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
 	std::ifstream f(sliceInformationFilepath);
 	nlohmann::json data = nlohmann::json::parse(f);
 
@@ -45,12 +45,15 @@ void SpriteManager::addSpritesToSpriteMap(Texture2D& spriteSheet, const std::str
 		auto bounds = slice.find("keys").value().at(0).find("bounds").value();
 
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
-		Sprite sprite = { spriteSheet, rect};
-		spriteMap.insert({name, sprite});
+		sprites.emplace_back(&spriteSheet, rect);
+		spriteMap.insert({name, sprites.size() - 1});
 	}
 }
 
-Sprite SpriteManager::GetSprite(const std::string &name) const {
+SpriteHandle SpriteManager::GetSpriteHandle(const std::string &name) const {
 	return spriteMap.at(name);
 }
 
+const Sprite & SpriteManager::GetSprite(SpriteHandle handle) const {
+	return sprites.at(handle);
+}

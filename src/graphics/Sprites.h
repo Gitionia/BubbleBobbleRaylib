@@ -1,14 +1,22 @@
 #pragma once
 
+#include <array>
 #include <raylib.h>
 #include <string>
 #include <unordered_map>
+#include <vector>
+
+#include "Sprites.h"
 
 struct Sprite {
-	Texture2D& spriteSheet;
-	Rectangle coords;
+	const Texture2D* spriteSheet;
+	const Rectangle coords;
+	Sprite(const Texture2D* spriteSheet, const Rectangle coords)
+		: spriteSheet(spriteSheet), coords(coords) {}
 };
 
+
+typedef uint32_t SpriteHandle;
 class SpriteManager {
 public:
 	SpriteManager();
@@ -16,13 +24,14 @@ public:
 
 	void LoadSprites();
 
-	Sprite GetSprite(const std::string &name) const;
+	SpriteHandle GetSpriteHandle(const std::string &name) const;
+	const Sprite& GetSprite(SpriteHandle handle) const;
 
 private:
-	void addSpritesToSpriteMap(Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
-
+	void addSpritesToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
 private:
 	Texture2D mainSpriteSheet;
 	Texture2D levelTilesSpriteSheet;
-	std::unordered_map<std::string, Sprite> spriteMap;
+	std::vector<Sprite> sprites;
+	std::unordered_map<std::string, SpriteHandle> spriteMap;
 };
