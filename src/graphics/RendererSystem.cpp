@@ -5,11 +5,6 @@
 
 #include "../Utilities.h"
 
-RendererSystem::RendererSystem(entt::registry& registry)
-	: registry(registry)
-{
-}
-
 template<typename Tag>
 void renderAllWithTag(const entt::registry& registry) {
 	auto viewRenderer = registry.view<Position, RenderData, Tag>();
@@ -26,7 +21,7 @@ void renderAllWithTag(const entt::registry& registry) {
 	}
 }
 
-void RendererSystem::Update() const
+void RendererSystem::Update()
 {
 	const int ballRadius = 30;
 

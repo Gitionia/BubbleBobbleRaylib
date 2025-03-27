@@ -5,15 +5,20 @@
 
 #include "../behavior/DragonBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
+#include "../graphics/Sprites.h"
+
 
 class SystemRunner
 {
 public:
-	explicit SystemRunner(entt::registry& registry);
-
+	explicit SystemRunner(entt::registry& registry, const SpriteManager& spriteManager);
+	~SystemRunner();
 	void UpdateSystems() const;
 
 private:
-	RendererSystem renderSystem;
-	DragonBehaviorSystem dragonBehaviorSystem;
+	template<typename T>
+	void registerSystem(entt::registry& registry, const SpriteManager& spriteManager);
+
+private:
+	std::vector<SystemBase*> systems;
 };

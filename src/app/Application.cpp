@@ -16,7 +16,7 @@
 #include <nlohmann/json.hpp>
 
 Application::Application(const ApplicationParameters& parameters)
-	: window(parameters.width, parameters.height, parameters.title), systemRunner(registry)
+	: window(parameters.width, parameters.height, parameters.title), systemRunner(registry, spriteManager)
 {
 	window.Init();
 	spriteManager.LoadSprites();

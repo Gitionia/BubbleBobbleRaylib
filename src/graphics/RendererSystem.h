@@ -2,16 +2,14 @@
 
 #include "entt/entt.hpp"
 #include "raylib.h"
+#include "../ecs/SystemBase.h"
 
-class RendererSystem {
+class RendererSystem : public SystemBase {
+	SYSTEM_DEF(RendererSystem)
+
 public:
-
-	explicit RendererSystem(entt::registry& registry);
-
-	void Update() const;
+	void Update() override;
 
 public:
 	static constexpr int SCALE_SIZE = 2;
-private:
-	entt::registry& registry;
 };

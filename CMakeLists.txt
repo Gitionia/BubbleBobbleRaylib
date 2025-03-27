@@ -23,6 +23,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/DragonBehaviorSystem.h
         src/behavior/Physics.h
         src/behavior/Physics.cpp
+        src/ecs/SystemBase.cpp
+        src/ecs/SystemBase.h
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)

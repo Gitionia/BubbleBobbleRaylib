@@ -1,13 +1,11 @@
 #pragma once
 
+#include "../ecs/SystemBase.h"
 #include "entt/entt.hpp"
 
-class DragonBehaviorSystem {
+class DragonBehaviorSystem : public SystemBase{
+	SYSTEM_DEF(DragonBehaviorSystem)
+
 public:
-	explicit DragonBehaviorSystem(entt::registry& registry);
-
-	void Update() const;
-
-private:
-	entt::registry& registry;
+	void Update() override;
 };
