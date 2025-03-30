@@ -4,6 +4,7 @@
 
 
 #include "../behavior/DragonBehaviorSystem.h"
+#include "../behavior/BubbleBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../graphics/Sprites.h"
 

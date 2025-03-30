@@ -5,6 +5,7 @@ SystemRunner::SystemRunner(entt::registry &registry, const SpriteManager& sprite
 {
 	registerSystem<RendererSystem>(registry, spriteManager);
 	registerSystem<DragonBehaviorSystem>(registry, spriteManager);
+	registerSystem<BubbleBehaviorSystem>(registry, spriteManager);
 }
 
 SystemRunner::~SystemRunner() {

@@ -29,15 +29,33 @@ struct WalkingActorComponent {
 	int jumpFrameCount = 0;
 };
 
+enum class BubbleState {
+    SHOOTING,
+    FLOATING
+};
+
+struct BubbleComponent {
+    int shootDirection;
+    BubbleState state = BubbleState::SHOOTING;
+    int shootCounter = MAX_SHOOT_COUNTER;
+    static constexpr int MAX_SHOOT_COUNTER = 40;
+};
+
 
 struct RenderData {
 	SpriteHandle spriteHandle;
 	Vector2 scale;
+    int xoffset = 0;
+    int yoffset = 0;
 	bool flipX = false;
 	bool flipY = false;
 
+	RenderData(const SpriteHandle handle, const Vector2& scale, int xoffset, int yoffset)
+		: spriteHandle(handle), scale(scale), xoffset(xoffset), yoffset(yoffset) {}
 	RenderData(const SpriteHandle handle, const Vector2& scale)
-		: spriteHandle(handle), scale(scale) {}
+		: spriteHandle(handle), scale(scale){}
+	RenderData(const SpriteHandle handle, float scale)
+		: spriteHandle(handle), scale({scale, scale}) {}
 	explicit RenderData(const SpriteHandle handle)
 		: spriteHandle(handle), scale({1, 1}) {}
 };
@@ -45,3 +63,4 @@ struct RenderData {
 
 struct LevelTileTag {};
 struct DragonTag {};
+struct BubbleTag {};

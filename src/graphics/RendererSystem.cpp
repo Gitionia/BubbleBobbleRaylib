@@ -14,6 +14,7 @@ void RendererSystem::Update()
 	ClearBackground(BLACK);
 
 	renderAllWithTag<LevelTileTag>();
+	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
 
 	DrawFPS(10, 10);
@@ -32,7 +33,7 @@ void RendererSystem::renderAllWithTag() {
 		if (renderData.flipY) sourceRect.height *= -1;
 
 		DrawTexturePro(*sprite.spriteSheet, sourceRect,
-			ScaleRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE, (float)pos.y / UNITS_TO_PIXEL_SCALE, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, SCALING_FACTOR),
+			ScaleRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, SCALING_FACTOR),
 			{0,0}, 0, WHITE);
 	}
 }
