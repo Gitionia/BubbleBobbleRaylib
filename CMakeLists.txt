@@ -30,8 +30,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/app/Config.h
 )
 
-target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
-target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
+target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
+target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 
