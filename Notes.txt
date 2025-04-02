@@ -1,0 +1,39 @@
+Jump frames (NES different in Atari!):
+
+Frame 0: look up
+Frame 1: 2 pixels
+Frame 2: 3 pixels
+3: 3 pixels
+4: 3 pixels
+5: 3 pixels
+6: 2 pixels
+7: 2 pixels
+8: 2 pixels
+9: 2 pixels
+10: 2 pixels
+11: 2 pixels
+12: 2 pixels
+13: 2 pixels
+14: 2 pixels   (32 pixel = 4 blocks, 1 left)
+15: 2 pixels
+16: 1 pixels
+17: 1 pixels
+19: 1 pixels
+20: 1 pixels
+21: 1 pixels
+22: 1 pixels   (40 pixels = 5 blocks, small extra left)
+23: 1 pixels
+24: 1 pixels
+25: 0 pixels
+26: 1 pixels
+27: 0 pixels
+28: 0 pixels
+29: 0 pixels   (looks slightly down)
+30: 0 pixels
+31: 0 pixels
+32: 0 pixels
+33: -1 pixels
+34: 0 pixels
+35: -1 pixels
+36: -1 pixels
+37: 0 pixels   (looks straight)   -> back on floor
