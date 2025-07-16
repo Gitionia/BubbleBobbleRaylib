@@ -1,5 +1,7 @@
 #include "Physics.h"
 
+#include "../app/Config.h"
+
 bool collidesWithWall(entt::registry &registry, const Position &position, const Collider &collider) {
 	const auto view = registry.view<Position, Collider, LevelTileTag>();
 
@@ -12,6 +14,18 @@ bool collidesWithWall(entt::registry &registry, const Position &position, const 
 	}
 
 	return false;
+}
+
+int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir) {
+	int coord = pos.x + col.offsetX + (dir > 0 ? col.width : 0);
+	if (coord % UNITS_PER_BLOCK == 0) {
+		return 0;
+	}
+	if (dir > 0) {
+		return UNITS_PER_BLOCK - (coord % UNITS_PER_BLOCK);
+	} else {
+		return -(coord % UNITS_PER_BLOCK);
+	}
 }
 
 bool overlaps(const Position &pos1, const Collider &col1, const Position &pos2, const Collider &col2) {

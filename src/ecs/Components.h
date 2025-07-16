@@ -38,7 +38,7 @@ struct BubbleComponent {
     int shootDirection;
     BubbleState state = BubbleState::SHOOTING;
     int shootCounter = MAX_SHOOT_COUNTER;
-    static constexpr int MAX_SHOOT_COUNTER = 40;
+    static constexpr int MAX_SHOOT_COUNTER = 80;
 };
 
 

@@ -12,15 +12,19 @@ void BubbleBehaviorSystem::Update()
     for (auto entity : view) {
         auto [pos, bubble, col] = view.get(entity);
 
-        int shootVelocity = UNITS_PER_BLOCK / 16;
+        int shootVelocity = UNITS_PER_BLOCK / 8;
 
         if (bubble.state == BubbleState::SHOOTING) {
             int dx = shootVelocity * bubble.shootDirection;
+
             pos.x += dx;
 
             if (collidesWithWall(registry, pos, col)) {
                 bubble.state = BubbleState::FLOATING;
+
+                // Bug: Now Bubbles also get rounded if they get spawned in a wall
                 pos.x -= dx;
+                pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
             }
 
             bubble.shootCounter--;

@@ -55,7 +55,7 @@ void DragonBehaviorSystem::Update() {
 		// 	}
 		// }
 
-        if (IsKeyDown(KEY_A)) {
+        if (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT)) {
             auto bubble = registry.create();
             registry.emplace<Position>(bubble, pos);
             registry.emplace<RenderData>(bubble, RenderData(spriteManager.GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
