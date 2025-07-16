@@ -2,6 +2,7 @@
 
 #include "../graphics/Sprites.h"
 #include "raylib.h"
+#include "../app/Config.h"
 
 struct Position {
 	int x, y;
@@ -38,7 +39,9 @@ struct BubbleComponent {
     int shootDirection;
     BubbleState state = BubbleState::SHOOTING;
     int shootCounter = MAX_SHOOT_COUNTER;
-    static constexpr int MAX_SHOOT_COUNTER = 80;
+	int lifetimeCounter = MAX_LIFE_TIME;
+	static constexpr int MAX_LIFE_TIME = TARGET_FPS * 6;
+	static constexpr int MAX_SHOOT_COUNTER = 80;
 };
 
 

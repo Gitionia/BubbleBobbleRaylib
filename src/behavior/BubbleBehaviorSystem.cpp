@@ -32,5 +32,11 @@ void BubbleBehaviorSystem::Update()
                 bubble.state = BubbleState::FLOATING;
             }
         }
+        else if (bubble.state == BubbleState::FLOATING) {
+            bubble.lifetimeCounter--;
+            if (bubble.lifetimeCounter == 0) {
+                registry.destroy(entity);
+            }
+        }
     }
 }
