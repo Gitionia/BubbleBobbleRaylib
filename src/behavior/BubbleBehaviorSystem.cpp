@@ -48,6 +48,10 @@ void BubbleBehaviorSystem::Update()
                 // Is this even allowed during iteration over entities??
                 registry.destroy(entity);
             }
+
+            if (collidesWithDragonSpikes(registry, pos, col)) {
+                registry.destroy(entity);
+            }
         }
     }
 }
