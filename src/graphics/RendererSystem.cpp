@@ -3,7 +3,7 @@
 #include <raymath.h>
 #include "../ecs/Components.h"
 
-#include "../Utilities.h"
+#include "../utils/Utilities.h"
 
 void RendererSystem::Update()
 {
