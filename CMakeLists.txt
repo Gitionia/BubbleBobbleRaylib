@@ -3,8 +3,8 @@ project(BubbleBobbleRaylib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_C_FLAGS_INIT "-fsanitize=disabled")
-set(CMAKE_CXX_FLAGS_INIT "-fsanitize=disabled")
+set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
+set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
 
 include(FetchContent)
 
@@ -37,17 +37,18 @@ target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 
-# add_subdirectory("deps/glfw-3.4")
-# target_link_libraries(BubbleBobbleRaylib PRIVATE glfw)
+
+
 add_subdirectory("deps/entt-master")
 target_link_libraries(BubbleBobbleRaylib PRIVATE EnTT::EnTT)
 
 add_subdirectory("deps/raylib-5.5")
-# find_package(raylib REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE raylib)
+
 add_subdirectory("deps/json-3.12")
-# find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
+
+
 
 add_custom_target(Copy_Resources
         COMMAND ${CMAKE_COMMAND} -E copy_directory
