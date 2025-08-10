@@ -16,6 +16,8 @@ void RendererSystem::Update()
 	renderAllWithTag<LevelTileTag>();
 	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
+	// debugDrawColliders<Collider>(RED);
+	debugDrawColliders<DragonSpikeCollider>(BLUE);
 
 	DrawFPS(10, 10);
 
@@ -35,5 +37,18 @@ void RendererSystem::renderAllWithTag() {
 		DrawTexturePro(*sprite.spriteSheet, sourceRect,
 			ScaleRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, SCALING_FACTOR),
 			{0,0}, 0, WHITE);
+	}
+}
+
+
+template<typename ColliderType>
+void RendererSystem::debugDrawColliders(Color color) {
+	auto viewRenderer = registry.view<Position, ColliderType>();
+	for (auto entity : viewRenderer) {
+		auto [pos, col] = viewRenderer.get(entity);
+
+        // * 2, because one Block has 32 screen pixels, but has 16 sprite pixels
+		DrawRectangle((pos.x + col.offsetX) * 2, (pos.y + col.offsetY) * 2, 
+            col.width * 2, col.height * 2, color);
 	}
 }

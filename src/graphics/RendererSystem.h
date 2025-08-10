@@ -14,4 +14,7 @@ public:
 private:
 	template<typename Tag>
 	void renderAllWithTag();
+
+	template<typename ColliderType>
+    void debugDrawColliders(Color color);
 };
