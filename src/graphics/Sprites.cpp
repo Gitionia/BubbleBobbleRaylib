@@ -46,7 +46,7 @@ void SpriteManager::addSpritesToSpriteMap(const Texture2D& spriteSheet, const st
 
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
 		sprites.emplace_back(&spriteSheet, rect);
-		spriteMap.insert({name, sprites.size() - 1});
+		spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 	}
 }
 
