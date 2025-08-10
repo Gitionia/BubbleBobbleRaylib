@@ -3,6 +3,7 @@
 #include "../graphics/Sprites.h"
 #include "raylib.h"
 #include "../app/Config.h"
+#include "ComponentUtils.h"
 
 struct Position {
 	int x, y;
@@ -16,12 +17,9 @@ struct BallSize {
 	int radius;
 };
 
-// Collider relative to a Position component
-struct Collider {
-	int width, height;
-	// offset from top left corner
-	int offsetX, offsetY;
-};
+COLLIDER_LAYER(DragonSpikeCollider)
+COLLIDER_LAYER(Collider)
+
 
 struct WalkingActorComponent {
 	bool isJumping = false;
