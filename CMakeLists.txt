@@ -3,8 +3,10 @@ project(BubbleBobbleRaylib)
 
 set(CMAKE_CXX_STANDARD 17)
 
-#set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
-#set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
+set(CMAKE_C_FLAGS_INIT "-fsanitize=disabled")
+set(CMAKE_CXX_FLAGS_INIT "-fsanitize=disabled")
+
+include(FetchContent)
 
 add_subdirectory(src)
 add_executable(BubbleBobbleRaylib src/app/main.cpp
@@ -30,18 +32,22 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/app/Config.h
 )
 
-target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
-target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=address)
+target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
+target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 
-find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(BubbleBobbleRaylib PRIVATE glfw)
-find_package(EnTT CONFIG REQUIRED)
+# add_subdirectory("deps/glfw-3.4")
+# target_link_libraries(BubbleBobbleRaylib PRIVATE glfw)
+add_subdirectory("deps/entt-master")
 target_link_libraries(BubbleBobbleRaylib PRIVATE EnTT::EnTT)
-find_package(raylib REQUIRED)
+
+add_subdirectory("deps/raylib-5.5")
+# find_package(raylib REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE raylib)
-find_package(nlohmann_json CONFIG REQUIRED)
+FetchContent_Declare(json URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz)
+FetchContent_MakeAvailable(json)
+# find_package(nlohmann_json CONFIG REQUIRED)
 target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 
 add_custom_target(Copy_Resources
