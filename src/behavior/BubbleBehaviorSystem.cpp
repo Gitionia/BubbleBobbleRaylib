@@ -23,6 +23,8 @@ void BubbleBehaviorSystem::Update()
 
             if (collidesWithWall(registry, pos, col)) {
                 bubble.state = BubbleState::FLOATING;
+                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+
 
                 // Bug: Now Bubbles also get rounded if they get spawned in a wall
                 pos.x -= dx;
@@ -32,6 +34,7 @@ void BubbleBehaviorSystem::Update()
             bubble.shootCounter--;
             if (bubble.shootCounter == 0) {
                 bubble.state = BubbleState::FLOATING;
+                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
             }
         }
         else if (bubble.state == BubbleState::FLOATING) {
@@ -42,6 +45,7 @@ void BubbleBehaviorSystem::Update()
 
             bubble.lifetimeCounter--;
             if (bubble.lifetimeCounter == 0) {
+                // Is this even allowed during iteration over entities??
                 registry.destroy(entity);
             }
         }
