@@ -11,7 +11,7 @@ struct ApplicationParameters {
 	int height = 32*26;
 	const char* title = "Bubble Bobble";
 };
- 
+
 class Application {
 public:
 	explicit Application(const ApplicationParameters& parameters);
