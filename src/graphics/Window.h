@@ -9,6 +9,7 @@ public:
 
 	bool IsOpen();
 	void Init();
+	void SetFPS(int fps);
 
 private:
 	int width;

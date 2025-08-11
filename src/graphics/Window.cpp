@@ -26,3 +26,8 @@ void Window::Init()
 
 	// ToggleFullscreen();
 }
+
+void Window::SetFPS(int fps)
+{
+    SetTargetFPS(fps);
+}

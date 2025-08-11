@@ -61,14 +61,28 @@ void Application::Run()
 	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
 	registry.emplace<Collider>(dragon, 2 * UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, UNITS_PER_BLOCK);
     // Spikes on the back have full height and 6 pixels to the end of the sprite
-	registry.emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0);
+	registry.emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0);
 	registry.emplace<WalkingActorComponent>(dragon);
 	registry.emplace<DragonTag>(dragon);
 
 
+#ifdef _DEBUG
+bool slowMotion = false;
+#endif
 
 
 	while (window.IsOpen()) {
 		systemRunner.UpdateSystems();
+
+#ifdef _DEBUG
+        
+        if (IsKeyDown(KEY_P)) {
+            // slowMotion = !slowMotion;
+            // window.SetFPS(slowMotion ? 1 : TARGET_FPS);
+            window.SetFPS(1);
+        } 
+        else 
+            window.SetFPS(60);
+#endif
 	}
 }

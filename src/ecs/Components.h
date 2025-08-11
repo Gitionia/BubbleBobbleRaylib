@@ -17,7 +17,11 @@ struct BallSize {
 	int radius;
 };
 
+/*Could theoretically be a static instance somewhere, 
+since it can be created and calculated*/
 COLLIDER_LAYER(DragonSpikeCollider)
+/* Could also be a static instance, just like DragonSpikeCollider*/
+COLLIDER_LAYER(BubbleJumpableTopCollider)
 COLLIDER_LAYER(Collider)
 
 

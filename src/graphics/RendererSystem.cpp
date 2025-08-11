@@ -16,8 +16,9 @@ void RendererSystem::Update()
 	renderAllWithTag<LevelTileTag>();
 	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
-	// debugDrawColliders<Collider>(RED);
+	debugDrawColliders<Collider>(RED);
 	debugDrawColliders<DragonSpikeCollider>(BLUE);
+	debugDrawColliders<BubbleJumpableTopCollider>(GREEN);
 
 	DrawFPS(10, 10);
 

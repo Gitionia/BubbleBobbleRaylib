@@ -31,8 +31,8 @@ bool collidesWith(entt::registry& registry, const Position& position, const Coll
 
 	return false;
 }
-template
-bool collidesWith<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+template bool collidesWith<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+template bool collidesWith<BubbleJumpableTopCollider>(entt::registry& registry, const Position& position, const Collider& collider);
 
 
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir) {

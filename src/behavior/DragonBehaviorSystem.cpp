@@ -70,6 +70,7 @@ void DragonBehaviorSystem::Update() {
             registry.emplace<Position>(bubble, pos);
             registry.emplace<RenderData>(bubble, RenderData(spriteManager.GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
             registry.emplace<Collider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 2 * UNITS_PER_BLOCK, 0, 0);
+            registry.emplace<BubbleJumpableTopCollider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
             registry.emplace<BubbleComponent>(bubble, renderData.flipX ? 1 : -1);
             registry.emplace<BubbleTag>(bubble);
         }
@@ -95,10 +96,12 @@ void DragonBehaviorSystem::Update() {
 		}
 
 		// start jump
-		if (isGrounded && jump) {
-			actor.isJumping = true;
-			actor.jumpFrameCount = JUMP_FRAME_COUNT;
-		}
+        if (jump) {
+            if (isGrounded || collidesWith<BubbleJumpableTopCollider>(registry, pos, collider)) {
+                actor.isJumping = true;
+                actor.jumpFrameCount = JUMP_FRAME_COUNT;
+            }
+        }
 
 		// execute jump
 		if (actor.isJumping) {
