@@ -16,8 +16,10 @@ void BubbleBehaviorSystem::Update()
 
         if (bubble.state == BubbleState::SHOOTING) {
             int dx = shootVelocity * bubble.shootDirection;
-
+            
             pos.x += dx;
+
+            
 
             if (collidesWithWall(registry, pos, col)) {
                 bubble.state = BubbleState::FLOATING;
@@ -33,6 +35,11 @@ void BubbleBehaviorSystem::Update()
             }
         }
         else if (bubble.state == BubbleState::FLOATING) {
+            
+            if (collidesWith<DragonSpikeCollider>(registry, pos, col)) {
+                registry.destroy(entity);
+            }
+
             bubble.lifetimeCounter--;
             if (bubble.lifetimeCounter == 0) {
                 registry.destroy(entity);

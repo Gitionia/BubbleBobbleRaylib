@@ -16,6 +16,25 @@ bool collidesWithWall(entt::registry &registry, const Position &position, const 
 	return false;
 }
 
+template <typename ColliderType>
+bool collidesWith(entt::registry& registry, const Position& position, const Collider& collider)
+{
+    const auto view = registry.view<Position, ColliderType>();
+
+	for (const auto entity : view) {
+		const auto [pos, col] = view.get(entity);
+
+		if (overlaps(position, collider, pos, col)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+template
+bool collidesWith<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+
+
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir) {
 	int coord = pos.x + col.offsetX + (dir > 0 ? col.width : 0);
 	if (coord % UNITS_PER_BLOCK == 0) {
