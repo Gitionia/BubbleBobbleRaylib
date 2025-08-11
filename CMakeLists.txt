@@ -12,7 +12,6 @@ add_subdirectory(src)
 add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/app/Application.cpp
         src/app/Application.h
-        src/ecs/Systems.cpp
         src/graphics/RendererSystem.cpp
         src/graphics/Window.cpp
         src/graphics/Sprites.h
@@ -27,8 +26,14 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/BubbleBehaviorSystem.h
         src/behavior/Physics.h
         src/behavior/Physics.cpp
+        src/ecs/Components.h
+        src/ecs/ComponentUtils.h
+        src/ecs/EntityFactory.h
+        src/ecs/EntityFactory.cpp
         src/ecs/SystemBase.cpp
         src/ecs/SystemBase.h
+        src/ecs/Systems.h
+        src/ecs/Systems.cpp
         src/app/Config.h
 )
 

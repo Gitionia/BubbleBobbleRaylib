@@ -2,6 +2,7 @@
 
 #include "../ecs/Systems.h"
 #include "entt/entt.hpp"
+#include "../ecs/EntityFactory.h"
 #include "../graphics/Window.h"
 #include "../graphics/Sprites.h"
 
@@ -20,6 +21,7 @@ public:
 private:
 	Window window;
 	SpriteManager spriteManager{};
-	entt::registry registry;
+    entt::registry registry{};
+    EntityFactory factory;
 	SystemRunner systemRunner;
 };
