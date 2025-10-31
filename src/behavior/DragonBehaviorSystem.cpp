@@ -6,6 +6,13 @@
 #include "Physics.h"
 #include "../app/Config.h"
 
+constexpr int dragonJumpingSpeeds[] = {
+	0, 2, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
+	1, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, 0
+};
+
+constexpr int jumpAnimationLength = sizeof(dragonJumpingSpeeds) / sizeof(int);
+
 void DragonBehaviorSystem::Update() {
 	SetGamepadMappings("0300000032150000290a000001010000,Razer Wolverine V2,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,crc:3361");
 
@@ -93,16 +100,17 @@ void DragonBehaviorSystem::Update() {
         if (jump) {
             if (isGrounded || collidesWith<BubbleJumpableTopCollider>(registry, pos, collider)) {
                 actor.isJumping = true;
-                actor.jumpFrameCount = JUMP_FRAME_COUNT;
+                actor.jumpFrameCount = 0;
             }
         }
 
 		// execute jump
 		if (actor.isJumping) {
-			actor.jumpFrameCount--;
+			actor.jumpFrameCount++;
+			// vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
 			vely = -jumpSpeed;
 
-			if (actor.jumpFrameCount == 0) {
+			if (actor.jumpFrameCount == JUMP_FRAME_COUNT - 1) {
 				actor.isJumping = false;
 			}
 		} else {
@@ -130,3 +138,4 @@ void DragonBehaviorSystem::Update() {
 	}
 
 }
+
