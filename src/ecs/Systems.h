@@ -21,5 +21,6 @@ private:
 	void registerSystem(entt::registry& registry, const SpriteManager& spriteManager);
 
 private:
+	entt::registry& registry;
 	std::vector<SystemBase*> systems;
 };

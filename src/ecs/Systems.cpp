@@ -1,7 +1,10 @@
 #include "Systems.h"
 
+#include "Components.h"
+
 
 SystemRunner::SystemRunner(entt::registry &registry, const SpriteManager& spriteManager)
+	: registry(registry)
 {
 	registerSystem<RendererSystem>(registry, spriteManager);
 	registerSystem<DragonBehaviorSystem>(registry, spriteManager);
@@ -18,6 +21,9 @@ void SystemRunner::UpdateSystems() const {
 	for (auto system: systems) {
 		system->Update();
 	}
+
+	auto view = registry.view<DestroyEntity>();
+	registry.destroy(view.begin(), view.end());
 }
 
 template<typename T>

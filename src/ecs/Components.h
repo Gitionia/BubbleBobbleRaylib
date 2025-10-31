@@ -65,6 +65,7 @@ struct RenderData {
 		: spriteHandle(handle), scale({1, 1}) {}
 };
 
+struct DestroyEntity {};
 
 struct LevelTileTag {};
 struct DragonTag {};

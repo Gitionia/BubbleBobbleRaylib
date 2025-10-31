@@ -40,17 +40,12 @@ void BubbleBehaviorSystem::Update()
         else if (bubble.state == BubbleState::FLOATING) {
             
             if (collidesWith<DragonSpikeCollider>(registry, pos, col)) {
-                registry.destroy(entity);
+                Destroy(entity);
             }
 
             bubble.lifetimeCounter--;
             if (bubble.lifetimeCounter == 0) {
-                // Is this even allowed during iteration over entities??
-                registry.destroy(entity);
-            }
-
-            if (collidesWith<DragonSpikeCollider>(registry, pos, col)) {
-                registry.destroy(entity);
+                Destroy(entity);
             }
         }
     }

@@ -15,6 +15,9 @@ public:
 	virtual void Update() = 0;
 
 protected:
+	void Destroy(const entt::entity& e) const;
+
+protected:
 	entt::registry& registry;
 	const SpriteManager& spriteManager;
 };
