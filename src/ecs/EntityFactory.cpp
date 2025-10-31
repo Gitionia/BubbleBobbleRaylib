@@ -7,7 +7,7 @@ EntityFactory::EntityFactory(entt::registry& registry, const SpriteManager& spri
 { 
 }
 
-entt::entity EntityFactory::createDragon()
+entt::entity EntityFactory::CreateDragon() const
 {
     auto dragon = registry.create();
 	registry.emplace<Position>(dragon, 5 * UNITS_PER_BLOCK, 5 * UNITS_PER_BLOCK);
@@ -19,4 +19,15 @@ entt::entity EntityFactory::createDragon()
 	registry.emplace<DragonTag>(dragon);
 
     return dragon;
+}
+
+entt::entity EntityFactory::CreateBubble(const Position& pos, int direction) const {
+	auto bubble = registry.create();
+	registry.emplace<Position>(bubble, pos);
+	registry.emplace<RenderData>(bubble, RenderData(spriteManager.GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
+	registry.emplace<Collider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 2 * UNITS_PER_BLOCK, 0, 0);
+	registry.emplace<BubbleComponent>(bubble, direction);
+	registry.emplace<BubbleTag>(bubble);
+
+	return bubble;
 }

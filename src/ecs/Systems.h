@@ -3,6 +3,7 @@
 #include <entt/entt.hpp>
 
 
+#include "EntityFactory.h"
 #include "../behavior/DragonBehaviorSystem.h"
 #include "../behavior/BubbleBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
@@ -12,13 +13,13 @@
 class SystemRunner
 {
 public:
-	explicit SystemRunner(entt::registry& registry, const SpriteManager& spriteManager);
+	explicit SystemRunner(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
 	~SystemRunner();
 	void UpdateSystems() const;
 
 private:
 	template<typename T>
-	void registerSystem(entt::registry& registry, const SpriteManager& spriteManager);
+	void registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
 
 private:
 	entt::registry& registry;

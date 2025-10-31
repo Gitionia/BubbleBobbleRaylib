@@ -2,16 +2,18 @@
 
 #include "entt/entt.hpp"
 
+#include "EntityFactory.h"
+
 #define SYSTEM_DEF(Type) public:\
-	explicit Type(entt::registry& registry, const SpriteManager& spriteManager) :\
-	SystemBase(registry, spriteManager) { }\
+	explicit Type(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager) :\
+	SystemBase(registry, factory, spriteManager) { }\
 	private:
 
 
 class SpriteManager;
 class SystemBase {
 public:
-	SystemBase(entt::registry& registry, const SpriteManager& spriteManager);
+	SystemBase(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
 	virtual void Update() = 0;
 
 protected:
@@ -19,5 +21,6 @@ protected:
 
 protected:
 	entt::registry& registry;
+	const EntityFactory& factory;
 	const SpriteManager& spriteManager;
 };

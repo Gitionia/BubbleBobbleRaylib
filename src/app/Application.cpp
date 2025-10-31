@@ -18,7 +18,7 @@
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
     factory(registry, spriteManager),
-    systemRunner(registry, spriteManager)
+    systemRunner(registry, factory, spriteManager)
 {
 	window.Init();
 	spriteManager.LoadSprites();
@@ -58,7 +58,7 @@ void Application::Run()
 	}
 
 
-	auto dragon = factory.createDragon();
+	auto dragon = factory.CreateDragon();
 
 
 #ifdef _DEBUG

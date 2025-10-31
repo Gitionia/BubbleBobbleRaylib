@@ -1,14 +1,15 @@
 #include "Systems.h"
 
 #include "Components.h"
+#include "EntityFactory.h"
 
 
-SystemRunner::SystemRunner(entt::registry &registry, const SpriteManager& spriteManager)
+SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factory, const SpriteManager& spriteManager)
 	: registry(registry)
 {
-	registerSystem<RendererSystem>(registry, spriteManager);
-	registerSystem<DragonBehaviorSystem>(registry, spriteManager);
-	registerSystem<BubbleBehaviorSystem>(registry, spriteManager);
+	registerSystem<RendererSystem>(registry, factory, spriteManager);
+	registerSystem<DragonBehaviorSystem>(registry, factory, spriteManager);
+	registerSystem<BubbleBehaviorSystem>(registry, factory, spriteManager);
 }
 
 SystemRunner::~SystemRunner() {
@@ -27,8 +28,8 @@ void SystemRunner::UpdateSystems() const {
 }
 
 template<typename T>
-void SystemRunner::registerSystem(entt::registry& registry, const SpriteManager& spriteManager) {
-	T* system = new T(registry, spriteManager);
+void SystemRunner::registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager) {
+	T* system = new T(registry, factory, spriteManager);
 	systems.push_back(system);
 }
 

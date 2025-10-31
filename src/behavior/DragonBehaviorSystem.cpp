@@ -66,12 +66,7 @@ void DragonBehaviorSystem::Update() {
 		// }
 
         if (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT)) {
-            auto bubble = registry.create();
-            registry.emplace<Position>(bubble, pos);
-            registry.emplace<RenderData>(bubble, RenderData(spriteManager.GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
-            registry.emplace<Collider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 2 * UNITS_PER_BLOCK, 0, 0);
-            registry.emplace<BubbleComponent>(bubble, renderData.flipX ? 1 : -1);
-            registry.emplace<BubbleTag>(bubble);
+            factory.CreateBubble(pos, renderData.flipX ? 1 : -1);
         }
 
 		// Above and below the level the dragon should ignore collisions.
