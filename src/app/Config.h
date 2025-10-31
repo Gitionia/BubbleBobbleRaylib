@@ -9,3 +9,5 @@
 #define SCALING_FACTOR 2
 
 #define TARGET_FPS 60
+
+// #define DRAW_DEBUG

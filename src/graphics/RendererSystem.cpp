@@ -4,11 +4,10 @@
 #include "../ecs/Components.h"
 
 #include "../utils/Utilities.h"
+#include "../app/Config.h"
 
 void RendererSystem::Update()
 {
-	const int ballRadius = 30;
-
 	BeginDrawing();
 
 	ClearBackground(BLACK);
@@ -16,9 +15,12 @@ void RendererSystem::Update()
 	renderAllWithTag<LevelTileTag>();
 	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
+
+#ifdef DRAW_DEBUG
 	debugDrawColliders<Collider>(RED);
 	debugDrawColliders<DragonSpikeCollider>(BLUE);
 	debugDrawColliders<BubbleJumpableTopCollider>(GREEN);
+#endif
 
 	DrawFPS(10, 10);
 
