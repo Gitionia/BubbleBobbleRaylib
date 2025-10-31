@@ -37,7 +37,7 @@ void BubbleBehaviorSystem::Update()
                 registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
             }
         }
-        else if (bubble.state == BubbleState::FLOATING) {
+        if (bubble.state == BubbleState::FLOATING) {
             
             if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
