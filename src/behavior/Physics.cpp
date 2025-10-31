@@ -17,7 +17,7 @@ bool collidesWithWall(entt::registry &registry, const Position &position, const 
 }
 
 template <typename ColliderType>
-bool collidesWith(entt::registry& registry, const Position& position, const Collider& collider)
+bool collidesWithCollider(entt::registry& registry, const Position& position, const Collider& collider)
 {
     const auto view = registry.view<Position, ColliderType>();
 
@@ -31,8 +31,28 @@ bool collidesWith(entt::registry& registry, const Position& position, const Coll
 
 	return false;
 }
-template bool collidesWith<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
-template bool collidesWith<BubbleJumpableTopCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+
+template<typename ColliderType>
+bool collidesWithMultiCollider(entt::registry &registry, const Position &position, const Collider &collider) {
+	const auto view = registry.view<Position, ColliderType>();
+
+	for (const auto entity : view) {
+		auto [pos, multiCollider] = view.get(entity);
+
+		for (Collider& col : multiCollider.colliders) {
+			if (overlaps(position, collider, pos, col)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+// template bool collidesWithCollider<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+template bool collidesWithCollider<BubbleJumpableTopCollider>(entt::registry& registry, const Position& position, const Collider& collider);
+
+template bool collidesWithMultiCollider<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
 
 
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir) {

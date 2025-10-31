@@ -9,3 +9,16 @@ struct name {\
         offsetX = boxWidth - (offsetX + width);\
     }\
 };
+
+COLLIDER_LAYER(Collider)
+
+#define MULTI_COLLIDER_LAYER(name, count) \
+struct name {\
+	Collider colliders[count];\
+	void flipX(int boxWidth) {\
+		for (Collider& col : colliders) {\
+			col.flipX(boxWidth);\
+		}\
+	}\
+};
+

@@ -17,4 +17,7 @@ private:
 
 	template<typename ColliderType>
     void debugDrawColliders(Color color);
+
+	template<typename ColliderType>
+    void debugDrawMultiColliders(Color color);
 };

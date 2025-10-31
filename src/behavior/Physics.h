@@ -6,7 +6,10 @@
 
 bool collidesWithWall(entt::registry& registry, const Position& position, const Collider& collider);
 template <typename ColliderType>
-bool collidesWith(entt::registry& registry, const Position& position, const Collider& collider);
+bool collidesWithCollider(entt::registry& registry, const Position& position, const Collider& collider);
+template <typename ColliderType>
+bool collidesWithMultiCollider(entt::registry& registry, const Position& position, const Collider& collider);
+
 
 int calculateMovementToRoundedPosition(const Position& pos, const Collider& col, int dir);
 template <typename Collider1, typename Collider2>

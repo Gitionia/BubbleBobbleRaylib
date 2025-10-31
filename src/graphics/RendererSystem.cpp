@@ -18,7 +18,7 @@ void RendererSystem::Update()
 
 #ifdef DRAW_DEBUG
 	debugDrawColliders<Collider>(RED);
-	debugDrawColliders<DragonSpikeCollider>(BLUE);
+	debugDrawMultiColliders<DragonSpikeCollider>(BLUE);
 	debugDrawColliders<BubbleJumpableTopCollider>(GREEN);
 #endif
 
@@ -53,5 +53,19 @@ void RendererSystem::debugDrawColliders(Color color) {
         // * 2, because one Block has 32 screen pixels, but has 16 sprite pixels
 		DrawRectangle((pos.x + col.offsetX) * 2, (pos.y + col.offsetY) * 2, 
             col.width * 2, col.height * 2, color);
+	}
+}
+
+template<typename ColliderType>
+void RendererSystem::debugDrawMultiColliders(Color color) {
+	auto viewRenderer = registry.view<Position, ColliderType>();
+	for (auto entity : viewRenderer) {
+		auto [pos, multiCollider] = viewRenderer.get(entity);
+
+		for (auto& col : multiCollider.colliders) {
+			// * 2, because one Block has 32 screen pixels, but has 16 sprite pixels
+			DrawRectangle((pos.x + col.offsetX) * 2, (pos.y + col.offsetY) * 2, col.width * 2, col.height * 2, color);
+
+		}
 	}
 }

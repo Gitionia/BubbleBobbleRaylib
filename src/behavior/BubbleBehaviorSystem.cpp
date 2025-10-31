@@ -39,7 +39,7 @@ void BubbleBehaviorSystem::Update()
         }
         else if (bubble.state == BubbleState::FLOATING) {
             
-            if (collidesWith<DragonSpikeCollider>(registry, pos, col)) {
+            if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
             }
 

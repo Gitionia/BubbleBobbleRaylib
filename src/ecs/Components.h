@@ -19,10 +19,10 @@ struct BallSize {
 
 /*Could theoretically be a static instance somewhere, 
 since it can be created and calculated*/
-COLLIDER_LAYER(DragonSpikeCollider)
+MULTI_COLLIDER_LAYER(DragonSpikeCollider, 2)
+// COLLIDER_LAYER(DragonSpikeCollider)
 /* Could also be a static instance, just like DragonSpikeCollider*/
 COLLIDER_LAYER(BubbleJumpableTopCollider)
-COLLIDER_LAYER(Collider)
 
 
 struct WalkingActorComponent {

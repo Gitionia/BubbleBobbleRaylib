@@ -14,7 +14,8 @@ entt::entity EntityFactory::CreateDragon() const
 	registry.emplace<RenderData>(dragon, RenderData(spriteManager.GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
 	registry.emplace<Collider>(dragon, 2 * UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, UNITS_PER_BLOCK);
     // Spikes on the back have full height and 6 pixels to the end of the sprite
-	registry.emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0);
+	registry.emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0,
+													2 * UNITS_PER_BLOCK, 4 * UNITS_PER_PIXEL, 0, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL);
 	registry.emplace<WalkingActorComponent>(dragon);
 	registry.emplace<DragonTag>(dragon);
 

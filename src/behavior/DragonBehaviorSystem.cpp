@@ -98,7 +98,7 @@ void DragonBehaviorSystem::Update() {
 
 		// start jump
         if (jump) {
-            if (isGrounded || collidesWith<BubbleJumpableTopCollider>(registry, pos, collider)) {
+            if (isGrounded || collidesWithCollider<BubbleJumpableTopCollider>(registry, pos, collider)) {
                 actor.isJumping = true;
                 actor.jumpFrameCount = 0;
             }
