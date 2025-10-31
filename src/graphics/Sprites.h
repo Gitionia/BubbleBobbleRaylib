@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <cstdint>
 #include <raylib.h>
 #include <string>
 #include <unordered_map>

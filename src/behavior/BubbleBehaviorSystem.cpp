@@ -49,7 +49,7 @@ void BubbleBehaviorSystem::Update()
                 registry.destroy(entity);
             }
 
-            if (collidesWithDragonSpikes(registry, pos, col)) {
+            if (collidesWith<DragonSpikeCollider>(registry, pos, col)) {
                 registry.destroy(entity);
             }
         }
