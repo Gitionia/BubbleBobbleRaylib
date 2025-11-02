@@ -1,6 +1,6 @@
 #pragma once
 
-class AudioPlayer {
+class AudioDevice {
 
 public:
 	bool Init();

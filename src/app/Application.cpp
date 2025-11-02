@@ -60,6 +60,8 @@ void Application::Run()
 		}
 	}
 
+	auto music = LoadMusicStream("res/sounds/DSSounds/Chimes 1.wav");
+	PlayMusicStream(music);
 
 	auto dragon = factory.CreateDragon();
 
@@ -72,6 +74,7 @@ bool slowMotion = false;
 	while (window.IsOpen()) {
 		systemRunner.UpdateSystems();
 
+		UpdateMusicStream(music);
 #ifdef _DEBUG
         
         if (IsKeyDown(KEY_P)) {
