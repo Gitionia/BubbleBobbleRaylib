@@ -22,7 +22,11 @@
    { "name": "Bubble-Green-Shoot-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 26, "y": 1053, "w": 10, "h": 10 } }] },
    { "name": "Bubble-Green-Shoot-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 1050, "w": 14, "h": 16 } }] },
    { "name": "Bubble-Green-Shoot-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 1051, "w": 12, "h": 14 } }] },
-   { "name": "Bubble-Green-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 7, "y": 1072, "w": 14, "h": 16 } }] }
+   { "name": "Bubble-Green-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 7, "y": 1072, "w": 14, "h": 16 } }] },
+   { "name": "Can-Walk-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 5, "y": 246, "w": 16, "h": 15 } }] },
+   { "name": "Can-Walk-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 24, "y": 245, "w": 15, "h": 16 } }] },
+   { "name": "Can-Walk-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 246, "w": 15, "h": 15 } }] },
+   { "name": "Can-Walk-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 62, "y": 245, "w": 16, "h": 16 } }] }
   ]
  }
 }
