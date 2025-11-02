@@ -20,11 +20,14 @@ Application::Application(const ApplicationParameters& parameters)
     factory(registry, spriteManager),
     systemRunner(registry, factory, spriteManager)
 {
+	audio.Init();
 	window.Init();
 	spriteManager.LoadSprites();
 }
 
-Application::~Application() = default;
+Application::~Application() {
+	audio.Close();
+}
 
 void createTile(entt::registry& registry, const SpriteManager& spriteManager, int x, int y, int tileSize) {
 	auto createdEntity = registry.create();

@@ -35,6 +35,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/ecs/Systems.h
         src/ecs/Systems.cpp
         src/app/Config.h
+        res/audio/AudioPlayer.h
+        res/audio/AudioPlayer.cpp
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
