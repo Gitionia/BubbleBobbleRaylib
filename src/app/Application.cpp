@@ -63,7 +63,7 @@ void Application::Run()
 		}
 	}
 
-	auto music = LoadMusicStream("res/sounds/DSSounds/Chimes 1.wav");
+	auto music = LoadMusicStream("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 	PlayMusicStream(music);
 
 	auto dragon = factory.CreateDragon();
@@ -78,6 +78,13 @@ bool slowMotion = false;
 		systemRunner.UpdateSystems();
 
 		UpdateMusicStream(music);
+
+		// float playbackTime = GetMusicTimePlayed(music);
+		// if (playbackTime > 46.1f) {
+		// 	StopMusicStream(music);
+		// 	PlayMusicStream(music);
+		// }
+
 #ifdef _DEBUG
         
         if (IsKeyDown(KEY_P)) {
