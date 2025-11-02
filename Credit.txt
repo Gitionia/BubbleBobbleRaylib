@@ -1,0 +1,4 @@
+Sources for Sounds:
+- Downloaded Files in "MiscellaneousSoundEffects" from https://sounds.spriters-resource.com/nes/bublbobl/asset/397247/ on 2.11.2025
+- Downloaded Files in "DSSounds" from https://sounds.spriters-resource.com/ds_dsi/bublboblds/asset/394629/ on 2.11.2025
+- Downloaded Files in "tim-follin-atari" from https://archive.org/details/tim-follin-bubble-bobble-atari/01+Bubble+Bobble+-+Start.mp3 on 2.11.2025
