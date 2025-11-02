@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../res/audio/AudioPlayer.h"
+#include "../../src/audio/AudioPlayer.h"
 #include "../ecs/Systems.h"
 #include "entt/entt.hpp"
 #include "../ecs/EntityFactory.h"
