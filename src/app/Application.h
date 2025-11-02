@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../src/audio/AudioDevice.h"
+#include "../../src/audio/AudioManager.h"
 #include "../ecs/Systems.h"
 #include "entt/entt.hpp"
 #include "../ecs/EntityFactory.h"
@@ -25,5 +25,5 @@ private:
     entt::registry registry{};
     EntityFactory factory;
 	SystemRunner systemRunner;
-	AudioDevice audio;
+	AudioManager audio;
 };

@@ -35,8 +35,10 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/ecs/Systems.h
         src/ecs/Systems.cpp
         src/app/Config.h
-        src/audio/AudioDevice.h
-        src/audio/AudioDevice.cpp
+        src/audio/AudioManager.h
+        src/audio/AudioManager.cpp
+        src/audio/AudioSystem.h
+        src/audio/AudioSystem.cpp
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
