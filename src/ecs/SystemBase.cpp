@@ -3,8 +3,8 @@
 #include "Components.h"
 
 
-SystemBase::SystemBase(entt::registry &registry, const EntityFactory& factory, const SpriteManager &spriteManager)
-	: registry(registry), factory(factory), spriteManager(spriteManager)
+SystemBase::SystemBase(entt::registry &registry, const EntityFactory& factory, const SpriteManager &spriteManager, const AudioManager& audio)
+	: registry(registry), factory(factory), spriteManager(spriteManager), audio(audio)
 {
 }
 

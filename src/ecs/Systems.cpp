@@ -5,13 +5,13 @@
 #include "../audio/AudioSystem.h"
 
 
-SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factory, const SpriteManager& spriteManager)
+SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio)
 	: registry(registry)
 {
-	registerSystem<RendererSystem>(registry, factory, spriteManager);
-	registerSystem<DragonBehaviorSystem>(registry, factory, spriteManager);
-	registerSystem<BubbleBehaviorSystem>(registry, factory, spriteManager);
-	registerSystem<AudioSystem>(registry, factory, spriteManager);
+	registerSystem<RendererSystem>(registry, factory, spriteManager, audio);
+	registerSystem<DragonBehaviorSystem>(registry, factory, spriteManager, audio);
+	registerSystem<BubbleBehaviorSystem>(registry, factory, spriteManager, audio);
+	registerSystem<AudioSystem>(registry, factory, spriteManager, audio);
 }
 
 SystemRunner::~SystemRunner() {
@@ -30,8 +30,8 @@ void SystemRunner::UpdateSystems() const {
 }
 
 template<typename T>
-void SystemRunner::registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager) {
-	T* system = new T(registry, factory, spriteManager);
+void SystemRunner::registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio) {
+	T* system = new T(registry, factory, spriteManager, audio);
 	systems.push_back(system);
 }
 
