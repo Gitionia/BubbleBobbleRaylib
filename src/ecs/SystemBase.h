@@ -15,6 +15,7 @@ class SpriteManager;
 class SystemBase {
 public:
 	SystemBase(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio);
+	virtual void Init() {}
 	virtual void Update() = 0;
 
 protected:

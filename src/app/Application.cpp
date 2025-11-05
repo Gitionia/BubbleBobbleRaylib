@@ -26,6 +26,7 @@ Application::Application(const ApplicationParameters& parameters)
 
 	window.Init();
 	spriteManager.LoadSprites();
+	systemRunner.Init();
 }
 
 Application::~Application() {

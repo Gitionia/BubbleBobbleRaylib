@@ -16,7 +16,9 @@ class SystemRunner
 public:
 	explicit SystemRunner(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio);
 	~SystemRunner();
+	void Init();
 	void UpdateSystems() const;
+
 
 private:
 	template<typename T>

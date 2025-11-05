@@ -5,6 +5,7 @@
 #include "../ecs/Components.h"
 #include "Physics.h"
 #include "../app/Config.h"
+#include "../graphics/Animations.h"
 
 constexpr int dragonJumpingSpeeds[] = {
 	0, 2, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -13,12 +14,24 @@ constexpr int dragonJumpingSpeeds[] = {
 
 constexpr int jumpAnimationLength = sizeof(dragonJumpingSpeeds) / sizeof(int);
 
+void DragonBehaviorSystem::Init() {
+	idleAnimation = { {spriteManager.GetSpriteHandle("Dragon-Idle-1"), spriteManager.GetSpriteHandle("Dragon-Idle-2")}, 3};
+}
+
 void DragonBehaviorSystem::Update() {
 	SetGamepadMappings("0300000032150000290a000001010000,Razer Wolverine V2,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,crc:3361");
+
+	static Animator animator(&idleAnimation);
 
 	auto view = registry.view<Position, WalkingActorComponent, RenderData, Collider, DragonSpikeCollider>();
 	for (auto entity : view) {
 		auto [pos, actor, renderData, collider, dragonSpikes] = view.get(entity);
+
+
+		if (animator.Update())
+			animator.Reset();
+		renderData.spriteHandle = animator.GetSpriteHandle();
+
 
 		bool useGamepad = true;
 

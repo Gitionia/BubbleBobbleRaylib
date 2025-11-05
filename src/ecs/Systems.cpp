@@ -20,6 +20,12 @@ SystemRunner::~SystemRunner() {
 	}
 }
 
+void SystemRunner::Init() {
+	for (auto system: systems) {
+		system->Init();
+	}
+}
+
 void SystemRunner::UpdateSystems() const {
 	for (auto system: systems) {
 		system->Update();
