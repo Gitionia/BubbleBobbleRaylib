@@ -12,8 +12,9 @@
 struct Sprite {
 	const Texture2D* spriteSheet;
 	const Rectangle coords;
-	Sprite(const Texture2D* spriteSheet, const Rectangle coords)
-		: spriteSheet(spriteSheet), coords(coords) {}
+	const int xOffset, yOffset;
+	Sprite(const Texture2D* spriteSheet, const Rectangle coords, int xOffset = 0, int yOffset = 0)
+		: spriteSheet(spriteSheet), coords(coords), xOffset(xOffset), yOffset(yOffset) {}
 };
 
 

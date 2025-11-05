@@ -38,7 +38,8 @@ void RendererSystem::renderAllWithTag() {
 		if (renderData.flipY) sourceRect.height *= -1;
 
 		DrawTexturePro(*sprite.spriteSheet, sourceRect,
-			ScaleRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, SCALING_FACTOR),
+			ScaleRect(OffsetRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset
+				, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, renderData.flipX ? sprite.xOffset : 0, sprite.yOffset), SCALING_FACTOR),
 			{0,0}, 0, WHITE);
 	}
 }

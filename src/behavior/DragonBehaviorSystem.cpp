@@ -15,7 +15,7 @@ constexpr int dragonJumpingSpeeds[] = {
 constexpr int jumpAnimationLength = sizeof(dragonJumpingSpeeds) / sizeof(int);
 
 void DragonBehaviorSystem::Init() {
-	idleAnimation = { {spriteManager.GetSpriteHandle("Dragon-Idle-1"), spriteManager.GetSpriteHandle("Dragon-Idle-2")}, 3};
+	idleAnimation = { {spriteManager.GetSpriteHandle("Test"), spriteManager.GetSpriteHandle("Test")}, 120};
 }
 
 void DragonBehaviorSystem::Update() {

@@ -16,12 +16,7 @@
   "scale": "1",
   "slices": [
    { "name": "Dragon-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 15, "w": 16, "h": 17 } }] },
    { "name": "Dragon-Walking-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 27, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon-Walking-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 70, "y": 16, "w": 15, "h": 16 } }] },
-   { "name": "Dragon-Walking-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 91, "y": 16, "w": 15, "h": 16 } }] },
-   { "name": "Dragon-Walking-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 110, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon-Walking-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 130, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Bubble-Green-Shoot-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 10, "y": 1054, "w": 6, "h": 8 } }] },
    { "name": "Bubble-Green-Shoot-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 26, "y": 1053, "w": 10, "h": 10 } }] },
    { "name": "Bubble-Green-Shoot-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 1050, "w": 14, "h": 16 } }] },
@@ -30,7 +25,14 @@
    { "name": "Can-Walk-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 5, "y": 246, "w": 16, "h": 15 } }] },
    { "name": "Can-Walk-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 24, "y": 245, "w": 15, "h": 16 } }] },
    { "name": "Can-Walk-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 246, "w": 15, "h": 15 } }] },
-   { "name": "Can-Walk-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 62, "y": 245, "w": 16, "h": 16 } }] }
+   { "name": "Can-Walk-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 62, "y": 245, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Walking-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 70, "y": 16, "w": 15, "h": 16 } }] },
+   { "name": "Dragon-Walking-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 91, "y": 16, "w": 15, "h": 16 } }] },
+   { "name": "Dragon-Walking-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 110, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Walking-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 130, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Slice 1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 238, "y": 36, "w": 15, "h": 16 } }] },
+   { "name": "Test", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 301, "y": 42, "w": 14, "h": 10 }, "pivot": {"x": 4, "y": 12 } }] }
   ]
  }
 }

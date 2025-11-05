@@ -42,10 +42,18 @@ void SpriteManager::addSpritesToSpriteMap(const Texture2D& spriteSheet, const st
 
 	for (const auto& slice : slices) {
 		auto name = slice.find("name").value();
-		auto bounds = slice.find("keys").value().at(0).find("bounds").value();
+		auto key = slice.find("keys").value().at(0);
+		auto bounds = key.find("bounds").value();
+		int xOffset = 0;
+		int yOffset = 0;
+		if (key.contains("pivot")) {
+			auto offset = key.find("pivot").value();
+			xOffset = offset.find("x").value();
+			yOffset = offset.find("y").value();
+		}
 
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
-		sprites.emplace_back(&spriteSheet, rect);
+		sprites.emplace_back(&spriteSheet, rect, xOffset, yOffset);
 		spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 	}
 }
