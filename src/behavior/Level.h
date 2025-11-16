@@ -6,11 +6,16 @@
 
 #include <nlohmann/json.hpp>
 
+#include "raylib.h"
+
 class LevelLayout {
 public:
 	LevelLayout() = default;
 
 	void SetTile(int index, bool value);
+	void SetColors(Color right, Color bottem);
+	Color GetShadeColorRight() const;
+	Color GetShadeColorBottem() const;
 	bool Get(int x, int y) const;
 
 public:
@@ -18,23 +23,10 @@ public:
 	static constexpr int HEIGHT = 26;
 private:
 	bool data[WIDTH * HEIGHT];
+	Color tileShadeColorRight;
+	Color tileShadeColorBottem;
 };
 
-inline LevelLayout LoadLevel(const std::string& filepath) {
-	std::ifstream f(filepath);
-	nlohmann::json data = nlohmann::json::parse(f);
-	auto layers = data.find("layers").value();
-	auto levelData = layers.at(0).find("data").value();
-
-	if (levelData.size() != 26 * 28) throw "Invalid Size of leveldata";
-
-	LevelLayout level{};
-
-	for (int i = 0; i < levelData.size(); i++) {
-		level.SetTile(i, (bool)(int)levelData.at(i));
-	}
-
-	return level;
-}
+LevelLayout LoadLevel(const std::string& filepath);
 
 

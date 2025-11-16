@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"json",
+         "target":"Level2.json"
+        }
+    },
  "height":26,
  "infinite":false,
  "layers":[
@@ -33,6 +41,17 @@
          "id":1,
          "name":"Tile Layer 1",
          "opacity":1,
+         "properties":[
+                {
+                 "name":"ShadeBottom",
+                 "type":"color",
+                 "value":"#ff810c00"
+                }, 
+                {
+                 "name":"ShadeRight",
+                 "type":"color",
+                 "value":"#ff951143"
+                }],
          "type":"tilelayer",
          "visible":true,
          "width":28,
@@ -43,7 +62,7 @@
  "nextobjectid":1,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.11.1",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
         {
