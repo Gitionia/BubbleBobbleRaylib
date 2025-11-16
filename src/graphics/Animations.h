@@ -5,12 +5,7 @@
 
 
 struct Animation {
-	Animation& operator=(const Animation& other) {
-		Sprites = other.Sprites;
-		FrameCountPerSprite = other.FrameCountPerSprite;
-
-		return *this;
-	}
+	Animation& operator=(const Animation& other) = default;
 
 	std::vector<SpriteHandle> Sprites;
 	// 	// How many frames the animation should take for each sprite

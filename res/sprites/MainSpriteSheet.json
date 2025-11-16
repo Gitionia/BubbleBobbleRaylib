@@ -30,7 +30,9 @@
    { "name": "Dragon-Walking-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 70, "y": 16, "w": 15, "h": 16 } }] },
    { "name": "Dragon-Walking-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 91, "y": 16, "w": 15, "h": 16 } }] },
    { "name": "Dragon-Walking-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 110, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon-Walking-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 130, "y": 16, "w": 16, "h": 16 } }] }
+   { "name": "Dragon-Walking-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 130, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Bubble-Green-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 25, "y": 1073, "w": 14, "h": 14 } }] },
+   { "name": "Bubble-Green-Idle-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 44, "y": 1072, "w": 12, "h": 16 } }] }
   ]
  }
 }

@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "../app/Config.h"
 #include "ComponentUtils.h"
+#include "../graphics/Animations.h"
 
 struct Position {
 	int x, y;
@@ -39,6 +40,8 @@ enum class BubbleState {
 
 struct BubbleComponent {
     int shootDirection;
+	Animator animator;
+
     BubbleState state = BubbleState::SHOOTING;
     int shootCounter = MAX_SHOOT_COUNTER;
 	int lifetimeCounter = MAX_LIFE_TIME;
