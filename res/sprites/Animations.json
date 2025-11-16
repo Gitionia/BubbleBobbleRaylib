@@ -2,7 +2,7 @@
   "animations" : [
     { "name" : "Dragon-Idle", "FramesPerSprite" : 4 },
     { "name" : "Dragon-Walking", "FramesPerSprite" : 10 },
-    { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 10 },
+    { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },
     { "name" : "Bubble-Green-Shoot", "FramesPerSprite" : 10 }
   ]
 }

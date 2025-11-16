@@ -66,6 +66,12 @@ struct RenderData {
 		: spriteHandle(handle), scale({scale, scale}) {}
 	explicit RenderData(const SpriteHandle handle)
 		: spriteHandle(handle), scale({1, 1}) {}
+
+	RenderData& SetDirection(int dir) {
+		if (dir > 0) flipX = true;
+		else if (dir < 0) flipX = false;
+		return *this;
+	}
 };
 
 struct DestroyEntity {};

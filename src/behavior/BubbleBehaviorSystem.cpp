@@ -8,11 +8,16 @@
 
 void BubbleBehaviorSystem::Update()
 {
-    auto view = registry.view<Position, BubbleComponent, Collider>();
+    auto view = registry.view<Position, BubbleComponent, Collider, RenderData>();
     for (auto entity : view) {
-        auto [pos, bubble, col] = view.get(entity);
+        auto [pos, bubble, col, renderData] = view.get(entity);
 
         int shootVelocity = UNITS_PER_BLOCK / 8;
+
+        if (bubble.animator.IsFinished())
+            bubble.animator.Reset();
+        renderData.spriteHandle = bubble.animator.GetSpriteHandle();
+        bubble.animator.Update();
 
         if (bubble.state == BubbleState::SHOOTING) {
             int dx = shootVelocity * bubble.shootDirection;
