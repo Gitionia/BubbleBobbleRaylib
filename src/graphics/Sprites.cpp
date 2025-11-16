@@ -62,6 +62,13 @@ SpriteHandle SpriteManager::GetSpriteHandle(const std::string &name) const {
 	return spriteMap.at(name);
 }
 
+SpriteHandle SpriteManager::GetSpriteHandleChecked(const std::string &name) const {
+	if (spriteMap.find(name) == std::end(spriteMap)) {
+		return -1;
+	}
+	return GetSpriteHandle(name);
+}
+
 const Sprite & SpriteManager::GetSprite(SpriteHandle handle) const {
 	return sprites.at(handle);
 }

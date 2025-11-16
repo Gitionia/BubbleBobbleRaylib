@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
+#include <unordered_map>
 
 #include "Sprites.h"
+
 
 
 struct Animation {
@@ -10,6 +12,16 @@ struct Animation {
 	std::vector<SpriteHandle> Sprites;
 	// 	// How many frames the animation should take for each sprite
 	int FrameCountPerSprite;
+};
+
+class Animations {
+public:
+	static Animations& Get();
+	void LoadAnimations(const SpriteManager& spriteManager);
+	Animation& GetAnimation(const std::string& name);
+
+private:
+	std::unordered_map<std::string, Animation> animations;
 };
 
 class Animator {

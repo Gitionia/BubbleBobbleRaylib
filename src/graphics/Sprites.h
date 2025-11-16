@@ -27,6 +27,7 @@ public:
 	void LoadSprites();
 
 	SpriteHandle GetSpriteHandle(const std::string &name) const;
+	SpriteHandle GetSpriteHandleChecked(const std::string& name) const;
 	const Sprite& GetSprite(SpriteHandle handle) const;
 
 private:
