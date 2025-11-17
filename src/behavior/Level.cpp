@@ -1,5 +1,7 @@
 #include "Level.h"
 
+#include <sstream>
+
 void LevelLayout::SetTile(int index, bool value) {
 	data[index] = value;
 }
