@@ -1,4 +1,5 @@
 #pragma once
+#include "../utils/Utilities.h"
 
 #define COLLIDER_LAYER(name) \
 struct name {\
@@ -8,6 +9,9 @@ struct name {\
     void flipX(int boxWidth) {\
         offsetX = boxWidth - (offsetX + width);\
     }\
+	Vector2Int getCenter(int x, int y) {\
+		return { x + width / 2, y + height / 2 };\
+	}\
 };
 
 COLLIDER_LAYER(Collider)

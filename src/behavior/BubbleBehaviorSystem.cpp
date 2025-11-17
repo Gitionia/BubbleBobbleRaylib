@@ -43,7 +43,13 @@ void BubbleBehaviorSystem::Update()
             }
         }
         if (bubble.state == BubbleState::FLOATING) {
-            
+
+            Vector2Int centerPos = col.getCenter(pos.x, pos.y);
+            Vector2Int airflowVelocity = getAirflowDirection(centerPos.X, centerPos.Y);
+
+            pos.x += airflowVelocity.X;
+            pos.y += airflowVelocity.Y;
+
             if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
             }

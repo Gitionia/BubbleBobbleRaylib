@@ -55,8 +55,8 @@ public:
 	Color GetShadeColorRight() const;
 	Color GetShadeColorBottem() const;
 
-	LevelTilemap& GetTiles();
-	LevelTilemap& GetAirflow();
+	const LevelTilemap& GetTiles() const;
+	const LevelTilemap& GetAirflow() const;
 
 	static LevelLayout LoadLevel(const std::string& filepath);
 private:

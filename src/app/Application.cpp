@@ -15,6 +15,8 @@
 
 #include <nlohmann/json.hpp>
 
+#include "../behavior/Physics.h"
+
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
     factory(registry, spriteManager),
@@ -38,6 +40,7 @@ void Application::Run()
 {
 	LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
 	factory.CreateLevel(level);
+	setPhysicsColliderData(level);
 
 	auto music = LoadMusicStream("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 	PlayMusicStream(music);

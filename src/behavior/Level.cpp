@@ -52,11 +52,11 @@ Color LevelLayout::GetShadeColorBottem() const {
 	return tileShadeColorBottem;
 }
 
-LevelTilemap &LevelLayout::GetTiles() {
+const LevelTilemap &LevelLayout::GetTiles() const {
 	return tiles;
 }
 
-LevelTilemap &LevelLayout::GetAirflow() {
+const LevelTilemap &LevelLayout::GetAirflow() const {
 	return airflow;
 }
 
