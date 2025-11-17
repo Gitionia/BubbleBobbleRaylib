@@ -36,7 +36,7 @@ Application::~Application() {
 
 void Application::Run()
 {
-	LevelLayout level = LoadLevel("res/levels/Level2.json");
+	LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
 	factory.CreateLevel(level);
 
 	auto music = LoadMusicStream("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");

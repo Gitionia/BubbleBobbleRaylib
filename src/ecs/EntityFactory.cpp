@@ -3,7 +3,7 @@
 #include "Components.h"
 
 EntityFactory::EntityFactory(entt::registry& registry, const SpriteManager& spriteManager) 
-        : registry(registry), spriteManager(spriteManager)     
+        : registry(registry), spriteManager(spriteManager)
 { 
 }
 
@@ -67,11 +67,11 @@ entt::entity EntityFactory::CreateBubble(const Position& pos, int direction) con
 
 void EntityFactory::CreateLevel(LevelLayout &level) const
 {
-	for (int x = 2; x < LevelLayout::WIDTH + 2; ++x) {
-		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
-			bool addShadowRight = !level.GetWithBoundaryCheck((x - 2) + 1, y);
-			bool addShadowBottem = !level.GetWithBoundaryCheck((x - 2), y + 1);
-			if (level.Get(x - 2, y)) {
+	for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
+		for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
+			bool addShadowRight = LevelTilemap::OutOfRange((x - 2) + 1, y) ? true : level.GetTiles().IsEmpty((x - 2) + 1, y);
+			bool addShadowBottem = LevelTilemap::OutOfRange((x - 2), y + 1) ? true : level.GetTiles().IsEmpty((x - 2), y + 1);
+			if (!level.GetTiles().IsEmpty(x - 2, y)) {
 				CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem()
 					, addShadowRight, addShadowBottem);
 			}
@@ -80,7 +80,7 @@ void EntityFactory::CreateLevel(LevelLayout &level) const
 
 	int rows[] = {0, 1, 30, 31};
 	for (int x : rows) {
-		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+		for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
 			bool addShadowRight = x == 1;
 			bool addShadowBottem = false;
 			CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem()

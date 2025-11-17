@@ -19,6 +19,6 @@ public:
     void CreateLevel(LevelLayout & level) const;
 
 private:
-    const SpriteManager& spriteManager;
 	entt::registry& registry;
+    const SpriteManager& spriteManager;
 };

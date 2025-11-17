@@ -2,8 +2,40 @@
 
 #include <sstream>
 
-void LevelLayout::SetTile(int index, bool value) {
-	data[index] = value;
+LevelTilemap::LevelTilemap()
+	: data((LevelTileType*)malloc(SIZE * sizeof(LevelTileType))) { }
+
+LevelTilemap::~LevelTilemap() {
+	delete[] data;
+}
+
+LevelTileType LevelTilemap::Get(int x, int y, bool checked) const {
+	if (checked && OutOfRange(x, y)) return LevelTileType::NONE;
+	return data[idx(x, y)];
+}
+
+bool LevelTilemap::IsEmpty(int x, int y) const {
+	return Get(x, y) == LevelTileType::NONE;
+}
+
+void LevelTilemap::setData(LevelTileType *src) const {
+	memcpy(data, src, SIZE * sizeof(LevelTileType));
+}
+
+void LevelTilemap::set(int x, int y, LevelTileType type) const {
+	data[idx(x, y)] = type;
+}
+
+void LevelTilemap::set(int index, LevelTileType type) const {
+	data[index] = type;
+}
+
+int LevelTilemap::idx(int x, int y) {
+	return x + y * WIDTH;
+}
+
+int LevelTilemap::OutOfRange(int x, int y) {
+	return idx(x, y) < 0 || idx(x, y) >= SIZE;
 }
 
 void LevelLayout::SetColors(Color right, Color bottem) {
@@ -19,18 +51,12 @@ Color LevelLayout::GetShadeColorBottem() const {
 	return tileShadeColorBottem;
 }
 
-bool LevelLayout::Get(int x, int y) const {
-	int index = x + y * WIDTH;
-	return data[index];
+LevelTilemap &LevelLayout::GetTiles() {
+	return tiles;
 }
 
-bool LevelLayout::GetWithBoundaryCheck(int x, int y) const {
-	int index = x + y * WIDTH;
-	if (index < 0 || index >= WIDTH * HEIGHT) {
-		return false;
-	}
-
-	return data[index];
+LevelTilemap &LevelLayout::GetAirflow() {
+	return airflow;
 }
 
 unsigned int parseColorChannel(const std::string & str) {
@@ -50,7 +76,7 @@ Color parseColors(const std::string& s) {
 	return {r, g, b, a};
 }
 
-LevelLayout LoadLevel(const std::string &filepath) {
+LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 	LevelLayout level{};
 
 
@@ -83,7 +109,7 @@ LevelLayout LoadLevel(const std::string &filepath) {
 
 
 	for (int i = 0; i < levelData.size(); i++) {
-		level.SetTile(i, (bool)(int)levelData.at(i));
+		level.tiles.set(i, levelData.at(i));
 	}
 
 	return level;

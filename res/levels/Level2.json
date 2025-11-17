@@ -108,7 +108,7 @@
         }, 
         {
          "firstgid":2,
-         "source":"..\/level_editor\/AirflowTilemap.tsx"
+         "source":"..\/level_editor\/AirflowTileset.tsx"
         }],
  "tilewidth":16,
  "type":"map",

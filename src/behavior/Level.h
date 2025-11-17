@@ -8,26 +8,63 @@
 
 #include "raylib.h"
 
+// These values should match with the Level layout json
+enum class LevelTileType {
+	NONE = 0,
+	TILE = 1,
+	AIRFLOW_UP = 2,
+	AIRFLOW_DOWN = 3,
+	AIRFLOW_RIGHT = 4,
+	AIRFLOW_LEFT = 5,
+};
+
+
+
+class LevelTilemap {
+public:
+	explicit LevelTilemap();
+	~LevelTilemap();
+
+	LevelTileType Get(int x, int y, bool checked = false) const;
+	bool IsEmpty(int x, int y) const;
+
+private:
+	void setData(LevelTileType* src) const;
+	void set(int x, int y, LevelTileType type) const;
+	void set(int index, LevelTileType type) const;
+	static int idx(int x, int y);
+
+public:
+	static int OutOfRange(int x, int y);
+
+private:
+	LevelTileType* data;
+public:
+	static constexpr int WIDTH = 28;
+	static constexpr int HEIGHT = 26;
+	static constexpr int SIZE = WIDTH * HEIGHT;
+
+	friend class LevelLayout;
+};
+
 class LevelLayout {
 public:
 	LevelLayout() = default;
 
-	void SetTile(int index, bool value);
 	void SetColors(Color right, Color bottem);
 	Color GetShadeColorRight() const;
 	Color GetShadeColorBottem() const;
-	bool Get(int x, int y) const;
-	bool GetWithBoundaryCheck(int x, int y) const;
 
-public:
-	static constexpr int WIDTH = 28;
-	static constexpr int HEIGHT = 26;
+	LevelTilemap& GetTiles();
+	LevelTilemap& GetAirflow();
+
+	static LevelLayout LoadLevel(const std::string& filepath);
 private:
-	bool data[WIDTH * HEIGHT];
+	LevelTilemap tiles;
+	LevelTilemap airflow;
 	Color tileShadeColorRight;
 	Color tileShadeColorBottem;
 };
 
-LevelLayout LoadLevel(const std::string& filepath);
 
 
