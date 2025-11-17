@@ -4,6 +4,7 @@
 #include "entt/entt.hpp"
 #include "../app/Config.h"
 #include "Physics.h"
+#include "../utils/Debug.h"
 
 
 void BubbleBehaviorSystem::Update()
@@ -47,8 +48,11 @@ void BubbleBehaviorSystem::Update()
             Vector2Int centerPos = col.getCenter(pos.x, pos.y);
             Vector2Int airflowVelocity = getAirflowDirection(centerPos.X, centerPos.Y);
 
+
             pos.x += airflowVelocity.X;
             pos.y += airflowVelocity.Y;
+
+            Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y + airflowVelocity.Y, 32, { 0, 122, 122, 122});
 
             if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);

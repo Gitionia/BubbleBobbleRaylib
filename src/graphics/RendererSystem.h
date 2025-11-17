@@ -20,4 +20,7 @@ private:
 
 	template<typename ColliderType>
     void debugDrawMultiColliders(Color color);
+
+private:
+	void drawDebugShapes();
 };

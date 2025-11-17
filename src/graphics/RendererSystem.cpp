@@ -17,6 +17,8 @@ void RendererSystem::Update()
 	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
 
+	drawDebugShapes();
+
 #ifdef DRAW_DEBUG
 	debugDrawColliders<Collider>(RED);
 	debugDrawMultiColliders<DragonSpikeCollider>(BLUE);
@@ -26,6 +28,18 @@ void RendererSystem::Update()
 	DrawFPS(10, 10);
 
 	EndDrawing();
+}
+
+void RendererSystem::drawDebugShapes() {
+	auto viewRenderer = registry.view<Position, DebugCircle>();
+	for (auto entity : viewRenderer) {
+		auto [pos, circle] = viewRenderer.get(entity);
+
+		DrawCircle(pos.x * SCALING_FACTOR, pos.y * SCALING_FACTOR, circle.radius, circle.color);
+	}
+
+	auto view = registry.view<DebugDrawTag>();
+	registry.destroy(view.begin(), view.end());
 }
 
 template<typename Tag>

@@ -80,9 +80,17 @@ struct RenderData {
 	}
 };
 
+struct DebugCircle {
+	float radius;
+	Color color;
+};
+
+
 struct DestroyEntity {};
 
 struct LevelTileTag {};
 struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};
+
+struct DebugDrawTag {};
