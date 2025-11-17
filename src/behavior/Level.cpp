@@ -26,7 +26,7 @@ bool LevelLayout::Get(int x, int y) const {
 
 bool LevelLayout::GetWithBoundaryCheck(int x, int y) const {
 	int index = x + y * WIDTH;
-	if (index < 0 || index > WIDTH * HEIGHT) {
+	if (index < 0 || index >= WIDTH * HEIGHT) {
 		return false;
 	}
 
