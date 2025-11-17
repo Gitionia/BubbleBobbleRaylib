@@ -47,8 +47,6 @@ Color parseColors(const std::string& s) {
 	unsigned char g = parseColorChannel(s.substr(5, 2));
 	unsigned char b = parseColorChannel(s.substr(7, 2));
 
-	printf("%hhu, %hhu, %hhu, %hhu", r, g, b, a);
-
 	return {r, g, b, a};
 }
 
