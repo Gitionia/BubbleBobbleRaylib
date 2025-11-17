@@ -22,6 +22,15 @@ bool LevelLayout::Get(int x, int y) const {
 	return data[index];
 }
 
+bool LevelLayout::GetWithBoundaryCheck(int x, int y) const {
+	int index = x + y * WIDTH;
+	if (index < 0 || index > WIDTH * HEIGHT) {
+		return false;
+	}
+
+	return data[index];
+}
+
 unsigned int parseColorChannel(const std::string & str) {
 	unsigned int x;
 	std::stringstream ss;

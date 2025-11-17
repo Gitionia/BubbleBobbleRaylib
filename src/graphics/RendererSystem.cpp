@@ -12,6 +12,7 @@ void RendererSystem::Update()
 
 	ClearBackground(BLACK);
 
+	renderAllWithTag<LevelTileShadowTag>();
 	renderAllWithTag<LevelTileTag>();
 	renderAllWithTag<BubbleTag>();
 	renderAllWithTag<DragonTag>();
@@ -37,10 +38,10 @@ void RendererSystem::renderAllWithTag() {
 		if (renderData.flipX) sourceRect.width *= -1;
 		if (renderData.flipY) sourceRect.height *= -1;
 
-		DrawTexturePro(*sprite.spriteSheet, sourceRect,
+		DrawTexturePro(sprite.spriteSheet, sourceRect,
 			ScaleRect(OffsetRect({ (float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset
 				, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y }, renderData.flipX ? sprite.xOffset : sprite.xOffset, sprite.yOffset), SCALING_FACTOR),
-			{0,0}, 0, WHITE);
+			{0,0}, 0, renderData.color);
 	}
 }
 

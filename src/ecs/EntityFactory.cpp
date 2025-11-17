@@ -7,6 +7,38 @@ EntityFactory::EntityFactory(entt::registry& registry, const SpriteManager& spri
 { 
 }
 
+entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, bool addShadowRight, bool addShadowBottem) const {
+	auto tile = registry.create();
+	{
+		registry.emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
+		RenderData data = {spriteManager.GetSpriteHandle("Level1"), {1, 1}};
+		registry.emplace<RenderData>(tile, data);
+		registry.emplace<LevelTileTag>(tile);
+		registry.emplace<Collider>(tile, UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, 0);
+	}
+
+	if (addShadowRight)
+	{
+		auto shadowRight = registry.create();
+		registry.emplace<Position>(shadowRight, (x + 1) * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
+		RenderData data = {spriteManager.GetSpriteHandle("TileShadowRight"), {2, 2}};
+		data.SetColor(colorShadowRight);
+		registry.emplace<RenderData>(shadowRight, data);
+		registry.emplace<LevelTileShadowTag>(shadowRight);
+	}
+	if (addShadowBottem)
+	{
+		auto shadowBottem = registry.create();
+		registry.emplace<Position>(shadowBottem, x * UNITS_PER_BLOCK, (y + 1) * UNITS_PER_BLOCK);
+		RenderData data = {spriteManager.GetSpriteHandle("TileShadowBottem"), {2, 2}};
+		data.SetColor(colorShadowBottem);
+		registry.emplace<RenderData>(shadowBottem, data);
+		registry.emplace<LevelTileShadowTag>(shadowBottem);
+	}
+
+	return tile;
+}
+
 entt::entity EntityFactory::CreateDragon() const
 {
     auto dragon = registry.create();
@@ -31,4 +63,28 @@ entt::entity EntityFactory::CreateBubble(const Position& pos, int direction) con
 	registry.emplace<BubbleTag>(bubble);
 
 	return bubble;
+}
+
+void EntityFactory::CreateLevel(LevelLayout &level) const
+{
+	for (int x = 2; x < LevelLayout::WIDTH + 2; ++x) {
+		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+			bool addShadowRight = !level.GetWithBoundaryCheck((x - 2) + 1, y);
+			bool addShadowBottem = !level.GetWithBoundaryCheck((x - 2), y + 1);
+			if (level.Get(x - 2, y)) {
+				CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem()
+					, addShadowRight, addShadowBottem);
+			}
+	}
+}
+
+	int rows[] = {0, 1, 30, 31};
+	for (int x : rows) {
+		for (int y = 0; y < LevelLayout::HEIGHT; ++y) {
+			bool addShadowRight = x == 1;
+			bool addShadowBottem = false;
+			CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem()
+				, addShadowRight, addShadowBottem);
+		}
+	}
 }

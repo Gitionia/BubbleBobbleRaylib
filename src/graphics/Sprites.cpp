@@ -10,15 +10,12 @@
 #include "nlohmann/json.hpp"
 
 
-SpriteManager::SpriteManager()
-	: mainSpriteSheet(), levelTilesSpriteSheet()
-{
-}
 
 SpriteManager::~SpriteManager()
 {
-	UnloadTexture(mainSpriteSheet);
-	UnloadTexture(levelTilesSpriteSheet);
+	for (auto& texture : textures) {
+		UnloadTexture(texture);
+	}
 }
 
 /**
@@ -27,14 +24,25 @@ SpriteManager::~SpriteManager()
  */
 void SpriteManager::LoadSprites()
 {
-	mainSpriteSheet = LoadTexture("res/sprites/MainSpriteSheet.png");
-	addSpritesToSpriteMap(mainSpriteSheet, "res/sprites/MainSpriteSheet.json");
+	Texture2D mainSpriteSheet = LoadTexture("res/sprites/MainSpriteSheet.png");
+	addSpriteSheetToSpriteMap(mainSpriteSheet, "res/sprites/MainSpriteSheet.json");
 
-	levelTilesSpriteSheet = LoadTexture("res/sprites/LevelTiles.png");
-	addSpritesToSpriteMap(levelTilesSpriteSheet, "res/sprites/LevelTiles.json");
+	Texture2D levelTilesSpriteSheet = LoadTexture("res/sprites/LevelTiles.png");
+	addSpriteSheetToSpriteMap(levelTilesSpriteSheet, "res/sprites/LevelTiles.json");
+
+	Texture2D levelTileShadowRight = LoadTexture("res/sprites/LevelTileShadowRight.png");
+	addSingleSpriteToSpriteMap(levelTileShadowRight, "TileShadowRight");
+
+	Texture2D levelTileShadowBottem = LoadTexture("res/sprites/LevelTileShadowBottem.png");
+	addSingleSpriteToSpriteMap(levelTileShadowBottem, "TileShadowBottem");
+
+	textures.push_back(mainSpriteSheet);
+	textures.push_back(levelTilesSpriteSheet);
+	textures.push_back(levelTileShadowRight);
+	textures.push_back(levelTileShadowBottem);
 }
 
-void SpriteManager::addSpritesToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
+void SpriteManager::addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
 	std::ifstream f(sliceInformationFilepath);
 	nlohmann::json data = nlohmann::json::parse(f);
 
@@ -53,7 +61,7 @@ void SpriteManager::addSpritesToSpriteMap(const Texture2D& spriteSheet, const st
 		}
 
 		Rectangle rect{ bounds.find("x").value(), bounds.find("y").value(), bounds.find("w").value(), bounds.find("h").value() };
-		sprites.emplace_back(&spriteSheet, rect, xOffset, yOffset);
+		sprites.emplace_back(spriteSheet, rect, xOffset, yOffset);
 		spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 	}
 }
@@ -71,4 +79,10 @@ SpriteHandle SpriteManager::GetSpriteHandleChecked(const std::string &name) cons
 
 const Sprite & SpriteManager::GetSprite(SpriteHandle handle) const {
 	return sprites.at(handle);
+}
+
+void SpriteManager::addSingleSpriteToSpriteMap(const Texture2D &sprite, const std::string& name) {
+	Rectangle rect = { 0, 0, (float)sprite.width, (float)sprite.height };
+	sprites.emplace_back(sprite, rect, 0, 0);
+	spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 }

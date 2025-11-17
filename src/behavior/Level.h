@@ -17,6 +17,7 @@ public:
 	Color GetShadeColorRight() const;
 	Color GetShadeColorBottem() const;
 	bool Get(int x, int y) const;
+	bool GetWithBoundaryCheck(int x, int y) const;
 
 public:
 	static constexpr int WIDTH = 28;

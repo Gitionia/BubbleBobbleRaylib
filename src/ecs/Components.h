@@ -53,6 +53,7 @@ struct BubbleComponent {
 struct RenderData {
 	SpriteHandle spriteHandle;
 	Vector2 scale;
+	Color color = WHITE;
     int xoffset = 0;
     int yoffset = 0;
 	bool flipX = false;
@@ -72,10 +73,16 @@ struct RenderData {
 		else if (dir < 0) flipX = false;
 		return *this;
 	}
+
+	RenderData& SetColor(Color color) {
+		this->color = color;
+		return *this;
+	}
 };
 
 struct DestroyEntity {};
 
 struct LevelTileTag {};
+struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};

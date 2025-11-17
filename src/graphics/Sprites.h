@@ -10,10 +10,10 @@
 #include "Sprites.h"
 
 struct Sprite {
-	const Texture2D* spriteSheet;
+	const Texture2D spriteSheet;
 	const Rectangle coords;
 	const int xOffset, yOffset;
-	Sprite(const Texture2D* spriteSheet, const Rectangle coords, int xOffset = 0, int yOffset = 0)
+	Sprite(const Texture2D spriteSheet, const Rectangle coords, int xOffset = 0, int yOffset = 0)
 		: spriteSheet(spriteSheet), coords(coords), xOffset(xOffset), yOffset(yOffset) {}
 };
 
@@ -21,7 +21,7 @@ struct Sprite {
 typedef uint32_t SpriteHandle;
 class SpriteManager {
 public:
-	SpriteManager();
+	SpriteManager() = default;
 	~SpriteManager();
 
 	void LoadSprites();
@@ -31,10 +31,10 @@ public:
 	const Sprite& GetSprite(SpriteHandle handle) const;
 
 private:
-	void addSpritesToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
+	void addSingleSpriteToSpriteMap(const Texture2D& sprite, const std::string& name);
+	void addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
 private:
-	Texture2D mainSpriteSheet;
-	Texture2D levelTilesSpriteSheet;
+	std::vector<Texture2D> textures;
 	std::vector<Sprite> sprites;
 	std::unordered_map<std::string, SpriteHandle> spriteMap;
 };
