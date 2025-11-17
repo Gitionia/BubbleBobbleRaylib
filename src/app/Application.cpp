@@ -61,6 +61,7 @@ bool slowMotion = false;
 
 		UpdateMusicStream(music);
 
+		Debug::PrintNumberOfEntities();
 		// float playbackTime = GetMusicTimePlayed(music);
 		// if (playbackTime > 46.1f) {
 		// 	StopMusicStream(music);

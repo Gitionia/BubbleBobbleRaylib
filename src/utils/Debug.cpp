@@ -14,6 +14,16 @@ void Debug::DrawPoint(int x, int y, float radius, Color color) {
 	registry->emplace<DebugCircle>(point, radius, color);
 }
 
+void Debug::PrintNumberOfEntities() {
+	int count = 0;
+	for(auto entity: Get().registry->view<entt::entity>())
+	{
+		count++;
+	}
+
+	printf("Number of entities: %d\n", count);
+}
+
 void Debug::setRegistry(entt::registry &_registry) {
 	registry = &_registry;
 }

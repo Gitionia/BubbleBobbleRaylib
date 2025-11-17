@@ -87,10 +87,10 @@ Vector2Int getAirflowDirection(int x, int y) {
 	Vector2Int tileCoords = posToTileCoords(x, y);
 
 	Vector2Int dir = Vector2Int::Zero();
-	dir += toDirection(airflow->Get(tileCoords.X, tileCoords.Y));
-	dir += toDirection(airflow->Get(tileCoords.X + 1, tileCoords.Y));
-	dir += toDirection(airflow->Get(tileCoords.X, tileCoords.Y + 1));
-	dir += toDirection(airflow->Get(tileCoords.X + 1, tileCoords.Y + 1));
+	dir += toDirection(airflow->Get(tileCoords.X, tileCoords.Y, true));
+	dir += toDirection(airflow->Get(tileCoords.X + 1, tileCoords.Y, true));
+	dir += toDirection(airflow->Get(tileCoords.X, tileCoords.Y + 1, true));
+	dir += toDirection(airflow->Get(tileCoords.X + 1, tileCoords.Y + 1, true));
 	dir.IntegerNormalize();
 	return dir;
 }

@@ -52,7 +52,7 @@ void BubbleBehaviorSystem::Update()
             pos.x += airflowVelocity.X;
             pos.y += airflowVelocity.Y;
 
-            Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y + airflowVelocity.Y, 32, { 0, 122, 122, 122});
+            Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y + airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
             if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
