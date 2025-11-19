@@ -15,15 +15,8 @@ struct Animation {
 	int FrameCountPerSprite;
 };
 
-class Animations {
-public:
-	static Animations& Get();
-	void LoadAnimations();
-	Animation& GetAnimation(const std::string& name);
-
-private:
-	std::unordered_map<std::string, Animation> animations;
-};
+void LoadAnimations();
+Animation& GetAnimation(const std::string& name);
 
 class Animator {
 public:

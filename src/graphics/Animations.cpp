@@ -3,13 +3,10 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 
+static std::unordered_map<std::string, Animation> animations;
 
-Animations & Animations::Get() {
-	static Animations animations;
-	return animations;
-}
 
-void Animations::LoadAnimations() {
+void LoadAnimations() {
 	const char* animationsFilePath = "res/sprites/Animations.json";
 	std::ifstream f(animationsFilePath);
 	nlohmann::json data = nlohmann::json::parse(f);
@@ -37,7 +34,7 @@ void Animations::LoadAnimations() {
 	}
 }
 
-Animation& Animations::GetAnimation(const std::string &name) {
+Animation& GetAnimation(const std::string &name) {
 	return animations.at(name);
 }
 

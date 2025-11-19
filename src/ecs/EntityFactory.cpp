@@ -59,7 +59,7 @@ entt::entity EntityFactory::CreateBubble(const Position& pos, int direction) con
 	registry.emplace<Position>(bubble, pos);
 	registry.emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}).SetDirection(direction));
 	registry.emplace<Collider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 2 * UNITS_PER_BLOCK, 0, 0);
-	registry.emplace<BubbleComponent>(bubble, direction, Animator(&Animations::Get().GetAnimation("Bubble-Green-Idle")));
+	registry.emplace<BubbleComponent>(bubble, direction, Animator(&GetAnimation("Bubble-Green-Idle")));
 	registry.emplace<BubbleTag>(bubble);
 
 	return bubble;

@@ -24,15 +24,18 @@ Application::Application(const ApplicationParameters& parameters)
     factory(registry),
     systemRunner(registry, factory)
 {
+	Debug::Get().setRegistry(registry);
+
+	window.Init();
+
 	if (!InitAudio()) {
 		std::printf("Error: Audio Device could not be initialized!");
 	}
 
-	Debug::Get().setRegistry(registry);
-	window.Init();
 	LoadSprites();
+	LoadAnimations();
+
 	systemRunner.Init();
-	Animations::Get().LoadAnimations();
 }
 
 Application::~Application() {
