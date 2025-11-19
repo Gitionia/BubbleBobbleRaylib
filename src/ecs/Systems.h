@@ -8,13 +8,12 @@
 #include "../behavior/BubbleBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../graphics/Sprites.h"
-#include "../audio/AudioManager.h"
 
 
 class SystemRunner
 {
 public:
-	explicit SystemRunner(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio);
+	explicit SystemRunner(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
 	~SystemRunner();
 	void Init();
 	void UpdateSystems() const;
@@ -22,7 +21,7 @@ public:
 
 private:
 	template<typename T>
-	void registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager, const AudioManager& audio);
+	void registerSystem(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
 
 private:
 	entt::registry& registry;

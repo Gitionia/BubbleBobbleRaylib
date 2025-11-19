@@ -1,13 +1,13 @@
-#include "AudioManager.h"
+#include "AudioPlayer.h"
 
 #include "raylib.h"
 
-bool AudioManager::Init() {
+bool AudioPlayer::Init() {
 	InitAudioDevice();
 
 	return IsAudioDeviceReady();
 }
 
-void AudioManager::Close() {
+void AudioPlayer::Close() {
 	CloseAudioDevice();
 }

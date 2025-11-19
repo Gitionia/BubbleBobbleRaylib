@@ -22,7 +22,7 @@
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
     factory(registry, spriteManager),
-    systemRunner(registry, factory, spriteManager, audio)
+    systemRunner(registry, factory, spriteManager)
 {
 	if (!audio.Init()) {
 		std::printf("Error: Audio Device could not be initialized!");
