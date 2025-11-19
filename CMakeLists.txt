@@ -35,8 +35,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/ecs/Systems.h
         src/ecs/Systems.cpp
         src/app/Config.h
-        src/audio/AudioPlayer.h
-        src/audio/AudioPlayer.cpp
+        src/audio/Audio.h
+        src/audio/Audio.cpp
         src/graphics/Animations.cpp
         src/graphics/Animations.h
         src/utils/Debug.h

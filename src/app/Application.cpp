@@ -24,7 +24,7 @@ Application::Application(const ApplicationParameters& parameters)
     factory(registry, spriteManager),
     systemRunner(registry, factory, spriteManager)
 {
-	if (!AudioPlayer::Get().Init()) {
+	if (!InitAudio()) {
 		std::printf("Error: Audio Device could not be initialized!");
 	}
 
@@ -36,7 +36,8 @@ Application::Application(const ApplicationParameters& parameters)
 }
 
 Application::~Application() {
-	AudioPlayer::Get().Close();
+	UnloadAllAudio();
+	CloseAudioDevice();
 }
 
 void Application::Run()
@@ -45,7 +46,7 @@ void Application::Run()
 	factory.CreateLevel(level);
 	setPhysicsColliderData(level);
 
-	Music& music = AudioPlayer::Get().PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+	Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 
 
 	auto dragon = factory.CreateDragon();
@@ -58,7 +59,7 @@ bool slowMotion = false;
 
 	while (window.IsOpen()) {
 		systemRunner.UpdateSystems();
-		AudioPlayer::Get().Update();
+		UpdateAudio();
 
 #ifdef _DEBUG
         
