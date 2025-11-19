@@ -7,7 +7,7 @@ struct Position;
 struct DebugCircle;
 
 void Debug::DrawPoint(int x, int y, float radius, Color color) {
-	auto& registry = Get().registry;
+	auto& registry = get().registry;
 	auto point = registry->create();
 	registry->emplace<DebugDrawTag>(point);
 	registry->emplace<Position>(point, x, y);
@@ -16,7 +16,7 @@ void Debug::DrawPoint(int x, int y, float radius, Color color) {
 
 void Debug::PrintNumberOfEntities() {
 	int count = 0;
-	for(auto entity: Get().registry->view<entt::entity>())
+	for(auto entity: get().registry->view<entt::entity>())
 	{
 		count++;
 	}
@@ -28,7 +28,7 @@ void Debug::setRegistry(entt::registry &_registry) {
 	registry = &_registry;
 }
 
-Debug & Debug::Get() {
+Debug & Debug::get() {
 	static Debug debug;
 	return debug;
 }

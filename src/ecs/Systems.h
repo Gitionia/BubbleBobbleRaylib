@@ -13,7 +13,7 @@
 class SystemRunner
 {
 public:
-	explicit SystemRunner(entt::registry& registry, const EntityFactory& factory);
+	explicit SystemRunner(entt::registry& registry);
 	~SystemRunner();
 	void Init();
 	void UpdateSystems() const;
@@ -21,7 +21,7 @@ public:
 
 private:
 	template<typename T>
-	void registerSystem(entt::registry& registry, const EntityFactory& factory);
+	void registerSystem(entt::registry& registry);
 
 private:
 	entt::registry& registry;

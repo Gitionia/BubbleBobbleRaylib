@@ -21,16 +21,17 @@
 
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
-    factory(registry),
-    systemRunner(registry, factory)
+    systemRunner(registry)
 {
-	Debug::Get().setRegistry(registry);
+	Debug::get().setRegistry(registry);
 
 	window.Init();
 
 	if (!InitAudio()) {
 		std::printf("Error: Audio Device could not be initialized!");
 	}
+
+	EntityFactory::get().setRegistry(registry);
 
 	LoadSprites();
 	LoadAnimations();
@@ -48,13 +49,13 @@ Application::~Application() {
 void Application::Run()
 {
 	LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
-	factory.CreateLevel(level);
+	EntityFactory::CreateLevel(level);
 	setPhysicsColliderData(level);
 
 	Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 
 
-	auto dragon = factory.CreateDragon();
+	auto dragon = EntityFactory::CreateDragon();
 
 
 #ifdef _DEBUG

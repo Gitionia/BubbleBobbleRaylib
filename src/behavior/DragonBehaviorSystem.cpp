@@ -85,7 +85,7 @@ void DragonBehaviorSystem::Update() {
 		// }
 
         if (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT)) {
-            factory.CreateBubble(pos, renderData.flipX ? 1 : -1);
+        	EntityFactory::CreateBubble(pos, renderData.flipX ? 1 : -1);
         }
 
 		// Above and below the level the dragon should ignore collisions.

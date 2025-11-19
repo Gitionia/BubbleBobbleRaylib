@@ -22,6 +22,5 @@ public:
 private:
 	Window window;
     entt::registry registry{};
-    EntityFactory factory;
 	SystemRunner systemRunner;
 };

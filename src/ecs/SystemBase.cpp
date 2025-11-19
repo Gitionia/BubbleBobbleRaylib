@@ -3,8 +3,8 @@
 #include "Components.h"
 
 
-SystemBase::SystemBase(entt::registry &registry, const EntityFactory& factory)
-	: registry(registry), factory(factory)
+SystemBase::SystemBase(entt::registry &registry)
+	: registry(registry)
 {
 }
 

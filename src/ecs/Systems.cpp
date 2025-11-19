@@ -4,12 +4,12 @@
 #include "EntityFactory.h"
 
 
-SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factory)
+SystemRunner::SystemRunner(entt::registry &registry)
 	: registry(registry)
 {
-	registerSystem<RendererSystem>(registry, factory);
-	registerSystem<DragonBehaviorSystem>(registry, factory);
-	registerSystem<BubbleBehaviorSystem>(registry, factory);
+	registerSystem<RendererSystem>(registry);
+	registerSystem<DragonBehaviorSystem>(registry);
+	registerSystem<BubbleBehaviorSystem>(registry);
 }
 
 SystemRunner::~SystemRunner() {
@@ -34,8 +34,8 @@ void SystemRunner::UpdateSystems() const {
 }
 
 template<typename T>
-void SystemRunner::registerSystem(entt::registry& registry, const EntityFactory& factory) {
-	T* system = new T(registry, factory);
+void SystemRunner::registerSystem(entt::registry& registry) {
+	T* system = new T(registry);
 	systems.push_back(system);
 }
 

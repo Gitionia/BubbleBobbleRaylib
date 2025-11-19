@@ -9,15 +9,15 @@
 
 class EntityFactory {
 public:
-    EntityFactory(entt::registry& registry);
-
-public:
-    entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true) const;
-    entt::entity CreateDragon() const;
-    entt::entity CreateBubble(const Position &pos, int direction) const;
-
-    void CreateLevel(LevelLayout & level) const;
+	static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true);
+	static entt::entity CreateDragon();
+	static entt::entity CreateBubble(const Position &pos, int direction);
+	static void CreateLevel(const LevelLayout & level);
 
 private:
-	entt::registry& registry;
+    static EntityFactory& get();
+    void setRegistry(entt::registry& registry);
+	entt::registry* registry;
+
+	friend class Application;
 };

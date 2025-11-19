@@ -11,9 +11,7 @@ public:
 
 private:
 	void setRegistry(entt::registry& _registry);
-
-
-	static Debug& Get();
+	static Debug& get();
 	entt::registry* registry;
 
 	friend class Application;
