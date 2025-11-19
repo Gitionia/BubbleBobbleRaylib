@@ -24,7 +24,7 @@ Application::Application(const ApplicationParameters& parameters)
     factory(registry, spriteManager),
     systemRunner(registry, factory, spriteManager)
 {
-	if (!audio.Init()) {
+	if (!AudioPlayer::Get().Init()) {
 		std::printf("Error: Audio Device could not be initialized!");
 	}
 
@@ -36,7 +36,7 @@ Application::Application(const ApplicationParameters& parameters)
 }
 
 Application::~Application() {
-	audio.Close();
+	AudioPlayer::Get().Close();
 }
 
 void Application::Run()
@@ -45,8 +45,8 @@ void Application::Run()
 	factory.CreateLevel(level);
 	setPhysicsColliderData(level);
 
-	auto music = LoadMusicStream("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
-	PlayMusicStream(music);
+	Music& music = AudioPlayer::Get().PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+
 
 	auto dragon = factory.CreateDragon();
 
@@ -58,15 +58,7 @@ bool slowMotion = false;
 
 	while (window.IsOpen()) {
 		systemRunner.UpdateSystems();
-
-		UpdateMusicStream(music);
-
-		Debug::PrintNumberOfEntities();
-		// float playbackTime = GetMusicTimePlayed(music);
-		// if (playbackTime > 46.1f) {
-		// 	StopMusicStream(music);
-		// 	PlayMusicStream(music);
-		// }
+		AudioPlayer::Get().Update();
 
 #ifdef _DEBUG
         

@@ -25,5 +25,4 @@ private:
     entt::registry registry{};
     EntityFactory factory;
 	SystemRunner systemRunner;
-	AudioPlayer audio;
 };
