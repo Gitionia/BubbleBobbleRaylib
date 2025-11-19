@@ -2,7 +2,6 @@
 
 #include "Components.h"
 #include "EntityFactory.h"
-#include "../audio/AudioSystem.h"
 
 
 SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factory, const SpriteManager& spriteManager)
@@ -11,7 +10,6 @@ SystemRunner::SystemRunner(entt::registry &registry, const EntityFactory& factor
 	registerSystem<RendererSystem>(registry, factory, spriteManager);
 	registerSystem<DragonBehaviorSystem>(registry, factory, spriteManager);
 	registerSystem<BubbleBehaviorSystem>(registry, factory, spriteManager);
-	registerSystem<AudioSystem>(registry, factory, spriteManager);
 }
 
 SystemRunner::~SystemRunner() {
