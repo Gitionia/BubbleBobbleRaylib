@@ -59,6 +59,8 @@ target_link_libraries(BubbleBobbleRaylib PRIVATE raylib)
 add_subdirectory("deps/json-3.12")
 target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 
+add_subdirectory("deps/spdlog-1.16")
+target_link_libraries(BubbleBobbleRaylib PRIVATE spdlog::spdlog)
 
 
 add_custom_target(Copy_Resources

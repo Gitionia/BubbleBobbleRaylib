@@ -19,6 +19,8 @@
 
 #include "../utils/Debug.h"
 
+#include "spdlog/spdlog.h"
+
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
     systemRunner(registry)
@@ -37,6 +39,8 @@ Application::Application(const ApplicationParameters& parameters)
 	LoadAnimations();
 
 	systemRunner.Init();
+
+	spdlog::info("Hello from spdlog!");
 }
 
 Application::~Application() {
