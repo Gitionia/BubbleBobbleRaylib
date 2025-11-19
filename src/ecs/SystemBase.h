@@ -5,15 +5,15 @@
 #include "EntityFactory.h"
 
 #define SYSTEM_DEF(Type) public:\
-	explicit Type(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager) :\
-	SystemBase(registry, factory, spriteManager) { }\
+	explicit Type(entt::registry& registry, const EntityFactory& factory) :\
+	SystemBase(registry, factory) { }\
 	private:
 
 
 class SpriteManager;
 class SystemBase {
 public:
-	SystemBase(entt::registry& registry, const EntityFactory& factory, const SpriteManager& spriteManager);
+	SystemBase(entt::registry& registry, const EntityFactory& factory);
 	virtual void Init() {}
 	virtual void Update() = 0;
 
@@ -23,5 +23,4 @@ protected:
 protected:
 	entt::registry& registry;
 	const EntityFactory& factory;
-	const SpriteManager& spriteManager;
 };

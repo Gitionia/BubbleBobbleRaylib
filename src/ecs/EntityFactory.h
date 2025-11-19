@@ -9,7 +9,7 @@
 
 class EntityFactory {
 public:
-    EntityFactory(entt::registry& registry, const SpriteManager& spriteManager);
+    EntityFactory(entt::registry& registry);
 
 public:
     entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true) const;
@@ -20,5 +20,4 @@ public:
 
 private:
 	entt::registry& registry;
-    const SpriteManager& spriteManager;
 };

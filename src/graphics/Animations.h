@@ -17,7 +17,7 @@ struct Animation {
 class Animations {
 public:
 	static Animations& Get();
-	void LoadAnimations(const SpriteManager& spriteManager);
+	void LoadAnimations();
 	Animation& GetAnimation(const std::string& name);
 
 private:

@@ -9,7 +9,7 @@ Animations & Animations::Get() {
 	return animations;
 }
 
-void Animations::LoadAnimations(const SpriteManager& spriteManager) {
+void Animations::LoadAnimations() {
 	const char* animationsFilePath = "res/sprites/Animations.json";
 	std::ifstream f(animationsFilePath);
 	nlohmann::json data = nlohmann::json::parse(f);
@@ -24,7 +24,7 @@ void Animations::LoadAnimations(const SpriteManager& spriteManager) {
 		std::vector<SpriteHandle> animationFrames;
 		while (continueAdding) {
 			std::string animName = animationBaseName + "-" + std::to_string(animationFrames.size() + 1);
-			SpriteHandle sprite = spriteManager.GetSpriteHandleChecked(animName);
+			SpriteHandle sprite = GetSpriteHandleChecked(animName);
 
 			if (sprite == -1) {
 				continueAdding = false;

@@ -21,7 +21,6 @@ public:
 
 private:
 	Window window;
-	SpriteManager spriteManager{};
     entt::registry registry{};
     EntityFactory factory;
 	SystemRunner systemRunner;

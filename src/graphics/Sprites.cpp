@@ -9,20 +9,19 @@
 
 #include "nlohmann/json.hpp"
 
+static std::vector<Texture2D> textures;
+static std::vector<Sprite> sprites;
+static std::unordered_map<std::string, SpriteHandle> spriteMap;
 
 
-SpriteManager::~SpriteManager()
-{
-	for (auto& texture : textures) {
-		UnloadTexture(texture);
-	}
-}
+void addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
+void addSingleSpriteToSpriteMap(const Texture2D& sprite, const std::string& name);
 
 /**
  * Needs to be called before GetSprite(...) can be used.
  * Loads sprites from sprite sheets into spritemap.
  */
-void SpriteManager::LoadSprites()
+void LoadSprites()
 {
 	Texture2D mainSpriteSheet = LoadTexture("res/sprites/MainSpriteSheet.png");
 	addSpriteSheetToSpriteMap(mainSpriteSheet, "res/sprites/MainSpriteSheet.json");
@@ -42,7 +41,34 @@ void SpriteManager::LoadSprites()
 	textures.push_back(levelTileShadowBottem);
 }
 
-void SpriteManager::addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
+void UnloadSprites() {
+	for (auto& texture : textures) {
+		UnloadTexture(texture);
+	}
+}
+
+SpriteHandle GetSpriteHandle(const std::string &name) {
+	return spriteMap.at(name);
+}
+
+SpriteHandle GetSpriteHandleChecked(const std::string &name) {
+	if (spriteMap.find(name) == std::end(spriteMap)) {
+		return -1;
+	}
+	return GetSpriteHandle(name);
+}
+
+const Sprite& GetSprite(SpriteHandle handle) {
+	return sprites.at(handle);
+}
+
+void addSingleSpriteToSpriteMap(const Texture2D &sprite, const std::string& name) {
+	Rectangle rect = { 0, 0, (float)sprite.width, (float)sprite.height };
+	sprites.emplace_back(sprite, rect, 0, 0);
+	spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
+}
+
+void addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
 	std::ifstream f(sliceInformationFilepath);
 	nlohmann::json data = nlohmann::json::parse(f);
 
@@ -64,25 +90,4 @@ void SpriteManager::addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, cons
 		sprites.emplace_back(spriteSheet, rect, xOffset, yOffset);
 		spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 	}
-}
-
-SpriteHandle SpriteManager::GetSpriteHandle(const std::string &name) const {
-	return spriteMap.at(name);
-}
-
-SpriteHandle SpriteManager::GetSpriteHandleChecked(const std::string &name) const {
-	if (spriteMap.find(name) == std::end(spriteMap)) {
-		return -1;
-	}
-	return GetSpriteHandle(name);
-}
-
-const Sprite & SpriteManager::GetSprite(SpriteHandle handle) const {
-	return sprites.at(handle);
-}
-
-void SpriteManager::addSingleSpriteToSpriteMap(const Texture2D &sprite, const std::string& name) {
-	Rectangle rect = { 0, 0, (float)sprite.width, (float)sprite.height };
-	sprites.emplace_back(sprite, rect, 0, 0);
-	spriteMap.insert({name, (SpriteHandle)(sprites.size() - 1)});
 }

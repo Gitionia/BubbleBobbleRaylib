@@ -1,11 +1,8 @@
 #pragma once
 
-#include <array>
 #include <cstdint>
 #include <raylib.h>
 #include <string>
-#include <unordered_map>
-#include <vector>
 
 #include "Sprites.h"
 
@@ -19,22 +16,11 @@ struct Sprite {
 
 
 typedef uint32_t SpriteHandle;
-class SpriteManager {
-public:
-	SpriteManager() = default;
-	~SpriteManager();
 
-	void LoadSprites();
+void LoadSprites();
+void UnloadSprites();
 
-	SpriteHandle GetSpriteHandle(const std::string &name) const;
-	SpriteHandle GetSpriteHandleChecked(const std::string& name) const;
-	const Sprite& GetSprite(SpriteHandle handle) const;
+SpriteHandle GetSpriteHandle(const std::string &name);
+SpriteHandle GetSpriteHandleChecked(const std::string& name);
+const Sprite& GetSprite(SpriteHandle handle);
 
-private:
-	void addSingleSpriteToSpriteMap(const Texture2D& sprite, const std::string& name);
-	void addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath);
-private:
-	std::vector<Texture2D> textures;
-	std::vector<Sprite> sprites;
-	std::unordered_map<std::string, SpriteHandle> spriteMap;
-};

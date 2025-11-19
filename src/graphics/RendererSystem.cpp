@@ -47,7 +47,7 @@ void RendererSystem::renderAllWithTag() {
 	auto viewRenderer = registry.view<Position, RenderData, Tag>();
 	for (auto entity : viewRenderer) {
 		auto [pos, renderData] = viewRenderer.get(entity);
-		const Sprite& sprite = spriteManager.GetSprite(renderData.spriteHandle);
+		const Sprite& sprite = GetSprite(renderData.spriteHandle);
 		Rectangle sourceRect = sprite.coords;
 		if (renderData.flipX) sourceRect.width *= -1;
 		if (renderData.flipY) sourceRect.height *= -1;
