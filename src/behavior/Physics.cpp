@@ -65,7 +65,7 @@ template bool collidesWithMultiCollider<DragonSpikeCollider>(entt::registry& reg
 
 
 Vector2Int posToTileCoords(int x, int y) {
-	return { x / UNITS_PER_BLOCK, y / UNITS_PER_BLOCK };
+	return { x / UNITS_PER_BLOCK - 2, y / UNITS_PER_BLOCK };
 }
 
 Vector2Int toDirection(LevelTileType type) {
