@@ -46,9 +46,6 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
-target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
-target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
-
 
 
 add_subdirectory("deps/entt-master")
@@ -70,10 +67,3 @@ add_custom_target(Copy_Resources
         $<TARGET_FILE_DIR:BubbleBobbleRaylib>/res
 )
 add_dependencies(BubbleBobbleRaylib Copy_Resources)
-
-file(COPY res/sprites/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
-file(COPY res/sprites/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
-file(COPY res/levels/Level1.json DESTINATION ${CMAKE_BINARY_DIR}/res/levels)
-
-
-

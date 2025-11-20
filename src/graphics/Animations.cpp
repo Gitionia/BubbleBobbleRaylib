@@ -3,12 +3,19 @@
 #include <fstream>
 #include "nlohmann/json.hpp"
 
+#include "../utils/Log.h"
+
 static std::unordered_map<std::string, Animation> animations;
 
 
 void LoadAnimations() {
 	const char* animationsFilePath = "res/sprites/Animations.json";
 	std::ifstream f(animationsFilePath);
+	if (f.fail()) {
+		PRINT_ERROR("Animation information at {} is missing!", animationsFilePath);
+		return;
+	}
+
 	nlohmann::json data = nlohmann::json::parse(f);
 
 	auto animationJsonArray = data.find("animations").value();

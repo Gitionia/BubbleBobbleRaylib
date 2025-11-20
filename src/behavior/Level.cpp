@@ -83,6 +83,11 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 	LevelLayout level{};
 
 	std::ifstream f(filepath);
+	if (f.fail()) {
+		PRINT_ERROR("Level data at {} is missing!", filepath.c_str());
+		return level;
+	}
+
 	nlohmann::json data = nlohmann::json::parse(f);
 	auto layers = data.find("layers").value();
 

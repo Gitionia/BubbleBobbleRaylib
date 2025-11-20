@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 
+#include "../utils/Log.h"
 #include "nlohmann/json.hpp"
 
 static std::vector<Texture2D> textures;
@@ -70,6 +71,10 @@ void addSingleSpriteToSpriteMap(const Texture2D &sprite, const std::string& name
 
 void addSpriteSheetToSpriteMap(const Texture2D& spriteSheet, const std::string& sliceInformationFilepath) {
 	std::ifstream f(sliceInformationFilepath);
+	if (f.fail()) {
+		PRINT_ERROR("Spritesheet information at {} is missing!", sliceInformationFilepath);
+		return;
+	}
 	nlohmann::json data = nlohmann::json::parse(f);
 
 	auto slices = data.find("meta").value().find("slices").value();
