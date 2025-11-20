@@ -31,11 +31,11 @@ Application::Application(const ApplicationParameters& parameters)
 
 	window.Init();
 
-	// if (!InitAudio()) {
-	// 	PRINT_ERROR("Audio Device could not be initialized!");
-	// } else {
-	// 	PRINT_INFO("Audio Device inilialized successfully");
-	// }
+	if (!InitAudio()) {
+		PRINT_ERROR("Audio Device could not be initialized!");
+	} else {
+		PRINT_INFO("Audio Device inilialized successfully");
+	}
 
 	EntityFactory::get().setRegistry(registry);
 
@@ -58,7 +58,7 @@ void Application::Run()
 	EntityFactory::CreateLevel(level);
 	setPhysicsColliderData(level);
 
-	// Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+	Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 
 
 	auto dragon = EntityFactory::CreateDragon();
@@ -74,7 +74,7 @@ bool slowMotion = false;
 		// std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
 		systemRunner.UpdateSystems();
-		// UpdateAudio();
+		UpdateAudio();
 
 		// std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 		// PRINT_INFO("Frame Time: {}µs", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
