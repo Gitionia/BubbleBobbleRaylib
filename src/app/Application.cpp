@@ -33,8 +33,6 @@ Application::Application(const ApplicationParameters& parameters)
 
 	if (!InitAudio()) {
 		PRINT_ERROR("Audio Device could not be initialized!");
-	} else {
-		PRINT_INFO("Audio Device inilialized successfully");
 	}
 
 	EntityFactory::get().setRegistry(registry);
