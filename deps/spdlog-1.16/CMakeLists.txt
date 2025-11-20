@@ -154,7 +154,7 @@ if(SPDLOG_BUILD_PIC)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
 
-find_package(Threads REQUIRED)
+#find_package(Threads REQUIRED)
 message(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
 # ---------------------------------------------------------------------------------------
 # Static/Shared library
@@ -193,7 +193,7 @@ endif()
 target_compile_definitions(spdlog PUBLIC SPDLOG_COMPILED_LIB)
 target_include_directories(spdlog ${SPDLOG_INCLUDES_LEVEL} PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
                                                                   "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>")
-target_link_libraries(spdlog PUBLIC Threads::Threads)
+#target_link_libraries(spdlog PUBLIC Threads::Threads)
 spdlog_enable_warnings(spdlog)
 
 set_target_properties(spdlog PROPERTIES VERSION ${SPDLOG_VERSION} SOVERSION

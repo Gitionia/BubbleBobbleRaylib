@@ -6,6 +6,13 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
 set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
 
+if (EMSCRIPTEN)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s ASYNCIFY -s GL_ENABLE_GET_PROC_ADDRESS=1 --preload-file res -s FORCE_FILESYSTEM=1 -s ASSERTIONS=1")
+    set(CMAKE_EXECUTABLE_SUFFIX ".html") # This line is used to set your executable to build with the emscripten html template so that you can directly open it.
+endif ()
+
+#-s ALLOW_MEMORY_GROWTH=1      // Allow automatic heap memory resizing -> NOT RECOMMENDED!
+
 include(FetchContent)
 
 add_subdirectory(src)
@@ -67,3 +74,8 @@ add_custom_target(Copy_Resources
         $<TARGET_FILE_DIR:BubbleBobbleRaylib>/res
 )
 add_dependencies(BubbleBobbleRaylib Copy_Resources)
+
+
+file(COPY res/sprites/MainSpriteSheet.json DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
+file(COPY res/sprites/MainSpriteSheet.png DESTINATION ${CMAKE_BINARY_DIR}/res/sprites)
+file(COPY res/levels/Level1.json DESTINATION ${CMAKE_BINARY_DIR}/res/levels)

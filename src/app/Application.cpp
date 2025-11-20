@@ -22,6 +22,7 @@
 
 #include "spdlog/spdlog.h"
 
+
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
     systemRunner(registry)
@@ -30,9 +31,9 @@ Application::Application(const ApplicationParameters& parameters)
 
 	window.Init();
 
-	if (!InitAudio()) {
-		PRINT_ERROR("Audio Device could not be initialized!");
-	}
+	// if (!InitAudio()) {
+		// PRINT_ERROR("Audio Device could not be initialized!");
+	// }
 
 	EntityFactory::get().setRegistry(registry);
 
@@ -55,7 +56,7 @@ void Application::Run()
 	EntityFactory::CreateLevel(level);
 	setPhysicsColliderData(level);
 
-	Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+	// Music& music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 
 
 	auto dragon = EntityFactory::CreateDragon();
@@ -68,7 +69,7 @@ bool slowMotion = false;
 
 	while (window.IsOpen()) {
 		systemRunner.UpdateSystems();
-		UpdateAudio();
+		// UpdateAudio();
 
 #ifdef _DEBUG
         
