@@ -18,6 +18,7 @@
 #include "../behavior/Physics.h"
 
 #include "../utils/Debug.h"
+#include "../utils/Log.h"
 
 #include "spdlog/spdlog.h"
 
@@ -30,7 +31,7 @@ Application::Application(const ApplicationParameters& parameters)
 	window.Init();
 
 	if (!InitAudio()) {
-		std::printf("Error: Audio Device could not be initialized!");
+		PRINT_ERROR("Audio Device could not be initialized!");
 	}
 
 	EntityFactory::get().setRegistry(registry);
@@ -39,8 +40,6 @@ Application::Application(const ApplicationParameters& parameters)
 	LoadAnimations();
 
 	systemRunner.Init();
-
-	spdlog::info("Hello from spdlog!");
 }
 
 Application::~Application() {

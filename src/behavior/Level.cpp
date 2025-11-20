@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+#include "../utils/Log.h"
+
 LevelTilemap::LevelTilemap()
 	: data((LevelTileType *) malloc(SIZE * sizeof(LevelTileType))) {
 }
@@ -102,7 +104,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 			}
 
 			if (colorRight.empty() || colorBottem.empty()) {
-				printf("Shade Colors of Level at %s could not be loaded. Maybe missing?", filepath.c_str());
+				PRINT_INFO("Shade Colors of Level at {} could not be loaded. Maybe missing?", filepath.c_str());
 			} else {
 				level.SetColors(parseColors(colorRight), parseColors(colorBottem));
 			}

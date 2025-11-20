@@ -1,5 +1,6 @@
 #include "Debug.h"
 
+#include "Log.h"
 #include "../ecs/Components.h"
 
 struct DebugDrawTag;
@@ -21,7 +22,7 @@ void Debug::PrintNumberOfEntities() {
 		count++;
 	}
 
-	printf("Number of entities: %d\n", count);
+	PRINT_INFO("Number of entities: {}", count);
 }
 
 void Debug::setRegistry(entt::registry &_registry) {
