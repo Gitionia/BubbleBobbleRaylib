@@ -22,10 +22,30 @@
 
 #include "spdlog/spdlog.h"
 
+#include <emscripten/emscripten.h>
+
+
+// #undef PLATFORM_WEB
+
+void update(SystemRunner& runner);
+
+#ifdef PLATFORM_WEB
+static SystemRunner* systemRunner;
+void webUpdate() {
+	// PRINT_INFO("Updating from PLATFORM_WEB");
+	update(*systemRunner);
+}
+void setupEmscriptionUpdateLoop(SystemRunner& runner) {
+	systemRunner = &runner;
+	emscripten_set_main_loop(webUpdate, 60, true);
+}
+#endif
+
+
 
 Application::Application(const ApplicationParameters& parameters)
 	: window(parameters.width, parameters.height, parameters.title), 
-    systemRunner(registry)
+	  systemRunner(registry)
 {
 	Debug::get().setRegistry(registry);
 
@@ -50,6 +70,7 @@ Application::~Application() {
 	UnloadSprites();
 }
 
+
 void Application::Run()
 {
 	LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
@@ -62,30 +83,22 @@ void Application::Run()
 	auto dragon = EntityFactory::CreateDragon();
 
 
-#ifdef _DEBUG
-bool slowMotion = false;
+#ifdef PLATFORM_WEB
+	setupEmscriptionUpdateLoop(systemRunner);
 #endif
 
 
 	while (window.IsOpen()) {
-
-		// std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-
-		systemRunner.UpdateSystems();
-		UpdateAudio();
-
-		// std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-		// PRINT_INFO("Frame Time: {}µs", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
-
-#ifdef _DEBUG
-        
-        if (IsKeyDown(KEY_P)) {
-            // slowMotion = !slowMotion;
-            // window.SetFPS(slowMotion ? 1 : TARGET_FPS);
-            window.SetFPS(1);
-        } 
-        else 
-            window.SetFPS(60);
-#endif
+		update(systemRunner);
 	}
+}
+
+void update(SystemRunner& runner) {
+	// std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
+	runner.UpdateSystems();
+	UpdateAudio();
+
+	// std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	// PRINT_INFO("Frame Time: {}µs", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
 }
