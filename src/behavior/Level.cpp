@@ -110,7 +110,8 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 			}
 
 
-			if (levelData.size() != 26 * 28) throw "Invalid Size of leveldata";
+			if (levelData.size() != 26 * 28)
+				PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Tiles'", filepath.c_str());
 
 			for (int i = 0; i < levelData.size(); i++) {
 				level.tiles.set(i, levelData.at(i));
@@ -119,7 +120,8 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 		else if (layer.find("name").value() == "Airflow") {
 			auto levelData = layer.find("data").value();
 
-			if (levelData.size() != 26 * 28) throw "Invalid Size of leveldata";
+			if (levelData.size() != 26 * 28)
+				PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Airflow'", filepath.c_str());
 
 			for (int i = 0; i < levelData.size(); i++) {
 				level.airflow.set(i, levelData.at(i));
