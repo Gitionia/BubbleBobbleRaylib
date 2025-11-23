@@ -22,10 +22,11 @@
 
 #include "spdlog/spdlog.h"
 
+#ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
+#endif
 
 
-// #undef PLATFORM_WEB
 
 void update(SystemRunner& runner);
 

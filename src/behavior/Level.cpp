@@ -5,32 +5,27 @@
 #include "../utils/Log.h"
 
 LevelTilemap::LevelTilemap()
-	: data((LevelTileType *) malloc(SIZE * sizeof(LevelTileType))) {
+	: data(SIZE) {
 }
 
 LevelTilemap::~LevelTilemap() {
-	delete[] data;
 }
 
 LevelTileType LevelTilemap::Get(int x, int y, bool checked) const {
 	if (checked && OutOfRange(x, y)) return LevelTileType::NONE;
-	return data[idx(x, y)];
+	return data.at(idx(x, y));
 }
 
 bool LevelTilemap::IsEmpty(int x, int y) const {
 	return Get(x, y) == LevelTileType::NONE;
 }
 
-void LevelTilemap::setData(LevelTileType *src) const {
-	memcpy(data, src, SIZE * sizeof(LevelTileType));
+void LevelTilemap::set(int x, int y, LevelTileType type) {
+	data.at(idx(x, y)) = type;
 }
 
-void LevelTilemap::set(int x, int y, LevelTileType type) const {
-	data[idx(x, y)] = type;
-}
-
-void LevelTilemap::set(int index, LevelTileType type) const {
-	data[index] = type;
+void LevelTilemap::set(int index, LevelTileType type) {
+	data.at(index) = type;
 }
 
 int LevelTilemap::idx(int x, int y) {

@@ -1,14 +1,14 @@
 #pragma once
 
 #include <string>
-
+#include <vector>
 #include <fstream>
 
 #include <nlohmann/json.hpp>
 
 #include "raylib.h"
 
-// These values should match with the Level layout json
+// These values should match with the elements in the level layout json
 enum class LevelTileType {
 	NONE = 0,
 	TILE = 1,
@@ -29,16 +29,16 @@ public:
 	bool IsEmpty(int x, int y) const;
 
 private:
-	void setData(LevelTileType* src) const;
-	void set(int x, int y, LevelTileType type) const;
-	void set(int index, LevelTileType type) const;
+	void set(int x, int y, LevelTileType type);
+	void set(int index, LevelTileType type);
 	static int idx(int x, int y);
 
 public:
 	static int OutOfRange(int x, int y);
 
 private:
-	LevelTileType* data;
+    std::vector<LevelTileType> data;
+    
 public:
 	static constexpr int WIDTH = 28;
 	static constexpr int HEIGHT = 26;
