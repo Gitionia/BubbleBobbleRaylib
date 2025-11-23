@@ -20,31 +20,36 @@ void BubbleBehaviorSystem::Update()
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
 
-        if (bubble.state == BubbleState::SHOOTING) {
+        switch (bubble.state)
+        {
+        case BubbleState::SHOOTING: {
             int dx = shootVelocity * bubble.shootDirection;
             
             pos.x += dx;
 
-            
-
             if (collidesWithWall(registry, pos, col)) {
-                bubble.state = BubbleState::FLOATING;
-                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
-
-
                 // Bug: Now Bubbles also get rounded if they get spawned in a wall
                 pos.x -= dx;
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
-            }
-
-            bubble.shootCounter--;
-            if (bubble.shootCounter == 0) {
+                
                 bubble.state = BubbleState::FLOATING;
-                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
-            }
-        }
-        if (bubble.state == BubbleState::FLOATING) {
+                bubble.shootCounter = 0;
 
+                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+
+
+
+            } else {
+                bubble.shootCounter--;
+                if (bubble.shootCounter == 0) {
+                    bubble.state = BubbleState::FLOATING;
+                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+                }
+            }
+
+            break;
+        }
+        case BubbleState::FLOATING: {
             Vector2Int centerPos = col.getCenter(pos.x, pos.y);
             Vector2Int airflowVelocity = getAirflowDirection(centerPos.X, centerPos.Y);
 
@@ -62,6 +67,12 @@ void BubbleBehaviorSystem::Update()
             if (bubble.lifetimeCounter == 0) {
                 Destroy(entity);
             }
+
+            break;
+        }
+        
+        default:
+            break;
         }
     }
 }
