@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
 set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 

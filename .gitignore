@@ -4,3 +4,6 @@ buildRaylibWeb
 .vs
 CMakeUserPresets.json
 /**/*.tiled-session
+.cache
+
+
