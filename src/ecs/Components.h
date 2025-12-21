@@ -33,6 +33,11 @@ struct WalkingActorComponent {
 	int jumpFrameCount = 0;
 };
 
+struct DragonComponent {
+    int bubbleShootDelay = 0;
+    static constexpr int MAX_BUBBLE_SHOOT_DELAY = 50;
+};
+
 enum class BubbleState {
     SHOOTING,
     FLOATING

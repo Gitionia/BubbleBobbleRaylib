@@ -33,7 +33,8 @@ int LevelTilemap::idx(int x, int y) {
 }
 
 int LevelTilemap::OutOfRange(int x, int y) {
-	return idx(x, y) < 0 || idx(x, y) >= SIZE;
+	return x < 0 || x >= WIDTH 
+        || y < 0 || y >= HEIGHT;
 }
 
 void LevelLayout::SetColors(Color right, Color bottem) {

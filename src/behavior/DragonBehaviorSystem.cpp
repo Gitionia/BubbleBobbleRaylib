@@ -22,9 +22,9 @@ void DragonBehaviorSystem::Update() {
 
 	static Animator animator(&GetAnimation("Dragon-Idle"));
 
-	auto view = registry.view<Position, WalkingActorComponent, RenderData, Collider, DragonSpikeCollider>();
+	auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData, Collider, DragonSpikeCollider>();
 	for (auto entity : view) {
-		auto [pos, actor, renderData, collider, dragonSpikes] = view.get(entity);
+		auto [pos, actor, dragon, renderData, collider, dragonSpikes] = view.get(entity);
 
 
 		if (animator.Update())
@@ -84,9 +84,13 @@ void DragonBehaviorSystem::Update() {
 		// 	}
 		// }
 
-        if (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT)) {
+        if (dragon.bubbleShootDelay == 0 && (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))) {
         	EntityFactory::CreateBubble(pos, renderData.flipX ? 1 : -1);
+            dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
+        } else if (dragon.bubbleShootDelay > 0) {
+            dragon.bubbleShootDelay--;
         }
+        
 
 		// Above and below the level the dragon should ignore collisions.
 		// Above includes all y-positions where the dragon would be standing on the

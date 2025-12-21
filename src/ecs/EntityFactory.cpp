@@ -46,6 +46,7 @@ entt::entity EntityFactory::CreateDragon() {
 	registry->emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0,
 													2 * UNITS_PER_BLOCK, 4 * UNITS_PER_PIXEL, 0 * UNITS_PER_BLOCK, 2 * UNITS_PER_BLOCK - 6 * UNITS_PER_PIXEL);
 	registry->emplace<WalkingActorComponent>(dragon);
+	registry->emplace<DragonComponent>(dragon);
 	registry->emplace<DragonTag>(dragon);
 
     return dragon;
