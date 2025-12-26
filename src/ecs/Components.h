@@ -51,7 +51,7 @@ struct BubbleComponent {
     int shootCounter = MAX_SHOOT_COUNTER;
 	int lifetimeCounter = MAX_LIFE_TIME;
 	static constexpr int MAX_LIFE_TIME = TARGET_FPS * 20;
-	static constexpr int MAX_SHOOT_COUNTER = 80;
+	static constexpr int MAX_SHOOT_COUNTER = 60;
 };
 
 
