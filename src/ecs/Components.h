@@ -8,6 +8,10 @@
 
 struct Position {
 	int x, y;
+
+    Vector2Int toVector() {
+        return { x, y };
+    }
 };
 
 struct Velocity {

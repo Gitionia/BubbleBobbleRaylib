@@ -48,7 +48,7 @@ void BubbleBehaviorSystem::Update() {
         }
         case BubbleState::FLOATING: {
             Vector2Int centerPos = col.getCenter(pos.x, pos.y);
-            Vector2Int airflowVelocity = getAirflowDirection(pos.x, pos.y);
+            Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
 
             pos.x += airflowVelocity.X;
             if (collidesWithWall(registry, pos, col)) {

@@ -14,7 +14,7 @@ bool collidesWithCollider(entt::registry& registry, const Position& position, co
 template <typename ColliderType>
 bool collidesWithMultiCollider(entt::registry& registry, const Position& position, const Collider& collider);
 
-Vector2Int getAirflowDirection(int x, int y);
+Vector2Int getAirflowDirection(const Collider& col, const Vector2Int& pos);
 
 int calculateMovementToRoundedPosition(const Position& pos, const Collider& col, int dir);
 template <typename Collider1, typename Collider2>
