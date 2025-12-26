@@ -1,14 +1,12 @@
 #include "BubbleBehaviorSystem.h"
 
-#include "../ecs/Components.h"
-#include "entt/entt.hpp"
 #include "../app/Config.h"
-#include "Physics.h"
+#include "../ecs/Components.h"
 #include "../utils/Debug.h"
+#include "Physics.h"
+#include "entt/entt.hpp"
 
-
-void BubbleBehaviorSystem::Update()
-{
+void BubbleBehaviorSystem::Update() {
     auto view = registry.view<Position, BubbleComponent, Collider, RenderData>();
     for (auto entity : view) {
         auto [pos, bubble, col, renderData] = view.get(entity);
@@ -20,30 +18,29 @@ void BubbleBehaviorSystem::Update()
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
 
-        switch (bubble.state)
-        {
+        switch (bubble.state) {
         case BubbleState::SHOOTING: {
             int dx = shootVelocity * bubble.shootDirection;
-            
+
             pos.x += dx;
 
             if (collidesWithWall(registry, pos, col)) {
                 // Bug: Now Bubbles also get rounded if they get spawned in a wall
                 pos.x -= dx;
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
-                
+
                 bubble.state = BubbleState::FLOATING;
                 bubble.shootCounter = 0;
 
-                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
-
-
+                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14,
+                                                            4 * UNITS_PER_PIXEL, 0, 0);
 
             } else {
                 bubble.shootCounter--;
                 if (bubble.shootCounter == 0) {
                     bubble.state = BubbleState::FLOATING;
-                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14,
+                                                                4 * UNITS_PER_PIXEL, 0, 0);
                 }
             }
 
@@ -51,13 +48,20 @@ void BubbleBehaviorSystem::Update()
         }
         case BubbleState::FLOATING: {
             Vector2Int centerPos = col.getCenter(pos.x, pos.y);
-            Vector2Int airflowVelocity = getAirflowDirection(centerPos.X, centerPos.Y);
-
+            Vector2Int airflowVelocity = getAirflowDirection(pos.x, pos.y);
 
             pos.x += airflowVelocity.X;
-            pos.y += airflowVelocity.Y;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.x -= airflowVelocity.X;
+            }
 
-            // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y + airflowVelocity.Y, 32, { 0, 122, 122, 180});
+            pos.y += airflowVelocity.Y;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.y -= airflowVelocity.Y;
+            }
+
+            // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
+            // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
             if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
@@ -70,7 +74,7 @@ void BubbleBehaviorSystem::Update()
 
             break;
         }
-        
+
         default:
             break;
         }
