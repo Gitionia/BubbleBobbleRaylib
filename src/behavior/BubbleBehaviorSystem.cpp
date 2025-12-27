@@ -31,9 +31,7 @@ void BubbleBehaviorSystem::Update() {
 
                 bubble.state = BubbleState::FLOATING;
                 bubble.shootCounter = 0;
-
-                registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14,
-                                                            4 * UNITS_PER_PIXEL, 0, 0);
+                bubble.jumpableDelay = bubble.MAX_JUMPABLE_DELAY;
 
             } else {
                 bubble.shootCounter--;
@@ -47,6 +45,14 @@ void BubbleBehaviorSystem::Update() {
             break;
         }
         case BubbleState::FLOATING: {
+
+            if (bubble.jumpableDelay > 0) {
+                bubble.jumpableDelay--;
+                if (bubble.jumpableDelay == 0) {
+                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+                }
+            }
+
             Vector2Int centerPos = col.getCenter(pos.x, pos.y);
             Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
 
