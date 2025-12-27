@@ -32,6 +32,7 @@ void BubbleBehaviorSystem::Update() {
                 bubble.state = BubbleState::FLOATING;
                 bubble.shootCounter = 0;
                 bubble.jumpableDelay = bubble.MAX_JUMPABLE_DELAY;
+                bubble.popableDelay = bubble.MAX_POPABLE_DELAY;
 
             } else {
                 bubble.shootCounter--;
@@ -53,23 +54,28 @@ void BubbleBehaviorSystem::Update() {
                 }
             }
 
-            Vector2Int centerPos = col.getCenter(pos.x, pos.y);
-            Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
-
-            pos.x += airflowVelocity.X;
-            if (collidesWithWall(registry, pos, col)) {
-                pos.x -= airflowVelocity.X;
+            if (bubble.popableDelay > 0) {
+                bubble.popableDelay--;
             }
 
-            pos.y += airflowVelocity.Y;
-            if (collidesWithWall(registry, pos, col)) {
-                pos.y -= airflowVelocity.Y;
-            }
+            if (bubble.jumpableDelay == 0) {
+                Vector2Int centerPos = col.getCenter(pos.x, pos.y);
+                Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
 
+                pos.x += airflowVelocity.X;
+                if (collidesWithWall(registry, pos, col)) {
+                    pos.x -= airflowVelocity.X;
+                }
+
+                pos.y += airflowVelocity.Y;
+                if (collidesWithWall(registry, pos, col)) {
+                    pos.y -= airflowVelocity.Y;
+                }
+            }
             // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
             // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
-            if (collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
+            if (bubble.popableDelay == 0 && collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
                 Destroy(entity);
             }
 

@@ -56,8 +56,12 @@ struct BubbleComponent {
 	int lifetimeCounter = MAX_LIFE_TIME;
     // Value > 0, if is floating and the jumpable collider is not added yet
     int jumpableDelay = 0;
+    // Value > 0, if is floating and it can't be popped yet
+    // Should be less than jumpableDelay
+    int popableDelay = 0;
 
-	static constexpr int MAX_JUMPABLE_DELAY = 3; 
+	static constexpr int MAX_JUMPABLE_DELAY = 9; 
+    static constexpr int MAX_POPABLE_DELAY = 7;
     static constexpr int MAX_LIFE_TIME = TARGET_FPS * 20;
 	static constexpr int MAX_SHOOT_COUNTER = 60;
 };
