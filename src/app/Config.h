@@ -12,4 +12,4 @@
 
 #define TARGET_FPS 60
 
-#define DRAW_DEBUG
+// #define DRAW_DEBUG

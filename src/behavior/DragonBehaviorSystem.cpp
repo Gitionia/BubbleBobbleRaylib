@@ -35,9 +35,12 @@ void DragonBehaviorSystem::Update() {
         int vely = 0;
         bool jump = (IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
         int moveSpeed = UNITS_PER_BLOCK / 16;
-        int jumpSpeed = UNITS_PER_BLOCK / 8;
+        int jumpEndSpeed = UNITS_PER_BLOCK / 8;
+        int jumpSpeed = 3 * UNITS_PER_BLOCK / 16;
         int fallSpeed = UNITS_PER_BLOCK / 8;
-        int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.1f) / jumpSpeed;
+        int JUMP_SLOWDOWN_COUNT = 5 * (int)(UNITS_PER_BLOCK * 0.9f) / jumpSpeed;
+
+        int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.3f) / jumpSpeed;
 
         int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
         int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
@@ -120,7 +123,7 @@ void DragonBehaviorSystem::Update() {
         if (actor.isJumping) {
             actor.jumpFrameCount++;
             // vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
-            vely = -jumpSpeed;
+            vely = actor.jumpFrameCount < JUMP_SLOWDOWN_COUNT ? -jumpSpeed  : -jumpEndSpeed;
 
             if (actor.jumpFrameCount == JUMP_FRAME_COUNT - 1) {
                 actor.isJumping = false;
