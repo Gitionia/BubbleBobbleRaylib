@@ -2,32 +2,26 @@
 
 #include "raylib.h"
 
-Window::Window(int width, int height, const char* title) :
-	width(width), height(height), title(title)
-{
-	SetTraceLogLevel(LOG_ERROR);
-	SetTargetFPS(60);
+Window::Window(int width, int height, const char *title) : width(width), height(height), title(title) {
+    SetTraceLogLevel(LOG_ERROR);
+    SetTargetFPS(60);
 }
 
-Window::~Window()
-{
-	CloseWindow();
+Window::~Window() {
+    CloseWindow();
 }
 
-bool Window::IsOpen()
-{
-	return !WindowShouldClose();
+bool Window::IsOpen() {
+    return !WindowShouldClose();
 }
 
-void Window::Init()
-{
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(width, height, title);
+void Window::Init() {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+    InitWindow(width, height, title);
 
-	// ToggleFullscreen();
+    // ToggleFullscreen();
 }
 
-void Window::SetFPS(int fps)
-{
+void Window::SetFPS(int fps) {
     SetTargetFPS(fps);
 }

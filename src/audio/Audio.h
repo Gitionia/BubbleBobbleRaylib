@@ -5,9 +5,8 @@
 
 #include "raylib.h"
 
-
 bool InitAudio();
 void UnloadAllAudio();
 void UpdateAudio();
 
-Music& PlayMusic(const std::string& filepath);
+Music &PlayMusic(const std::string &filepath);

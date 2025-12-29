@@ -5,14 +5,13 @@
 
 #include "../graphics/Animations.h"
 
-class DragonBehaviorSystem : public SystemBase{
-	SYSTEM_DEF(DragonBehaviorSystem)
+class DragonBehaviorSystem : public SystemBase {
+    SYSTEM_DEF(DragonBehaviorSystem)
 
-public:
-	void Init() override;
-	void Update() override;
+  public:
+    void Init() override;
+    void Update() override;
 
-private:
-	Animation idleAnimation {};
-
+  private:
+    Animation idleAnimation{};
 };

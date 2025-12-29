@@ -1,6 +1,5 @@
 #pragma once
 
-
 #define UNITS_PER_BLOCK 16
 #define PIXELS_PER_BLOCK 16
 #define SCREEN_PIXEL_IN_PIXEL 32

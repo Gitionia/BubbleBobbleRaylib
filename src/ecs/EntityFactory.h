@@ -2,24 +2,23 @@
 
 #include <entt/entt.hpp>
 
-#include "Components.h"
 #include "../behavior/Level.h"
 #include "../graphics/Sprites.h"
+#include "Components.h"
 #include "entt/entt.hpp"
 
-
 class EntityFactory {
-public:
-	static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true);
-	static entt::entity CreateDragon();
-	static entt::entity CreateBubble(const Position &pos, int direction);
-	static void CreateLevel(const LevelLayout & level);
+  public:
+    static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true);
+    static entt::entity CreateDragon();
+    static entt::entity CreateBubble(const Position &pos, int direction);
+    static void CreateLevel(const LevelLayout &level);
     static void MakeBubbleJumpable(entt::entity entity);
 
-private:
-    static EntityFactory& get();
-    void setRegistry(entt::registry& registry);
-	entt::registry* registry;
+  private:
+    static EntityFactory &get();
+    void setRegistry(entt::registry &registry);
+    entt::registry *registry;
 
-	friend class Application;
+    friend class Application;
 };

@@ -5,14 +5,14 @@
 
 class Debug {
 
-public:
-	static void DrawPoint(int x, int y, float radius, Color color);
-	static void PrintNumberOfEntities();
+  public:
+    static void DrawPoint(int x, int y, float radius, Color color);
+    static void PrintNumberOfEntities();
 
-private:
-	void setRegistry(entt::registry& _registry);
-	static Debug& get();
-	entt::registry* registry;
+  private:
+    void setRegistry(entt::registry &_registry);
+    static Debug &get();
+    entt::registry *registry;
 
-	friend class Application;
+    friend class Application;
 };

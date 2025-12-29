@@ -1,26 +1,26 @@
 #pragma once
 
 #include "../audio/Audio.h"
-#include "../ecs/Systems.h"
-#include "entt/entt.hpp"
 #include "../ecs/EntityFactory.h"
-#include "../graphics/Window.h"
+#include "../ecs/Systems.h"
 #include "../graphics/Sprites.h"
+#include "../graphics/Window.h"
+#include "entt/entt.hpp"
 
 struct ApplicationParameters {
-	int width = 32*32;
-	int height = 32*26;
-	const char* title = "Bubble Bobble";
+    int width = 32 * 32;
+    int height = 32 * 26;
+    const char *title = "Bubble Bobble";
 };
 
 class Application {
-public:
-	explicit Application(const ApplicationParameters& parameters);
-	~Application();
-	void Run();
+  public:
+    explicit Application(const ApplicationParameters &parameters);
+    ~Application();
+    void Run();
 
-private:
-	Window window;
+  private:
+    Window window;
     entt::registry registry{};
-	SystemRunner systemRunner;
+    SystemRunner systemRunner;
 };

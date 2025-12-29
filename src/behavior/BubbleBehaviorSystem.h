@@ -5,7 +5,6 @@
 class BubbleBehaviorSystem : public SystemBase {
     SYSTEM_DEF(BubbleBehaviorSystem)
 
-public:
+  public:
     void Update() override;
-
 };

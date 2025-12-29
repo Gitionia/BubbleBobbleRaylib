@@ -2,12 +2,10 @@
 
 #include "Components.h"
 
-
 SystemBase::SystemBase(entt::registry &registry)
-	: registry(registry)
-{
+    : registry(registry) {
 }
 
-void SystemBase::Destroy(const entt::entity& e) const {
-	registry.emplace<DestroyEntity>(e);
+void SystemBase::Destroy(const entt::entity &e) const {
+    registry.emplace<DestroyEntity>(e);
 }

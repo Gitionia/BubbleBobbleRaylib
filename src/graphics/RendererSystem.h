@@ -1,26 +1,26 @@
 #pragma once
 
+#include "../app/Config.h"
+#include "../ecs/SystemBase.h"
 #include "entt/entt.hpp"
 #include "raylib.h"
-#include "../ecs/SystemBase.h"
-#include "../app/Config.h"
 
 class RendererSystem : public SystemBase {
-	SYSTEM_DEF(RendererSystem)
+    SYSTEM_DEF(RendererSystem)
 
-public:
-	void Update() override;
+  public:
+    void Update() override;
 
-private:
-	template<typename Tag>
-	void renderAllWithTag();
+  private:
+    template <typename Tag>
+    void renderAllWithTag();
 
-	template<typename ColliderType>
+    template <typename ColliderType>
     void debugDrawColliders(Color color);
 
-	template<typename ColliderType>
+    template <typename ColliderType>
     void debugDrawMultiColliders(Color color);
 
-private:
-	void drawDebugShapes();
+  private:
+    void drawDebugShapes();
 };
