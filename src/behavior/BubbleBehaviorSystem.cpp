@@ -38,8 +38,7 @@ void BubbleBehaviorSystem::Update() {
                 bubble.shootCounter--;
                 if (bubble.shootCounter == 0) {
                     bubble.state = BubbleState::FLOATING;
-                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14,
-                                                                4 * UNITS_PER_PIXEL, 0, 0);
+                    EntityFactory::MakeBubbleJumpable(entity);
                 }
             }
 
@@ -50,7 +49,7 @@ void BubbleBehaviorSystem::Update() {
             if (bubble.jumpableDelay > 0) {
                 bubble.jumpableDelay--;
                 if (bubble.jumpableDelay == 0) {
-                    registry.emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, 0);
+                    EntityFactory::MakeBubbleJumpable(entity);
                 }
             }
 

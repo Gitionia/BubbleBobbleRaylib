@@ -5,6 +5,7 @@
 #include "Components.h"
 #include "../behavior/Level.h"
 #include "../graphics/Sprites.h"
+#include "entt/entt.hpp"
 
 
 class EntityFactory {
@@ -13,6 +14,7 @@ public:
 	static entt::entity CreateDragon();
 	static entt::entity CreateBubble(const Position &pos, int direction);
 	static void CreateLevel(const LevelLayout & level);
+    static void MakeBubbleJumpable(entt::entity entity);
 
 private:
     static EntityFactory& get();
