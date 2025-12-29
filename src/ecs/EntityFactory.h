@@ -3,15 +3,14 @@
 #include <entt/entt.hpp>
 
 #include "../behavior/Level.h"
-#include "../graphics/Sprites.h"
-#include "Components.h"
 #include "entt/entt.hpp"
+#include "../utils/Utilities.h"
 
 class EntityFactory {
   public:
     static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true);
     static entt::entity CreateDragon();
-    static entt::entity CreateBubble(const Position &pos, int direction);
+    static entt::entity CreateBubbleCenteredAt(const Vector2Int &centre, int direction);
     static void CreateLevel(const LevelLayout &level);
     static void MakeBubbleJumpable(entt::entity entity);
 

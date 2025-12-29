@@ -19,6 +19,7 @@
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
 
+#include "Config.h"
 #include "spdlog/spdlog.h"
 
 #ifdef PLATFORM_WEB
@@ -84,11 +85,23 @@ void Application::Run() {
 }
 
 void update(SystemRunner &runner) {
-    // std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+#ifdef PROFILE
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+#endif
 
     runner.UpdateSystems();
     UpdateAudio();
 
-    // std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-    // PRINT_INFO("Frame Time: {}µs", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
+#ifdef _DEBUG
+    if (IsKeyPressed(KEY_P)) {
+        SetTargetFPS(2);
+    } else if (IsKeyPressed(KEY_O)) {
+        SetTargetFPS(TARGET_FPS);
+    }
+#endif
+
+#ifdef PROFILE
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+    PRINT_INFO("Frame Time: {}µs", std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count());
+#endif
 }

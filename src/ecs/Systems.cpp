@@ -5,9 +5,9 @@
 
 SystemRunner::SystemRunner(entt::registry &registry)
     : registry(registry) {
-    registerSystem<RendererSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
     registerSystem<BubbleBehaviorSystem>(registry);
+    registerSystem<RendererSystem>(registry);
 }
 
 SystemRunner::~SystemRunner() {

@@ -11,6 +11,10 @@ int sign(int x);
 struct Vector2Int {
     int X, Y;
 
+    Vector2Int Add(int vx, int vy) {
+        return { X + vx, Y + vy };
+    }
+
     static Vector2Int Zero() {
         return {0, 0};
     }

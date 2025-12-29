@@ -18,6 +18,10 @@ endif ()
 
 include(FetchContent)
 
+
+add_compile_definitions(_DEBUG)
+
+
 add_subdirectory(src)
 add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/app/Application.cpp
