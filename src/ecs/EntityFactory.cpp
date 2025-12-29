@@ -42,8 +42,8 @@ entt::entity EntityFactory::CreateDragon() {
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
     registry->emplace<Collider>(dragon, 2 * UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, UNITS_PER_BLOCK);
     // Spikes on the back have full height and 6 pixels to the end of the sprite
-    registry->emplace<DragonSpikeCollider>(dragon, 12 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 4 * UNITS_PER_PIXEL, 2 * UNITS_PER_BLOCK - 12 * UNITS_PER_PIXEL, 0,
-                                           2 * UNITS_PER_BLOCK, 4 * UNITS_PER_PIXEL, 0 * UNITS_PER_BLOCK, 2 * UNITS_PER_BLOCK - 6 * UNITS_PER_PIXEL);
+    registry->emplace<DragonSpikeCollider>(dragon, BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
+                                           BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6));           // Spikes at the feet
     registry->emplace<WalkingActorComponent>(dragon);
     registry->emplace<DragonComponent>(dragon);
     registry->emplace<DragonTag>(dragon);
@@ -57,7 +57,7 @@ entt::entity EntityFactory::CreateBubble(const Position &pos, int direction) {
 
     registry->emplace<Position>(bubble, pos);
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}).SetDirection(direction));
-    registry->emplace<Collider>(bubble, 2 * (UNITS_PER_BLOCK / 16) * 14, 2 * UNITS_PER_BLOCK, 0, 0);
+    registry->emplace<Collider>(bubble, BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0);
     registry->emplace<BubbleComponent>(bubble, direction, Animator(&GetAnimation("Bubble-Green-Idle")));
     registry->emplace<BubbleTag>(bubble);
 
@@ -66,7 +66,9 @@ entt::entity EntityFactory::CreateBubble(const Position &pos, int direction) {
 
 void EntityFactory::MakeBubbleJumpable(entt::entity entity) {
     entt::registry *registry = get().registry;
-    registry->emplace<BubbleJumpableTopCollider>(entity, 2 * (UNITS_PER_BLOCK / 16) * 14, 4 * UNITS_PER_PIXEL, 0, -2 * UNITS_PER_PIXEL);
+   
+    // Collider offset 2 pixels up to avoid poping the bubble when jumping
+    registry->emplace<BubbleJumpableTopCollider>(entity, BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2));
 }
 
 void EntityFactory::CreateLevel(const LevelLayout &level) {

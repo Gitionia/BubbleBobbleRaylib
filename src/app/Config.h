@@ -1,11 +1,14 @@
 #pragma once
 
-#define UNITS_PER_BLOCK 16
 #define PIXELS_PER_BLOCK 16
+#define UNITS_PER_PIXEL 1
+#define UNITS_PER_BLOCK (UNITS_PER_PIXEL * PIXELS_PER_BLOCK)
 #define SCREEN_PIXEL_IN_PIXEL 32
-#define UNITS_PER_PIXEL (UNITS_PER_BLOCK / PIXELS_PER_BLOCK)
 #define UNITS_TO_PIXEL_SCALE ((float)UNITS_PER_BLOCK / (float)PIXELS_PER_BLOCK)
 #define SCALING_FACTOR 2
+
+// Block-Pixel-Size
+#define BP_SIZE(blocks, pixels) ((blocks) * UNITS_PER_BLOCK + (pixels) * UNITS_PER_PIXEL)
 
 #define TARGET_FPS 60
 
