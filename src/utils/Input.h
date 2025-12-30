@@ -2,7 +2,8 @@
 
 enum class Key {
     None,
-    Jump
+    Jump,
+    Fire
 };
 
 class Input {

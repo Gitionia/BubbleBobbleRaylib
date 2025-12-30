@@ -10,6 +10,8 @@ bool Input::IsKeyDown(Key key) {
     switch (key) {
     case Key::Jump:
         return ::IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
+    case Key::Fire:
+        return ::IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
     default:
         return false;
     }

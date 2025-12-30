@@ -68,7 +68,7 @@ void DragonBehaviorSystem::Update() {
         // 	}
         // }
 
-        if (dragon.bubbleShootDelay == 0 && (IsKeyDown(KEY_A) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))) {
+        if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), renderData.flipX ? 1 : -1);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
         } else if (dragon.bubbleShootDelay > 0) {
