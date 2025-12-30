@@ -5,6 +5,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
+#include "../utils/Input.h"
 #include "Physics.h"
 
 constexpr int dragonJumpingSpeeds[] = {
@@ -17,7 +18,6 @@ void DragonBehaviorSystem::Init() {
 }
 
 void DragonBehaviorSystem::Update() {
-    SetGamepadMappings("0300000032150000290a000001010000,Razer Wolverine V2,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,crc:3361");
 
     static Animator animator(&GetAnimation("Dragon-Idle"));
 
@@ -33,7 +33,6 @@ void DragonBehaviorSystem::Update() {
 
         int velx = 0;
         int vely = 0;
-        bool jump = (IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
         int moveSpeed = UNITS_PER_BLOCK / 16;
         int jumpEndSpeed = UNITS_PER_BLOCK / 8;
         int jumpSpeed = 3 * UNITS_PER_BLOCK / 16;
@@ -45,23 +44,8 @@ void DragonBehaviorSystem::Update() {
         int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
         int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
 
-        float deadZone = 0.4f;
-        if (useGamepad && IsGamepadAvailable(0)) {
-            float axisx = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
-            // float axisy = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_Y);
-            // std::cout << "x:" << axisx << ", y: "<< axisy << std::endl;
-            velx = (axisx > deadZone ? 1 : axisx < -deadZone ? -1
-                                                             : 0) *
-                   moveSpeed;
-            // vely = axisy > deadZone? 1 : axisy < -deadZone ?-1:0;
-        } else {
-            if (IsKeyDown(KEY_RIGHT)) {
-                velx += moveSpeed;
-            }
-            if (IsKeyDown(KEY_LEFT)) {
-                velx -= moveSpeed;
-            }
-        }
+        bool jump = Input::IsKeyDown(Key::Jump);
+        velx = moveSpeed * Input::GetXAxis();
 
         bool targetFilp;
         if (velx > 0) {
@@ -123,7 +107,7 @@ void DragonBehaviorSystem::Update() {
         if (actor.isJumping) {
             actor.jumpFrameCount++;
             // vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
-            vely = actor.jumpFrameCount < JUMP_SLOWDOWN_COUNT ? -jumpSpeed  : -jumpEndSpeed;
+            vely = actor.jumpFrameCount < JUMP_SLOWDOWN_COUNT ? -jumpSpeed : -jumpEndSpeed;
 
             if (actor.jumpFrameCount == JUMP_FRAME_COUNT - 1) {
                 actor.isJumping = false;

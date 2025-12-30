@@ -56,6 +56,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/utils/Debug.h
         src/utils/Debug.cpp
         src/utils/Log.h
+        src/utils/Input.h
+        src/utils/Input.cpp
 )
 
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)

@@ -18,6 +18,7 @@
 
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
+#include "../utils/Input.h"
 
 #include "Config.h"
 #include "spdlog/spdlog.h"
@@ -50,6 +51,8 @@ Application::Application(const ApplicationParameters &parameters)
     if (!InitAudio()) {
         PRINT_ERROR("Audio Device could not be initialized!");
     }
+
+    Input::Init();
 
     EntityFactory::get().setRegistry(registry);
 
