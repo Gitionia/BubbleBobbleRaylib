@@ -6,6 +6,7 @@
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
 #include "../utils/Input.h"
+#include "Level.h"
 #include "Physics.h"
 
 constexpr int dragonJumpingSpeeds[] = {
@@ -126,10 +127,13 @@ void DragonBehaviorSystem::Update() {
             if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
                 pos.y -= vely;
             }
+        }
 
-            if (pos.y >= BOTTEM_WARP_POS) {
-                pos.y -= TOP_WARP_POS;
-            }
+        if (pos.y >= BOTTEM_WARP_POS) {
+            pos.y = BP_SIZE(-3, 0);
+        } 
+        else if (pos.y < BP_SIZE(-4, 0)) {
+            pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
         }
     }
 }
