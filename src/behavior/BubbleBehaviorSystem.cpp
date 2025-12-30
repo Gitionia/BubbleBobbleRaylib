@@ -3,6 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../utils/Debug.h"
+#include "../utils/Log.h"
 #include "Physics.h"
 #include "entt/entt.hpp"
 
@@ -71,6 +72,13 @@ void BubbleBehaviorSystem::Update() {
                     pos.y -= airflowVelocity.Y;
                 }
             }
+
+            if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 2)) {
+                pos.y = BP_SIZE(-2, 0);
+            } else if (pos.y < BP_SIZE(-2, -2)) {
+                pos.y = BP_SIZE(LevelTilemap::HEIGHT, -2);
+            }
+
             // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
             // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
