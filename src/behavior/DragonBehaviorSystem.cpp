@@ -29,8 +29,6 @@ void DragonBehaviorSystem::Update() {
             animator.Reset();
         renderData.spriteHandle = animator.GetSpriteHandle();
 
-        bool useGamepad = true;
-
         int velx = 0;
         int vely = 0;
         int moveSpeed = UNITS_PER_BLOCK / 16;
@@ -47,18 +45,18 @@ void DragonBehaviorSystem::Update() {
         bool jump = Input::IsKeyDown(Key::Jump);
         velx = moveSpeed * Input::GetXAxis();
 
-        bool targetFilp;
+        bool targetFlip;
         if (velx > 0) {
-            targetFilp = true;
+            targetFlip = true;
         } else if (velx < 0) {
-            targetFilp = false;
+            targetFlip = false;
         }
 
         if (velx != 0) {
-            if (targetFilp != renderData.flipX) {
+            if (targetFlip != renderData.flipX) {
                 dragonSpikes.flipX(2 * UNITS_PER_BLOCK);
             }
-            renderData.flipX = targetFilp;
+            renderData.flipX = targetFlip;
         }
 
         // check if should restore collision detection
