@@ -11,7 +11,6 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
         RenderData data = {GetSpriteHandle("Level1"), {1, 1}};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
-        registry->emplace<Collider>(tile, UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, 0);
     }
 
     if (addShadowRight) {
