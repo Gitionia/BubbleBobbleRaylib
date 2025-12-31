@@ -2,6 +2,7 @@
 
 #include "../app/Config.h"
 #include "Level.h"
+#include <cstdio>
 
 static const LevelTilemap *tiles = nullptr;
 static const LevelTilemap *airflow = nullptr;
@@ -11,17 +12,28 @@ void setPhysicsColliderData(const LevelLayout &level) {
     airflow = &level.GetAirflow();
 }
 
+int xPosToTileCoord(int x) {
+    return x / UNITS_PER_BLOCK - 2;
+}
+
+int yPosToTileCoord(int y) {
+    return y / UNITS_PER_BLOCK;
+}
+
+Vector2Int posToTileCoords(int x, int y) {
+    return {xPosToTileCoord(x), yPosToTileCoord(y)};
+}
+
 bool collidesWithWall(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, Collider, LevelTileTag>();
-
-    for (const auto entity : view) {
-        const auto [pos, col] = view.get(entity);
-
-        if (overlaps(position, collider, pos, col)) {
-            return true;
+    Vector2Int pos = position.toVector();
+    for (int x = xPosToTileCoord(collider.left(pos)); x <= xPosToTileCoord(collider.right(pos) - 1); x++) {
+        for (int y = yPosToTileCoord(collider.top(pos)); y <= yPosToTileCoord(collider.bottem(pos) - 1); y++) {
+            // collides with 2 space walls on level sides, but not with walls over or below the level
+            if (x < 0 || x >= LevelTilemap::WIDTH || (y >= 0 && y < LevelTilemap::HEIGHT && !tiles->IsEmpty(x, y))) {
+                return true;
+            }
         }
     }
-
     return false;
 }
 
@@ -61,18 +73,6 @@ bool collidesWithMultiCollider(entt::registry &registry, const Position &positio
 template bool collidesWithCollider<BubbleJumpableTopCollider>(entt::registry &registry, const Position &position, const Collider &collider);
 
 template bool collidesWithMultiCollider<DragonSpikeCollider>(entt::registry &registry, const Position &position, const Collider &collider);
-
-int xPosToTileCoord(int x) {
-    return x / UNITS_PER_BLOCK - 2;
-}
-
-int yPosToTileCoord(int y) {
-    return y / UNITS_PER_BLOCK;
-}
-
-Vector2Int posToTileCoords(int x, int y) {
-    return {xPosToTileCoord(x), yPosToTileCoord(y)};
-}
 
 Vector2Int toDirection(LevelTileType type) {
     switch (type) {

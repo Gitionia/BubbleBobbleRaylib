@@ -9,8 +9,9 @@ enum class Key {
 class Input {
   public:
     static void Init();
-      static bool IsKeyDown(Key key);
+    static bool IsKeyDown(Key key);
     static int GetXAxis();
+    static int GetYAxis();
 
   private:
     static inline bool useGamepad = true;

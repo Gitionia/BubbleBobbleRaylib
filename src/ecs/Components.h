@@ -9,7 +9,7 @@
 struct Position {
     int x, y;
 
-    Vector2Int toVector() {
+    Vector2Int toVector() const {
         return {x, y};
     }
 };

@@ -13,16 +13,16 @@
             return {x + width / 2, y + height / 2};                              \
         }                                                                        \
         int left(Vector2Int pos) const {                                         \
-            return pos.X;                                                        \
+            return pos.X + offsetX;                                              \
         }                                                                        \
         int right(Vector2Int pos) const {                                        \
-            return pos.X + width;                                                \
+            return pos.X + width + offsetX;                                      \
         }                                                                        \
         int top(Vector2Int pos) const {                                          \
-            return pos.Y;                                                        \
+            return pos.Y + offsetY;                                              \
         }                                                                        \
         int bottem(Vector2Int pos) const {                                       \
-            return pos.Y + height;                                               \
+            return pos.Y + height + offsetY;                                     \
         }                                                                        \
     };
 
