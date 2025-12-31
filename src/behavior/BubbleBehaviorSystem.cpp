@@ -8,9 +8,11 @@
 #include "entt/entt.hpp"
 
 void BubbleBehaviorSystem::Update() {
-    auto view = registry.view<Position, BubbleComponent, Collider, RenderData>();
+    static Collider col { BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0 };
+
+    auto view = registry.view<Position, BubbleComponent, RenderData>();
     for (auto entity : view) {
-        auto [pos, bubble, col, renderData] = view.get(entity);
+        auto [pos, bubble, renderData] = view.get(entity);
 
         int shootVelocity = UNITS_PER_BLOCK / 8;
 

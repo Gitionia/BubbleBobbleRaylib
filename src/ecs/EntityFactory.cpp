@@ -56,7 +56,6 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
 
     registry->emplace<Position>(bubble, centre.X - BP_SIZE(0, 14), centre.Y - BP_SIZE(1, 0));
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}).SetDirection(direction));
-    registry->emplace<Collider>(bubble, BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0);
     registry->emplace<BubbleComponent>(bubble, direction, Animator(&GetAnimation("Bubble-Green-Idle")));
     registry->emplace<BubbleTag>(bubble);
 
