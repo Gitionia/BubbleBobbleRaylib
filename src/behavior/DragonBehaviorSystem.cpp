@@ -5,6 +5,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
+#include "../utils/Debug.h"
 #include "../utils/Input.h"
 #include "Level.h"
 #include "Physics.h"
@@ -66,7 +67,6 @@ void DragonBehaviorSystem::Update() {
             renderData.flipX = targetFlip;
         }
 
-
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), renderData.flipX ? 1 : -1);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
@@ -127,7 +127,8 @@ void DragonBehaviorSystem::Update() {
         pos.y += vely;
         if (!actor.isJumping) {
             if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-                pos.y -= vely;
+                DBG_ASSERT(vely > 0);
+                pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
             }
         }
 
