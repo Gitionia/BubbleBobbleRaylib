@@ -66,12 +66,6 @@ void DragonBehaviorSystem::Update() {
             renderData.flipX = targetFlip;
         }
 
-        // check if should restore collision detection
-        // if (actor.ignoreCollisions) {
-        // 	if (!collidesWithWall(registry, pos, collider)) {
-        // 		actor.ignoreCollisions = false;
-        // 	}
-        // }
 
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), renderData.flipX ? 1 : -1);
