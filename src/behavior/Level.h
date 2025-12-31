@@ -16,6 +16,7 @@ enum class LevelTileType {
     AIRFLOW_DOWN = 3,
     AIRFLOW_RIGHT = 4,
     AIRFLOW_LEFT = 5,
+    ENEMY_CAN = 6
 };
 
 class LevelTilemap {
@@ -55,12 +56,14 @@ class LevelLayout {
 
     const LevelTilemap &GetTiles() const;
     const LevelTilemap &GetAirflow() const;
+    const LevelTilemap &GetEnemies() const;
 
     static LevelLayout LoadLevel(const std::string &filepath);
 
   private:
     LevelTilemap tiles;
     LevelTilemap airflow;
+    LevelTilemap enemies;
     Color tileShadeColorRight;
     Color tileShadeColorBottem;
 };

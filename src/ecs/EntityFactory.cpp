@@ -65,9 +65,20 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
 
 void EntityFactory::MakeBubbleJumpable(entt::entity entity) {
     entt::registry *registry = get().registry;
-   
+
     // Collider offset 2 pixels up to avoid poping the bubble when jumping
     registry->emplace<BubbleJumpableTopCollider>(entity, BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2));
+}
+
+entt::entity EntityFactory::CreateEnemy(int x, int y) {
+    entt::registry *registry = get().registry;
+    auto enemy = registry->create();
+
+    registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
+    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-2"), {2, 2}).SetDirection(-1));
+    registry->emplace<BubbleTag>(enemy);
+
+    return enemy;
 }
 
 void EntityFactory::CreateLevel(const LevelLayout &level) {
@@ -87,6 +98,14 @@ void EntityFactory::CreateLevel(const LevelLayout &level) {
             bool addShadowRight = x == 1;
             bool addShadowBottem = false;
             CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem(), addShadowRight, addShadowBottem);
+        }
+    }
+
+    for (int x = 0; x < LevelTilemap::WIDTH; ++x) {
+        for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
+            if (!level.GetEnemies().IsEmpty(x, y)) {
+                CreateEnemy(x, y);
+            }
         }
     }
 }

@@ -58,6 +58,10 @@ const LevelTilemap &LevelLayout::GetAirflow() const {
     return airflow;
 }
 
+const LevelTilemap &LevelLayout::GetEnemies() const {
+    return enemies;
+}
+
 unsigned int parseColorChannel(const std::string &str) {
     unsigned int x;
     std::stringstream ss;
@@ -125,7 +129,17 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             for (int i = 0; i < levelData.size(); i++) {
                 level.airflow.set(i, levelData.at(i));
             }
+        }  else if (layer.find("name").value() == "Enemies") {
+            auto levelData = layer.find("data").value();
+
+            if (levelData.size() != 26 * 28)
+                PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Enemies'", filepath.c_str());
+
+            for (int i = 0; i < levelData.size(); i++) {
+                level.enemies.set(i, levelData.at(i));
+            }
         }
+
     }
 
     return level;
