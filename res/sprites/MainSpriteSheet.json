@@ -9,11 +9,16 @@
    }
  },
  "meta": {
-  "app": "http://www.aseprite.org/",
+  "app": "https://www.aseprite.org/",
   "version": "1.x-dev",
   "format": "I8",
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Background", "opacity": 255, "blendMode": "normal" }
+  ],
   "slices": [
    { "name": "Dragon-Idle-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 6, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Walking-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 27, "y": 16, "w": 16, "h": 16 } }] },
@@ -27,12 +32,16 @@
    { "name": "Can-Walk-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 246, "w": 15, "h": 15 } }] },
    { "name": "Can-Walk-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 62, "y": 245, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 48, "y": 16, "w": 16, "h": 16 } }] },
-   { "name": "Dragon-Walking-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 70, "y": 16, "w": 15, "h": 16 } }] },
-   { "name": "Dragon-Walking-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 91, "y": 16, "w": 15, "h": 16 } }] },
+   { "name": "Dragon-Walking-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 69, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Walking-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 90, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Walking-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 110, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Walking-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 130, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Bubble-Green-Idle-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 25, "y": 1073, "w": 14, "h": 14 }, "pivot": {"x": 0, "y": 2 } }] },
-   { "name": "Bubble-Green-Idle-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 44, "y": 1072, "w": 12, "h": 16 }, "pivot": {"x": 2, "y": 0 } }] }
+   { "name": "Bubble-Green-Idle-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 44, "y": 1072, "w": 12, "h": 16 }, "pivot": {"x": 2, "y": 0 } }] },
+   { "name": "Dragon-Shooting-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 150, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Shooting-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 171, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Shooting-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 192, "y": 16, "w": 16, "h": 16 } }] },
+   { "name": "Dragon-Shooting-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 213, "y": 16, "w": 16, "h": 16 } }] }
   ]
  }
 }

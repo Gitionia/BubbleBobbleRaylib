@@ -38,7 +38,7 @@ struct WalkingActorComponent {
 
 struct DragonComponent {
     int bubbleShootDelay = 0;
-    static constexpr int MAX_BUBBLE_SHOOT_DELAY = 50;
+    static constexpr int MAX_BUBBLE_SHOOT_DELAY = 1;
 };
 
 enum class BubbleState {

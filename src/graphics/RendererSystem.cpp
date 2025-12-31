@@ -7,8 +7,6 @@
 #include "../utils/Utilities.h"
 
 void RendererSystem::Update() {
-    BeginDrawing();
-
     ClearBackground(BLACK);
 
     renderAllWithTag<LevelTileShadowTag>();
@@ -25,8 +23,6 @@ void RendererSystem::Update() {
 #endif
 
     DrawFPS(10, 10);
-
-    EndDrawing();
 }
 
 void RendererSystem::drawDebugShapes() {

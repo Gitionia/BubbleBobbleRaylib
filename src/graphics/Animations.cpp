@@ -36,7 +36,7 @@ void LoadAnimations() {
             }
         }
 
-        animations.insert({animationBaseName, {animationFrames, framesPerSprite}});
+        animations.insert({animationBaseName, {animationFrames, animationBaseName, framesPerSprite}});
     }
 }
 
@@ -71,3 +71,8 @@ void Animator::SetNewAnimation(const Animation *animation) {
 SpriteHandle Animator::GetSpriteHandle() const {
     return animation->Sprites.at(currentSprite);
 }
+
+const std::string& Animator::GetAnimationName() const {
+    return animation->name;
+}
+

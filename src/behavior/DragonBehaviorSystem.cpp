@@ -26,8 +26,14 @@ void DragonBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, actor, dragon, renderData, collider, dragonSpikes] = view.get(entity);
 
-        if (animator.Update())
+        animator.Update();
+        if (animator.IsFinished()) {
+            if (animator.GetAnimationName() == "Dragon-Shooting") {
+                animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+            }
             animator.Reset();
+        }
+
         renderData.spriteHandle = animator.GetSpriteHandle();
 
         int velx = 0;
@@ -70,6 +76,8 @@ void DragonBehaviorSystem::Update() {
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), renderData.flipX ? 1 : -1);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
+
+            animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
         } else if (dragon.bubbleShootDelay > 0) {
             dragon.bubbleShootDelay--;
         }
@@ -131,8 +139,7 @@ void DragonBehaviorSystem::Update() {
 
         if (pos.y >= BOTTEM_WARP_POS) {
             pos.y = BP_SIZE(-3, 0);
-        } 
-        else if (pos.y < BP_SIZE(-4, 0)) {
+        } else if (pos.y < BP_SIZE(-4, 0)) {
             pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
         }
     }
