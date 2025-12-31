@@ -14,14 +14,6 @@ struct Position {
     }
 };
 
-struct Velocity {
-    int dx, dy;
-};
-
-struct BallSize {
-    int radius;
-};
-
 /*Could theoretically be a static instance somewhere,
 since it can be created and calculated*/
 MULTI_COLLIDER_LAYER(DragonSpikeCollider, 2)
