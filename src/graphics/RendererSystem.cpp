@@ -43,6 +43,7 @@ void RendererSystem::renderAllWithTag() {
     auto viewRenderer = registry.view<Position, RenderData, Tag>();
     for (auto entity : viewRenderer) {
         auto [pos, renderData] = viewRenderer.get(entity);
+
         const Sprite &sprite = GetSprite(renderData.spriteHandle);
         Rectangle sourceRect = sprite.coords;
         if (renderData.flipX)
@@ -50,8 +51,14 @@ void RendererSystem::renderAllWithTag() {
         if (renderData.flipY)
             sourceRect.height *= -1;
 
+        Rectangle dest = {(float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset,
+                          sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y};
+
+        dest = OffsetRect(dest, sprite.xOffset, sprite.yOffset);
+        dest = ScaleRect(dest, SCALING_FACTOR);
+
         DrawTexturePro(sprite.spriteSheet, sourceRect,
-                       ScaleRect(OffsetRect({(float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset, sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y}, renderData.flipX ? sprite.xOffset : sprite.xOffset, sprite.yOffset), SCALING_FACTOR),
+                       dest,
                        {0, 0}, 0, renderData.color);
     }
 }
