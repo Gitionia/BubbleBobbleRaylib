@@ -42,6 +42,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/TrashCanBehaviorSystem.cpp
         src/behavior/Physics.h
         src/behavior/Physics.cpp
+        src/behavior/WalkingActorUtils.h
+        src/behavior/WalkingActorUtils.cpp
         src/ecs/Components.h
         src/ecs/ComponentUtils.h
         src/ecs/EntityFactory.h

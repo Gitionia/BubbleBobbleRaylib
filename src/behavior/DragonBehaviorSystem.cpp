@@ -10,6 +10,7 @@
 #include "../utils/Input.h"
 #include "Level.h"
 #include "Physics.h"
+#include "WalkingActorUtils.h"
 
 constexpr int dragonJumpingSpeeds[] = {
     0, 2, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
@@ -24,12 +25,13 @@ void DragonBehaviorSystem::Update() {
 
     static Animator animator(&GetAnimation("Dragon-Idle"));
 
-    const Collider& collider = Colliders::walkingActorCollider;
+    const Collider &collider = Colliders::walkingActorCollider;
 
     auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>();
     for (auto entity : view) {
         auto [pos, actor, dragon, renderData] = view.get(entity);
 
+        // animations and sprite
         animator.Update();
         if (animator.IsFinished()) {
             if (animator.GetAnimationName() == "Dragon-Shooting") {
@@ -37,7 +39,6 @@ void DragonBehaviorSystem::Update() {
             }
             animator.Reset();
         }
-
         renderData.spriteHandle = animator.GetSpriteHandle();
 
         int velx = 0;
@@ -69,24 +70,17 @@ void DragonBehaviorSystem::Update() {
             dragon.bubbleShootDelay--;
         }
 
-        // Above and below the level the dragon should ignore collisions.
-        // Above includes all y-positions where the dragon would be standing on the
-        // top of the level or above that.
-        if (pos.y > 24 * UNITS_PER_BLOCK || pos.y <= -2 * UNITS_PER_BLOCK) {
-            actor.ignoreCollisions = true;
-        } else {
-            actor.ignoreCollisions = collidesWithWall(registry, pos, collider);
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, actor);
+
+        pos.x += velx;
+        if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
+            pos.x -= velx;
         }
 
         // check if grounded
-        bool isGrounded = false;
+        bool isGrounded;
         if (!actor.isJumping) {
-
-            pos.y += fallSpeed;
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-                isGrounded = true;
-            }
-            pos.y -= fallSpeed;
+            isGrounded = isWalkingActorGrounded(registry, pos, actor);
         }
 
         // start jump
@@ -96,6 +90,11 @@ void DragonBehaviorSystem::Update() {
                 actor.jumpFrameCount = 0;
             }
         }
+
+        // clamp x position to inside of the level
+        pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
+        pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
+
 
         // execute jump
         if (actor.isJumping) {
@@ -109,14 +108,8 @@ void DragonBehaviorSystem::Update() {
         } else {
             vely = fallSpeed;
         }
-
-        pos.x += velx;
-        if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-            pos.x -= velx;
-        }
-        pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
-        pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
-
+        
+        // execute falling
         pos.y += vely;
         if (!actor.isJumping) {
             if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
@@ -125,6 +118,7 @@ void DragonBehaviorSystem::Update() {
             }
         }
 
+        // apply warping
         if (pos.y >= BOTTEM_WARP_POS) {
             pos.y = BP_SIZE(-3, 0);
         } else if (pos.y < BP_SIZE(-4, 0)) {
