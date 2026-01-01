@@ -62,18 +62,9 @@ void TrashCanBehaviorSystem::Update() {
 
         velx = moveSpeed * enemy.walkingDir;
 
-        bool targetFlip;
-        if (velx > 0) {
-            targetFlip = true;
-        } else if (velx < 0) {
-            targetFlip = false;
-        }
 
         if (velx != 0) {
-            if (targetFlip != renderData.flipX) {
-                // dragonSpikes.flipX(2 * UNITS_PER_BLOCK);
-            }
-            renderData.flipX = targetFlip;
+            renderData.flipX = velx > 0;
         }
 
         // Above and below the level the dragon should ignore collisions.
