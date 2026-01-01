@@ -64,7 +64,7 @@ void TrashCanBehaviorSystem::Update() {
 
 
         if (velx != 0) {
-            renderData.flipX = velx > 0;
+            pos.dir = velx < 0 ? -1 : 1;
         }
 
         // Above and below the level the dragon should ignore collisions.

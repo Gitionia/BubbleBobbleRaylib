@@ -57,12 +57,11 @@ void DragonBehaviorSystem::Update() {
         velx = moveSpeed * Input::GetXAxis();
 
         if (velx != 0) {
-            renderData.flipX = velx > 0;
             pos.dir = velx < 0 ? -1 : 1;
         }
 
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
-            EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), renderData.flipX ? 1 : -1);
+            EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), pos.dir);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
 
             animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));

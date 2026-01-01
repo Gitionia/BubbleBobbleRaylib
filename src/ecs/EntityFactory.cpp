@@ -51,7 +51,7 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     auto bubble = registry->create();
 
     registry->emplace<Position>(bubble, centre.X - BP_SIZE(0, 14), centre.Y - BP_SIZE(1, 0));
-    registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}).SetDirection(direction));
+    registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
     registry->emplace<BubbleComponent>(bubble, direction, Animator(&GetAnimation("Bubble-Green-Idle")));
     registry->emplace<BubbleTag>(bubble);
 
@@ -70,7 +70,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     auto enemy = registry->create();
 
     registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
-    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}).SetDirection(-1));
+    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
     registry->emplace<EnemyComponent>(enemy, 0);
     registry->emplace<WalkingActorComponent>(enemy);
     registry->emplace<EnemyTag>(enemy);

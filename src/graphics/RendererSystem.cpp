@@ -46,11 +46,10 @@ void RendererSystem::renderAllWithTag() {
 
         const Sprite &sprite = GetSprite(renderData.spriteHandle);
         Rectangle sourceRect = sprite.coords;
-        if (renderData.flipX)
+        
+        if (pos.dir > 0) {
             sourceRect.width *= -1;
-        if (renderData.flipY)
-            sourceRect.height *= -1;
-
+        }
         Rectangle dest = {(float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset,
                           sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y};
 

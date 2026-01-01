@@ -79,8 +79,6 @@ struct RenderData {
     Color color = WHITE;
     int xoffset = 0;
     int yoffset = 0;
-    bool flipX = false;
-    bool flipY = false;
 
     RenderData(const SpriteHandle handle, const Vector2 &scale, int xoffset, int yoffset)
         : spriteHandle(handle), scale(scale), xoffset(xoffset), yoffset(yoffset) {}
@@ -90,14 +88,6 @@ struct RenderData {
         : spriteHandle(handle), scale({scale, scale}) {}
     explicit RenderData(const SpriteHandle handle)
         : spriteHandle(handle), scale({1, 1}) {}
-
-    RenderData &SetDirection(int dir) {
-        if (dir > 0)
-            flipX = true;
-        else if (dir < 0)
-            flipX = false;
-        return *this;
-    }
 
     RenderData &SetColor(Color color) {
         this->color = color;
