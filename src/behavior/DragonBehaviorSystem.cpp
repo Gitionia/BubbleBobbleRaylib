@@ -69,7 +69,7 @@ void DragonBehaviorSystem::Update() {
         }
 
         // check if grounded
-        bool isGrounded;
+        bool isGrounded = false;
         if (!actor.isJumping) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
         }

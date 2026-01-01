@@ -8,13 +8,14 @@
 #include "../utils/Random.h"
 #include "Level.h"
 #include "Physics.h"
+#include "WalkingActorUtils.h"
 
 void TrashCanBehaviorSystem::Init() {
 }
 
 void TrashCanBehaviorSystem::Update() {
 
-    const Collider& collider = Colliders::walkingActorCollider;
+    const Collider &collider = Colliders::walkingActorCollider;
 
     static Animator animator(&GetAnimation("Can-Walk"));
 
@@ -44,53 +45,38 @@ void TrashCanBehaviorSystem::Update() {
         // check if grounded
         bool isGrounded = false;
         if (!actor.isJumping) {
-
-            pos.y += fallSpeed;
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-                isGrounded = true;
-            }
-            pos.y -= fallSpeed;
+            isGrounded = isWalkingActorGrounded(registry, pos, actor);
         }
 
         if (isGrounded) {
             if (enemy.walkingDir == 0) {
                 enemy.walkingDir = Random::Get().GetDirection();
             }
+
+            pos.dir = enemy.walkingDir;
         } else {
             enemy.walkingDir = 0;
         }
 
         velx = moveSpeed * enemy.walkingDir;
 
-
-        if (velx != 0) {
-            pos.dir = velx < 0 ? -1 : 1;
-        }
-
-        // Above and below the level the dragon should ignore collisions.
-        // Above includes all y-positions where the dragon would be standing on the
-        // top of the level or above that.
-        if (pos.y > 24 * UNITS_PER_BLOCK || pos.y <= -2 * UNITS_PER_BLOCK) {
-            actor.ignoreCollisions = true;
-        } else {
-            actor.ignoreCollisions = collidesWithWall(registry, pos, collider);
-        }
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, actor);
 
         // start jump
         if (jump) {
             if (isGrounded) {
                 actor.isJumping = true;
-                actor.jumpFrameCount = 0;
+                actor.jumpFrameCount = JUMP_FRAME_COUNT;
             }
         }
 
         // execute jump
         if (actor.isJumping) {
-            actor.jumpFrameCount++;
+            actor.jumpFrameCount--;
             // vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
             vely = -jumpSpeed;
 
-            if (actor.jumpFrameCount == JUMP_FRAME_COUNT - 1) {
+            if (actor.jumpFrameCount == 0) {
                 actor.isJumping = false;
             }
         } else {
