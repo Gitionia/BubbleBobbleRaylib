@@ -19,7 +19,7 @@ void WalkingActorBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent, DragonTag>();
+    auto view = registry.view<Position, WalkingActorComponent>();
     for (auto entity : view) {
         auto [pos, actor] = view.get(entity);
 

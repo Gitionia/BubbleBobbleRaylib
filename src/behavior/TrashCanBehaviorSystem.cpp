@@ -70,19 +70,6 @@ void TrashCanBehaviorSystem::Update() {
             }
         }
 
-        // execute jump
-        if (actor.isJumping) {
-            actor.jumpFrameCount--;
-            // vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
-            vely = -jumpSpeed;
-
-            if (actor.jumpFrameCount == 0) {
-                actor.isJumping = false;
-            }
-        } else {
-            vely = fallSpeed;
-        }
-
         pos.x += velx;
         if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
 
@@ -96,21 +83,6 @@ void TrashCanBehaviorSystem::Update() {
             }
             pos.x += velx;
         }
-        pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
-        pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
-
-        pos.y += vely;
-        if (!actor.isJumping) {
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-                DBG_ASSERT(vely > 0);
-                pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
-            }
-        }
-
-        if (pos.y >= BOTTEM_WARP_POS) {
-            pos.y = BP_SIZE(-3, 0);
-        } else if (pos.y < BP_SIZE(-4, 0)) {
-            pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
-        }
+        
     }
 }

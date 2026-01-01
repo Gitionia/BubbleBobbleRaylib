@@ -72,7 +72,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
     registry->emplace<EnemyComponent>(enemy, 0);
-    registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 8, 3 * UNITS_PER_BLOCK / 16);
+    registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     registry->emplace<EnemyTag>(enemy);
 
     return enemy;
