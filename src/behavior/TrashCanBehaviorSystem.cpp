@@ -109,9 +109,16 @@ void TrashCanBehaviorSystem::Update() {
 
         pos.x += velx;
         if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-            pos.x -= velx;
 
+            pos.x -= velx;
             enemy.walkingDir *= -1;
+            
+            // check if enemy is in 2 space gap, in that case don't flip direction
+            pos.x -= velx;
+            if (collidesWithWall(registry, pos, collider)) {
+                enemy.walkingDir *= -1;
+            }
+            pos.x += velx;
         }
         pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
         pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
