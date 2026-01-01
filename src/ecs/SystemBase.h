@@ -2,7 +2,6 @@
 
 #include "entt/entt.hpp"
 
-#include "EntityFactory.h"
 
 #define SYSTEM_DEF(Type)                                              \
   public:                                                             \

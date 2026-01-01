@@ -4,6 +4,7 @@
 #include "../ecs/Components.h"
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
+#include "../ecs/EntityFactory.h"
 #include "Physics.h"
 #include "entt/entt.hpp"
 

@@ -38,6 +38,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/DragonBehaviorSystem.h
         src/behavior/BubbleBehaviorSystem.cpp
         src/behavior/BubbleBehaviorSystem.h
+        src/behavior/TrashCanBehaviorSystem.h
+        src/behavior/TrashCanBehaviorSystem.cpp
         src/behavior/Physics.h
         src/behavior/Physics.cpp
         src/ecs/Components.h

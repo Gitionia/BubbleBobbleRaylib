@@ -33,6 +33,10 @@ struct DragonComponent {
     static constexpr int MAX_BUBBLE_SHOOT_DELAY = 1;
 };
 
+struct EnemyComponent {
+    int walkingDir;
+};
+
 enum class BubbleState {
     SHOOTING,
     FLOATING

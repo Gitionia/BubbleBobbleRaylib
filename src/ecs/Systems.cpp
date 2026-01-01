@@ -1,10 +1,20 @@
 #include "Systems.h"
 
+#include "../behavior/TrashCanBehaviorSystem.h"
 #include "Components.h"
-#include "EntityFactory.h"
+
+#include "../behavior/BubbleBehaviorSystem.h"
+#include "../behavior/DragonBehaviorSystem.h"
+#include "../graphics/RendererSystem.h"
+#include "../behavior/BubbleBehaviorSystem.h"
+#include "../behavior/DragonBehaviorSystem.h"
+#include "../graphics/RendererSystem.h"
+
 
 SystemRunner::SystemRunner(entt::registry &registry)
     : registry(registry) {
+        
+    registerSystem<TrashCanBehaviorSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
     registerSystem<BubbleBehaviorSystem>(registry);
     registerSystem<RendererSystem>(registry);

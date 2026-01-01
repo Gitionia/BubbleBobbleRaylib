@@ -2,11 +2,7 @@
 
 #include <entt/entt.hpp>
 
-#include "../behavior/BubbleBehaviorSystem.h"
-#include "../behavior/DragonBehaviorSystem.h"
-#include "../graphics/RendererSystem.h"
-#include "../graphics/Sprites.h"
-#include "EntityFactory.h"
+#include "../ecs/SystemBase.h"
 
 class SystemRunner {
   public:
