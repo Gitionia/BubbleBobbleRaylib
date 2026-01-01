@@ -39,7 +39,7 @@ entt::entity EntityFactory::CreateDragon() {
 
     registry->emplace<Position>(dragon, 5 * UNITS_PER_BLOCK, 5 * UNITS_PER_BLOCK);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
-    registry->emplace<WalkingActorComponent>(dragon);
+    registry->emplace<WalkingActorComponent>(dragon, UNITS_PER_BLOCK / 8, 3 * UNITS_PER_BLOCK / 16);
     registry->emplace<DragonComponent>(dragon);
     registry->emplace<DragonTag>(dragon);
 
@@ -72,7 +72,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
     registry->emplace<EnemyComponent>(enemy, 0);
-    registry->emplace<WalkingActorComponent>(enemy);
+    registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 8, 3 * UNITS_PER_BLOCK / 16);
     registry->emplace<EnemyTag>(enemy);
 
     return enemy;

@@ -12,12 +12,6 @@
 #include "Physics.h"
 #include "WalkingActorUtils.h"
 
-constexpr int dragonJumpingSpeeds[] = {
-    0, 2, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0,
-    1, 0, 0, 0, 0, 0, 0, -1, 0, -1, -1, 0};
-
-constexpr int jumpAnimationLength = sizeof(dragonJumpingSpeeds) / sizeof(int);
-
 void DragonBehaviorSystem::Init() {
 }
 
@@ -41,21 +35,11 @@ void DragonBehaviorSystem::Update() {
         }
         renderData.spriteHandle = animator.GetSpriteHandle();
 
-        int velx = 0;
-        int vely = 0;
+        int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
+        
         int moveSpeed = UNITS_PER_BLOCK / 16;
-        int jumpEndSpeed = UNITS_PER_BLOCK / 8;
-        int jumpSpeed = 3 * UNITS_PER_BLOCK / 16;
-        int fallSpeed = UNITS_PER_BLOCK / 8;
-        int JUMP_SLOWDOWN_COUNT = 5 * (int)(UNITS_PER_BLOCK * 0.9f) / jumpSpeed;
-
-        int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.3f) / jumpSpeed;
-
-        int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
-        int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
-
+        int velx = moveSpeed * Input::GetXAxis();
         bool jump = Input::IsKeyDown(Key::Jump);
-        velx = moveSpeed * Input::GetXAxis();
 
         if (velx != 0) {
             pos.dir = velx < 0 ? -1 : 1;
@@ -87,42 +71,9 @@ void DragonBehaviorSystem::Update() {
         if (jump) {
             if (isGrounded || collidesWithCollider<BubbleJumpableTopCollider>(registry, pos, collider)) {
                 actor.isJumping = true;
-                actor.jumpFrameCount = 0;
+                actor.jumpFrameCount = JUMP_FRAME_COUNT;
             }
-        }
-
-        // clamp x position to inside of the level
-        pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
-        pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
-
-
-        // execute jump
-        if (actor.isJumping) {
-            actor.jumpFrameCount++;
-            // vely = -2 * dragonJumpingSpeeds[actor.jumpFrameCount];
-            vely = actor.jumpFrameCount < JUMP_SLOWDOWN_COUNT ? -jumpSpeed : -jumpEndSpeed;
-
-            if (actor.jumpFrameCount == JUMP_FRAME_COUNT - 1) {
-                actor.isJumping = false;
-            }
-        } else {
-            vely = fallSpeed;
         }
         
-        // execute falling
-        pos.y += vely;
-        if (!actor.isJumping) {
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-                DBG_ASSERT(vely > 0);
-                pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
-            }
-        }
-
-        // apply warping
-        if (pos.y >= BOTTEM_WARP_POS) {
-            pos.y = BP_SIZE(-3, 0);
-        } else if (pos.y < BP_SIZE(-4, 0)) {
-            pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
-        }
     }
 }
