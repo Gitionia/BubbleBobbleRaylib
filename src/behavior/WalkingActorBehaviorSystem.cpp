@@ -42,7 +42,7 @@ void WalkingActorBehaviorSystem::Update() {
         }
 
         if (actor.isJumping) {
-            vely = -actor.jumpSpeed; // actor.jumpFrameCount < JUMP_SLOWDOWN_COUNT ? -jumpSpeed : -jumpEndSpeed;
+            vely = -actor.jumpSpeed;
         } else {
             vely = actor.fallSpeed;
         }
