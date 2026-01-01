@@ -39,7 +39,6 @@ entt::entity EntityFactory::CreateDragon() {
 
     registry->emplace<Position>(dragon, 5 * UNITS_PER_BLOCK, 5 * UNITS_PER_BLOCK);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
-    registry->emplace<Collider>(dragon, 2 * UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, UNITS_PER_BLOCK);
     // Spikes on the back have full height and 6 pixels to the end of the sprite
     registry->emplace<DragonSpikeCollider>(dragon, BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
                                            BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6));           // Spikes at the feet
@@ -75,10 +74,9 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
 
     registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}).SetDirection(-1));
-    registry->emplace<Collider>(enemy, 2 * UNITS_PER_BLOCK, UNITS_PER_BLOCK, 0, UNITS_PER_BLOCK);
     registry->emplace<EnemyComponent>(enemy, 0);
     registry->emplace<WalkingActorComponent>(enemy);
-    registry->emplace<BubbleTag>(enemy);
+    registry->emplace<EnemyTag>(enemy);
 
     return enemy;
 }

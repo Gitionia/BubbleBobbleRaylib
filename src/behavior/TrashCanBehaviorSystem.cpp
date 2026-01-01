@@ -1,6 +1,5 @@
 #include "TrashCanBehaviorSystem.h"
 
-
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
@@ -15,11 +14,13 @@ void TrashCanBehaviorSystem::Init() {
 
 void TrashCanBehaviorSystem::Update() {
 
+    const Collider& collider = Colliders::WalkingActorCollider;
+
     static Animator animator(&GetAnimation("Can-Walk"));
-    
-    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData, Collider>();
+
+    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>();
     for (auto entity : view) {
-        auto [pos, actor, enemy, renderData, collider] = view.get(entity);
+        auto [pos, actor, enemy, renderData] = view.get(entity);
 
         animator.Update();
         if (animator.IsFinished()) {
@@ -51,7 +52,6 @@ void TrashCanBehaviorSystem::Update() {
             pos.y -= fallSpeed;
         }
 
-
         if (isGrounded) {
             if (enemy.walkingDir == 0) {
                 enemy.walkingDir = Random::Get().GetDirection();
@@ -76,7 +76,6 @@ void TrashCanBehaviorSystem::Update() {
             renderData.flipX = targetFlip;
         }
 
-        
         // Above and below the level the dragon should ignore collisions.
         // Above includes all y-positions where the dragon would be standing on the
         // top of the level or above that.
@@ -112,7 +111,7 @@ void TrashCanBehaviorSystem::Update() {
 
             pos.x -= velx;
             enemy.walkingDir *= -1;
-            
+
             // check if enemy is in 2 space gap, in that case don't flip direction
             pos.x -= velx;
             if (collidesWithWall(registry, pos, collider)) {

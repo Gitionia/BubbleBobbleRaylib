@@ -9,7 +9,7 @@
 #include "entt/entt.hpp"
 
 void BubbleBehaviorSystem::Update() {
-    static Collider col { BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0 };
+    const Collider& col = Colliders::BubbleCollider;
 
     auto view = registry.view<Position, BubbleComponent, RenderData>();
     for (auto entity : view) {

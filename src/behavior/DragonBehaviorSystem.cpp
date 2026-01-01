@@ -4,10 +4,10 @@
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
+#include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
 #include "../utils/Debug.h"
 #include "../utils/Input.h"
-#include "../ecs/EntityFactory.h"
 #include "Level.h"
 #include "Physics.h"
 
@@ -24,9 +24,11 @@ void DragonBehaviorSystem::Update() {
 
     static Animator animator(&GetAnimation("Dragon-Idle"));
 
-    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData, Collider, DragonSpikeCollider>();
+    const Collider& collider = Colliders::WalkingActorCollider;
+
+    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData, DragonSpikeCollider>();
     for (auto entity : view) {
-        auto [pos, actor, dragon, renderData, collider, dragonSpikes] = view.get(entity);
+        auto [pos, actor, dragon, renderData, dragonSpikes] = view.get(entity);
 
         animator.Update();
         if (animator.IsFinished()) {

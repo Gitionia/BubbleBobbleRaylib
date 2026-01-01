@@ -21,6 +21,12 @@ MULTI_COLLIDER_LAYER(DragonSpikeCollider, 2)
 /* Could also be a static instance, just like DragonSpikeCollider*/
 COLLIDER_LAYER(BubbleJumpableTopCollider)
 
+class Colliders {
+  public:
+    static inline const Collider WalkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
+    static inline const Collider BubbleCollider { BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0 };
+};
+
 struct WalkingActorComponent {
     bool isJumping = false;
     bool ignoreCollisions = false;
@@ -104,5 +110,6 @@ struct LevelTileTag {};
 struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};
+struct EnemyTag {};
 
 struct DebugDrawTag {};
