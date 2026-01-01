@@ -110,6 +110,8 @@ void TrashCanBehaviorSystem::Update() {
         pos.x += velx;
         if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
             pos.x -= velx;
+
+            enemy.walkingDir *= -1;
         }
         pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
         pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
