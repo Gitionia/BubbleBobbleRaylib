@@ -19,6 +19,7 @@
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
 #include "../utils/Input.h"
+#include "../utils/Random.h"
 
 #include "Config.h"
 #include "spdlog/spdlog.h"
@@ -55,6 +56,8 @@ Application::Application(const ApplicationParameters &parameters)
     Input::Init();
 
     EntityFactory::get().setRegistry(registry);
+
+    Random::Get().Init();
 
     LoadSprites();
     LoadAnimations();

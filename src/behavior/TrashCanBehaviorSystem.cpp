@@ -6,6 +6,7 @@
 #include "../graphics/Animations.h"
 #include "../utils/Debug.h"
 #include "../utils/Input.h"
+#include "../utils/Random.h"
 #include "Level.h"
 #include "Physics.h"
 
@@ -18,7 +19,7 @@ void TrashCanBehaviorSystem::Update() {
     
     auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData, Collider>();
     for (auto entity : view) {
-        auto [pos, actor, eneme, renderData, collider] = view.get(entity);
+        auto [pos, actor, enemy, renderData, collider] = view.get(entity);
 
         animator.Update();
         if (animator.IsFinished()) {
@@ -30,7 +31,7 @@ void TrashCanBehaviorSystem::Update() {
         int vely = 0;
         int moveSpeed = UNITS_PER_BLOCK / 16;
         int jumpSpeed = 3 * UNITS_PER_BLOCK / 16;
-        int fallSpeed = UNITS_PER_BLOCK / 8;
+        int fallSpeed = UNITS_PER_BLOCK / 16;
 
         int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
         int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
@@ -51,6 +52,15 @@ void TrashCanBehaviorSystem::Update() {
         }
 
 
+        if (isGrounded) {
+            if (enemy.walkingDir == 0) {
+                enemy.walkingDir = Random::Get().GetDirection();
+            }
+        } else {
+            enemy.walkingDir = 0;
+        }
+
+        velx = moveSpeed * enemy.walkingDir;
 
         bool targetFlip;
         if (velx > 0) {
