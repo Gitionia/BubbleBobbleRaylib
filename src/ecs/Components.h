@@ -9,6 +9,8 @@
 struct Position {
     int x, y;
 
+    int dir = -1;
+
     Vector2Int toVector() const {
         return {x, y};
     }
@@ -23,8 +25,12 @@ COLLIDER_LAYER(BubbleJumpableTopCollider)
 
 class Colliders {
   public:
-    static inline const Collider WalkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
-    static inline const Collider BubbleCollider { BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0 };
+    static inline const Collider walkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
+    static inline const Collider bubbleCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0};
+
+    // Needs to be resized, because right now it works like a 2x2-block collider
+    static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
+                                                                BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
 };
 
 struct WalkingActorComponent {

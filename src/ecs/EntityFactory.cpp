@@ -39,9 +39,6 @@ entt::entity EntityFactory::CreateDragon() {
 
     registry->emplace<Position>(dragon, 5 * UNITS_PER_BLOCK, 5 * UNITS_PER_BLOCK);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
-    // Spikes on the back have full height and 6 pixels to the end of the sprite
-    registry->emplace<DragonSpikeCollider>(dragon, BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
-                                           BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6));           // Spikes at the feet
     registry->emplace<WalkingActorComponent>(dragon);
     registry->emplace<DragonComponent>(dragon);
     registry->emplace<DragonTag>(dragon);

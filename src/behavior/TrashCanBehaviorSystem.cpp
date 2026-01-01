@@ -14,7 +14,7 @@ void TrashCanBehaviorSystem::Init() {
 
 void TrashCanBehaviorSystem::Update() {
 
-    const Collider& collider = Colliders::WalkingActorCollider;
+    const Collider& collider = Colliders::walkingActorCollider;
 
     static Animator animator(&GetAnimation("Can-Walk"));
 

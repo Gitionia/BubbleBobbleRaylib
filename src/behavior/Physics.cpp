@@ -69,6 +69,28 @@ bool collidesWithMultiCollider(entt::registry &registry, const Position &positio
     return false;
 }
 
+
+bool collidesWithDragonSpikes(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, DragonTag>();
+
+    for (const auto entity : view) {
+        auto [pos] = view.get(entity);
+
+        DragonSpikeCollider multiCollider = Colliders::dragonSpikeCollider;
+        if (pos.dir > 0) {
+            multiCollider.flipX(BP_SIZE(2, 0));
+        }
+
+        for (Collider &col : multiCollider.colliders) {
+            if (overlaps(position, collider, pos, col)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 // template bool collidesWithCollider<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
 template bool collidesWithCollider<BubbleJumpableTopCollider>(entt::registry &registry, const Position &position, const Collider &collider);
 

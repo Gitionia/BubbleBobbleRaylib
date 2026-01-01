@@ -9,7 +9,7 @@
 #include "entt/entt.hpp"
 
 void BubbleBehaviorSystem::Update() {
-    const Collider& col = Colliders::BubbleCollider;
+    const Collider& col = Colliders::bubbleCollider;
 
     auto view = registry.view<Position, BubbleComponent, RenderData>();
     for (auto entity : view) {
@@ -85,7 +85,7 @@ void BubbleBehaviorSystem::Update() {
             // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
             // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
-            if (bubble.popableDelay == 0 && collidesWithMultiCollider<DragonSpikeCollider>(registry, pos, col)) {
+            if (bubble.popableDelay == 0 && collidesWithDragonSpikes(registry, pos, col)) {
                 Destroy(entity);
             }
 

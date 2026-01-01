@@ -24,11 +24,11 @@ void DragonBehaviorSystem::Update() {
 
     static Animator animator(&GetAnimation("Dragon-Idle"));
 
-    const Collider& collider = Colliders::WalkingActorCollider;
+    const Collider& collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData, DragonSpikeCollider>();
+    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>();
     for (auto entity : view) {
-        auto [pos, actor, dragon, renderData, dragonSpikes] = view.get(entity);
+        auto [pos, actor, dragon, renderData] = view.get(entity);
 
         animator.Update();
         if (animator.IsFinished()) {
@@ -56,18 +56,9 @@ void DragonBehaviorSystem::Update() {
         bool jump = Input::IsKeyDown(Key::Jump);
         velx = moveSpeed * Input::GetXAxis();
 
-        bool targetFlip;
-        if (velx > 0) {
-            targetFlip = true;
-        } else if (velx < 0) {
-            targetFlip = false;
-        }
-
         if (velx != 0) {
-            if (targetFlip != renderData.flipX) {
-                dragonSpikes.flipX(2 * UNITS_PER_BLOCK);
-            }
-            renderData.flipX = targetFlip;
+            renderData.flipX = velx > 0;
+            pos.dir = velx < 0 ? -1 : 1;
         }
 
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
