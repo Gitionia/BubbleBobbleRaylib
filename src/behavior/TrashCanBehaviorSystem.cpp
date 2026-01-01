@@ -44,7 +44,7 @@ void TrashCanBehaviorSystem::Update() {
 
         // check if grounded
         bool isGrounded = false;
-        if (!actor.isJumping) {
+        if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
         }
 
@@ -65,7 +65,6 @@ void TrashCanBehaviorSystem::Update() {
         // start jump
         if (jump) {
             if (isGrounded) {
-                actor.isJumping = true;
                 actor.jumpFrameCount = JUMP_FRAME_COUNT;
             }
         }

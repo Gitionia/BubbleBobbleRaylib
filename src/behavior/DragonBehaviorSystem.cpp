@@ -70,14 +70,13 @@ void DragonBehaviorSystem::Update() {
 
         // check if grounded
         bool isGrounded = false;
-        if (!actor.isJumping) {
+        if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
         }
 
         // start jump
         if (jump) {
             if (isGrounded || collidesWithCollider<BubbleJumpableTopCollider>(registry, pos, collider)) {
-                actor.isJumping = true;
                 actor.jumpFrameCount = JUMP_FRAME_COUNT;
             }
         }

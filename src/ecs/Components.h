@@ -36,11 +36,14 @@ class Colliders {
 struct WalkingActorComponent {
     int fallSpeed;
     int jumpSpeed;
-    bool isJumping = false;
     bool ignoreCollisions = false;
     // number of frames left for the jump
     int jumpFrameCount = 0;
-};
+
+    bool isJumping() {
+        return jumpFrameCount > 0;
+    }
+};  
 
 struct DragonComponent {
     int bubbleShootDelay = 0;

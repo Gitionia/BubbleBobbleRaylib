@@ -23,25 +23,17 @@ void WalkingActorBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, actor] = view.get(entity);
 
-        int vely = 0;
-        int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
-        // int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
-        
-
         // clamp x position to inside of the level
         pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
         pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
 
         // execute jump
-        if (actor.isJumping) {
+        if (actor.jumpFrameCount > 0) {
             actor.jumpFrameCount--;
-
-            if (actor.jumpFrameCount == 0) {
-                actor.isJumping = false;
-            }
         }
 
-        if (actor.isJumping) {
+        int vely = 0;
+        if (actor.isJumping()) {
             vely = -actor.jumpSpeed;
         } else {
             vely = actor.fallSpeed;
@@ -49,12 +41,14 @@ void WalkingActorBehaviorSystem::Update() {
 
         // execute falling
         pos.y += vely;
-        if (!actor.isJumping) {
+        if (!actor.isJumping()) {
             if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
                 DBG_ASSERT(vely > 0);
                 pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
             }
         }
+
+        int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
 
         // apply warping
         if (pos.y >= BOTTEM_WARP_POS) {
