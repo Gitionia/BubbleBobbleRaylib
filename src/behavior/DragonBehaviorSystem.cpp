@@ -35,9 +35,7 @@ void DragonBehaviorSystem::Update() {
         }
         renderData.spriteHandle = animator.GetSpriteHandle();
 
-
         int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
-        
 
         int inputDir = Input::GetXAxis();
         bool jump = Input::IsKeyDown(Key::Jump);
@@ -48,7 +46,6 @@ void DragonBehaviorSystem::Update() {
 
         int moveSpeed = UNITS_PER_BLOCK / 16;
         int velx = moveSpeed * inputDir;
-
 
         // shooting
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
@@ -75,11 +72,18 @@ void DragonBehaviorSystem::Update() {
         }
 
         // start jump
-        if (jump) {
+        if (jump && !actor.isJumping()) {
             if (isGrounded || collidesWithCollider<BubbleJumpableTopCollider>(registry, pos, collider)) {
-                actor.jumpFrameCount = JUMP_FRAME_COUNT;
+                dragon.jumpSpeed.reset();
+                actor.jumpFrameCount = dragon.jumpSpeed.getLength();
             }
         }
-        
+
+        if (actor.isJumping()) {
+            actor.jumpSpeed = dragon.jumpSpeed.get();
+            printf("jumpspeed %i \n", actor.jumpSpeed);
+            dragon.jumpSpeed.tick();
+
+        }
     }
 }

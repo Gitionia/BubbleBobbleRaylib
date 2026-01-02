@@ -27,11 +27,6 @@ void WalkingActorBehaviorSystem::Update() {
         pos.x = std::max(2 * UNITS_PER_BLOCK, pos.x);
         pos.x = std::min(28 * UNITS_PER_BLOCK, pos.x);
 
-        // execute jump
-        if (actor.jumpFrameCount > 0) {
-            actor.jumpFrameCount--;
-        }
-
         int vely = 0;
         if (actor.isJumping()) {
             vely = -actor.jumpSpeed;
@@ -46,6 +41,11 @@ void WalkingActorBehaviorSystem::Update() {
                 DBG_ASSERT(vely > 0);
                 pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
             }
+        }
+
+        // execute jump
+        if (actor.jumpFrameCount > 0) {
+            actor.jumpFrameCount--;
         }
 
         int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;

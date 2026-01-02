@@ -3,6 +3,7 @@
 #include "../app/Config.h"
 #include "../graphics/Animations.h"
 #include "../graphics/Sprites.h"
+#include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
 #include "raylib.h"
 
@@ -43,10 +44,14 @@ struct WalkingActorComponent {
     bool isJumping() {
         return jumpFrameCount > 0;
     }
-};  
+};
 
 struct DragonComponent {
     int bubbleShootDelay = 0;
+
+    static inline AnimatedValueDefinition<int> jumpSpeedsDefintion{{BP_SIZE(0, 6), 5}, {BP_SIZE(0, 4), 10}, {BP_SIZE(0, 2), 10}};
+    AnimatedValue<int> jumpSpeed{jumpSpeedsDefintion};
+
     static constexpr int MAX_BUBBLE_SHOOT_DELAY = 1;
 };
 
