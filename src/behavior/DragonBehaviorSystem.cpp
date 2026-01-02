@@ -81,7 +81,6 @@ void DragonBehaviorSystem::Update() {
 
         if (actor.isJumping()) {
             actor.jumpSpeed = dragon.jumpSpeed.get();
-            printf("jumpspeed %i \n", actor.jumpSpeed);
             dragon.jumpSpeed.tick();
 
         }

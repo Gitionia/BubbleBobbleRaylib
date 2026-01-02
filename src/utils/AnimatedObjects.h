@@ -32,7 +32,6 @@ class AnimatedValue {
                 currentIndex = frames.size() - 1;
             }
         }
-        printf("index %i frame %i \n", currentIndex, frame);
     }
 
     T get() {
