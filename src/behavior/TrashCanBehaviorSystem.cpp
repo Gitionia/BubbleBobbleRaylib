@@ -30,17 +30,10 @@ void TrashCanBehaviorSystem::Update() {
         renderData.spriteHandle = animator.GetSpriteHandle();
 
         int velx = 0;
-        int vely = 0;
         int moveSpeed = UNITS_PER_BLOCK / 16;
-        int jumpSpeed = 3 * UNITS_PER_BLOCK / 16;
-        int fallSpeed = UNITS_PER_BLOCK / 16;
+        int JUMP_FRAME_COUNT = BP_SIZE(5, 8) / actor.jumpSpeed;
 
-        int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
-        int TOP_WARP_POS = 30 * UNITS_PER_BLOCK;
-
-        int JUMP_FRAME_COUNT = BP_SIZE(5, 0) / jumpSpeed;
-
-        bool jump = false;
+        bool jump = Random::Get().Range(150) == 1;
 
         // check if grounded
         bool isGrounded = false;
