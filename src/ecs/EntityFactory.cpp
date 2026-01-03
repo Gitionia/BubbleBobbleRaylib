@@ -52,7 +52,7 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
 
     registry->emplace<Position>(bubble, centre.X - BP_SIZE(0, 14), centre.Y - BP_SIZE(1, 0));
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
-    registry->emplace<BubbleComponent>(bubble, direction, Animator(&GetAnimation("Bubble-Green-Idle")));
+    registry->emplace<BubbleShootComponent>(bubble, direction);
     registry->emplace<BubbleTag>(bubble);
 
     return bubble;

@@ -2,78 +2,104 @@
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
+#include "../ecs/EntityFactory.h"
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
-#include "../ecs/EntityFactory.h"
 #include "Physics.h"
 #include "entt/entt.hpp"
 
+void BubbleBehaviorSystem::makeBubbleFloating(entt::entity entity) {
+    entitiesToMakeFloating.push_back(entity);
+}
+
+void BubbleBehaviorSystem::Init() {
+    // Probably a lower reserve would suffice, but this should be good enough without much cost
+    entitiesToMakeFloating.reserve(20);
+}
+
 void BubbleBehaviorSystem::Update() {
-    const Collider& col = Colliders::bubbleCollider;
+    const Collider &col = Colliders::bubbleCollider;
 
-    auto view = registry.view<Position, BubbleComponent, RenderData>();
-    for (auto entity : view) {
-        auto [pos, bubble, renderData] = view.get(entity);
+    {
+        auto view = registry.view<Position, BubbleShootComponent, RenderData>();
+        for (auto entity : view) {
+            auto [pos, bubble, renderData] = view.get(entity);
 
-        int shootVelocity = UNITS_PER_BLOCK / 8;
+            int shootVelocity = UNITS_PER_BLOCK / 8;
 
-        if (bubble.animator.IsFinished())
-            bubble.animator.Reset();
-        renderData.spriteHandle = bubble.animator.GetSpriteHandle();
-        bubble.animator.Update();
+            if (bubble.animator.IsFinished())
+                bubble.animator.Reset();
+            renderData.spriteHandle = bubble.animator.GetSpriteHandle();
+            bubble.animator.Update();
 
-        switch (bubble.state) {
-        case BubbleState::SHOOTING: {
-            int dx = shootVelocity * bubble.shootDirection;
+            if (!bubble.isWaiting()) {
+                int dx = shootVelocity * bubble.shootDirection;
+                pos.x += dx;
 
-            pos.x += dx;
+                bubble.shootFrame--;
+                if (bubble.shootFrame == 0) {
+                    // switch to floating
 
-            if (collidesWithWall(registry, pos, col)) {
-                // Bug: Now Bubbles also get rounded if they get spawned in a wall
-                pos.x -= dx;
-                pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
+                    makeBubbleFloating(entity);
+                }
+                // if hits wall, enable jumpable delay and popable delay
+                else if (collidesWithWall(registry, pos, col)) {
+                    // Bug: Now Bubbles also get rounded if they get spawned in a wall
+                    pos.x -= dx;
+                    pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
 
-                bubble.state = BubbleState::FLOATING;
-                bubble.shootCounter = 0;
-                bubble.jumpableDelay = bubble.MAX_JUMPABLE_DELAY;
-                bubble.popableDelay = bubble.MAX_POPABLE_DELAY;
-
+                    bubble.shootFrame = 0;
+                    bubble.jumpableDelayFrame = bubble.JUMPABLE_DELAY_FRAME_COUNT;
+                    bubble.popableDelayFrame = bubble.POPABLE_DELAY_FRAME_COUNT;
+                }
             } else {
-                bubble.shootCounter--;
-                if (bubble.shootCounter == 0) {
-                    bubble.state = BubbleState::FLOATING;
-                    EntityFactory::MakeBubbleJumpable(entity);
+                if (bubble.popableDelayFrame > 0) {
+                    bubble.popableDelayFrame--;
                 }
-            }
+                if (bubble.popableDelayFrame == 0 && collidesWithDragonSpikes(registry, pos, col)) {
+                    Destroy(entity);
+                }
 
-            break;
+                if (bubble.jumpableDelayFrame > 0) {
+                    bubble.jumpableDelayFrame--;
+                }
+                if (bubble.jumpableDelayFrame == 0) {
+                    makeBubbleFloating(entity);
+                }
+
+                printf("popableDelay %i, jumpableDelay %i \n", bubble.popableDelayFrame, bubble.jumpableDelayFrame);
+            }
         }
-        case BubbleState::FLOATING: {
+    }
 
-            if (bubble.jumpableDelay > 0) {
-                bubble.jumpableDelay--;
-                if (bubble.jumpableDelay == 0) {
-                    EntityFactory::MakeBubbleJumpable(entity);
-                }
+    for (auto entity : entitiesToMakeFloating) {
+        registry.remove<BubbleShootComponent>(entity);
+        registry.emplace<BubbleFloatComponent>(entity);
+    }
+
+    entitiesToMakeFloating.clear();
+
+    {
+        auto view = registry.view<Position, BubbleFloatComponent, RenderData>();
+        for (auto entity : view) {
+            auto [pos, bubble, renderData] = view.get(entity);
+
+            if (bubble.animator.IsFinished())
+                bubble.animator.Reset();
+            renderData.spriteHandle = bubble.animator.GetSpriteHandle();
+            bubble.animator.Update();
+
+            Vector2Int centerPos = col.getCenter(pos.x, pos.y);
+            Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
+
+            pos.x += airflowVelocity.X;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.x -= airflowVelocity.X;
             }
 
-            if (bubble.popableDelay > 0) {
-                bubble.popableDelay--;
-            }
-
-            if (bubble.jumpableDelay == 0) {
-                Vector2Int centerPos = col.getCenter(pos.x, pos.y);
-                Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
-
-                pos.x += airflowVelocity.X;
-                if (collidesWithWall(registry, pos, col)) {
-                    pos.x -= airflowVelocity.X;
-                }
-
-                pos.y += airflowVelocity.Y;
-                if (collidesWithWall(registry, pos, col)) {
-                    pos.y -= airflowVelocity.Y;
-                }
+            pos.y += airflowVelocity.Y;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.y -= airflowVelocity.Y;
             }
 
             if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 2)) {
@@ -85,20 +111,15 @@ void BubbleBehaviorSystem::Update() {
             // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
             // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
-            if (bubble.popableDelay == 0 && collidesWithDragonSpikes(registry, pos, col)) {
+            if (collidesWithDragonSpikes(registry, pos, col)) {
                 Destroy(entity);
             }
 
-            bubble.lifetimeCounter--;
-            if (bubble.lifetimeCounter == 0) {
+            if (bubble.lifetimeFrame > 0) {
+                bubble.lifetimeFrame--;
+            } else {
                 Destroy(entity);
             }
-
-            break;
-        }
-
-        default:
-            break;
         }
     }
 }

@@ -69,6 +69,19 @@ bool collidesWithMultiCollider(entt::registry &registry, const Position &positio
     return false;
 }
 
+bool collidesWithJumpableBubble(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, BubbleFloatComponent>();
+
+    for (const auto entity : view) {
+        const auto [pos, bubble] = view.get(entity);
+
+        if (overlaps(position, collider, pos, Colliders::bubbleJumpableCollider)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 bool collidesWithDragonSpikes(entt::registry &registry, const Position &position, const Collider &collider) {
     const auto view = registry.view<Position, DragonTag>();
