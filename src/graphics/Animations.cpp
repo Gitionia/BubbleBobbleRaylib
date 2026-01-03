@@ -47,15 +47,15 @@ Animation &GetAnimation(const std::string &name) {
 Animator::Animator(const Animation *animation)
     : animation(animation) {}
 
-bool Animator::Update() {
-    frame++;
+void Animator::Update() {
+    if (!IsFinished()) {
+        frame++;
+    }
     currentSprite = frame / animation->FrameCountPerSprite;
-
-    return IsFinished();
 }
 
 bool Animator::IsFinished() const {
-    return currentSprite >= animation->Sprites.size();
+    return currentSprite == animation->Sprites.size() - 1;
 }
 
 void Animator::Reset() {
@@ -72,7 +72,6 @@ SpriteHandle Animator::GetSpriteHandle() const {
     return animation->Sprites.at(currentSprite);
 }
 
-const std::string& Animator::GetAnimationName() const {
+const std::string &Animator::GetAnimationName() const {
     return animation->name;
 }
-

@@ -23,7 +23,7 @@ class Animator {
   public:
     Animator(const Animation *animation);
 
-    bool Update();
+    void Update();
     bool IsFinished() const;
     void Reset();
     void SetNewAnimation(const Animation *animation);

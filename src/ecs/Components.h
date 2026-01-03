@@ -62,7 +62,7 @@ struct EnemyComponent {
 
 struct BubbleShootComponent {
     int shootDirection;
-    Animator animator{&GetAnimation("Bubble-Green-Idle")};
+    Animator animator{&GetAnimation("Bubble-Green-Shoot")};
 
     static constexpr int SHOOT_FRAME_COUNT = 60;
     int shootFrame = SHOOT_FRAME_COUNT;

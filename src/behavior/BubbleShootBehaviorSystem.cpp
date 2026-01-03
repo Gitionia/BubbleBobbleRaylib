@@ -26,8 +26,6 @@ void BubbleShootBehaviorSystem::Update() {
 
         int shootVelocity = UNITS_PER_BLOCK / 8;
 
-        if (bubble.animator.IsFinished())
-            bubble.animator.Reset();
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
 
