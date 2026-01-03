@@ -58,13 +58,6 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     return bubble;
 }
 
-void EntityFactory::MakeBubbleJumpable(entt::entity entity) {
-    entt::registry *registry = get().registry;
-
-    // Collider offset 2 pixels up to avoid poping the bubble when jumping
-    registry->emplace<BubbleJumpableTopCollider>(entity, BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2));
-}
-
 entt::entity EntityFactory::CreateEnemy(int x, int y) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();

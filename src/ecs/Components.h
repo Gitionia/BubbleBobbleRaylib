@@ -60,11 +60,6 @@ struct EnemyComponent {
     int walkingDir;
 };
 
-enum class BubbleState {
-    SHOOTING,
-    FLOATING
-};
-
 struct BubbleShootComponent {
     int shootDirection;
     Animator animator{&GetAnimation("Bubble-Green-Idle")};
@@ -83,32 +78,11 @@ struct BubbleShootComponent {
     }
 };
 
-struct BubbleTransitionToFloatingComponent {};
-
 struct BubbleFloatComponent {
     Animator animator{&GetAnimation("Bubble-Green-Idle")};
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
-};
-
-struct BubbleComponent {
-    int shootDirection;
-    Animator animator;
-
-    BubbleState state = BubbleState::SHOOTING;
-    int shootCounter = MAX_SHOOT_COUNTER;
-    int lifetimeCounter = MAX_LIFE_TIME;
-    // Value > 0, if is floating and the jumpable collider is not added yet
-    int jumpableDelay = 0;
-    // Value > 0, if is floating and it can't be popped yet
-    // Should be less than jumpableDelay
-    int popableDelay = 0;
-
-    static constexpr int MAX_JUMPABLE_DELAY = 9;
-    static constexpr int MAX_POPABLE_DELAY = 7;
-    static constexpr int MAX_LIFE_TIME = TARGET_FPS * 20;
-    static constexpr int MAX_SHOOT_COUNTER = 60;
 };
 
 struct RenderData {

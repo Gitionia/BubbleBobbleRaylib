@@ -13,7 +13,6 @@ class EntityFactory {
     static entt::entity CreateEnemy(int x, int y);
     static entt::entity CreateBubbleCenteredAt(const Vector2Int &centre, int direction);
     static void CreateLevel(const LevelLayout &level);
-    static void MakeBubbleJumpable(entt::entity entity);
 
   private:
     static EntityFactory &get();
