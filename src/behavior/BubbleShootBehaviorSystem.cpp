@@ -34,6 +34,8 @@ void BubbleShootBehaviorSystem::Update() {
         auto [pos, bubble, renderData] = view.get(entity);
 
         int shootVelocity = BP_SIZE(0, 4);
+        int POPABLE_DELAY_FRAME_COUNT = 3;
+        int JUMPABLE_DELAY_FRAME_COUNT = 5;
 
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
@@ -54,8 +56,8 @@ void BubbleShootBehaviorSystem::Update() {
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
 
                 bubble.shootFrame = 0;
-                bubble.jumpableDelayFrame = bubble.JUMPABLE_DELAY_FRAME_COUNT;
-                bubble.popableDelayFrame = bubble.POPABLE_DELAY_FRAME_COUNT;
+                bubble.jumpableDelayFrame = JUMPABLE_DELAY_FRAME_COUNT;
+                bubble.popableDelayFrame = POPABLE_DELAY_FRAME_COUNT;
             }
         } else {
             if (bubble.popableDelayFrame > 0) {
@@ -69,10 +71,9 @@ void BubbleShootBehaviorSystem::Update() {
                 bubble.jumpableDelayFrame--;
             }
             if (bubble.jumpableDelayFrame == 0) {
-                
+
                 Defer(entity, &makeBubbleFloating, Floating);
             }
         }
     }
-
 }
