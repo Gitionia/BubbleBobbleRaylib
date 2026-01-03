@@ -27,6 +27,7 @@ COLLIDER_LAYER(BubbleJumpableTopCollider)
 class Colliders {
   public:
     static inline const Collider walkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
+    static inline const Collider fullActorCollider = {BP_SIZE(2, 0), BP_SIZE(2, 0), 0, 0};
     static inline const Collider bubbleCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
 

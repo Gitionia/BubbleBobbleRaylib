@@ -32,7 +32,7 @@ void TrashCanBehaviorSystem::Update() {
         auto [pos, actor, enemy, renderData] = view.get(entity);
 
    
-        std::optional<entt::entity> bubble = getCollidingShootingBubble(registry, pos, collider);
+        std::optional<entt::entity> bubble = getCollidingShootingBubble(registry, pos, Colliders::fullActorCollider);
         if (bubble.has_value()) {
             Defer(entity, &makeEnemyBubbled, 0); 
             Destroy(bubble.value());
