@@ -10,6 +10,8 @@ class DragonBehaviorSystem : public SystemBase {
 
   public:
     void Init() override;
+
+  protected:
     void Update() override;
 
   private:

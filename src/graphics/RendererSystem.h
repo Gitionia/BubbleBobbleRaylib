@@ -8,7 +8,7 @@
 class RendererSystem : public SystemBase {
     SYSTEM_DEF(RendererSystem)
 
-  public:
+  protected:
     void Update() override;
 
   private:

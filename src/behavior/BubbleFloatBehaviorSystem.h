@@ -5,6 +5,6 @@
 class BubbleFloatBehaviorSystem : public SystemBase {
     SYSTEM_DEF(BubbleFloatBehaviorSystem)
 
-  public:
+  protected:
     void Update() override;
 };

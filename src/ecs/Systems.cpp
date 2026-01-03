@@ -40,7 +40,7 @@ void SystemRunner::Init() {
 
 void SystemRunner::UpdateSystems() const {
     for (auto system : systems) {
-        system->Update();
+        system->BaseUpdate();
     }
 
     auto view = registry.view<DestroyEntity>();

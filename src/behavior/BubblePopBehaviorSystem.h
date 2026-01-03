@@ -5,6 +5,6 @@
 class BubblePopBehaviorSystem : public SystemBase {
     SYSTEM_DEF(BubblePopBehaviorSystem)
 
-  public:
+  protected:
     void Update() override;
 };

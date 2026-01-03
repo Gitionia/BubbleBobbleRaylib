@@ -56,6 +56,7 @@ Application::Application(const ApplicationParameters &parameters)
     Input::Init();
 
     EntityFactory::get().setRegistry(registry);
+    SystemBase::BaseInit();
 
     Random::Get().Init();
 
