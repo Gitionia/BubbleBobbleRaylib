@@ -20,6 +20,10 @@
    { "name": "Background", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
+   { "name": "Bubble-Pop-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 614, "y": 1050, "w": 14, "h": 16 } }] },
+   { "name": "Bubble-Pop-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 590, "y": 1050, "w": 14, "h": 16 } }] },
+   { "name": "Bubble-PrePop-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 278, "y": 1073, "w": 14, "h": 16 } }] },
+   { "name": "Bubble-PrePop-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 224, "y": 1073, "w": 14, "h": 16 } }] },
    { "name": "Dragon-Shooting-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 213, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Shooting-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 192, "y": 16, "w": 16, "h": 16 } }] },
    { "name": "Dragon-Shooting-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 171, "y": 16, "w": 16, "h": 16 } }] },
