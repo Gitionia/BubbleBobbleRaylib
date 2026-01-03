@@ -14,6 +14,7 @@ class SpriteManager;
 class SystemBase {
   public:
     SystemBase(entt::registry &registry);
+    virtual ~SystemBase() = default;
     virtual void Init() {}
     virtual void Update() = 0;
 
