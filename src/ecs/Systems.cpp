@@ -8,6 +8,7 @@
 #include "../graphics/RendererSystem.h"
 #include "../behavior/BubbleShootBehaviorSystem.h"
 #include "../behavior/BubbleFloatBehaviorSystem.h"
+#include "../behavior/BubblePopBehaviorSystem.h"
 #include "../behavior/DragonBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
@@ -21,6 +22,7 @@ SystemRunner::SystemRunner(entt::registry &registry)
     registerSystem<WalkingActorBehaviorSystem>(registry);
     registerSystem<BubbleShootBehaviorSystem>(registry);
     registerSystem<BubbleFloatBehaviorSystem>(registry);
+    registerSystem<BubblePopBehaviorSystem>(registry);
     registerSystem<RendererSystem>(registry);
 }
 

@@ -40,6 +40,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/behavior/BubbleShootBehaviorSystem.h
         src/behavior/BubbleFloatBehaviorSystem.cpp
         src/behavior/BubbleFloatBehaviorSystem.h
+        src/behavior/BubblePopBehaviorSystem.cpp
+        src/behavior/BubblePopBehaviorSystem.h
         src/behavior/TrashCanBehaviorSystem.h
         src/behavior/TrashCanBehaviorSystem.cpp
         src/behavior/WalkingActorBehaviorSystem.h

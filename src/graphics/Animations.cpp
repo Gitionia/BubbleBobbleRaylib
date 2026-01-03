@@ -52,10 +52,13 @@ void Animator::Update() {
         frame++;
     }
     currentSprite = frame / animation->FrameCountPerSprite;
+    if (currentSprite >= animation->Sprites.size()) {
+        currentSprite = animation->Sprites.size() - 1;
+    }
 }
 
 bool Animator::IsFinished() const {
-    return currentSprite == animation->Sprites.size() - 1;
+    return frame >= animation->FrameCountPerSprite * animation->Sprites.size();
 }
 
 void Animator::Reset() {

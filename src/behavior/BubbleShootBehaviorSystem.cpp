@@ -52,7 +52,7 @@ void BubbleShootBehaviorSystem::Update() {
                 bubble.popableDelayFrame--;
             }
             if (bubble.popableDelayFrame == 0 && collidesWithDragonSpikes(registry, pos, col)) {
-                Destroy(entity);
+                makeBubbleFloating(entity);
             }
 
             if (bubble.jumpableDelayFrame > 0) {
@@ -66,7 +66,7 @@ void BubbleShootBehaviorSystem::Update() {
 
     for (auto entity : entitiesToMakeFloating) {
         registry.remove<BubbleShootComponent>(entity);
-        registry.emplace<BubbleFloatComponent>(entity);
+        registry.emplace<BubblePopComponent>(entity);
     }
     entitiesToMakeFloating.clear();
 }

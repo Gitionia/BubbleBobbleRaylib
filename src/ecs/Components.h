@@ -29,7 +29,7 @@ class Colliders {
     static inline const Collider walkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
     static inline const Collider bubbleCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
-    
+
     // Needs to be resized, because right now it works like a 2x2-block collider
     static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
                                                                 BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
@@ -83,6 +83,12 @@ struct BubbleFloatComponent {
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
+};
+
+struct BubblePopComponent {
+    Animator animator{&GetAnimation("Bubble-PrePop")};
+    bool isInStatePrePop = true;
+    int popAnimationRepetitions = 0;
 };
 
 struct RenderData {
