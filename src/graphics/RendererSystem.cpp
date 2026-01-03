@@ -6,7 +6,17 @@
 #include "../app/Config.h"
 #include "../utils/Utilities.h"
 
+void RendererSystem::Init() {
+    renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);
+}
+
+RendererSystem::~RendererSystem() {
+    UnloadRenderTexture(renderTexture);
+}
+
 void RendererSystem::Update() {
+    BeginTextureMode(renderTexture);
+
     ClearBackground(BLACK);
 
     renderAllWithTag<LevelTileShadowTag>();
@@ -24,6 +34,27 @@ void RendererSystem::Update() {
 #endif
 
     DrawFPS(10, 10);
+
+    EndTextureMode();
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+
+    Rectangle src = {0, 0, TARGET_WINDOW_WIDTH, -TARGET_WINDOW_HEIGHT};
+
+    float width = GetScreenWidth();
+    float height = GetScreenHeight();
+
+    float scaleX = width / TARGET_WINDOW_WIDTH;
+    float scaleY = height / TARGET_WINDOW_HEIGHT;
+
+    float scale = std::min(scaleX, scaleY);
+
+
+
+    Rectangle dest = {0, 0, TARGET_WINDOW_WIDTH * scale, TARGET_WINDOW_HEIGHT * scale};
+    DrawTexturePro(renderTexture.texture, src, dest, {0, 0}, 0, WHITE);
+    EndDrawing();
 }
 
 void RendererSystem::drawDebugShapes() {
@@ -46,7 +77,7 @@ void RendererSystem::renderAllWithTag() {
 
         const Sprite &sprite = GetSprite(renderData.spriteHandle);
         Rectangle sourceRect = sprite.coords;
-        
+
         if (pos.dir > 0) {
             sourceRect.width *= -1;
         }

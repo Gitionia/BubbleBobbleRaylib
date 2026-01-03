@@ -93,7 +93,6 @@ void Application::Run() {
 
 void update(SystemRunner &runner) {
 
-    BeginDrawing();
 // #define PROFILE
 #ifdef PROFILE
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -115,7 +114,4 @@ void update(SystemRunner &runner) {
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
     PRINT_INFO("FPS: {}, Frame Time: {}µs", 1000000 / elapsed, elapsed);
 #endif
-
-    EndDrawing();
-
 }

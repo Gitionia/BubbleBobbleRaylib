@@ -8,6 +8,10 @@
 class RendererSystem : public SystemBase {
     SYSTEM_DEF(RendererSystem)
 
+  public:
+    void Init() override;
+    ~RendererSystem();
+
   protected:
     void Update() override;
 
@@ -23,4 +27,7 @@ class RendererSystem : public SystemBase {
 
   private:
     void drawDebugShapes();
+
+  private:
+    RenderTexture2D renderTexture;
 };

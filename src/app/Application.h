@@ -5,11 +5,12 @@
 #include "../ecs/Systems.h"
 #include "../graphics/Sprites.h"
 #include "../graphics/Window.h"
+#include "Config.h"
 #include "entt/entt.hpp"
 
 struct ApplicationParameters {
-    int width = 32 * 32;
-    int height = 32 * 26;
+    int width = TARGET_WINDOW_WIDTH;
+    int height = TARGET_WINDOW_HEIGHT;
     const char *title = "Bubble Bobble";
 };
 
