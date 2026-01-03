@@ -38,8 +38,6 @@ void BubbleBehaviorSystem::Update() {
 
                 bubble.shootFrame--;
                 if (bubble.shootFrame == 0) {
-                    // switch to floating
-
                     makeBubbleFloating(entity);
                 }
                 // if hits wall, enable jumpable delay and popable delay
@@ -66,8 +64,6 @@ void BubbleBehaviorSystem::Update() {
                 if (bubble.jumpableDelayFrame == 0) {
                     makeBubbleFloating(entity);
                 }
-
-                printf("popableDelay %i, jumpableDelay %i \n", bubble.popableDelayFrame, bubble.jumpableDelayFrame);
             }
         }
     }
@@ -76,7 +72,6 @@ void BubbleBehaviorSystem::Update() {
         registry.remove<BubbleShootComponent>(entity);
         registry.emplace<BubbleFloatComponent>(entity);
     }
-
     entitiesToMakeFloating.clear();
 
     {

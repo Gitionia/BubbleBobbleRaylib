@@ -7,5 +7,7 @@ SystemBase::SystemBase(entt::registry &registry)
 }
 
 void SystemBase::Destroy(const entt::entity &e) const {
-    registry.emplace<DestroyEntity>(e);
+    if (!registry.any_of<DestroyEntity>(e)) {
+        registry.emplace<DestroyEntity>(e);
+    }
 }
