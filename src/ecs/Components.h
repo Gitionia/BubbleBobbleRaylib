@@ -72,10 +72,10 @@ struct BubbleShootComponent {
     static constexpr int SHOOT_FRAME_COUNT = 60;
     int shootFrame = SHOOT_FRAME_COUNT;
 
-    static constexpr int POPABLE_DELAY_FRAME_COUNT = 7;
+    static constexpr int POPABLE_DELAY_FRAME_COUNT = 0;
     int popableDelayFrame = 0;
 
-    static constexpr int JUMPABLE_DELAY_FRAME_COUNT = 9;
+    static constexpr int JUMPABLE_DELAY_FRAME_COUNT = 3;
     int jumpableDelayFrame = 0;
 
     bool isWaiting() {
@@ -86,7 +86,7 @@ struct BubbleShootComponent {
 struct BubbleTransitionToFloatingComponent {};
 
 struct BubbleFloatComponent {
-    Animator animator{&GetAnimation("Dragon-Idle")};
+    Animator animator{&GetAnimation("Bubble-Green-Idle")};
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
