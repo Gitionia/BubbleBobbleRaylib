@@ -9,6 +9,14 @@
 #include "Level.h"
 #include "Physics.h"
 #include "WalkingActorUtils.h"
+#include "entt/entity/fwd.hpp"
+#include <optional>
+
+
+void makeEnemyBubbled(entt::registry& registry, entt::entity e) {
+    BubbleFloatComponent& c = registry.emplace<BubbleFloatComponent>(e);
+    c.animator.SetNewAnimation(&GetAnimation("Can-Bubbled"));
+}
 
 void TrashCanBehaviorSystem::Init() {
 }
@@ -19,9 +27,17 @@ void TrashCanBehaviorSystem::Update() {
 
     static Animator animator(&GetAnimation("Can-Walk"));
 
-    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>();
+    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, actor, enemy, renderData] = view.get(entity);
+
+   
+        std::optional<entt::entity> bubble = getCollidingShootingBubble(registry, pos, collider);
+        if (bubble.has_value()) {
+            Defer(entity, &makeEnemyBubbled, 0); 
+            Destroy(bubble.value());
+        }
+
 
         animator.Update();
         if (animator.IsFinished()) {

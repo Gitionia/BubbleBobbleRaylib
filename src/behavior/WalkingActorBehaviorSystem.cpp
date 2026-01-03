@@ -11,6 +11,7 @@
 #include "Level.h"
 #include "Physics.h"
 #include "WalkingActorUtils.h"
+#include "entt/entity/fwd.hpp"
 
 void WalkingActorBehaviorSystem::Init() {
 }
@@ -19,7 +20,7 @@ void WalkingActorBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent>();
+    auto view = registry.view<Position, WalkingActorComponent>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, actor] = view.get(entity);
 

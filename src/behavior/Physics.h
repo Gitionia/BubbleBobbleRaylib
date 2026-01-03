@@ -2,9 +2,11 @@
 
 #include "../ecs/Components.h"
 #include "Level.h"
+#include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 
 #include "../utils/Utilities.h"
+#include <optional>
 
 void setPhysicsColliderData(const LevelLayout &level);
 
@@ -16,6 +18,7 @@ bool collidesWithMultiCollider(entt::registry &registry, const Position &positio
 
 bool collidesWithDragonSpikes(entt::registry &registry, const Position &position, const Collider &collider);
 bool collidesWithJumpableBubble(entt::registry &registry, const Position &position, const Collider &collider);
+std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry, const Position &position, const Collider &collider);
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos);
 

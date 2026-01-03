@@ -2,7 +2,9 @@
 
 #include "../app/Config.h"
 #include "Level.h"
+#include "entt/entity/fwd.hpp"
 #include <cstdio>
+#include <optional>
 
 static const LevelTilemap *tiles = nullptr;
 static const LevelTilemap *airflow = nullptr;
@@ -81,6 +83,20 @@ bool collidesWithJumpableBubble(entt::registry &registry, const Position &positi
     }
 
     return false;
+}
+
+std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, BubbleShootComponent>();
+
+    for (const auto entity : view) {
+        const auto [pos, bubble] = view.get(entity);
+
+        if (!bubble.isWaiting() && overlaps(position, collider, pos, Colliders::bubbleCollider)) {
+            return entity;
+        }
+    }
+
+    return {};
 }
 
 bool collidesWithDragonSpikes(entt::registry &registry, const Position &position, const Collider &collider) {
