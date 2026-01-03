@@ -9,6 +9,7 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     {
         registry->emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle("Level1"), {1, 1}};
+        data.scale = { 2, 2};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
     }
