@@ -64,7 +64,7 @@ struct BubbleShootComponent {
     int shootDirection;
     Animator animator{&GetAnimation("Bubble-Green-Shoot")};
 
-    static constexpr int SHOOT_FRAME_COUNT = 60;
+    static constexpr int SHOOT_FRAME_COUNT = 24;
     int shootFrame = SHOOT_FRAME_COUNT;
 
     static constexpr int POPABLE_DELAY_FRAME_COUNT = 0;

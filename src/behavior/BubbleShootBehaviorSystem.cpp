@@ -24,7 +24,7 @@ void BubbleShootBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, bubble, renderData] = view.get(entity);
 
-        int shootVelocity = UNITS_PER_BLOCK / 8;
+        int shootVelocity = BP_SIZE(0, 4);
 
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
