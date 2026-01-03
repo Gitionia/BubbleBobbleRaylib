@@ -2,8 +2,8 @@
 
 #include "../ecs/SystemBase.h"
 
-class BubbleBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(BubbleBehaviorSystem)
+class BubbleShootBehaviorSystem : public SystemBase {
+    SYSTEM_DEF(BubbleShootBehaviorSystem)
 
   public:
     void Init() override;
