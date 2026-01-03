@@ -6,15 +6,24 @@
 #include "../utils/Debug.h"
 #include "../utils/Log.h"
 #include "Physics.h"
+#include "entt/entity/fwd.hpp"
 #include "entt/entt.hpp"
 
-void BubbleShootBehaviorSystem::makeBubbleFloating(entt::entity entity) {
-    entitiesToMakeFloating.push_back(entity);
+enum DeferValues {
+    Floating = 0,
+    Pop = 1
+};
+
+static void makeBubbleFloating(entt::registry &registry, entt::entity entity) {
+
+    registry.remove<BubbleShootComponent>(entity);
+    registry.emplace<BubbleFloatComponent>(entity);
 }
 
-void BubbleShootBehaviorSystem::Init() {
-    // Probably a lower reserve would suffice, but this should be good enough without much cost
-    entitiesToMakeFloating.reserve(20);
+static void makeBubblePop(entt::registry &registry, entt::entity entity) {
+
+    registry.remove<BubbleShootComponent>(entity);
+    registry.emplace<BubblePopComponent>(entity);
 }
 
 void BubbleShootBehaviorSystem::Update() {
@@ -35,7 +44,8 @@ void BubbleShootBehaviorSystem::Update() {
 
             bubble.shootFrame--;
             if (bubble.shootFrame == 0) {
-                makeBubbleFloating(entity);
+
+                Defer(entity, &makeBubbleFloating, Floating);
             }
             // if hits wall, enable jumpable delay and popable delay
             else if (collidesWithWall(registry, pos, col)) {
@@ -52,21 +62,17 @@ void BubbleShootBehaviorSystem::Update() {
                 bubble.popableDelayFrame--;
             }
             if (bubble.popableDelayFrame == 0 && collidesWithDragonSpikes(registry, pos, col)) {
-                makeBubbleFloating(entity);
+                Defer(entity, &makeBubblePop, Pop);
             }
 
             if (bubble.jumpableDelayFrame > 0) {
                 bubble.jumpableDelayFrame--;
             }
             if (bubble.jumpableDelayFrame == 0) {
-                makeBubbleFloating(entity);
+                
+                Defer(entity, &makeBubbleFloating, Floating);
             }
         }
     }
 
-    for (auto entity : entitiesToMakeFloating) {
-        registry.remove<BubbleShootComponent>(entity);
-        registry.emplace<BubblePopComponent>(entity);
-    }
-    entitiesToMakeFloating.clear();
 }

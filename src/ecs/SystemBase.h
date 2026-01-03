@@ -27,7 +27,7 @@ static void BaseInit();
     virtual void Update() = 0;
     void Destroy(const entt::entity &e) const;
 
-    using DeferFunctionType = std::function<void(const entt::registry&, entt::entity)>; 
+    using DeferFunctionType = std::function<void(entt::registry&, entt::entity)>; 
     void Defer(entt::entity e, DeferFunctionType f, int index);
 
   protected:

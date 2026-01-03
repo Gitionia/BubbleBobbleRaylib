@@ -67,10 +67,10 @@ struct BubbleShootComponent {
     static constexpr int SHOOT_FRAME_COUNT = 24;
     int shootFrame = SHOOT_FRAME_COUNT;
 
-    static constexpr int POPABLE_DELAY_FRAME_COUNT = 0;
+    static constexpr int POPABLE_DELAY_FRAME_COUNT = 6;
     int popableDelayFrame = 0;
 
-    static constexpr int JUMPABLE_DELAY_FRAME_COUNT = 3;
+    static constexpr int JUMPABLE_DELAY_FRAME_COUNT = 10;
     int jumpableDelayFrame = 0;
 
     bool isWaiting() {

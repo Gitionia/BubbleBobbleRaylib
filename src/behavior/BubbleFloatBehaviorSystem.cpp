@@ -8,6 +8,12 @@
 #include "Physics.h"
 #include "entt/entt.hpp"
 
+static void makeBubblePop(entt::registry &registry, entt::entity entity) {
+
+    registry.remove<BubbleFloatComponent>(entity);
+    registry.emplace<BubblePopComponent>(entity);
+}
+
 void BubbleFloatBehaviorSystem::Update() {
     const Collider &col = Colliders::bubbleCollider;
 
@@ -42,14 +48,12 @@ void BubbleFloatBehaviorSystem::Update() {
         // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
         // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
-        if (collidesWithDragonSpikes(registry, pos, col)) {
-            Destroy(entity);
-        }
-
         if (bubble.lifetimeFrame > 0) {
             bubble.lifetimeFrame--;
-        } else {
-            Destroy(entity);
+        }
+
+        if (bubble.lifetimeFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
+            Defer(entity, &makeBubblePop, 0);
         }
     }
 }
