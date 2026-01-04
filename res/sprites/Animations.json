@@ -3,6 +3,8 @@
     { "name" : "Dragon-Idle", "FramesPerSprite" : 4 },
     { "name" : "Dragon-Walking", "FramesPerSprite" : 10 },
     { "name" : "Dragon-Shooting", "FramesPerSprite" : 4 },
+    { "name" : "Dragon-Jumping", "FramesPerSprite" : 10 },
+    { "name" : "Dragon-Falling", "FramesPerSprite" : 10 },
     { "name" : "Dragon-Hit", "FramesPerSprite" : 4 },
     { "name" : "Dragon-HitStare", "FramesPerSprite" : 4 },
     { "name" : "Dragon-Respawn", "FramesPerSprite" : 16 },

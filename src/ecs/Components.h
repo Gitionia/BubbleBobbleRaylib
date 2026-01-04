@@ -76,7 +76,9 @@ struct DragonComponent {
     enum AnimationState {
         IDLE,
         WALKING,
-        SHOOTING
+        SHOOTING,
+        JUMPING,
+        FALLING
     };
 
     AnimationState state;

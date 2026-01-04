@@ -47,6 +47,8 @@ void DragonBehaviorSystem::Update() {
                 animator.Reset();
             } else if (dragon.state == DragonComponent::IDLE) {
                 animator.Reset();
+            } else if (dragon.state == DragonComponent::JUMPING || dragon.state == DragonComponent::FALLING) {
+                animator.Reset();
             }
         }
         renderData.spriteHandle = animator.GetSpriteHandle();
@@ -96,6 +98,28 @@ void DragonBehaviorSystem::Update() {
         bool isGrounded = false;
         if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
+        }
+
+        if (!actor.isJumping()) {
+            if (!isGrounded && dragon.state != DragonComponent::FALLING && dragon.state != DragonComponent::SHOOTING) {
+                animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
+                dragon.state = DragonComponent::FALLING;
+
+            } else if (isGrounded) {
+                if (inputDir == 0) {
+                    animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                    dragon.state = DragonComponent::IDLE;
+                } else {
+                    animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
+                    dragon.state = DragonComponent::WALKING;
+                }
+            }
+
+        } else {
+            if (dragon.state != DragonComponent::JUMPING) {
+                animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
+                dragon.state = DragonComponent::JUMPING;
+            }
         }
 
         // start jump
