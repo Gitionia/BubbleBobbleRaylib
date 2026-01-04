@@ -5,7 +5,7 @@
     { "name" : "Dragon-Shooting", "FramesPerSprite" : 4 },
     { "name" : "Dragon-Hit", "FramesPerSprite" : 4 },
     { "name" : "Dragon-HitStare", "FramesPerSprite" : 4 },
-    { "name" : "Dragon-Respawn", "FramesPerSprite" : 4 },
+    { "name" : "Dragon-Respawn", "FramesPerSprite" : 16 },
     { "name" : "Can-Walk", "FramesPerSprite" : 20 },
     { "name" : "Can-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },

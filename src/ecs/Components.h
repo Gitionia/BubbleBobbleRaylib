@@ -46,6 +46,13 @@ struct WalkingActorComponent {
     bool isJumping() {
         return jumpFrameCount > 0;
     }
+
+    void reset(int fallSpeed, int jumpSpeed) {
+        jumpFrameCount = 0;
+        ignoreCollisions = false;
+        this->fallSpeed = fallSpeed;
+        this->jumpSpeed = jumpSpeed;
+    }
 };
 
 struct DragonComponent {
@@ -55,6 +62,28 @@ struct DragonComponent {
     AnimatedValue<int> jumpSpeed{jumpSpeedsDefintion};
 
     static constexpr int MAX_BUBBLE_SHOOT_DELAY = 30;
+
+    static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8; 
+    static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16; 
+
+    void reset() {
+        bubbleShootDelay = 0;
+        jumpSpeed.reset();
+    }
+};
+
+struct DragonHitComponent {
+    Animator animator { &GetAnimation("Dragon-Hit")};
+
+    enum AnimationState {
+        HIT = 0,
+        HIT_STARE = 1,
+        RESPAWN = 2
+    };
+
+    AnimationState state = HIT;
+
+    int repetitionCount = 4;
 };
 
 struct EnemyComponent {

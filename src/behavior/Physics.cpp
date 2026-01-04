@@ -120,6 +120,20 @@ bool collidesWithDragonSpikes(entt::registry &registry, const Position &position
     return false;
 }
 
+bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, EnemyTag>(entt::exclude<DestroyEntity, BubbleFloatComponent, BubblePopComponent>);
+
+    for (const auto entity : view) {
+        const auto [pos] = view.get(entity);
+
+        if (overlaps(position, collider, pos, Colliders::fullActorCollider)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // template bool collidesWithCollider<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
 template bool collidesWithCollider<BubbleJumpableTopCollider>(entt::registry &registry, const Position &position, const Collider &collider);
 

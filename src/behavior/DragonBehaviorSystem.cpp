@@ -1,6 +1,7 @@
 #include "DragonBehaviorSystem.h"
 
 #include <iostream>
+#include <iterator>
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
@@ -11,6 +12,11 @@
 #include "Level.h"
 #include "Physics.h"
 #include "WalkingActorUtils.h"
+#include "entt/entity/fwd.hpp"
+
+void makeDragonHit(entt::registry &registry, entt::entity e) {
+    registry.emplace<DragonHitComponent>(e);
+}
 
 void DragonBehaviorSystem::Init() {
 }
@@ -21,9 +27,14 @@ void DragonBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>();
+    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>(entt::exclude<DragonHitComponent>);
     for (auto entity : view) {
         auto [pos, actor, dragon, renderData] = view.get(entity);
+
+        if (collidesWithEnemy(registry, pos, Colliders::fullActorCollider)) {
+            Defer(entity, &makeDragonHit, 0);
+            continue;
+        }
 
         // animations and sprite
         animator.Update();
@@ -82,7 +93,6 @@ void DragonBehaviorSystem::Update() {
         if (actor.isJumping()) {
             actor.jumpSpeed = dragon.jumpSpeed.get();
             dragon.jumpSpeed.tick();
-
         }
     }
 }

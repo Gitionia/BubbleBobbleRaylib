@@ -10,6 +10,7 @@
 #include "../behavior/BubbleFloatBehaviorSystem.h"
 #include "../behavior/BubblePopBehaviorSystem.h"
 #include "../behavior/DragonBehaviorSystem.h"
+#include "../behavior/DragonHitBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
 
@@ -19,6 +20,7 @@ SystemRunner::SystemRunner(entt::registry &registry)
         
     registerSystem<TrashCanBehaviorSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
+    registerSystem<DragonHitBehaviorSystem>(registry);
     registerSystem<WalkingActorBehaviorSystem>(registry);
     registerSystem<BubbleShootBehaviorSystem>(registry);
     registerSystem<BubbleFloatBehaviorSystem>(registry);

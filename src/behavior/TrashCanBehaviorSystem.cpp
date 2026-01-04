@@ -36,6 +36,8 @@ void TrashCanBehaviorSystem::Update() {
         if (bubble.has_value()) {
             Defer(entity, &makeEnemyBubbled, 0); 
             Destroy(bubble.value());
+
+            continue;
         }
 
 
