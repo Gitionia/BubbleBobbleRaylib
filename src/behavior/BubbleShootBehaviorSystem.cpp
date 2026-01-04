@@ -65,6 +65,7 @@ void BubbleShootBehaviorSystem::Update() {
             }
             if (bubble.popableDelayFrame == 0 && collidesWithDragonSpikes(registry, pos, col)) {
                 Defer(entity, &makeBubblePop, Pop);
+                continue;
             }
 
             if (bubble.jumpableDelayFrame > 0) {
