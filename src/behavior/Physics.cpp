@@ -72,7 +72,7 @@ bool collidesWithMultiCollider(entt::registry &registry, const Position &positio
 }
 
 bool collidesWithJumpableBubble(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, BubbleFloatComponent>(entt::exclude<DestroyEntity>);
+    const auto view = registry.view<Position, BubbleFloatComponent>();
 
     for (const auto entity : view) {
         const auto [pos, bubble] = view.get(entity);
@@ -86,7 +86,7 @@ bool collidesWithJumpableBubble(entt::registry &registry, const Position &positi
 }
 
 std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, BubbleShootComponent>(entt::exclude<DestroyEntity>);
+    const auto view = registry.view<Position, BubbleShootComponent>();
 
     for (const auto entity : view) {
         const auto [pos, bubble] = view.get(entity);
@@ -121,7 +121,7 @@ bool collidesWithDragonSpikes(entt::registry &registry, const Position &position
 }
 
 bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, EnemyTag>(entt::exclude<DestroyEntity, BubbleFloatComponent, BubblePopComponent>);
+    const auto view = registry.view<Position, EnemyTag>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
 
     for (const auto entity : view) {
         const auto [pos] = view.get(entity);

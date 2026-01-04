@@ -27,6 +27,9 @@ void SystemBase::Defer(entt::entity e, DeferFunctionType f, int index) {
 void SystemBase::BaseUpdate() {
     Update();
 
+    auto view = registry.view<DestroyEntity>();
+    registry.destroy(view.begin(), view.end());
+    
     for (int i = 0; i < DEFER_MAX_COUNT; i++) {
         for (auto entity : deferedEntityCollections.at(i)) {
             DeferFunctionType& f = deferFunctions.at(i);

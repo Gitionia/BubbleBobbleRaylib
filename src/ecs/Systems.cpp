@@ -3,21 +3,17 @@
 #include "../behavior/TrashCanBehaviorSystem.h"
 #include "Components.h"
 
-#include "../behavior/BubbleShootBehaviorSystem.h"
-#include "../behavior/DragonBehaviorSystem.h"
-#include "../graphics/RendererSystem.h"
-#include "../behavior/BubbleShootBehaviorSystem.h"
 #include "../behavior/BubbleFloatBehaviorSystem.h"
 #include "../behavior/BubblePopBehaviorSystem.h"
+#include "../behavior/BubbleShootBehaviorSystem.h"
 #include "../behavior/DragonBehaviorSystem.h"
 #include "../behavior/DragonHitBehaviorSystem.h"
-#include "../graphics/RendererSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
-
+#include "../graphics/RendererSystem.h"
 
 SystemRunner::SystemRunner(entt::registry &registry)
     : registry(registry) {
-        
+
     registerSystem<TrashCanBehaviorSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
     registerSystem<DragonHitBehaviorSystem>(registry);
@@ -44,9 +40,6 @@ void SystemRunner::UpdateSystems() const {
     for (auto system : systems) {
         system->BaseUpdate();
     }
-
-    auto view = registry.view<DestroyEntity>();
-    registry.destroy(view.begin(), view.end());
 }
 
 template <typename T>
