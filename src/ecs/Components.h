@@ -15,6 +15,16 @@ struct Position {
     Vector2Int toVector() const {
         return {x, y};
     }
+
+    void set(const Position& pos) {
+        set(pos.x, pos.y, pos.dir);
+    }
+
+    void set(int x, int y, int dir) {
+        this->x = x;
+        this->y = y;
+        this->dir = dir;
+    }
 };
 
 /*Could theoretically be a static instance somewhere,
@@ -63,13 +73,16 @@ struct DragonComponent {
 
     static constexpr int MAX_BUBBLE_SHOOT_DELAY = 30;
 
-    static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8; 
-    static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16; 
-
     void reset() {
         bubbleShootDelay = 0;
         jumpSpeed.reset();
     }
+    
+
+    static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8; 
+    static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16; 
+
+    static inline const Position STARTING_POSITION {BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
 };
 
 struct DragonHitComponent {

@@ -18,6 +18,7 @@ void makeDragonRespawn(entt::registry &registry, entt::entity e) {
     registry.remove<DragonHitComponent>(e);
     registry.get<WalkingActorComponent>(e).reset(DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
     registry.get<DragonComponent>(e).reset();
+    registry.get<Position>(e).set(DragonComponent::STARTING_POSITION);
 }
 
 void DragonHitBehaviorSystem::Init() {

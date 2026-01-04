@@ -38,7 +38,7 @@ entt::entity EntityFactory::CreateDragon() {
     entt::registry *registry = get().registry;
     auto dragon = registry->create();
 
-    registry->emplace<Position>(dragon, 5 * UNITS_PER_BLOCK, 5 * UNITS_PER_BLOCK);
+    registry->emplace<Position>(dragon, DragonComponent::STARTING_POSITION);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
     registry->emplace<WalkingActorComponent>(dragon, DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
     registry->emplace<DragonComponent>(dragon);
