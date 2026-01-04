@@ -73,9 +73,18 @@ struct DragonComponent {
 
     static constexpr int MAX_BUBBLE_SHOOT_DELAY = 30;
 
+    enum AnimationState {
+        IDLE,
+        WALKING,
+        SHOOTING
+    };
+
+    AnimationState state;
+
     void reset() {
         bubbleShootDelay = 0;
         jumpSpeed.reset();
+        state = IDLE;
     }
     
 

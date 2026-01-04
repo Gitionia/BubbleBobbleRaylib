@@ -39,10 +39,15 @@ void DragonBehaviorSystem::Update() {
         // animations and sprite
         animator.Update();
         if (animator.IsFinished()) {
-            if (animator.GetAnimationName() == "Dragon-Shooting") {
+            if (dragon.state == DragonComponent::SHOOTING) {
                 animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                dragon.state = DragonComponent::IDLE;
+
+            } else if (dragon.state == DragonComponent::WALKING) {
+                animator.Reset();
+            } else if (dragon.state == DragonComponent::IDLE) {
+                animator.Reset();
             }
-            animator.Reset();
         }
         renderData.spriteHandle = animator.GetSpriteHandle();
 
@@ -53,6 +58,16 @@ void DragonBehaviorSystem::Update() {
 
         if (inputDir != 0) {
             pos.dir = inputDir;
+
+            if (dragon.state == DragonComponent::IDLE) {
+                animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
+                dragon.state = DragonComponent::WALKING;
+            }
+        } else {
+            if (dragon.state == DragonComponent::WALKING) {
+                animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                dragon.state = DragonComponent::IDLE;
+            }
         }
 
         int moveSpeed = UNITS_PER_BLOCK / 16;
@@ -64,6 +79,7 @@ void DragonBehaviorSystem::Update() {
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
 
             animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
+            dragon.state = DragonComponent::SHOOTING;
         } else if (dragon.bubbleShootDelay > 0) {
             dragon.bubbleShootDelay--;
         }
