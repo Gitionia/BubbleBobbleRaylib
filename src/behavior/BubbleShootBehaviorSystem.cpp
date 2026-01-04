@@ -47,11 +47,17 @@ void BubbleShootBehaviorSystem::Update() {
             bubble.shootFrame--;
             if (bubble.shootFrame == 0) {
 
+                if (collidesWithWall(registry, pos, col)) {
+                    pos.x -= dx;
+                    pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
+                }
+                
                 Defer(entity, &makeBubbleFloating, Floating);
             }
             // if hits wall, enable jumpable delay and popable delay
             else if (collidesWithWall(registry, pos, col)) {
                 // Bug: Now Bubbles also get rounded if they get spawned in a wall
+
                 pos.x -= dx;
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
 
