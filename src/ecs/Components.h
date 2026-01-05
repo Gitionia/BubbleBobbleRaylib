@@ -16,7 +16,7 @@ struct Position {
         return {x, y};
     }
 
-    void set(const Position& pos) {
+    void set(const Position &pos) {
         set(pos.x, pos.y, pos.dir);
     }
 
@@ -66,6 +66,8 @@ struct WalkingActorComponent {
 };
 
 struct DragonComponent {
+    Animator animator{&GetAnimation("Dragon-Idle")};
+
     int bubbleShootDelay = 0;
 
     static inline AnimatedValueDefinition<int> jumpSpeedsDefintion{{BP_SIZE(0, 6), 5}, {BP_SIZE(0, 4), 10}, {BP_SIZE(0, 2), 10}};
@@ -84,20 +86,20 @@ struct DragonComponent {
     AnimationState state;
 
     void reset() {
+        animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
         bubbleShootDelay = 0;
         jumpSpeed.reset();
         state = IDLE;
     }
-    
 
-    static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8; 
-    static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16; 
+    static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8;
+    static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
 
-    static inline const Position STARTING_POSITION {BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
+    static inline const Position STARTING_POSITION{BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
 };
 
 struct DragonHitComponent {
-    Animator animator { &GetAnimation("Dragon-Hit")};
+    Animator animator{&GetAnimation("Dragon-Hit")};
 
     enum AnimationState {
         HIT = 0,
@@ -136,13 +138,13 @@ struct BubbleShootComponent {
         NORMAL_SHOOT,
         // Wall collision when shot, but can shoot outside the wall
         IGNORE_COLLISION_SHOOT,
-        //Wall collision when shot and can't shoot outside the wall
+        // Wall collision when shot and can't shoot outside the wall
         IGNORE_COLLISION_WAIT
     };
 
     State state = NONE;
     bool ignoreCollision = false;
-    int ignoreCollisionWaitFrame = 0; 
+    int ignoreCollisionWaitFrame = 0;
 };
 
 struct BubbleFloatComponent {

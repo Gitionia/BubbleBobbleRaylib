@@ -23,8 +23,6 @@ void DragonBehaviorSystem::Init() {
 
 void DragonBehaviorSystem::Update() {
 
-    static Animator animator(&GetAnimation("Dragon-Idle"));
-
     const Collider &collider = Colliders::walkingActorCollider;
 
     auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>(entt::exclude<DragonHitComponent>);
@@ -46,12 +44,12 @@ void DragonBehaviorSystem::Update() {
             pos.dir = inputDir;
 
             if (dragon.state == DragonComponent::IDLE) {
-                animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
+                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
                 dragon.state = DragonComponent::WALKING;
             }
         } else {
             if (dragon.state == DragonComponent::WALKING) {
-                animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
                 dragon.state = DragonComponent::IDLE;
             }
         }
@@ -97,41 +95,41 @@ void DragonBehaviorSystem::Update() {
             dragon.jumpSpeed.tick();
         }
 
-        animator.Update();
+        dragon.animator.Update();
         // If shooting and not finished we won't change the animation
-        if (!(dragon.state == DragonComponent::SHOOTING && !animator.IsFinished())) {
+        if (!(dragon.state == DragonComponent::SHOOTING && !dragon.animator.IsFinished())) {
 
             if (startedShootingAnimation) {
 
-                animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
+                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
                 dragon.state = DragonComponent::SHOOTING;
             } else if (!isGrounded) {
 
                 if (actor.isJumping() && dragon.state != DragonComponent::JUMPING) {
-                    animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
                     dragon.state = DragonComponent::JUMPING;
 
                 } else if (!actor.isJumping() && dragon.state != DragonComponent::FALLING) {
-                    animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
                     dragon.state = DragonComponent::FALLING;
                 }
             } else {
 
                 if (inputDir == 0 && dragon.state != DragonComponent::IDLE) {
-                    animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
                     dragon.state = DragonComponent::IDLE;
 
                 } else if (inputDir != 0 && dragon.state != DragonComponent::WALKING) {
-                    animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
                     dragon.state = DragonComponent::WALKING;
                 }
             }
         }
 
-        if (animator.IsFinished() && dragon.state != DragonComponent::SHOOTING) {
-            animator.Reset();
+        if (dragon.animator.IsFinished() && dragon.state != DragonComponent::SHOOTING) {
+            dragon.animator.Reset();
         }
 
-        renderData.spriteHandle = animator.GetSpriteHandle();
+        renderData.spriteHandle = dragon.animator.GetSpriteHandle();
     }
 }
