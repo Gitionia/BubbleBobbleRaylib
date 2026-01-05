@@ -128,6 +128,18 @@ struct BubbleShootComponent {
     bool isWaiting() {
         return jumpableDelayFrame > 0;
     }
+
+    enum State {
+        // If no state was determined yet
+        NONE,
+        // No wall collision when shot first
+        NORMAL_SHOOT,
+        // Wall collision when shot, but can shoot outside the wall
+        IGNORE_COLLISION_SHOOT
+    };
+
+    State state = NONE;
+    bool ignoreCollision = false;
 };
 
 struct BubbleFloatComponent {

@@ -40,6 +40,21 @@ void BubbleShootBehaviorSystem::Update() {
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
 
+        if (bubble.state == BubbleShootComponent::NONE) {
+            if (collidesWithWall(registry, pos, col)) {
+                bubble.state = BubbleShootComponent::IGNORE_COLLISION_SHOOT;
+                bubble.ignoreCollision = true;
+
+            } else {
+                bubble.state = BubbleShootComponent::NORMAL_SHOOT;
+                bubble.ignoreCollision = false;
+            }
+
+        } else if (bubble.state == BubbleShootComponent::IGNORE_COLLISION_SHOOT && bubble.ignoreCollision) {
+            bubble.ignoreCollision = collidesWithWall(registry, pos, col);
+        }
+
+
         if (!bubble.isWaiting()) {
             int dx = shootVelocity * bubble.shootDirection;
             pos.x += dx;
@@ -51,13 +66,11 @@ void BubbleShootBehaviorSystem::Update() {
                     pos.x -= dx;
                     pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
                 }
-                
+
                 Defer(entity, &makeBubbleFloating, Floating);
             }
-            // if hits wall, enable jumpable delay and popable delay
-            else if (collidesWithWall(registry, pos, col)) {
-                // Bug: Now Bubbles also get rounded if they get spawned in a wall
-
+            // if hits wall (and no ignore collision shoot), enable jumpable delay and popable delay
+            else if (!bubble.ignoreCollision && collidesWithWall(registry, pos, col)) {
                 pos.x -= dx;
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
 
