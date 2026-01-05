@@ -31,7 +31,7 @@ void BubbleFloatBehaviorSystem::Update() {
 
         if (bubble.isWaitingForPop()) {
             bubble.popFrame--;
-            if (bubble.popFrame == 0) {
+            if (bubble.popFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
                 Defer(entity, &makeBubblePop, 0);
             }
             
