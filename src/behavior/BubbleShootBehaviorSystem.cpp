@@ -11,7 +11,8 @@
 
 enum DeferValues {
     Floating = 0,
-    Pop = 1
+    Pop = 1,
+    FloatingAndWaiting = 2
 };
 
 static void makeBubbleFloating(entt::registry &registry, entt::entity entity) {
@@ -24,6 +25,18 @@ static void makeBubblePop(entt::registry &registry, entt::entity entity) {
 
     registry.remove<BubbleShootComponent>(entity);
     registry.emplace<BubblePopComponent>(entity);
+}
+
+static void makeBubbleFloatingAndWaiting(entt::registry &registry, entt::entity entity) {
+
+    registry.remove<BubbleShootComponent>(entity);
+    BubbleFloatComponent &c = registry.emplace<BubbleFloatComponent>(entity);
+
+    c.popFrame = 10;
+}
+
+bool wallGapExists(entt::registry &registry, const Position &pos, const Collider &col) {
+    return false;
 }
 
 void BubbleShootBehaviorSystem::Update() {
@@ -42,8 +55,18 @@ void BubbleShootBehaviorSystem::Update() {
 
         if (bubble.state == BubbleShootComponent::NONE) {
             if (collidesWithWall(registry, pos, col)) {
-                bubble.state = BubbleShootComponent::IGNORE_COLLISION_SHOOT;
-                bubble.ignoreCollision = true;
+
+                if (!wallGapExists(registry, pos, col)) {
+                    bubble.state = BubbleShootComponent::IGNORE_COLLISION_WAIT;
+                    bubble.ignoreCollision = true;
+
+                    bubble.ignoreCollisionWaitFrame = 10;
+                
+
+                } else {
+                    bubble.state = BubbleShootComponent::IGNORE_COLLISION_SHOOT;
+                    bubble.ignoreCollision = true;
+                }
 
             } else {
                 bubble.state = BubbleShootComponent::NORMAL_SHOOT;
@@ -54,8 +77,13 @@ void BubbleShootBehaviorSystem::Update() {
             bubble.ignoreCollision = collidesWithWall(registry, pos, col);
         }
 
+        if (bubble.state == BubbleShootComponent::IGNORE_COLLISION_WAIT) {
+            bubble.ignoreCollisionWaitFrame--;
+            if (bubble.ignoreCollisionWaitFrame == 0) {
+                Defer(entity, &makeBubbleFloatingAndWaiting, FloatingAndWaiting);
+            }
 
-        if (!bubble.isWaiting()) {
+        } else if (!bubble.isWaiting()) {
             int dx = shootVelocity * bubble.shootDirection;
             pos.x += dx;
 
@@ -78,6 +106,7 @@ void BubbleShootBehaviorSystem::Update() {
                 bubble.jumpableDelayFrame = JUMPABLE_DELAY_FRAME_COUNT;
                 bubble.popableDelayFrame = POPABLE_DELAY_FRAME_COUNT;
             }
+
         } else {
             if (bubble.popableDelayFrame > 0) {
                 bubble.popableDelayFrame--;

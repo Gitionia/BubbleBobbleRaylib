@@ -29,31 +29,39 @@ void BubbleFloatBehaviorSystem::Update() {
         Vector2Int centerPos = col.getCenter(pos.x, pos.y);
         Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
 
-        pos.x += airflowVelocity.X;
-        if (collidesWithWall(registry, pos, col)) {
-            pos.x -= airflowVelocity.X;
-        }
+        if (bubble.isWaitingForPop()) {
+            bubble.popFrame--;
+            if (bubble.popFrame == 0) {
+                Defer(entity, &makeBubblePop, 0);
+            }
+            
+        } else {
+            pos.x += airflowVelocity.X;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.x -= airflowVelocity.X;
+            }
 
-        pos.y += airflowVelocity.Y;
-        if (collidesWithWall(registry, pos, col)) {
-            pos.y -= airflowVelocity.Y;
-        }
+            pos.y += airflowVelocity.Y;
+            if (collidesWithWall(registry, pos, col)) {
+                pos.y -= airflowVelocity.Y;
+            }
 
-        if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 2)) {
-            pos.y = BP_SIZE(-2, 0);
-        } else if (pos.y < BP_SIZE(-2, -2)) {
-            pos.y = BP_SIZE(LevelTilemap::HEIGHT, -2);
-        }
+            if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 2)) {
+                pos.y = BP_SIZE(-2, 0);
+            } else if (pos.y < BP_SIZE(-2, -2)) {
+                pos.y = BP_SIZE(LevelTilemap::HEIGHT, -2);
+            }
 
-        // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
-        // airflowVelocity.Y, 32, { 0, 122, 122, 180});
+            // Debug::DrawPoint(centerPos.X + airflowVelocity.X, centerPos.Y +
+            // airflowVelocity.Y, 32, { 0, 122, 122, 180});
 
-        if (bubble.lifetimeFrame > 0) {
-            bubble.lifetimeFrame--;
-        }
+            if (bubble.lifetimeFrame > 0) {
+                bubble.lifetimeFrame--;
+            }
 
-        if (bubble.lifetimeFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
-            Defer(entity, &makeBubblePop, 0);
+            if (bubble.lifetimeFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
+                Defer(entity, &makeBubblePop, 0);
+            }
         }
     }
 }

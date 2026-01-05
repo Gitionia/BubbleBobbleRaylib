@@ -135,11 +135,14 @@ struct BubbleShootComponent {
         // No wall collision when shot first
         NORMAL_SHOOT,
         // Wall collision when shot, but can shoot outside the wall
-        IGNORE_COLLISION_SHOOT
+        IGNORE_COLLISION_SHOOT,
+        //Wall collision when shot and can't shoot outside the wall
+        IGNORE_COLLISION_WAIT
     };
 
     State state = NONE;
     bool ignoreCollision = false;
+    int ignoreCollisionWaitFrame = 0; 
 };
 
 struct BubbleFloatComponent {
@@ -147,6 +150,13 @@ struct BubbleFloatComponent {
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
+
+    // Value > 0, if bubble was shot in ignore collision wait and should be some frames jumpable
+    int popFrame = 0;
+    // If this is true, then bubble should not be popable by dragon spikes and only pop when popFrame reaches 0
+    bool isWaitingForPop() {
+        return popFrame > 0;
+    }
 };
 
 struct BubblePopComponent {
