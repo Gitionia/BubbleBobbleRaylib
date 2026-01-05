@@ -86,7 +86,7 @@ bool collidesWithJumpableBubble(entt::registry &registry, const Position &positi
 }
 
 std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, BubbleShootComponent>();
+    const auto view = registry.view<Position, BubbleShootComponent>(entt::exclude<DestroyEntity>);
 
     for (const auto entity : view) {
         const auto [pos, bubble] = view.get(entity);
