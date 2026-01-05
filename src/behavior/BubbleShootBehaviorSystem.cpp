@@ -36,7 +36,21 @@ static void makeBubbleFloatingAndWaiting(entt::registry &registry, entt::entity 
     c.popFrame = POPABLE_DELAY_IN_FLOATING_FRAME_COUNT;
 }
 
-bool wallGapExists(entt::registry &registry, const Position &pos, const Collider &col) {
+bool wallGapExists(entt::registry &registry, const Position& pos, const Collider &col, int dir) {
+
+    Position posToCheck = pos;
+    // make pos.x even in the shooting direction
+    if (posToCheck.x % 2 != 0) {
+        posToCheck.x += dir;
+    }
+
+    for (int distance = 0; distance <= BP_SIZE(2, 8); distance += 2) {
+        posToCheck.x = pos.x + distance;
+        if (!collidesWithWall(registry, posToCheck, col)) {
+            return true;
+        }
+    }
+
     return false;
 }
 
@@ -57,13 +71,12 @@ void BubbleShootBehaviorSystem::Update() {
         if (bubble.state == BubbleShootComponent::NONE) {
             if (collidesWithWall(registry, pos, col)) {
 
-                if (!wallGapExists(registry, pos, col)) {
+                if (!wallGapExists(registry, pos, col, bubble.shootDirection)) {
                     bubble.state = BubbleShootComponent::IGNORE_COLLISION_WAIT;
                     bubble.ignoreCollision = true;
 
                     int IGNORE_COLLISION_WAIT_FRAME_COUNT = 10;
                     bubble.ignoreCollisionWaitFrame = IGNORE_COLLISION_WAIT_FRAME_COUNT;
-                
 
                 } else {
                     bubble.state = BubbleShootComponent::IGNORE_COLLISION_SHOOT;
