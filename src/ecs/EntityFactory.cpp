@@ -62,11 +62,23 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
-    registry->emplace<Position>(enemy, BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
+    registry->emplace<Position>(enemy, x, y);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
     registry->emplace<EnemyComponent>(enemy, 0);
     registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     registry->emplace<EnemyTag>(enemy);
+
+    return enemy;
+}
+
+entt::entity EntityFactory::CreateEnemyDice(int x, int y, int dir) {
+    entt::registry *registry = get().registry;
+    auto enemy = registry->create();
+
+    registry->emplace<Position>(enemy, x, y, dir);
+    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
+    registry->emplace<EnemyDiceComponent>(enemy, &GetAnimation("Can-Item"));
+    registry->emplace<EnemyItemDiceTag>(enemy);
 
     return enemy;
 }
@@ -94,7 +106,7 @@ void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 0; x < LevelTilemap::WIDTH; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
             if (!level.GetEnemies().IsEmpty(x, y)) {
-                CreateEnemy(x, y);
+                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
             }
         }
     }

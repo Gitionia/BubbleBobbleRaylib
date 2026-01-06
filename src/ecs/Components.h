@@ -115,6 +115,10 @@ struct EnemyComponent {
     int walkingDir;
 };
 
+struct EnemyDiceComponent {
+    Animator animator;
+};
+
 struct BubbleShootComponent {
     int shootDirection;
     Animator animator{&GetAnimation("Bubble-Green-Shoot")};
@@ -195,6 +199,7 @@ struct DebugCircle {
     Color color;
 };
 
+struct EnemyBubblePoppedTag {};
 struct DestroyEntity {};
 
 struct LevelTileTag {};
@@ -202,5 +207,6 @@ struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};
 struct EnemyTag {};
+struct EnemyItemDiceTag {};
 
 struct DebugDrawTag {};

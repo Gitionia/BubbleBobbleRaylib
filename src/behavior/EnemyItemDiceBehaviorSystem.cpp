@@ -13,10 +13,15 @@ void EnemyItemDiceBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    auto view = registry.view<Position, EnemyDiceComponent, RenderData>();
     for (auto entity : view) {
-        auto [pos, actor, enemy, renderData] = view.get(entity);
+        auto [pos, enemy, renderData] = view.get(entity);
 
-        
+        enemy.animator.Update();
+        if (enemy.animator.IsFinished()) {
+            enemy.animator.Reset();
+        }
+
+        renderData.spriteHandle = enemy.animator.GetSpriteHandle();
     }
 }

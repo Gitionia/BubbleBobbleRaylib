@@ -57,7 +57,7 @@ Application::~Application() {
 }
 
 void Application::Run() {
-    LevelLayout level = LevelLayout::LoadLevel("res/levels/Level3.json");
+    LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
     EntityFactory::CreateLevel(level);
     setPhysicsColliderData(level);
 
