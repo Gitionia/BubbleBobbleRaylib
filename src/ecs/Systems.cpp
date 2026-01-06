@@ -1,8 +1,10 @@
 #include "Systems.h"
 
-#include "../behavior/TrashCanBehaviorSystem.h"
 #include "Components.h"
 
+#include "../behavior/TrashCanBehaviorSystem.h"
+#include "../behavior/EnemyItemDiceBehaviorSystem.h"
+#include "../behavior/PopEnemyBubbleSystem.h"
 #include "../behavior/BubbleFloatBehaviorSystem.h"
 #include "../behavior/BubblePopBehaviorSystem.h"
 #include "../behavior/BubbleShootBehaviorSystem.h"
@@ -15,6 +17,8 @@ SystemRunner::SystemRunner(entt::registry &registry)
     : registry(registry) {
 
     registerSystem<TrashCanBehaviorSystem>(registry);
+    registerSystem<PopEnemyBubbleSystem>(registry);
+    registerSystem<EnemyItemDiceBehaviorSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
     registerSystem<DragonHitBehaviorSystem>(registry);
     registerSystem<WalkingActorBehaviorSystem>(registry);

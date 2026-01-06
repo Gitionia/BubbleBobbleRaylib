@@ -5,10 +5,23 @@
 #include "../ecs/EntityFactory.h"
 #include "Physics.h"
 
-static void makeBubblePop(entt::registry &registry, entt::entity entity) {
+enum DeferValues {
+    PopFromLifeTime = 0,
+    PopFromDragonSpikes = 1
+};
+
+static void makeBubblePopFromLifeTime(entt::registry &registry, entt::entity entity) {
 
     registry.remove<BubbleFloatComponent>(entity);
-    registry.emplace<BubblePopComponent>(entity);
+    BubblePopComponent &c = registry.emplace<BubblePopComponent>(entity);
+    c.poppedFromLifeTime = true;
+}
+
+static void makeBubblePopFromDragonSpikes(entt::registry &registry, entt::entity entity) {
+
+    registry.remove<BubbleFloatComponent>(entity);
+    BubblePopComponent &c = registry.emplace<BubblePopComponent>(entity);
+    c.poppedFromLifeTime = false;
 }
 
 void BubbleFloatBehaviorSystem::Update() {
@@ -29,9 +42,11 @@ void BubbleFloatBehaviorSystem::Update() {
         if (bubble.isWaitingForPop()) {
             bubble.popFrame--;
             if (bubble.popFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
-                Defer(entity, &makeBubblePop, 0);
+                // Note: this should only be reached by actual bubbles and not bubbled enemies,
+                // so we don't care that much, how we set popComponent.poppedFromLifeTime
+                Defer(entity, &makeBubblePopFromDragonSpikes, PopFromDragonSpikes);
             }
-            
+
         } else {
             pos.x += airflowVelocity.X;
             if (collidesWithWall(registry, pos, col)) {
@@ -56,8 +71,11 @@ void BubbleFloatBehaviorSystem::Update() {
                 bubble.lifetimeFrame--;
             }
 
-            if (bubble.lifetimeFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
-                Defer(entity, &makeBubblePop, 0);
+            if (bubble.lifetimeFrame == 0) {
+                Defer(entity, &makeBubblePopFromLifeTime, PopFromLifeTime);
+            }
+            if (collidesWithDragonSpikes(registry, pos, col)) {
+                Defer(entity, &makeBubblePopFromDragonSpikes, PopFromDragonSpikes);
             }
         }
     }

@@ -20,7 +20,8 @@ static void makeBubbleFloating(entt::registry &registry, entt::entity entity) {
 static void makeBubblePop(entt::registry &registry, entt::entity entity) {
 
     registry.remove<BubbleShootComponent>(entity);
-    registry.emplace<BubblePopComponent>(entity);
+    BubblePopComponent& c = registry.emplace<BubblePopComponent>(entity);
+    c.poppedFromLifeTime = false;
 }
 
 static void makeBubbleFloatingAndWaiting(entt::registry &registry, entt::entity entity) {

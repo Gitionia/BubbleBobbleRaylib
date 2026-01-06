@@ -164,6 +164,8 @@ struct BubblePopComponent {
     Animator animator{&GetAnimation("Bubble-PrePop")};
     bool isInStatePrePop = true;
     int popAnimationRepetitions = 0;
+
+    bool poppedFromLifeTime = true;
 };
 
 struct RenderData {
