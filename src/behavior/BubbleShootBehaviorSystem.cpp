@@ -41,7 +41,7 @@ bool wallGapExists(entt::registry &registry, const Position &pos, const Collider
     }
 
     for (int distance = 0; distance <= BP_SIZE(2, 8); distance += 2) {
-        posToCheck.x = pos.x + distance;
+        posToCheck.x = pos.x + distance * dir;
         if (!collidesWithWall(registry, posToCheck, col)) {
             return true;
         }
