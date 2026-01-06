@@ -10,6 +10,7 @@
     { "name" : "Dragon-Respawn", "FramesPerSprite" : 16 },
     { "name" : "Can-Walk", "FramesPerSprite" : 20 },
     { "name" : "Can-Bubbled", "FramesPerSprite" : 18 },
+    { "name" : "Can-Item", "FramesPerSprite" : 5 },
     { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },
     { "name" : "Bubble-Green-Shoot", "FramesPerSprite" : 8 },
     { "name" : "Bubble-PrePop", "FramesPerSprite" : 4 },
