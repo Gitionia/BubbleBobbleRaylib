@@ -49,7 +49,7 @@ void WalkingActorBehaviorSystem::Update() {
         // apply warping
         if (pos.y >= BOTTEM_WARP_POS) {
             pos.y = BP_SIZE(-3, 0);
-        } else if (pos.y < BP_SIZE(-4, 0)) {
+        } else if (pos.y < BP_SIZE(-3, 2)) {
             pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
         }
     }
