@@ -71,14 +71,14 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     return enemy;
 }
 
-entt::entity EntityFactory::CreateEnemyDice(int x, int y, int dir) {
+entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
     registry->emplace<Position>(enemy, x, y, dir);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
-    registry->emplace<EnemyDiceComponent>(enemy, &GetAnimation("Can-Item"));
-    registry->emplace<EnemyItemDiceTag>(enemy);
+    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"));
+    registry->emplace<EnemyTumbleTag>(enemy);
 
     return enemy;
 }

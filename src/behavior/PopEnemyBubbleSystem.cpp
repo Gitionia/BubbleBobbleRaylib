@@ -8,7 +8,7 @@
 
 enum DeferValues {
     RevertEnemyToNormal = 0,
-    MakeEnemyItemDice = 1
+    MakeEnemyTumble = 1
 };
 
 void makeEnemyNormal(entt::registry& registry, entt::entity entity) {
@@ -23,12 +23,12 @@ void makeEnemyNormal(entt::registry& registry, entt::entity entity) {
     EntityFactory::CreateEnemy(pos.x, pos.y);
 }
 
-void makeEnemyItemDice(entt::registry& registry, entt::entity entity) {
+void makeEnemyTumble(entt::registry& registry, entt::entity entity) {
     registry.emplace<EnemyBubblePoppedTag>(entity);
 
     Position pos = registry.get<Position>(entity);
     pos.x -= BP_SIZE(0, 2);
-    EntityFactory::CreateEnemyDice(pos.x, pos.y, pos.dir);
+    EntityFactory::CreateTumblingEnemy(pos.x, pos.y, pos.dir);
 }
 
 void PopEnemyBubbleSystem::Update() {
@@ -41,7 +41,7 @@ void PopEnemyBubbleSystem::Update() {
             Defer(entity, &makeEnemyNormal, RevertEnemyToNormal);
 
         } else {
-            Defer(entity, &makeEnemyItemDice, MakeEnemyItemDice);
+            Defer(entity, &makeEnemyTumble, MakeEnemyTumble);
         }
     }
 }

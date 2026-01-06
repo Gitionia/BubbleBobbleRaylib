@@ -2,8 +2,8 @@
 
 #include "../ecs/SystemBase.h"
 
-class EnemyItemDiceBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(EnemyItemDiceBehaviorSystem)
+class EnemyTumbleBehaviorSystem : public SystemBase {
+    SYSTEM_DEF(EnemyTumbleBehaviorSystem)
 
   public:
     void Init() override;

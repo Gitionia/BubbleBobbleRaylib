@@ -115,7 +115,7 @@ struct EnemyComponent {
     int walkingDir;
 };
 
-struct EnemyDiceComponent {
+struct EnemyTumbleComponent {
     Animator animator;
 };
 
@@ -207,6 +207,6 @@ struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};
 struct EnemyTag {};
-struct EnemyItemDiceTag {};
+struct EnemyTumbleTag {};
 
 struct DebugDrawTag {};

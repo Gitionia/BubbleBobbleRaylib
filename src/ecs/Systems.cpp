@@ -3,7 +3,7 @@
 #include "Components.h"
 
 #include "../behavior/TrashCanBehaviorSystem.h"
-#include "../behavior/EnemyItemDiceBehaviorSystem.h"
+#include "../behavior/EnemyTumbleBehaviorSystem.h"
 #include "../behavior/PopEnemyBubbleSystem.h"
 #include "../behavior/BubbleFloatBehaviorSystem.h"
 #include "../behavior/BubblePopBehaviorSystem.h"
@@ -18,7 +18,7 @@ SystemRunner::SystemRunner(entt::registry &registry)
 
     registerSystem<TrashCanBehaviorSystem>(registry);
     registerSystem<PopEnemyBubbleSystem>(registry);
-    registerSystem<EnemyItemDiceBehaviorSystem>(registry);
+    registerSystem<EnemyTumbleBehaviorSystem>(registry);
     registerSystem<DragonBehaviorSystem>(registry);
     registerSystem<DragonHitBehaviorSystem>(registry);
     registerSystem<WalkingActorBehaviorSystem>(registry);

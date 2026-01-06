@@ -1,4 +1,4 @@
-#include "EnemyItemDiceBehaviorSystem.h"
+#include "EnemyTumbleBehaviorSystem.h"
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
@@ -6,14 +6,14 @@
 #include "Physics.h"
 #include "WalkingActorUtils.h"
 
-void EnemyItemDiceBehaviorSystem::Init() {
+void EnemyTumbleBehaviorSystem::Init() {
 }
 
-void EnemyItemDiceBehaviorSystem::Update() {
+void EnemyTumbleBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, EnemyDiceComponent, RenderData>();
+    auto view = registry.view<Position, EnemyTumbleComponent, RenderData>();
     for (auto entity : view) {
         auto [pos, enemy, renderData] = view.get(entity);
 
