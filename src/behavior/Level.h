@@ -1,13 +1,5 @@
 #pragma once
 
-#include <fstream>
-#include <string>
-#include <vector>
-
-#include <nlohmann/json.hpp>
-
-#include "raylib.h"
-
 // These values should match with the elements in the level layout json
 enum class LevelTileType {
     NONE = 0,

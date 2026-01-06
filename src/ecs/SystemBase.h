@@ -1,10 +1,6 @@
 #pragma once
 
-#include "entt/entity/fwd.hpp"
-#include "entt/entt.hpp"
-
 #include "EntityFactory.h"
-#include <functional>
 
 #define SYSTEM_DEF(Type)                                              \
   public:                                                             \
@@ -15,7 +11,7 @@
 class SpriteManager;
 class SystemBase {
   public:
-static void BaseInit();
+    static void BaseInit();
 
     SystemBase(entt::registry &registry);
     virtual ~SystemBase() = default;
@@ -27,7 +23,7 @@ static void BaseInit();
     virtual void Update() = 0;
     void Destroy(const entt::entity &e) const;
 
-    using DeferFunctionType = std::function<void(entt::registry&, entt::entity)>; 
+    using DeferFunctionType = std::function<void(entt::registry &, entt::entity)>;
     void Defer(entt::entity e, DeferFunctionType f, int index);
 
   protected:

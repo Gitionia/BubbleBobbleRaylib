@@ -1,5 +1,4 @@
 #pragma once
-#include "../utils/Utilities.h"
 
 #define COLLIDER_LAYER(name)                                                     \
     struct name {                                                                \

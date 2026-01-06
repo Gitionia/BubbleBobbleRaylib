@@ -2,9 +2,6 @@
 
 #include "../app/Config.h"
 #include "Level.h"
-#include "entt/entity/fwd.hpp"
-#include <cstdio>
-#include <optional>
 
 static const LevelTilemap *tiles = nullptr;
 static const LevelTilemap *airflow = nullptr;

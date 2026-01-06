@@ -1,7 +1,6 @@
 #include "EntityFactory.h"
 
 #include "Components.h"
-#include "entt/entt.hpp"
 
 entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, bool addShadowRight, bool addShadowBottem) {
     entt::registry *registry = get().registry;
@@ -9,7 +8,7 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     {
         registry->emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle("Level1"), {1, 1}};
-        data.scale = { 2, 2};
+        data.scale = {2, 2};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
     }

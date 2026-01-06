@@ -1,10 +1,7 @@
 #pragma once
 
-#include <entt/entt.hpp>
 
 #include "../behavior/Level.h"
-#include "entt/entt.hpp"
-#include "../utils/Utilities.h"
 
 class EntityFactory {
   public:

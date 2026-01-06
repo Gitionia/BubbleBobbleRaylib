@@ -1,11 +1,5 @@
 #pragma once
 
-#include <cstdint>
-#include <raylib.h>
-#include <string>
-
-#include "Sprites.h"
-
 struct Sprite {
     const Texture2D spriteSheet;
     const Rectangle coords;

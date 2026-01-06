@@ -1,8 +1,5 @@
 #pragma once
-#include <entt/entity/registry.hpp>
-#include "Log.h"
 
-#include "raylib.h"
 
 class Debug {
 
@@ -17,7 +14,6 @@ class Debug {
 
     friend class Application;
 };
-
 #ifdef _DEBUG
 #define DBG_ASSERT(x) \
     if (!(x)) {\

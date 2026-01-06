@@ -1,10 +1,5 @@
 #include "Animations.h"
 
-#include "nlohmann/json.hpp"
-#include <fstream>
-
-#include "../utils/Log.h"
-
 static std::unordered_map<std::string, Animation> animations;
 
 void LoadAnimations() {

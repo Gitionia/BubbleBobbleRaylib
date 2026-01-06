@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
-#include "entt/entt.hpp"
 
 #include "../graphics/Animations.h"
 

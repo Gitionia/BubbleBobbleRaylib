@@ -3,10 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
-#include "../utils/Debug.h"
-#include "../utils/Log.h"
 #include "Physics.h"
-#include "entt/entt.hpp"
 
 void BubblePopBehaviorSystem::Update() {
     auto view = registry.view<Position, BubblePopComponent, RenderData>();

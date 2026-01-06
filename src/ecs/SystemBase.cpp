@@ -2,8 +2,6 @@
 
 #include "Components.h"
 
-#include "../utils/Debug.h"
-
 void SystemBase::BaseInit() {
     deferedEntityCollections.resize(DEFER_MAX_COUNT);
     for (auto vector : deferedEntityCollections) {

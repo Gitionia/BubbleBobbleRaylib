@@ -2,8 +2,6 @@
 
 #include "../app/Config.h"
 #include "../ecs/SystemBase.h"
-#include "entt/entt.hpp"
-#include "raylib.h"
 
 class RendererSystem : public SystemBase {
     SYSTEM_DEF(RendererSystem)

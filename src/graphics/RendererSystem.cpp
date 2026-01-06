@@ -1,10 +1,8 @@
 #include "RendererSystem.h"
+
 #include "../ecs/Components.h"
-#include <raylib.h>
-#include <raymath.h>
 
 #include "../app/Config.h"
-#include "../utils/Utilities.h"
 
 void RendererSystem::Init() {
     renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);
@@ -49,8 +47,6 @@ void RendererSystem::Update() {
     float scaleY = height / TARGET_WINDOW_HEIGHT;
 
     float scale = std::min(scaleX, scaleY);
-
-
 
     Rectangle dest = {0, 0, TARGET_WINDOW_WIDTH * scale, TARGET_WINDOW_HEIGHT * scale};
     DrawTexturePro(renderTexture.texture, src, dest, {0, 0}, 0, WHITE);

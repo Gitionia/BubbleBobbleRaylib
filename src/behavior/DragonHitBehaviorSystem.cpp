@@ -1,18 +1,12 @@
 #include "DragonHitBehaviorSystem.h"
 
-#include <iostream>
-#include <iterator>
-
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "../utils/Debug.h"
-#include "../utils/Input.h"
 #include "Level.h"
 #include "Physics.h"
 #include "WalkingActorUtils.h"
-#include "entt/entity/fwd.hpp"
 
 void makeDragonRespawn(entt::registry &registry, entt::entity e) {
     registry.remove<DragonHitComponent>(e);

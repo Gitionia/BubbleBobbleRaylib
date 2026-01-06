@@ -75,6 +75,8 @@ add_executable(BubbleBobbleRaylib src/app/main.cpp
         src/utils/Random.cpp
 )
 
+target_precompile_headers(BubbleBobbleRaylib PUBLIC src/pch.h)
+
 target_compile_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 target_link_options(BubbleBobbleRaylib PUBLIC -fsanitize=undefined)
 

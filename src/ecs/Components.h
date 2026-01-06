@@ -5,7 +5,6 @@
 #include "../graphics/Sprites.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
-#include "raylib.h"
 
 struct Position {
     int x, y;

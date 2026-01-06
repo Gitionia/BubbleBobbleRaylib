@@ -1,7 +1,5 @@
 #include "Window.h"
 
-#include "raylib.h"
-
 Window::Window(int width, int height, const char *title) : width(width), height(height), title(title) {
     SetTraceLogLevel(LOG_ERROR);
     SetTargetFPS(60);

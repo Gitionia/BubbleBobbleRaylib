@@ -3,11 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
-#include "../utils/Debug.h"
-#include "../utils/Log.h"
 #include "Physics.h"
-#include "entt/entity/fwd.hpp"
-#include "entt/entt.hpp"
 
 enum DeferValues {
     Floating = 0,
@@ -36,7 +32,7 @@ static void makeBubbleFloatingAndWaiting(entt::registry &registry, entt::entity 
     c.popFrame = POPABLE_DELAY_IN_FLOATING_FRAME_COUNT;
 }
 
-bool wallGapExists(entt::registry &registry, const Position& pos, const Collider &col, int dir) {
+bool wallGapExists(entt::registry &registry, const Position &pos, const Collider &col, int dir) {
 
     Position posToCheck = pos;
     // make pos.x even in the shooting direction

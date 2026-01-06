@@ -1,28 +1,11 @@
 #include "Application.h"
 
-#include "../ecs/Components.h"
 #include "../ecs/Systems.h"
 
 #include "../behavior/Level.h"
-
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
-#include <raylib.h>
-
-#include <nlohmann/json.hpp>
-
 #include "../behavior/Physics.h"
 
-#include "../utils/Debug.h"
-#include "../utils/Log.h"
-#include "../utils/Input.h"
-#include "../utils/Random.h"
-
 #include "Config.h"
-#include "spdlog/spdlog.h"
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>

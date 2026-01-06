@@ -4,11 +4,8 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "../utils/Debug.h"
-#include "../utils/Input.h"
 #include "Level.h"
 #include "Physics.h"
-#include "entt/entity/fwd.hpp"
 
 bool shouldWalkingActorIgnoreCollisions(entt::registry &registry, const Position &pos, const WalkingActorComponent &actor);
 

@@ -1,15 +1,5 @@
 #include "Sprites.h"
 
-#include "raylib.h"
-
-#include <filesystem>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-
-#include "../utils/Log.h"
-#include "nlohmann/json.hpp"
-
 static std::vector<Texture2D> textures;
 static std::vector<Sprite> sprites;
 static std::unordered_map<std::string, SpriteHandle> spriteMap;

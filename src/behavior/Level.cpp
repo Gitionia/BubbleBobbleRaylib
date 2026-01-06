@@ -1,9 +1,5 @@
 #include "Level.h"
 
-#include <sstream>
-
-#include "../utils/Log.h"
-
 LevelTilemap::LevelTilemap()
     : data(SIZE) {
 }
@@ -129,7 +125,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             for (int i = 0; i < levelData.size(); i++) {
                 level.airflow.set(i, levelData.at(i));
             }
-        }  else if (layer.find("name").value() == "Enemies") {
+        } else if (layer.find("name").value() == "Enemies") {
             auto levelData = layer.find("data").value();
 
             if (levelData.size() != 26 * 28)
@@ -139,7 +135,6 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 level.enemies.set(i, levelData.at(i));
             }
         }
-
     }
 
     return level;

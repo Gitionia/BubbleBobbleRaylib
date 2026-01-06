@@ -6,7 +6,6 @@
 #include "../graphics/Sprites.h"
 #include "../graphics/Window.h"
 #include "Config.h"
-#include "entt/entt.hpp"
 
 struct ApplicationParameters {
     int width = TARGET_WINDOW_WIDTH;
