@@ -17,6 +17,12 @@ void EnemyTumbleBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, enemy, renderData] = view.get(entity);
 
+        pos.x += enemy.xVel.get() * pos.dir;
+        pos.y += -enemy.yVel.get();
+
+        enemy.xVel.tick();
+        enemy.yVel.tick();
+
         enemy.animator.Update();
         if (enemy.animator.IsFinished()) {
             enemy.animator.Reset();

@@ -75,9 +75,16 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
+    int s = 20;
+    static AnimatedValueDefinition<int> xVelLow{{BP_SIZE(0, 0), 10},{BP_SIZE(0, 1), 10}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10},{BP_SIZE(0, 0), 10} };
+    static AnimatedValueDefinition<int> yVelLow{{BP_SIZE(0, 3), s}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 0), 5}, {-BP_SIZE(0, 1), 10}, {-BP_SIZE(0, 2), s}, {-BP_SIZE(0, 3), s}};
+    s = 30;
+    static AnimatedValueDefinition<int> xVelHigh{{BP_SIZE(0, 0), 15},{BP_SIZE(0, 1), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 30}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15},{BP_SIZE(0, 0), 15} };
+    static AnimatedValueDefinition<int> yVelHigh{{BP_SIZE(0, 3), s}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15}, {BP_SIZE(0, 0), 15}, {-BP_SIZE(0, 1), 10}, {-BP_SIZE(0, 2), s}, {-BP_SIZE(0, 3), s}};
+
     registry->emplace<Position>(enemy, x, y, dir);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
-    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"));
+    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVelHigh, yVelHigh);
     registry->emplace<EnemyTumbleTag>(enemy);
 
     return enemy;

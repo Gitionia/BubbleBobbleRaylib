@@ -6,6 +6,7 @@
 #include "../behavior/Physics.h"
 
 #include "Config.h"
+#include "raylib.h"
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
@@ -80,6 +81,11 @@ void update(SystemRunner &runner) {
 #ifdef PROFILE
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 #endif
+
+    if (IsKeyPressed(KEY_Z)) {
+        printf("Hello World");
+        EntityFactory::CreateTumblingEnemy(100, 250, 1);
+    }
 
     runner.UpdateSystems();
     UpdateAudio();

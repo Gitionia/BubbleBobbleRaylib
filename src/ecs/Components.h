@@ -117,6 +117,10 @@ struct EnemyComponent {
 
 struct EnemyTumbleComponent {
     Animator animator;
+
+    AnimatedValue<int> xVel;
+    AnimatedValue<int> yVel;
+
 };
 
 struct BubbleShootComponent {
