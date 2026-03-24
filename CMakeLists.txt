@@ -23,7 +23,7 @@ add_compile_definitions(_DEBUG)
 
 
 add_subdirectory(src)
-add_executable(BubbleBobbleRaylib src/app/main.cpp
+add_executable(BubbleBobbleRaylib src/main.cpp
         src/app/Application.cpp
         src/app/Application.h
         src/graphics/RendererSystem.cpp
