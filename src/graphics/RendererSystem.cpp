@@ -26,6 +26,11 @@ void RendererSystem::Update() {
     renderAllWithTag<BubbleTag>();
     renderAllWithTag<DragonTag>();
 
+    static Font font;
+    if (font.glyphCount == 0)
+        font = LoadFontEx("res/fonts/C64_Pro_Mono-STYLE.ttf", 128, 0, 0);
+    DrawTextEx(font, "HELLO with Commodore", {400, 100}, 32, 0, RED);
+
     drawDebugShapes();
 
 #ifdef DRAW_DEBUG
