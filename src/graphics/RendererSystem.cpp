@@ -20,6 +20,7 @@ void RendererSystem::Update() {
     renderAllWithTag<LevelTileShadowTag>();
     renderAllWithTag<LevelTileTag>();
     renderAllWithTag<ItemTag>();
+    renderAllWithTag<InGameTextTag>();
     renderAllWithTag<EnemyTag>();
     renderAllWithTag<EnemyTumbleTag>();
     renderAllWithTag<BubbleTag>();

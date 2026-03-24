@@ -177,6 +177,12 @@ struct BubblePopComponent {
     bool poppedFromLifeTime = true;
 };
 
+struct PositionAnimationComponent {
+    Vector2Int start;
+    Vector2Int end;
+    int totalFrameCount;
+    int progress = 0;
+};
 
 struct RenderData {
     SpriteHandle spriteHandle;
@@ -215,5 +221,6 @@ struct BubbleTag {};
 struct EnemyTag {};
 struct EnemyTumbleTag {};
 struct ItemTag {};
+struct InGameTextTag {};
 
 struct DebugDrawTag {};

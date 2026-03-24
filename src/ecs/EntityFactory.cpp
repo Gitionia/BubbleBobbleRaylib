@@ -105,6 +105,18 @@ entt::entity EntityFactory::CreateItem(const Vector2Int& pos) {
     return item;
 }
 
+entt::entity EntityFactory::CreateItemPointsText(const Vector2Int& pos) {
+    entt::registry *registry = get().registry;
+    
+    auto entity = registry->create();
+    registry->emplace<Position>(entity, pos.X, pos.Y);
+    registry->emplace<RenderData>(entity, RenderData(GetSpriteHandle("Points-500"), {2, 2}));
+    
+    registry->emplace<InGameTextTag>(entity);
+
+    return entity;
+}
+
 void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {

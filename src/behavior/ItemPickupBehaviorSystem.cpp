@@ -13,7 +13,7 @@ void ItemPickupBehaviorSystem::Update() {
 
             if (overlaps(dragonPos, Colliders::fullActorCollider, 
                 itemPos, Colliders::fullActorCollider)) {
-                PRINT_INFO("Picked up Item. 500 Points!");
+                EntityFactory::CreateItemPointsText(itemPos.toVector());
                 Destroy(item);
             }
         }
