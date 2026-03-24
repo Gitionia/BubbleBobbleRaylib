@@ -1,9 +1,7 @@
 #include "app/Application.h"
 
 int main() {
-    auto *app = new Application({});
-    app->Run();
-    delete app;
-
-    return 0;
+    ApplicationParameters params {};
+    Application app(params);
+    app.Run();
 }
