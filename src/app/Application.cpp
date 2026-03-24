@@ -88,7 +88,6 @@ void update(SystemRunner &runner) {
 #ifdef DEBUG_TOOLS
 
     if (IsKeyPressed(KEY_Z)) {
-        printf("Hello World");
         EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection());
     }
 
