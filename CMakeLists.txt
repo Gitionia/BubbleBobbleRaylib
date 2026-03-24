@@ -44,6 +44,8 @@ add_executable(BubbleBobbleRaylib
         src/ecs/Components.h
         src/behavior/EnemyTumbleBehaviorSystem.h
         src/behavior/EnemyTumbleBehaviorSystem.cpp
+        src/behavior/ItemPickupBehaviorSystem.h
+        src/behavior/ItemPickupBehaviorSystem.cpp
         src/behavior/DragonBehaviorSystem.cpp
         src/behavior/DragonBehaviorSystem.h
         src/behavior/WalkingActorUtils.h
