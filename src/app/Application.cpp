@@ -66,13 +66,15 @@ void Application::Run() {
 
     auto dragon = EntityFactory::CreateDragon();
 
+
 #ifdef PLATFORM_WEB
     setupEmscriptionUpdateLoop(systemRunner);
-#endif
-
+#else
     while (window.IsOpen()) {
         update(systemRunner);
     }
+#endif
+
 }
 
 void update(SystemRunner &runner) {
