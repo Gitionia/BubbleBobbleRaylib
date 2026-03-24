@@ -3,6 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
+#include "Level.h"
 #include "Physics.h"
 #include "WalkingActorUtils.h"
 
@@ -19,7 +20,15 @@ void EnemyTumbleBehaviorSystem::Update() {
 
         pos.x += enemy.xVel.get() * pos.dir;
         pos.y += -enemy.yVel.get();
+        if (pos.x < 2 * UNITS_PER_BLOCK) {
+            pos.x = 2 * UNITS_PER_BLOCK;
+            pos.dir = 1; 
+        } else if (pos.x > LevelTilemap::WIDTH * UNITS_PER_BLOCK) {
+            pos.x = LevelTilemap::WIDTH * UNITS_PER_BLOCK;
+            pos.dir = -1; 
+        }
 
+        
         enemy.xVel.tick();
         enemy.yVel.tick();
 

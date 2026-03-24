@@ -84,15 +84,17 @@ void update(SystemRunner &runner) {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 #endif
 
+
+#ifdef DEBUG_TOOLS
+
     if (IsKeyPressed(KEY_Z)) {
         printf("Hello World");
-        EntityFactory::CreateTumblingEnemy(100, 250, 1);
+        EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection());
     }
 
     runner.UpdateSystems();
     UpdateAudio();
 
-#ifdef DEBUG_TOOLS
     if (IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
     } else if (IsKeyPressed(KEY_O)) {
