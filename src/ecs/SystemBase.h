@@ -28,7 +28,7 @@ class SystemBase {
 
   protected:
     static constexpr int DEFER_MAX_COUNT = 5;
-    static inline std::vector<std::vector<entt::entity>> deferedEntityCollections;
-    static inline std::vector<DeferFunctionType> deferFunctions;
+    static inline std::array<std::vector<entt::entity>, DEFER_MAX_COUNT> deferedEntityCollections {};
+    static inline std::array<DeferFunctionType, DEFER_MAX_COUNT> deferFunctions {};
     entt::registry &registry;
 };

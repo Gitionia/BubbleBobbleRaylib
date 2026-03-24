@@ -1,14 +1,12 @@
 #include "SystemBase.h"
 
 #include "Components.h"
+#include "entt/entity/fwd.hpp"
 
 void SystemBase::BaseInit() {
-    deferedEntityCollections.resize(DEFER_MAX_COUNT);
     for (auto vector : deferedEntityCollections) {
-        vector.reserve(10);
+        vector.reserve(20);
     }
-
-    deferFunctions.resize(DEFER_MAX_COUNT);
 }
 
 SystemBase::SystemBase(entt::registry &registry)
@@ -29,13 +27,17 @@ void SystemBase::BaseUpdate() {
     registry.destroy(view.begin(), view.end());
     
     for (int i = 0; i < DEFER_MAX_COUNT; i++) {
-        for (auto entity : deferedEntityCollections.at(i)) {
-            DeferFunctionType& f = deferFunctions.at(i);
+        std::vector<entt::entity>& entities = deferedEntityCollections.at(i);
+        DeferFunctionType& f = deferFunctions.at(i);
 
+        for (auto entity : entities) {
+            DBG_ASSERT(f);
             f(registry, entity);
         }
 
-        deferedEntityCollections.at(i).clear();
+        // clean up the defered data, because it should only be used for the current system
+        f = nullptr;
+        entities.clear();
     }
 }
 
