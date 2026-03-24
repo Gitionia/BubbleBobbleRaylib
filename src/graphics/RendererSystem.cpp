@@ -6,6 +6,7 @@
 
 void RendererSystem::Init() {
     renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);
+    font = LoadFontEx("res/fonts/C64_Pro_Mono-STYLE.ttf", 128, 0, 0);
 }
 
 RendererSystem::~RendererSystem() {
@@ -26,10 +27,7 @@ void RendererSystem::Update() {
     renderAllWithTag<BubbleTag>();
     renderAllWithTag<DragonTag>();
 
-    static Font font;
-    if (font.glyphCount == 0)
-        font = LoadFontEx("res/fonts/C64_Pro_Mono-STYLE.ttf", 128, 0, 0);
-    DrawTextEx(font, "HELLO with Commodore", {400, 100}, 32, 0, RED);
+    renderFontText();
 
     drawDebugShapes();
 
@@ -59,6 +57,21 @@ void RendererSystem::Update() {
     Rectangle dest = {0, 0, TARGET_WINDOW_WIDTH * scale, TARGET_WINDOW_HEIGHT * scale};
     DrawTexturePro(renderTexture.texture, src, dest, {0, 0}, 0, WHITE);
     EndDrawing();
+}
+
+void RendererSystem::renderFontText() {
+    auto viewM = registry.view<Position, ModifiableUITextComponent>();
+    for (auto entity : viewM) {
+        auto [pos, ui] = viewM.get(entity);
+
+        DrawTextEx(font, ui.text.c_str(), pos.toRLVector(), ui.fontSize, ui.spacing, ui.color);
+    }
+    auto viewC = registry.view<Position, ConstUITextComponent>();
+    for (auto entity : viewC) {
+        auto [pos, ui] = viewC.get(entity);
+
+        DrawTextEx(font, ui.text, pos.toRLVector(), ui.fontSize, ui.spacing, ui.color);
+    }
 }
 
 void RendererSystem::drawDebugShapes() {

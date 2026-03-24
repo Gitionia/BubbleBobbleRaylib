@@ -15,6 +15,10 @@ struct Position {
         return {x, y};
     }
 
+    Vector2 toRLVector() const {
+        return {(float)x, (float)y};
+    }
+
     void set(const Position &pos) {
         set(pos.x, pos.y, pos.dir);
     }
@@ -187,6 +191,20 @@ struct PositionAnimationComponent {
         DELETE_ENTITY
     };
     ActionWhenCompleted action;
+};
+
+struct ModifiableUITextComponent {
+    std::string text;
+    Color color;
+    int fontSize = 32;
+    int spacing = 0;
+};
+
+struct ConstUITextComponent {
+    const char* text;
+    Color color;
+    int fontSize = 32;
+    int spacing = 0;
 };
 
 struct RenderData {

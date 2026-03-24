@@ -66,6 +66,7 @@ void Application::Run() {
 
     auto dragon = EntityFactory::CreateDragon();
 
+    EntityFactory::CreateConstantUIText({BP_SIZE(26, 0), 32}, "HI SCORE Dummy", GREEN);
 
 #ifdef PLATFORM_WEB
     setupEmscriptionUpdateLoop(systemRunner);

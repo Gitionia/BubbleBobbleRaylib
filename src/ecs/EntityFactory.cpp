@@ -120,6 +120,27 @@ entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos) {
     return entity;
 }
 
+entt::entity EntityFactory::CreateModifiableUIText(const Vector2Int &pos, const std::string &text, Color color, int fontSize, int spacing) {
+    entt::registry *registry = get().registry;
+
+    auto entity = registry->create();
+    registry->emplace<Position>(entity, pos.X, pos.Y);
+    registry->emplace<ModifiableUITextComponent>(entity, text, color, fontSize, spacing);
+
+    return entity;
+}
+
+
+entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const char*text, Color color, int fontSize, int spacing) {
+    entt::registry *registry = get().registry;
+
+    auto entity = registry->create();
+    registry->emplace<Position>(entity, pos.X, pos.Y);
+    registry->emplace<ConstUITextComponent>(entity, text, color, fontSize, spacing);
+
+    return entity;
+}
+
 void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {

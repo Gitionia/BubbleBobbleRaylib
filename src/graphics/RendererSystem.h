@@ -17,6 +17,8 @@ class RendererSystem : public SystemBase {
     template <typename Tag>
     void renderAllWithTag();
 
+    void renderFontText();
+
     template <typename ColliderType>
     void debugDrawColliders(Color color);
 
@@ -27,5 +29,6 @@ class RendererSystem : public SystemBase {
     void drawDebugShapes();
 
   private:
-    RenderTexture2D renderTexture;
+  RenderTexture2D renderTexture;
+  Font font;
 };
