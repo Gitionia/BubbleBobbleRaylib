@@ -12,6 +12,7 @@
 #include "../behavior/DragonHitBehaviorSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
 #include "../behavior/ItemPickupBehaviorSystem.h"
+#include "../behavior/PositionAnimationBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 
 SystemRunner::SystemRunner(entt::registry &registry)
@@ -27,6 +28,7 @@ SystemRunner::SystemRunner(entt::registry &registry)
     registerSystem<BubbleFloatBehaviorSystem>(registry);
     registerSystem<BubblePopBehaviorSystem>(registry);
     registerSystem<ItemPickupBehaviorSystem>(registry);
+    registerSystem<PositionAnimationBehaviorSystem>(registry);
     registerSystem<RendererSystem>(registry);
 }
 

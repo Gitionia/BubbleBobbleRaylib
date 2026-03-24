@@ -76,27 +76,27 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
     auto enemy = registry->create();
 
     int s = 20;
-    static AnimatedValueDefinition<int> xVelLow{{BP_SIZE(0, 0), 10},{BP_SIZE(0, 1), 10}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10},{BP_SIZE(0, 0), 10} };
+    static AnimatedValueDefinition<int> xVelLow{{BP_SIZE(0, 0), 10}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 0), 10}};
     static AnimatedValueDefinition<int> yVelLow{{BP_SIZE(0, 3), s}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 0), 5}, {-BP_SIZE(0, 1), 10}, {-BP_SIZE(0, 2), s}, {-BP_SIZE(0, 3), s}};
     s = 30;
-    static AnimatedValueDefinition<int> xVelHigh{{BP_SIZE(0, 0), 15},{BP_SIZE(0, 1), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 30}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15},{BP_SIZE(0, 0), 15} };
+    static AnimatedValueDefinition<int> xVelHigh{{BP_SIZE(0, 0), 15}, {BP_SIZE(0, 1), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 30}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15}, {BP_SIZE(0, 0), 15}};
     static AnimatedValueDefinition<int> yVelHigh{{BP_SIZE(0, 3), s}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15}, {BP_SIZE(0, 0), 15}, {-BP_SIZE(0, 1), 10}, {-BP_SIZE(0, 2), s}, {-BP_SIZE(0, 3), s}};
 
     registry->emplace<Position>(enemy, x, y, dir);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
-    
+
     bool rand = Random::Get().Bool();
-    auto& xVel = rand ? xVelHigh : xVelLow; 
-    auto& yVel = rand ? yVelHigh : yVelLow; 
+    auto &xVel = rand ? xVelHigh : xVelLow;
+    auto &yVel = rand ? yVelHigh : yVelLow;
     registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel);
     registry->emplace<EnemyTumbleTag>(enemy);
 
     return enemy;
 }
 
-entt::entity EntityFactory::CreateItem(const Vector2Int& pos) {
+entt::entity EntityFactory::CreateItem(const Vector2Int &pos) {
     entt::registry *registry = get().registry;
-    
+
     auto item = registry->create();
     registry->emplace<Position>(item, pos.X, pos.Y);
     registry->emplace<RenderData>(item, RenderData(GetSpriteHandle("Item-Banana"), {2, 2}));
@@ -105,13 +105,16 @@ entt::entity EntityFactory::CreateItem(const Vector2Int& pos) {
     return item;
 }
 
-entt::entity EntityFactory::CreateItemPointsText(const Vector2Int& pos) {
+entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos) {
     entt::registry *registry = get().registry;
-    
+
+    pos.Y += BP_SIZE(0, 8);
+
     auto entity = registry->create();
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<RenderData>(entity, RenderData(GetSpriteHandle("Points-500"), {2, 2}));
-    
+    registry->emplace<PositionAnimationComponent>(entity, pos, pos.Add(0, BP_SIZE(-5, 0)),
+                                                  120, PositionAnimationComponent::DELETE_ENTITY);
     registry->emplace<InGameTextTag>(entity);
 
     return entity;

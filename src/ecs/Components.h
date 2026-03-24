@@ -182,6 +182,11 @@ struct PositionAnimationComponent {
     Vector2Int end;
     int totalFrameCount;
     int progress = 0;
+    
+    enum ActionWhenCompleted {
+        DELETE_ENTITY
+    };
+    ActionWhenCompleted action;
 };
 
 struct RenderData {
