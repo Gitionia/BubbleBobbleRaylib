@@ -84,7 +84,11 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
 
     registry->emplace<Position>(enemy, x, y, dir);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
-    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVelHigh, yVelHigh);
+    
+    bool rand = Random::Get().Bool();
+    auto& xVel = rand ? xVelHigh : xVelLow; 
+    auto& yVel = rand ? yVelHigh : yVelLow; 
+    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel);
     registry->emplace<EnemyTumbleTag>(enemy);
 
     return enemy;

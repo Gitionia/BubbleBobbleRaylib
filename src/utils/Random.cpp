@@ -21,7 +21,9 @@ int Random::Range(int max) {
     return Range(1, max);
 }
 
-
+bool Random::Bool() {
+    return Range(1, 1000) > 500;
+}
 
 Random &Random::Get() {
     static Random random;

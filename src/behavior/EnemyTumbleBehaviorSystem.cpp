@@ -18,7 +18,10 @@ void EnemyTumbleBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, enemy, renderData] = view.get(entity);
 
-        pos.x += enemy.xVel.get() * pos.dir;
+        if (!enemy.isFalling) {
+            pos.x += enemy.xVel.get() * pos.dir;
+        }
+
         pos.y += -enemy.yVel.get();
         if (pos.x < 2 * UNITS_PER_BLOCK) {
             pos.x = 2 * UNITS_PER_BLOCK;
@@ -28,7 +31,16 @@ void EnemyTumbleBehaviorSystem::Update() {
             pos.dir = -1; 
         }
 
-        if (!enemy.isFalling && enemy.xVel.onLastFrame() && enemy.yVel.onLastFrame()) {
+        int BOTTEM_WARP_POS = 27 * UNITS_PER_BLOCK;
+        // apply warping
+        if (pos.y >= BOTTEM_WARP_POS) {
+            pos.y = BP_SIZE(-3, 0);
+        } else if (pos.y < BP_SIZE(-3, -2)) {
+            pos.y = BP_SIZE(LevelTilemap::HEIGHT + 1, 0);
+        }
+
+
+        if (enemy.xVel.onLastFrame() || enemy.yVel.onLastFrame()) {
             enemy.isFalling = true;
 
             if (enemy.ignoreCollision) {

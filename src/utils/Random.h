@@ -8,6 +8,7 @@ class Random {
     int GetDirection();
     int Range(int min, int max);
     int Range(int max);
+    bool Bool();
 
   private:
     std::mt19937 rng{};
