@@ -92,7 +92,7 @@ void update(SystemRunner &runner) {
     runner.UpdateSystems();
     UpdateAudio();
 
-#ifdef _DEBUG
+#ifdef DEBUG_TOOLS
     if (IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
     } else if (IsKeyPressed(KEY_O)) {

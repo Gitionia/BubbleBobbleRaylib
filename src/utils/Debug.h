@@ -1,6 +1,5 @@
 #pragma once
 
-
 class Debug {
 
   public:
@@ -14,14 +13,12 @@ class Debug {
 
     friend class Application;
 };
-#ifdef _DEBUG
-#define DBG_ASSERT(x) \
-    if (!(x)) {\
-        PRINT_ERROR("Assert failed at {} line {}", __FILE__, __LINE__);\
-        exit(0);\
-    }
+#ifdef NDEBUG
+#define DBG_ASSERT(x)
 #else
-#define DBG_ASSERT(x)   
+#define DBG_ASSERT(x)                                                   \
+    if (!(x)) {                                                         \
+        PRINT_ERROR("Assert failed at {} line {}", __FILE__, __LINE__); \
+        exit(0);                                                        \
+    }
 #endif
-
-
