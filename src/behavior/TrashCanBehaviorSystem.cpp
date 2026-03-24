@@ -7,9 +7,8 @@
 #include "Physics.h"
 #include "WalkingActorUtils.h"
 
-
-void makeEnemyBubbled(entt::registry& registry, entt::entity e) {
-    BubbleFloatComponent& c = registry.emplace<BubbleFloatComponent>(e);
+void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
+    BubbleFloatComponent &c = registry.emplace<BubbleFloatComponent>(e);
     c.animator.SetNewAnimation(&GetAnimation("Can-Bubbled"));
 }
 
@@ -22,24 +21,23 @@ void TrashCanBehaviorSystem::Update() {
 
     static Animator animator(&GetAnimation("Can-Walk"));
 
+    animator.Update();
+    if (animator.IsFinished()) {
+        animator.Reset();
+    }
+
     auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, actor, enemy, renderData] = view.get(entity);
 
-   
         std::optional<entt::entity> bubble = getCollidingShootingBubble(registry, pos, Colliders::fullActorCollider);
         if (bubble.has_value()) {
-            Defer(entity, &makeEnemyBubbled, 0); 
+            Defer(entity, &makeEnemyBubbled, 0);
             Destroy(bubble.value());
 
             continue;
         }
 
-
-        animator.Update();
-        if (animator.IsFinished()) {
-            animator.Reset();
-        }
         renderData.spriteHandle = animator.GetSpriteHandle();
 
         int velx = 0;
@@ -88,6 +86,5 @@ void TrashCanBehaviorSystem::Update() {
             }
             pos.x += velx;
         }
-        
     }
 }
