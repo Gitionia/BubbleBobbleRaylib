@@ -12,6 +12,7 @@ void BubblePopBehaviorSystem::Update() {
 
         int MAX_POP_ANIM_REPETITIONS = 2;
 
+        pos.dir = -1;
         if (bubble.isInStatePrePop) {
             renderData.spriteHandle = bubble.animator.GetSpriteHandle();
             bubble.animator.Update();
