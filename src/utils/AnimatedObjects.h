@@ -45,6 +45,10 @@ class AnimatedValue {
         return length;
     }
 
+    bool onLastFrame() {
+        return currentIndex == frames.size() - 1;
+    }
+
   private:
     int frame = 0;
     int currentIndex = 0;

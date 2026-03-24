@@ -120,7 +120,8 @@ struct EnemyTumbleComponent {
 
     AnimatedValue<int> xVel;
     AnimatedValue<int> yVel;
-
+    bool ignoreCollision = true;
+    bool isFalling = false;
 };
 
 struct BubbleShootComponent {
@@ -176,6 +177,7 @@ struct BubblePopComponent {
     bool poppedFromLifeTime = true;
 };
 
+
 struct RenderData {
     SpriteHandle spriteHandle;
     Vector2 scale;
@@ -212,5 +214,6 @@ struct DragonTag {};
 struct BubbleTag {};
 struct EnemyTag {};
 struct EnemyTumbleTag {};
+struct ItemTag {};
 
 struct DebugDrawTag {};

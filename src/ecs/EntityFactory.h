@@ -2,6 +2,7 @@
 
 
 #include "../behavior/Level.h"
+#include "Components.h"
 
 class EntityFactory {
   public:
@@ -9,6 +10,7 @@ class EntityFactory {
     static entt::entity CreateDragon();
     static entt::entity CreateEnemy(int x, int y);
     static entt::entity CreateTumblingEnemy(int x, int y, int dir);
+    static entt::entity CreateItem(const Vector2Int& pos);
     static entt::entity CreateBubbleCenteredAt(const Vector2Int &centre, int direction);
     static void CreateLevel(const LevelLayout &level);
 

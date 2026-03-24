@@ -28,9 +28,37 @@ void EnemyTumbleBehaviorSystem::Update() {
             pos.dir = -1; 
         }
 
+        if (!enemy.isFalling && enemy.xVel.onLastFrame() && enemy.yVel.onLastFrame()) {
+            enemy.isFalling = true;
+
+            if (enemy.ignoreCollision) {
+                enemy.ignoreCollision = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::fullActorCollider);
+            }
+        }
+
+        if (!enemy.isFalling) {
+            enemy.xVel.tick();
+            enemy.yVel.tick();
         
-        enemy.xVel.tick();
-        enemy.yVel.tick();
+        } else {
+            WalkingActorComponent dummyComponent {
+                .fallSpeed = enemy.yVel.get(),
+                .jumpSpeed = 0,
+                .ignoreCollisions = enemy.ignoreCollision,
+                .jumpFrameCount = 0
+            };
+
+            if (isWalkingActorGrounded(registry, pos, dummyComponent)) {
+                // pos.y will overshoot desired y-position on a block
+                pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
+                
+                EntityFactory::CreateItem(pos.toVector());
+                Destroy(entity);
+                continue;
+            }
+
+        }
+
 
         enemy.animator.Update();
         if (enemy.animator.IsFinished()) {

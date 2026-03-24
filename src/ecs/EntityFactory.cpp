@@ -90,6 +90,17 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
     return enemy;
 }
 
+entt::entity EntityFactory::CreateItem(const Vector2Int& pos) {
+    entt::registry *registry = get().registry;
+    
+    auto item = registry->create();
+    registry->emplace<Position>(item, pos.X, pos.Y);
+    registry->emplace<RenderData>(item, RenderData(GetSpriteHandle("Item-Banana"), {2, 2}));
+    registry->emplace<ItemTag>(item);
+
+    return item;
+}
+
 void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {

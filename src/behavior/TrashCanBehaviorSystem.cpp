@@ -66,7 +66,7 @@ void TrashCanBehaviorSystem::Update() {
 
         velx = moveSpeed * enemy.walkingDir;
 
-        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, actor);
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
         // start jump
         if (jump) {

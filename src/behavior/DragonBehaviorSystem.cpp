@@ -54,7 +54,7 @@ void DragonBehaviorSystem::Update() {
             dragon.bubbleShootDelay--;
         }
 
-        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, actor);
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
         // walking
         pos.x += velx;
