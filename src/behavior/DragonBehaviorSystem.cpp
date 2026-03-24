@@ -29,28 +29,19 @@ void DragonBehaviorSystem::Update() {
             continue;
         }
 
-        int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
+        const int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
 
         int inputDir = Input::GetXAxis();
         bool jump = Input::IsKeyDown(Key::Jump);
+
+        int moveSpeed = UNITS_PER_BLOCK / 16;
+        int velx = moveSpeed * inputDir;
+
         bool startedShootingAnimation = false;
 
         if (inputDir != 0) {
             pos.dir = inputDir;
-
-            if (dragon.state == DragonComponent::IDLE) {
-                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
-                dragon.state = DragonComponent::WALKING;
-            }
-        } else {
-            if (dragon.state == DragonComponent::WALKING) {
-                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
-                dragon.state = DragonComponent::IDLE;
-            }
         }
-
-        int moveSpeed = UNITS_PER_BLOCK / 16;
-        int velx = moveSpeed * inputDir;
 
         // shooting
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
@@ -71,7 +62,7 @@ void DragonBehaviorSystem::Update() {
             pos.x -= velx;
         }
 
-        // check if grounded
+        // check if is grounded
         bool isGrounded = false;
         if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
@@ -98,17 +89,8 @@ void DragonBehaviorSystem::Update() {
 
                 dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
                 dragon.state = DragonComponent::SHOOTING;
-            } else if (!isGrounded) {
 
-                if (actor.isJumping() && dragon.state != DragonComponent::JUMPING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
-                    dragon.state = DragonComponent::JUMPING;
-
-                } else if (!actor.isJumping() && dragon.state != DragonComponent::FALLING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
-                    dragon.state = DragonComponent::FALLING;
-                }
-            } else {
+            } else if (isGrounded) {
 
                 if (inputDir == 0 && dragon.state != DragonComponent::IDLE) {
                     dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
@@ -117,6 +99,17 @@ void DragonBehaviorSystem::Update() {
                 } else if (inputDir != 0 && dragon.state != DragonComponent::WALKING) {
                     dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
                     dragon.state = DragonComponent::WALKING;
+                }
+
+            } else {
+
+                if (actor.isJumping() && dragon.state != DragonComponent::JUMPING) {
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
+                    dragon.state = DragonComponent::JUMPING;
+
+                } else if (!actor.isJumping() && dragon.state != DragonComponent::FALLING) {
+                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
+                    dragon.state = DragonComponent::FALLING;
                 }
             }
         }
