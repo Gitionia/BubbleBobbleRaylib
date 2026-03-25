@@ -193,6 +193,10 @@ struct BubblePopComponent {
     int itemLevel = 0;
 };
 
+struct ItemComponent {
+    ItemType type;
+};
+
 struct PositionAnimationComponent {
     Vector2Int start;
     Vector2Int end;

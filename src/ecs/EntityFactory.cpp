@@ -100,19 +100,21 @@ entt::entity EntityFactory::CreateItem(const Vector2Int &pos, ItemType itemType)
     auto item = registry->create();
     registry->emplace<Position>(item, pos.X, pos.Y);
     registry->emplace<RenderData>(item, RenderData(GetSpriteHandle(GetItemSpriteName(itemType)), {2, 2}));
+    registry->emplace<ItemComponent>(item, itemType);
     registry->emplace<ItemTag>(item);
 
     return item;
 }
 
-entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos) {
+entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos, ItemType itemType) {
     entt::registry *registry = get().registry;
 
     pos.Y += BP_SIZE(0, 8);
 
     auto entity = registry->create();
     registry->emplace<Position>(entity, pos.X, pos.Y);
-    registry->emplace<RenderData>(entity, RenderData(GetSpriteHandle("Points-500"), {2, 2}));
+    registry->emplace<RenderData>(entity,
+                                  RenderData(GetSpriteHandle(GetPointTextSpriteNameFromItemType(itemType)), {2, 2}));
     registry->emplace<PositionAnimationComponent>(entity, pos, pos.Add(0, BP_SIZE(-5, 0)),
                                                   120, PositionAnimationComponent::DELETE_ENTITY);
     registry->emplace<InGameTextTag>(entity);
@@ -130,8 +132,7 @@ entt::entity EntityFactory::CreateModifiableUIText(const Vector2Int &pos, const 
     return entity;
 }
 
-
-entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const char*text, Color color, int fontSize, int spacing) {
+entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const char *text, Color color, int fontSize, int spacing) {
     entt::registry *registry = get().registry;
 
     auto entity = registry->create();

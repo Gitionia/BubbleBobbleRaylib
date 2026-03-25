@@ -11,7 +11,7 @@ class EntityFactory {
     static entt::entity CreateEnemy(int x, int y);
     static entt::entity CreateTumblingEnemy(int x, int y, int dir, ItemType itemType);
     static entt::entity CreateItem(const Vector2Int& pos, ItemType itemType);
-    static entt::entity CreateItemPointsText(Vector2Int pos);
+    static entt::entity CreateItemPointsText(Vector2Int pos, ItemType itemType);
     static entt::entity CreateBubbleCenteredAt(const Vector2Int &centre, int direction);
     static entt::entity CreateModifiableUIText(const Vector2Int &position, const std::string& text, Color color, int fontSize = 32, int spacing = 0);
     static entt::entity CreateConstantUIText(const Vector2Int &position, const char* text, Color color, int fontSize = 32, int spacing = 0);
