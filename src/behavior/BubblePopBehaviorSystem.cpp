@@ -26,19 +26,24 @@ void makeBubblePop(entt::registry &registry, entt::entity e) {
         c.poppedFromLifeTime = false;
 
         int itemLevel = 0;
-        for (const ItemLevelForEntity& itemLevelForEntity : itemLevels) {
-            if (itemLevelForEntity.entity == e && itemLevelForEntity.itemLevel > itemLevel) {
-                itemLevel = itemLevelForEntity.itemLevel;
+
+        bool foundItemLevel = false;
+        for (const ItemLevelForEntity &itemLevelForEntity : itemLevels) {
+            if (itemLevelForEntity.entity == e) {
+                foundItemLevel = true;
+
+                if (itemLevelForEntity.itemLevel > itemLevel) {
+                    itemLevel = itemLevelForEntity.itemLevel;
+                }
             }
         }
 
-        DBG_CHECK(itemLevel > 0, "Item Level for popped bubble was not > 0, even though it was popped by other bubble");
+        DBG_CHECK(foundItemLevel, "Popped bubble did not find item level of bubble that popped this bubble!");
         c.itemLevel = itemLevel;
-
     }
 }
 
-void BubblePopBehaviorSystem::popAdjacentBubbles(const Position &position, const BubblePopComponent &popComp) {
+void BubblePopBehaviorSystem::popAdjacentBubbles(const Position &position, int targetItemLevel) {
     auto view = registry.view<Position, BubbleFloatComponent>();
 
     for (entt::entity entity : view) {
@@ -47,7 +52,7 @@ void BubblePopBehaviorSystem::popAdjacentBubbles(const Position &position, const
         if (overlaps(position, Colliders::bubblePopCollider, pos, Colliders::bubblePopCollider)) {
 
             Defer(entity, &makeBubblePop, 0);
-            itemLevels.push_back({entity, popComp.itemLevel + 1});
+            itemLevels.push_back({entity, targetItemLevel});
         }
     }
 }
@@ -75,7 +80,11 @@ void BubblePopBehaviorSystem::Update() {
         if (bubble.isInStatePrePop) {
 
             if (!bubble.poppedFromLifeTime) {
-                popAdjacentBubbles(pos, bubble);
+                int itemLevelForPoppedBubbles = bubble.itemLevel;
+                if (registry.any_of<EnemyTag>(entity)) {
+                    itemLevelForPoppedBubbles++;
+                }
+                popAdjacentBubbles(pos, itemLevelForPoppedBubbles);
             }
 
             renderData.spriteHandle = bubble.animator.GetSpriteHandle();

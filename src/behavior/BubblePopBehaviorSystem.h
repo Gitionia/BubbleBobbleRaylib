@@ -12,5 +12,5 @@ class BubblePopBehaviorSystem : public SystemBase {
     void Update() override;
 
   private:
-    void popAdjacentBubbles(const Position &position, const BubblePopComponent& popComp);
+    void popAdjacentBubbles(const Position &position, int targetItemLevel);
   };
