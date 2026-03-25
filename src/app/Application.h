@@ -7,6 +7,7 @@
 #include "../graphics/Window.h"
 #include "Config.h"
 #include "EventSystem.h"
+#include "StateMachine.h"
 
 struct ApplicationParameters {
     int width = TARGET_WINDOW_WIDTH;
@@ -25,4 +26,5 @@ class Application {
     EventSystem eventSystem;
     entt::registry registry{};
     SystemRunner systemRunner;
+    StateMachine stateMachine;
 };
