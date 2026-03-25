@@ -4,6 +4,30 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "Physics.h"
+#include "entt/entity/fwd.hpp"
+
+void makeBubblePopFromLifeTime(entt::registry &registry, entt::entity e) {
+
+    registry.remove<BubbleFloatComponent>(e);
+    if (!registry.any_of<BubblePopComponent>(e)) {
+
+        BubblePopComponent &c = registry.emplace<BubblePopComponent>(e);
+        c.poppedFromLifeTime = false;
+
+    }
+}
+
+void BubblePopBehaviorSystem::popAdjacentBubbles(const Position &position) {
+    auto view = registry.view<Position, BubbleFloatComponent>();
+
+    for (auto entity : view) {
+        auto [pos, bubble] = view.get(entity);
+
+        if (overlaps(position, Colliders::bubblePopCollider, pos, Colliders::bubblePopCollider)) {
+            Defer(entity, &makeBubblePopFromLifeTime, 0);
+        }
+    }
+}
 
 void BubblePopBehaviorSystem::Update() {
     auto view = registry.view<Position, BubblePopComponent, RenderData>();
@@ -14,6 +38,11 @@ void BubblePopBehaviorSystem::Update() {
 
         pos.dir = -1;
         if (bubble.isInStatePrePop) {
+
+            if (!bubble.poppedFromLifeTime) {
+                popAdjacentBubbles(pos);
+            }
+            
             renderData.spriteHandle = bubble.animator.GetSpriteHandle();
             bubble.animator.Update();
 

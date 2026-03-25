@@ -7,4 +7,7 @@ class BubblePopBehaviorSystem : public SystemBase {
 
   protected:
     void Update() override;
-};
+
+  private:
+    void popAdjacentBubbles(const Position &position);
+  };
