@@ -2,6 +2,14 @@
 
 #include "StateMachine.h"
 
+#include "../level/Level.h"
+#include "../level/Physics.h"
+#include "../audio/Audio.h"
+
+#include "../ecs/Components.h"
+#include "entt/entity/fwd.hpp"
+#include "raylib.h"
+
 class GameplayState : public StateMachineState {
   public:
     GameplayState(SystemRunner &runner)
@@ -13,7 +21,4 @@ class GameplayState : public StateMachineState {
   private:
     LevelLayout level;
     Music *music;
-    int points;
-    entt::entity textEntity;
-    ModifiableUITextComponent *ui;
 };

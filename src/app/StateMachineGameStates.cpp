@@ -1,13 +1,6 @@
 #include "StateMachineGameStates.h"
 
 
-#include "../level/Level.h"
-#include "../level/Physics.h"
-
-#include "../audio/Audio.h"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
-#include <string>
 
 
 void GameplayState::Init() {
@@ -18,21 +11,11 @@ void GameplayState::Init() {
 
         auto dragon = EntityFactory::CreateDragon();
 
-        points = 0;
-        textEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0), 0}, "HI SCORE\n" + std::to_string(points), GREEN);
 
-        // ui = &registry.get<ModifiableUITextComponent>(textEntity);
-}
-
-void GameplayState::Update() {
+    }
     
-    // // should be moved into update() function
-    // for (const Event &event : eventSystem.ReadEvent(POINTS_GAINED)) {
-    //     int gainedPoints = event.data;
-    //     points += gainedPoints;
-    // }
-
-    // ui.text = "HI SCORE\n" + std::to_string(points);
+    void GameplayState::Update() {
+        
 
     runner.UpdateSystems();
 

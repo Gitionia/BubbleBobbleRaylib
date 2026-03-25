@@ -1,6 +1,5 @@
 #include "Systems.h"
 
-#include "Components.h"
 
 #include "../behavior/TrashCanBehaviorSystem.h"
 #include "../behavior/EnemyTumbleBehaviorSystem.h"
@@ -13,6 +12,7 @@
 #include "../behavior/WalkingActorBehaviorSystem.h"
 #include "../behavior/ItemPickupBehaviorSystem.h"
 #include "../behavior/PositionAnimationBehaviorSystem.h"
+#include "../behavior/GameplayUISystem.h"
 #include "../graphics/RendererSystem.h"
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem& eventSystem)
@@ -29,6 +29,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem& eventSystem)
     registerSystem<BubblePopBehaviorSystem>(registry, eventSystem);
     registerSystem<ItemPickupBehaviorSystem>(registry, eventSystem);
     registerSystem<PositionAnimationBehaviorSystem>(registry, eventSystem);
+    registerSystem<GameplayUISystem>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
 
