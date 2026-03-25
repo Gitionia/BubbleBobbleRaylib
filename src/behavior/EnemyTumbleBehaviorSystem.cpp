@@ -5,6 +5,7 @@
 #include "../graphics/Animations.h"
 #include "../level/Level.h"
 #include "../level/Physics.h"
+#include "../level/Items.h"
 #include "WalkingActorUtils.h"
 
 void EnemyTumbleBehaviorSystem::Init() {
