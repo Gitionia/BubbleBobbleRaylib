@@ -182,6 +182,10 @@ struct BubblePopComponent {
     int popAnimationRepetitions = 0;
 
     bool poppedFromLifeTime = true;
+    // Says wether points should still be given for the pop.
+    // Note that this can be set to true, even if no points were given, 
+    // because e. g. the bubble was an enemy where the pop gives no points
+    bool gavePointsForPop = false;
 };
 
 struct PositionAnimationComponent {

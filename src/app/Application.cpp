@@ -82,8 +82,8 @@ void Application::Run() {
         update(systemRunner, eventSystem);
 
         // should be moved into update() function
-        for (auto event : eventSystem.ReadEvent(POINTS_GAINED)) {
-            int gainedPoints = *(int *)event.data.get();
+        for (const Event& event : eventSystem.ReadEvent(POINTS_GAINED)) {
+            int gainedPoints = event.data;
             points += gainedPoints;
         }
 

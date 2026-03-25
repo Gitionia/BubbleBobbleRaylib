@@ -17,16 +17,7 @@ void ItemPickupBehaviorSystem::Update() {
                 EntityFactory::CreateItemPointsText(itemPos.toVector());
                 Destroy(item);
 
-                // Custom Deleter necessary for deleting void pointer
-                std::shared_ptr<void> ptr(new int(500), 
-                    [](void *pi) 
-                    { 
-                        delete (int*)pi; 
-                    }
-                );
-
-                eventSystem.Notify(dragon, POINTS_GAINED, 
-                    ptr);
+                eventSystem.Notify(dragon, POINTS_GAINED, 500);
             }
         }
     }

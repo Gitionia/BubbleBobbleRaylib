@@ -36,6 +36,17 @@ void BubblePopBehaviorSystem::Update() {
 
         int MAX_POP_ANIM_REPETITIONS = 2;
 
+        if (!bubble.gavePointsForPop) {
+            // We check this only once for this entity, 
+            // so we say in any case that points were given
+            bubble.gavePointsForPop = true;
+            
+            if (!registry.any_of<EnemyTag>(entity)) {
+                eventSystem.Notify(entity, POINTS_GAINED, 10);
+            }
+        }
+
+
         pos.dir = -1;
         if (bubble.isInStatePrePop) {
 

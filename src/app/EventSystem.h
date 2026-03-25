@@ -10,7 +10,7 @@ enum EventType {
 
 struct Event {
     entt::entity sender;
-    std::shared_ptr<void> data;
+    int64_t data;
 };
 
 class EventSystem {
@@ -19,7 +19,7 @@ public:
     EventSystem();
 
     // Notifies system of an event that occured this frame
-    void Notify(entt::entity sender, EventType type, const std::shared_ptr<void> data);
+    void Notify(entt::entity sender, EventType type, int64_t data);
 
     // Gets all the events of a type that were raised this frame
     const std::vector<Event>& ReadEvent(EventType type);

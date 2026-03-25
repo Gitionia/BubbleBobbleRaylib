@@ -1,5 +1,4 @@
 #include "EventSystem.h"
-#include <memory>
 #include <vector>
 
 EventSystem::EventSystem() {
@@ -8,7 +7,7 @@ EventSystem::EventSystem() {
     }
 }
 
-void EventSystem::Notify(entt::entity sender, EventType type, std::shared_ptr<void> data) {
+void EventSystem::Notify(entt::entity sender, EventType type, int64_t data) {
     eventLists.at(type).push_back({sender, data});
 }
 
