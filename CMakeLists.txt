@@ -50,6 +50,8 @@ add_executable(BubbleBobbleRaylib
         src/ecs/Components.h
         src/behavior/GameplayUISystem.h
         src/behavior/GameplayUISystem.cpp
+        src/behavior/GameplayWatcherSystem.h
+        src/behavior/GameplayWatcherSystem.cpp
         src/behavior/EnemyTumbleBehaviorSystem.h
         src/behavior/EnemyTumbleBehaviorSystem.cpp
         src/behavior/PositionAnimationBehaviorSystem.cpp

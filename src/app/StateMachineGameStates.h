@@ -1,5 +1,6 @@
 #pragma once
 
+#include "EventSystem.h"
 #include "StateMachine.h"
 
 #include "../level/Level.h"
@@ -12,8 +13,8 @@
 
 class GameplayState : public StateMachineState {
   public:
-    GameplayState(SystemRunner &runner)
-        : StateMachineState(runner) {}
+    GameplayState(SystemRunner &runner, EventSystem& eventSystem)
+        : StateMachineState(runner, eventSystem) {}
 
     void Init() override;
     void Update() override;

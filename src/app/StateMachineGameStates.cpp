@@ -1,23 +1,25 @@
 #include "StateMachineGameStates.h"
-
-
-
+#include "EventSystem.h"
 
 void GameplayState::Init() {
     level = LevelLayout::LoadLevel("res/levels/Level2.json");
-        EntityFactory::CreateLevel(level);
-        setPhysicsColliderData(level);
-        music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+    EntityFactory::CreateLevel(level);
+    setPhysicsColliderData(level);
+    music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
 
-        auto dragon = EntityFactory::CreateDragon();
+    auto dragon = EntityFactory::CreateDragon();
+}
 
-
-    }
+void GameplayState::Update() {
     
-    void GameplayState::Update() {
-        
-
     runner.UpdateSystems();
+
+    if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
+        EntityFactory::CreateLevel(level);
+        
+        setPhysicsColliderData(level);
+    }
+
 
 #ifdef DEBUG_TOOLS
     if (IsKeyPressed(KEY_Z)) {
@@ -29,6 +31,4 @@ void GameplayState::Init() {
         SetTargetFPS(TARGET_FPS);
     }
 #endif
-
 }
-

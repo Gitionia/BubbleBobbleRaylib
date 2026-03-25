@@ -5,6 +5,7 @@
 #include <vector>
 enum EventType {
     POINTS_GAINED,
+    ALL_ENEMIES_DEFEATED,
     EventType_Count
 };
 

@@ -6,8 +6,8 @@
 
 class StateMachineState {
   public:
-    StateMachineState(SystemRunner& runner) :
-      runner(runner) {}
+    StateMachineState(SystemRunner& runner, EventSystem& eventSystem) :
+      runner(runner), eventSystem(eventSystem) {}
 
     virtual void Init() {}
     virtual void OnEnter() {}
@@ -16,6 +16,7 @@ class StateMachineState {
 
   protected:
     SystemRunner& runner;
+    EventSystem& eventSystem;
 };
 
 class StateMachine {

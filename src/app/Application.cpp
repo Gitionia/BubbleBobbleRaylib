@@ -24,7 +24,7 @@ void update();
 Application::Application(const ApplicationParameters &parameters)
     : window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(systemRunner, new GameplayState(systemRunner)) {
+      stateMachine(systemRunner, new GameplayState(systemRunner, eventSystem)) {
         
     Debug::get().setRegistry(registry);
 

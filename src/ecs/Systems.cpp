@@ -13,6 +13,7 @@
 #include "../behavior/ItemPickupBehaviorSystem.h"
 #include "../behavior/PositionAnimationBehaviorSystem.h"
 #include "../behavior/GameplayUISystem.h"
+#include "../behavior/GameplayWatcherSystem.h"
 #include "../graphics/RendererSystem.h"
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem& eventSystem)
@@ -30,6 +31,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem& eventSystem)
     registerSystem<ItemPickupBehaviorSystem>(registry, eventSystem);
     registerSystem<PositionAnimationBehaviorSystem>(registry, eventSystem);
     registerSystem<GameplayUISystem>(registry, eventSystem);
+    registerSystem<GameplayWatcherSystem>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
 
