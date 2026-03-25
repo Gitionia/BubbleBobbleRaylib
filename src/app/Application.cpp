@@ -8,6 +8,7 @@
 #include "Config.h"
 #include "EventSystem.h"
 #include "StateMachine.h"
+#include "StateMachineGameStates.h"
 #include "entt/entity/fwd.hpp"
 #include "raylib.h"
 #include <string>
@@ -23,7 +24,8 @@ void update();
 Application::Application(const ApplicationParameters &parameters)
     : window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(systemRunner) {
+      stateMachine(systemRunner, new GameplayState(systemRunner)) {
+        
     Debug::get().setRegistry(registry);
 
     window.Init();
