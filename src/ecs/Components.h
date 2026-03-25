@@ -5,6 +5,7 @@
 #include "../graphics/Sprites.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
+#include "../level/Items.h"
 
 struct Position {
     int x, y;
@@ -127,6 +128,7 @@ struct EnemyTumbleComponent {
 
     AnimatedValue<int> xVel;
     AnimatedValue<int> yVel;
+    ItemType itemToSpawn;
     bool ignoreCollision = true;
     bool isFalling = false;
 };
@@ -186,6 +188,9 @@ struct BubblePopComponent {
     // Note that this can be set to true, even if no points were given, 
     // because e. g. the bubble was an enemy where the pop gives no points
     bool gavePointsForPop = false;
+
+    // The item level, depending on item levels of all bubbles that popped this bubble
+    int itemLevel = 0;
 };
 
 struct PositionAnimationComponent {

@@ -13,6 +13,8 @@ class Debug {
 
     friend class Application;
 };
+
+
 #ifdef NDEBUG
 #define DBG_ASSERT(x)
 #else
@@ -20,5 +22,15 @@ class Debug {
     if (!(x)) {                                                         \
         PRINT_ERROR("Assert failed at {} line {}", __FILE__, __LINE__); \
         exit(0);                                                        \
+    }
+#endif
+
+#ifdef NDEBUG
+#define DBG_CHECK(x, msg)
+#else
+#define DBG_CHECK(x, msg)                                                                           \
+    if (!(x)) {                                                                                     \
+        PRINT_ERROR("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
+        exit(0);                                                                                    \
     }
 #endif

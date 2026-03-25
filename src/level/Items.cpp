@@ -5,8 +5,8 @@ const char *GetItemSpriteName(ItemType item) {
 
     case ItemType::Banana:
         return "Item-Banana";
-    case ItemType::Orange:
-        return "Item-Orange";
+    case ItemType::Apple:
+        return "Item-Apple";
     case ItemType::Pear:
         return "Item-Pear";
     case ItemType::Melon:
@@ -27,7 +27,7 @@ int GetItemPoints(ItemType item) {
 
     case ItemType::Banana:
         return 500;
-    case ItemType::Orange:
+    case ItemType::Apple:
         return 1000;
     case ItemType::Pear:
         return 2000;

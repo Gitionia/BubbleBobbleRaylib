@@ -71,7 +71,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     return enemy;
 }
 
-entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
+entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, ItemType itemType) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
@@ -88,18 +88,18 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir) {
     bool rand = Random::Get().Bool();
     auto &xVel = rand ? xVelHigh : xVelLow;
     auto &yVel = rand ? yVelHigh : yVelLow;
-    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel);
+    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel, itemType);
     registry->emplace<EnemyTumbleTag>(enemy);
 
     return enemy;
 }
 
-entt::entity EntityFactory::CreateItem(const Vector2Int &pos) {
+entt::entity EntityFactory::CreateItem(const Vector2Int &pos, ItemType itemType) {
     entt::registry *registry = get().registry;
 
     auto item = registry->create();
     registry->emplace<Position>(item, pos.X, pos.Y);
-    registry->emplace<RenderData>(item, RenderData(GetSpriteHandle("Item-Banana"), {2, 2}));
+    registry->emplace<RenderData>(item, RenderData(GetSpriteHandle(GetItemSpriteName(itemType)), {2, 2}));
     registry->emplace<ItemTag>(item);
 
     return item;

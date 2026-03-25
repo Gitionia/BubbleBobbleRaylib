@@ -65,7 +65,7 @@ void EnemyTumbleBehaviorSystem::Update() {
                 // pos.y will overshoot desired y-position on a block
                 pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
                 
-                EntityFactory::CreateItem(pos.toVector());
+                EntityFactory::CreateItem(pos.toVector(), enemy.itemToSpawn);
                 Destroy(entity);
                 continue;
             }

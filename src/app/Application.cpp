@@ -104,7 +104,7 @@ void update(SystemRunner &runner, EventSystem& eventSystem) {
 #ifdef DEBUG_TOOLS
 
     if (IsKeyPressed(KEY_Z)) {
-        EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection());
+        EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection(), GetItemOfLevel(Random::Get().Range(0, 5)));
     }
 
     runner.UpdateSystems();
