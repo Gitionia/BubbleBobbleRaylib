@@ -2,8 +2,8 @@
 
 #include "../ecs/Systems.h"
 
-#include "../behavior/Level.h"
-#include "../behavior/Physics.h"
+#include "../level/Level.h"
+#include "../level/Physics.h"
 
 #include "Config.h"
 #include "EventSystem.h"

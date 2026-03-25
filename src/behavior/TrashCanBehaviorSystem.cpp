@@ -3,8 +3,8 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
-#include "Level.h"
-#include "Physics.h"
+#include "../level/Level.h"
+#include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 
 void makeEnemyBubbled(entt::registry &registry, entt::entity e) {

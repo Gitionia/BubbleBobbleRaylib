@@ -4,8 +4,8 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "Level.h"
-#include "Physics.h"
+#include "../level/Level.h"
+#include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 
 void WalkingActorBehaviorSystem::Init() {

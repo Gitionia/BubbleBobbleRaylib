@@ -31,11 +31,11 @@ add_executable(BubbleBobbleRaylib
         src/main.cpp
         src/pch.h
         src/pch.cpp
+        src/app/EventSystem.cpp
         src/app/Application.h
+        src/app/EventSystem.h
         src/app/Config.h
         src/app/Application.cpp
-        src/app/EventSystem.cpp
-        src/app/EventSystem.h
         src/ecs/EntityFactory.h
         src/ecs/SystemBase.h
         src/ecs/ComponentUtils.h
@@ -46,11 +46,9 @@ add_executable(BubbleBobbleRaylib
         src/ecs/Components.h
         src/behavior/EnemyTumbleBehaviorSystem.h
         src/behavior/EnemyTumbleBehaviorSystem.cpp
-        src/behavior/ItemPickupBehaviorSystem.h
-        src/behavior/ItemPickupBehaviorSystem.cpp
-        src/behavior/PositionAnimationBehaviorSystem.h
         src/behavior/PositionAnimationBehaviorSystem.cpp
         src/behavior/DragonBehaviorSystem.cpp
+        src/behavior/ItemPickupBehaviorSystem.cpp
         src/behavior/DragonBehaviorSystem.h
         src/behavior/WalkingActorUtils.h
         src/behavior/BubbleFloatBehaviorSystem.cpp
@@ -60,17 +58,15 @@ add_executable(BubbleBobbleRaylib
         src/behavior/BubbleShootBehaviorSystem.cpp
         src/behavior/BubbleFloatBehaviorSystem.h
         src/behavior/DragonHitBehaviorSystem.cpp
-        src/behavior/Level.cpp
         src/behavior/BubblePopBehaviorSystem.h
         src/behavior/PopEnemyBubbleSystem.cpp
         src/behavior/WalkingActorBehaviorSystem.cpp
         src/behavior/PopEnemyBubbleSystem.h
         src/behavior/TrashCanBehaviorSystem.cpp
-        src/behavior/Level.h
-        src/behavior/Physics.h
+        src/behavior/PositionAnimationBehaviorSystem.h
         src/behavior/WalkingActorBehaviorSystem.h
         src/behavior/TrashCanBehaviorSystem.h
-        src/behavior/Physics.cpp
+        src/behavior/ItemPickupBehaviorSystem.h
         src/behavior/WalkingActorUtils.cpp
         src/graphics/Sprites.cpp
         src/graphics/RendererSystem.h
@@ -80,8 +76,13 @@ add_executable(BubbleBobbleRaylib
         src/graphics/Sprites.h
         src/graphics/Animations.h
         src/graphics/Window.h
+        src/utils/Log.h
         src/audio/Audio.cpp
         src/audio/Audio.h
+        src/level/Level.cpp
+        src/level/Level.h
+        src/level/Physics.h
+        src/level/Physics.cpp
         src/utils/Debug.h
         src/utils/Debug.cpp
         src/utils/Input.cpp
@@ -91,14 +92,14 @@ add_executable(BubbleBobbleRaylib
         src/utils/Input.h
         src/utils/Random.h
         src/utils/Utilities.h
-        src/utils/Log.h
+
 )
 
 target_precompile_headers(BubbleBobbleRaylib PUBLIC src/pch.h)
 
 
 target_compile_definitions(BubbleBobbleRaylib PRIVATE
-  $<$<CONFIG:Debug>:DEBUG_TOOLS=1>
+        $<$<CONFIG:Debug>:DEBUG_TOOLS=1>
 )
 
 add_subdirectory("deps/entt-master")

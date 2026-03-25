@@ -1,7 +1,7 @@
 #pragma once
 
 
-#include "../behavior/Level.h"
+#include "../level/Level.h"
 #include "Components.h"
 
 class EntityFactory {

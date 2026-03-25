@@ -3,7 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
-#include "Physics.h"
+#include "../level/Physics.h"
 #include "entt/entity/fwd.hpp"
 
 void makeBubblePopFromLifeTime(entt::registry &registry, entt::entity e) {

@@ -3,7 +3,7 @@
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
-#include "Physics.h"
+#include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 
 enum DeferValues {
