@@ -63,11 +63,12 @@ Application::~Application() {
 }
 
 void Application::Run() {
-    LevelLayout level = LevelLayout::LoadLevel("res/levels/Level1 Test Empty.json");
+    LevelLayout level = LevelLayout::LoadLevel("res/levels/Level2.json");
     EntityFactory::CreateLevel(level);
     setPhysicsColliderData(level);
 
     Music &music = PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+
 
     auto dragon = EntityFactory::CreateDragon();
 
