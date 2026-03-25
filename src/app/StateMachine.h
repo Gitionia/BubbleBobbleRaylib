@@ -9,6 +9,7 @@ class StateMachineState {
     StateMachineState(SystemRunner& runner) :
       runner(runner) {}
 
+    virtual void Init() {}
     virtual void OnEnter() {}
     virtual void Update() = 0;
     virtual void OnExit() {}
@@ -22,6 +23,7 @@ class StateMachine {
     StateMachine(SystemRunner &runner, StateMachineState* firstState);
     ~StateMachine() = default;
 
+    void Init();
     void Update();
 
   private:
