@@ -11,6 +11,8 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
         data.scale = {2, 2};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
+
+        registry->emplace<GameplayEntityTag>(tile);
     }
 
     if (addShadowRight) {
@@ -20,6 +22,8 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
         data.SetColor(colorShadowRight);
         registry->emplace<RenderData>(shadowRight, data);
         registry->emplace<LevelTileShadowTag>(shadowRight);
+
+        registry->emplace<GameplayEntityTag>(shadowRight);
     }
     if (addShadowBottem) {
         auto shadowBottem = registry->create();
@@ -28,6 +32,8 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
         data.SetColor(colorShadowBottem);
         registry->emplace<RenderData>(shadowBottem, data);
         registry->emplace<LevelTileShadowTag>(shadowBottem);
+
+        registry->emplace<GameplayEntityTag>(shadowBottem);
     }
 
     return tile;
@@ -43,6 +49,8 @@ entt::entity EntityFactory::CreateDragon() {
     registry->emplace<DragonComponent>(dragon);
     registry->emplace<DragonTag>(dragon);
 
+    registry->emplace<GameplayEntityTag>(dragon);
+
     return dragon;
 }
 
@@ -54,6 +62,8 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
     registry->emplace<BubbleShootComponent>(bubble, direction);
     registry->emplace<BubbleTag>(bubble);
+
+    registry->emplace<GameplayEntityTag>(bubble);
 
     return bubble;
 }
@@ -67,6 +77,8 @@ entt::entity EntityFactory::CreateEnemy(int x, int y) {
     registry->emplace<EnemyComponent>(enemy, 0);
     registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     registry->emplace<EnemyTag>(enemy);
+
+    registry->emplace<GameplayEntityTag>(enemy);
 
     return enemy;
 }
@@ -91,6 +103,8 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, ItemType 
     registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel, itemType);
     registry->emplace<EnemyTumbleTag>(enemy);
 
+    registry->emplace<GameplayEntityTag>(enemy);
+
     return enemy;
 }
 
@@ -102,6 +116,8 @@ entt::entity EntityFactory::CreateItem(const Vector2Int &pos, ItemType itemType)
     registry->emplace<RenderData>(item, RenderData(GetSpriteHandle(GetItemSpriteName(itemType)), {2, 2}));
     registry->emplace<ItemComponent>(item, itemType);
     registry->emplace<ItemTag>(item);
+
+    registry->emplace<GameplayEntityTag>(item);
 
     return item;
 }
@@ -119,6 +135,8 @@ entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos, ItemType itemTy
                                                   120, PositionAnimationComponent::DELETE_ENTITY);
     registry->emplace<InGameTextTag>(entity);
 
+    registry->emplace<GameplayEntityTag>(entity);
+
     return entity;
 }
 
@@ -129,6 +147,8 @@ entt::entity EntityFactory::CreateModifiableUIText(const Vector2Int &pos, const 
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<ModifiableUITextComponent>(entity, text, color, fontSize, spacing);
 
+    registry->emplace<UITextEntityTag>(entity);
+
     return entity;
 }
 
@@ -138,6 +158,8 @@ entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const ch
     auto entity = registry->create();
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<ConstUITextComponent>(entity, text, color, fontSize, spacing);
+
+    registry->emplace<UITextEntityTag>(entity);
 
     return entity;
 }

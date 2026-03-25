@@ -262,4 +262,10 @@ struct EnemyTumbleTag {};
 struct ItemTag {};
 struct InGameTextTag {};
 
+// These Tags should never be removed from an entity since they identify the group of the entity
+
+// An entity in gameplay (dragon, enemies, walls, bubbles, etc.) excluding any UI
+struct GameplayEntityTag {};
+struct UITextEntityTag {};
+
 struct DebugDrawTag {};
