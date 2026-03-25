@@ -34,6 +34,8 @@ add_executable(BubbleBobbleRaylib
         src/app/Application.h
         src/app/Config.h
         src/app/Application.cpp
+        src/app/EventSystem.cpp
+        src/app/EventSystem.h
         src/ecs/EntityFactory.h
         src/ecs/SystemBase.h
         src/ecs/ComponentUtils.h

@@ -6,6 +6,7 @@
 #include "../graphics/Sprites.h"
 #include "../graphics/Window.h"
 #include "Config.h"
+#include "EventSystem.h"
 
 struct ApplicationParameters {
     int width = TARGET_WINDOW_WIDTH;
@@ -21,6 +22,7 @@ class Application {
 
   private:
     Window window;
+    EventSystem eventSystem;
     entt::registry registry{};
     SystemRunner systemRunner;
 };

@@ -6,29 +6,34 @@
 #include "../behavior/Physics.h"
 
 #include "Config.h"
+#include "EventSystem.h"
+#include "entt/entity/fwd.hpp"
 #include "raylib.h"
+#include <string>
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
 #endif
 
-void update(SystemRunner &runner);
+void update(SystemRunner &runner, EventSystem &eventSystem);
 
 #ifdef PLATFORM_WEB
 static SystemRunner *systemRunner;
+static EventSystem *eventSystem;
 void webUpdate() {
     // PRINT_INFO("Updating from PLATFORM_WEB");
     update(*systemRunner);
 }
-void setupEmscriptionUpdateLoop(SystemRunner &runner) {
+void setupEmscriptionUpdateLoop(SystemRunner &runner, EventSystem &eventSystem) {
     systemRunner = &runner;
+    eventSystem = &eventSystem;
     emscripten_set_main_loop(webUpdate, 60, true);
 }
 #endif
 
 Application::Application(const ApplicationParameters &parameters)
     : window(parameters.width, parameters.height, parameters.title),
-      systemRunner(registry) {
+      systemRunner(registry, eventSystem) {
     Debug::get().setRegistry(registry);
 
     window.Init();
@@ -66,25 +71,35 @@ void Application::Run() {
 
     auto dragon = EntityFactory::CreateDragon();
 
-    EntityFactory::CreateConstantUIText({BP_SIZE(26, 0), 32}, "HI SCORE Dummy", GREEN);
+    int points = 0;
+    entt::entity textEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0), 0}, "HI SCORE\n" + std::to_string(points), GREEN);
+    ModifiableUITextComponent &ui = registry.get<ModifiableUITextComponent>(textEntity);
 
 #ifdef PLATFORM_WEB
     setupEmscriptionUpdateLoop(systemRunner);
 #else
     while (window.IsOpen()) {
-        update(systemRunner);
+        update(systemRunner, eventSystem);
+
+        // should be moved into update() function
+        for (auto event : eventSystem.ReadEvent(POINTS_GAINED)) {
+            int gainedPoints = *(int *)event.data.get();
+            points += gainedPoints;
+        }
+
+        ui.text = "HI SCORE\n" + std::to_string(points);
+        
+        eventSystem.Clear();
     }
 #endif
-
 }
 
-void update(SystemRunner &runner) {
+void update(SystemRunner &runner, EventSystem& eventSystem) {
 
 // #define PROFILE
 #ifdef PROFILE
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 #endif
-
 
 #ifdef DEBUG_TOOLS
 

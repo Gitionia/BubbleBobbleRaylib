@@ -9,8 +9,8 @@ void SystemBase::BaseInit() {
     }
 }
 
-SystemBase::SystemBase(entt::registry &registry)
-    : registry(registry) {
+SystemBase::SystemBase(entt::registry &registry, EventSystem& eventSystem)
+    : registry(registry), eventSystem(eventSystem) {
 }
 
 void SystemBase::Defer(entt::entity e, DeferFunctionType f, int index) {

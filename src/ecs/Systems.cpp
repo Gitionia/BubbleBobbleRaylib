@@ -15,21 +15,21 @@
 #include "../behavior/PositionAnimationBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 
-SystemRunner::SystemRunner(entt::registry &registry)
+SystemRunner::SystemRunner(entt::registry &registry, EventSystem& eventSystem)
     : registry(registry) {
 
-    registerSystem<TrashCanBehaviorSystem>(registry);
-    registerSystem<PopEnemyBubbleSystem>(registry);
-    registerSystem<EnemyTumbleBehaviorSystem>(registry);
-    registerSystem<DragonBehaviorSystem>(registry);
-    registerSystem<DragonHitBehaviorSystem>(registry);
-    registerSystem<WalkingActorBehaviorSystem>(registry);
-    registerSystem<BubbleShootBehaviorSystem>(registry);
-    registerSystem<BubbleFloatBehaviorSystem>(registry);
-    registerSystem<BubblePopBehaviorSystem>(registry);
-    registerSystem<ItemPickupBehaviorSystem>(registry);
-    registerSystem<PositionAnimationBehaviorSystem>(registry);
-    registerSystem<RendererSystem>(registry);
+    registerSystem<TrashCanBehaviorSystem>(registry, eventSystem);
+    registerSystem<PopEnemyBubbleSystem>(registry, eventSystem);
+    registerSystem<EnemyTumbleBehaviorSystem>(registry, eventSystem);
+    registerSystem<DragonBehaviorSystem>(registry, eventSystem);
+    registerSystem<DragonHitBehaviorSystem>(registry, eventSystem);
+    registerSystem<WalkingActorBehaviorSystem>(registry, eventSystem);
+    registerSystem<BubbleShootBehaviorSystem>(registry, eventSystem);
+    registerSystem<BubbleFloatBehaviorSystem>(registry, eventSystem);
+    registerSystem<BubblePopBehaviorSystem>(registry, eventSystem);
+    registerSystem<ItemPickupBehaviorSystem>(registry, eventSystem);
+    registerSystem<PositionAnimationBehaviorSystem>(registry, eventSystem);
+    registerSystem<RendererSystem>(registry, eventSystem);
 }
 
 SystemRunner::~SystemRunner() {
@@ -51,7 +51,7 @@ void SystemRunner::UpdateSystems() const {
 }
 
 template <typename T>
-void SystemRunner::registerSystem(entt::registry &registry) {
-    T *system = new T(registry);
+void SystemRunner::registerSystem(entt::registry &registry, EventSystem& eventSystem) {
+    T *system = new T(registry, eventSystem);
     systems.push_back(system);
 }

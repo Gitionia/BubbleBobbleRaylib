@@ -2,9 +2,12 @@
 
 #include "EntityFactory.h"
 
+#include "../app/EventSystem.h"
+
 #define SYSTEM_DEF(Type)                                              \
   public:                                                             \
-    explicit Type(entt::registry &registry) : SystemBase(registry) {} \
+    explicit Type(entt::registry &registry, EventSystem &eventSystem) \
+        : SystemBase(registry, eventSystem) {}                        \
                                                                       \
   private:
 
@@ -13,7 +16,7 @@ class SystemBase {
   public:
     static void BaseInit();
 
-    SystemBase(entt::registry &registry);
+    SystemBase(entt::registry &registry, EventSystem &eventSystem);
     virtual ~SystemBase() = default;
     virtual void Init() {}
 
@@ -28,7 +31,8 @@ class SystemBase {
 
   protected:
     static constexpr int DEFER_MAX_COUNT = 5;
-    static inline std::array<std::vector<entt::entity>, DEFER_MAX_COUNT> deferedEntityCollections {};
-    static inline std::array<DeferFunctionType, DEFER_MAX_COUNT> deferFunctions {};
+    static inline std::array<std::vector<entt::entity>, DEFER_MAX_COUNT> deferedEntityCollections{};
+    static inline std::array<DeferFunctionType, DEFER_MAX_COUNT> deferFunctions{};
     entt::registry &registry;
+    EventSystem &eventSystem;
 };

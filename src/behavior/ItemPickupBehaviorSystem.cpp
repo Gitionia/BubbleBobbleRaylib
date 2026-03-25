@@ -1,5 +1,6 @@
 #include "ItemPickupBehaviorSystem.h"
 #include "Physics.h"
+#include <memory>
 
 void ItemPickupBehaviorSystem::Update() {
     auto dragonView = registry.view<Position, DragonTag>(entt::exclude<DragonHitComponent>);
@@ -15,6 +16,17 @@ void ItemPickupBehaviorSystem::Update() {
                 itemPos, Colliders::fullActorCollider)) {
                 EntityFactory::CreateItemPointsText(itemPos.toVector());
                 Destroy(item);
+
+                // Custom Deleter necessary for deleting void pointer
+                std::shared_ptr<void> ptr(new int(500), 
+                    [](void *pi) 
+                    { 
+                        delete (int*)pi; 
+                    }
+                );
+
+                eventSystem.Notify(dragon, POINTS_GAINED, 
+                    ptr);
             }
         }
     }
