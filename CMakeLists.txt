@@ -78,6 +78,8 @@ add_executable(BubbleBobbleRaylib
         src/behavior/TrashCanBehaviorSystem.h
         src/behavior/ItemPickupBehaviorSystem.h
         src/behavior/WalkingActorUtils.cpp
+        src/behavior/TitleScreenSystem.h
+        src/behavior/TitleScreenSystem.cpp
         src/graphics/Sprites.cpp
         src/graphics/RendererSystem.h
         src/graphics/Window.cpp

@@ -164,6 +164,20 @@ entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const ch
     return entity;
 }
 
+entt::entity EntityFactory::CreateSimpleSprite(const Vector2Int &pos, int dir, SpriteHandle sprite, Color color, Vector2 scale) {
+    entt::registry *registry = get().registry;
+
+    auto entity = registry->create();
+    registry->emplace<Position>(entity, pos.X, pos.Y, dir);
+    RenderData data(sprite, scale);
+    registry->emplace<RenderData>(entity, data.SetColor(color));
+    registry->emplace<SimpleSpriteTag>(entity);
+
+    registry->emplace<SpriteEntityTag>(entity);
+
+    return entity;
+}
+
 void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {

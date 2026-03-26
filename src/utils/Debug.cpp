@@ -1,6 +1,7 @@
 #include "Debug.h"
 
 #include "../ecs/Components.h"
+#include "raylib.h"
 
 struct DebugDrawTag;
 struct Position;
@@ -21,6 +22,10 @@ void Debug::PrintNumberOfEntities() {
     }
 
     PRINT_INFO("Number of entities: {}", count);
+}
+
+void Debug::PrintMousePosition() {
+    PRINT_INFO("X: {}, Y: {}", GetMousePosition().x, GetMousePosition().y);
 }
 
 void Debug::setRegistry(entt::registry &_registry) {

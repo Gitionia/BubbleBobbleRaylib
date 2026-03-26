@@ -26,6 +26,7 @@ void RendererSystem::Update() {
     renderAllWithTag<EnemyTumbleTag>();
     renderAllWithTag<BubbleTag>();
     renderAllWithTag<DragonTag>();
+    renderAllWithTag<SimpleSpriteTag>();
 
     renderFontText();
 

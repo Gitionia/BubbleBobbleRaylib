@@ -40,3 +40,17 @@ void GameplayState::Update() {
     }
 #endif
 }
+
+
+void TitleScreenState::Init() {
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
+    // Play Music
+}
+
+void TitleScreenState::Update() {
+    if (Input::IsKeyDown(Key::Any)) {
+        PRINT_INFO("Switch to Game State");
+    }
+
+    runner.UpdateSystems();
+}

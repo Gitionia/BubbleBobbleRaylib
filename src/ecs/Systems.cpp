@@ -14,6 +14,7 @@
 #include "../behavior/TrashCanBehaviorSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
 #include "../behavior/LevelInstantiatorSystem.h"
+#include "../behavior/TitleScreenSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "SystemBase.h"
 
@@ -34,6 +35,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<GameplayUISystem>(registry, eventSystem);
     registerSystem<GameplayWatcherSystem>(registry, eventSystem);
     registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
+    registerSystem<TitleScreenSystem>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
 

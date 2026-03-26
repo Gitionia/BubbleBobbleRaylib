@@ -5,6 +5,7 @@ class Debug {
   public:
     static void DrawPoint(int x, int y, float radius, Color color);
     static void PrintNumberOfEntities();
+    static void PrintMousePosition();
 
   private:
     void setRegistry(entt::registry &_registry);
