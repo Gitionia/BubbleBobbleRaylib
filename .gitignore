@@ -1,9 +1,11 @@
 /cmake-build-debug/
 build
+logs
 buildRaylibWeb
 .vs
 .cache
 CMakeUserPresets.json
 /**/*.tiled-session
+
 
 

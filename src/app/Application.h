@@ -27,4 +27,7 @@ class Application {
     entt::registry registry{};
     SystemRunner systemRunner;
     StateMachine stateMachine;
+
+    std::shared_ptr<spdlog::logger> stdoutLogger;
+    std::shared_ptr<spdlog::logger> fileLogger;
 };

@@ -11,6 +11,9 @@
 #include "StateMachineGameStates.h"
 #include "entt/entity/fwd.hpp"
 #include "raylib.h"
+#include "spdlog/sinks/basic_file_sink.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include <memory>
 #include <string>
 
 #ifdef PLATFORM_WEB
@@ -25,7 +28,19 @@ Application::Application(const ApplicationParameters &parameters)
     : window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
       stateMachine(systemRunner, new GameplayState(systemRunner, eventSystem)) {
-        
+
+#ifdef NDEBUG
+    auto logLevel = spdlog::level::error;
+#else
+    auto logLevel = spdlog::level::info;
+#endif
+    stdoutLogger = spdlog::stdout_color_mt("console");
+    fileLogger = spdlog::basic_logger_mt("file", "logs/log.txt");
+    stdoutLogger->set_level(logLevel);
+    fileLogger->set_level(logLevel);
+
+    PRINT_INFO("Starting game");
+
     Debug::get().setRegistry(registry);
 
     window.Init();
@@ -46,8 +61,8 @@ Application::Application(const ApplicationParameters &parameters)
 
     systemRunner.Init();
     stateMachine.Init();
-
     
+
     g_stateMachine = &stateMachine;
     g_eventSystem = &eventSystem;
 }
@@ -63,7 +78,7 @@ void Application::Run() {
 
 #ifdef PLATFORM_WEB
     emscripten_set_main_loop(update, 0, true);
-    #else
+#else
     while (window.IsOpen()) {
         update();
     }
