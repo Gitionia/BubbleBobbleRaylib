@@ -13,6 +13,7 @@
 #include "../behavior/PositionAnimationBehaviorSystem.h"
 #include "../behavior/TrashCanBehaviorSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
+#include "../behavior/LevelInstantiatorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "SystemBase.h"
 
@@ -32,6 +33,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<PositionAnimationBehaviorSystem>(registry, eventSystem);
     registerSystem<GameplayUISystem>(registry, eventSystem);
     registerSystem<GameplayWatcherSystem>(registry, eventSystem);
+    registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
 

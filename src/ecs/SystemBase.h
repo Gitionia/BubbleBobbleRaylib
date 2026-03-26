@@ -7,7 +7,7 @@
 namespace SystemTypeFlags {
 static inline constexpr int RENDERING = 1 << 0;
 static inline constexpr int GAMEPLAY = 1 << 1;
-static inline constexpr int LOAD_NEW_LEVEL = 1 << 2;
+static inline constexpr int LEVEL_INSTANTIATION = 1 << 2;
 } // namespace SystemTypeFlags
 
 #define SYSTEM_DEF(Type, typeFlags)                                   \

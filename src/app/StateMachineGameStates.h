@@ -19,7 +19,10 @@ class GameplayState : public StateMachineState {
     void Init() override;
     void Update() override;
 
+    private:
+    void StartLevel();
+
   private:
-    LevelLayout level;
     Music *music;
+    int level = 1;
 };

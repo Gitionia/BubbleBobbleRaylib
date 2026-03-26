@@ -6,6 +6,7 @@
 enum EventType {
     POINTS_GAINED,
     ALL_ENEMIES_DEFEATED,
+    INSTANTIATE_LEVEL,
     EventType_Count
 };
 

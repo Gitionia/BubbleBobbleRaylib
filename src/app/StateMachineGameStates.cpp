@@ -1,28 +1,34 @@
 #include "StateMachineGameStates.h"
 #include "EventSystem.h"
+#include "entt/entity/fwd.hpp"
 
 void GameplayState::Init() {
-    level = LevelLayout::LoadLevel("res/levels/Level2.json");
-    EntityFactory::CreateLevel(level);
-    setPhysicsColliderData(level);
     music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+    StartLevel();
 
-    auto dragon = EntityFactory::CreateDragon();
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
+}
+
+void GameplayState::StartLevel() {
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
+    eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
+    runner.UpdateSystems();
+
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 }
 
 void GameplayState::Update() {
-    
+
     // Move into OnEnter()
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 
     runner.UpdateSystems();
 
     if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
-        EntityFactory::CreateLevel(level);
-        
-        setPhysicsColliderData(level);
+        PRINT_INFO("All enemies defeated");
+        level++;
+        StartLevel();
     }
-
 
 #ifdef DEBUG_TOOLS
     if (IsKeyPressed(KEY_Z)) {

@@ -13,7 +13,9 @@
 #include <sstream>
 #include <string>
 #include <unordered_map>
+#include <format>
 #include <vector>
+#include <array>
 
 #include "entt/entt.hpp"
 #include "nlohmann/json.hpp"

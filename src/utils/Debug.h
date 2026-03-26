@@ -31,6 +31,5 @@ class Debug {
 #define DBG_CHECK(x, msg)                                                                           \
     if (!(x)) {                                                                                     \
         PRINT_ERROR("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
-        exit(0);                                                                                    \
     }
 #endif

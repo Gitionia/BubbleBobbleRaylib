@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.19)
 
 project(BubbleBobbleRaylib C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # generates compile_commands.json
 set(CMAKE_EXPORT_COMPILE_COMMANDS OFF)
@@ -52,6 +52,8 @@ add_executable(BubbleBobbleRaylib
         src/behavior/GameplayUISystem.cpp
         src/behavior/GameplayWatcherSystem.h
         src/behavior/GameplayWatcherSystem.cpp
+        src/behavior/LevelInstantiatorSystem.h
+        src/behavior/LevelInstantiatorSystem.cpp
         src/behavior/EnemyTumbleBehaviorSystem.h
         src/behavior/EnemyTumbleBehaviorSystem.cpp
         src/behavior/PositionAnimationBehaviorSystem.cpp
