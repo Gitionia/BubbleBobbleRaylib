@@ -4,7 +4,7 @@
 #include "entt/entity/fwd.hpp"
 #include <cstddef>
 
-void GameplayState::Init() {
+void GameplayState::OnEnter() {
     music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
     StartLevel();
 
@@ -20,9 +20,6 @@ void GameplayState::StartLevel() {
 }
 
 std::shared_ptr<StateMachineState> GameplayState::Update() {
-
-    // Move into OnEnter()
-    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 
     runner.UpdateSystems();
 
@@ -45,8 +42,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     return nullptr;
 }
 
-
-void TitleScreenState::Init() {
+void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
     // Play Music
 }
@@ -58,9 +54,10 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
         runner.UpdateSystems();
 
         return std::make_shared<GameplayState>(runner, eventSystem);
+    
+    } else {
+        runner.UpdateSystems();
+
+        return nullptr;
     }
-
-    runner.UpdateSystems();
-
-    return nullptr;
 }

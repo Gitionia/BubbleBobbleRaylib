@@ -10,7 +10,6 @@ class StateMachineState {
     StateMachineState(SystemRunner& runner, EventSystem& eventSystem) :
       runner(runner), eventSystem(eventSystem) {}
 
-    virtual void Init() {}
     virtual void OnEnter() {}
     virtual std::shared_ptr<StateMachineState> Update() = 0;
     virtual void OnExit() {}
@@ -25,7 +24,6 @@ class StateMachine {
     StateMachine(SystemRunner &runner, std::shared_ptr<StateMachineState> firstState);
     ~StateMachine() = default;
 
-    void Init();
     void Update();
 
   private:

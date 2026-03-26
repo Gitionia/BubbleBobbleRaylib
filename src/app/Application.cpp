@@ -60,7 +60,6 @@ Application::Application(const ApplicationParameters &parameters)
     LoadAnimations();
 
     systemRunner.Init();
-    stateMachine.Init();
     
 
     g_stateMachine = &stateMachine;
