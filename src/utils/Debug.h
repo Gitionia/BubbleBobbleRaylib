@@ -30,6 +30,6 @@ class Debug {
 #else
 #define DBG_CHECK(x, msg)                                                                           \
     if (!(x)) {                                                                                     \
-        PRINT_ERROR("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
+        PRINT_WARN("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
     }
 #endif

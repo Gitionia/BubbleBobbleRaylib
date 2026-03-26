@@ -46,7 +46,7 @@ Application::Application(const ApplicationParameters &parameters)
     window.Init();
 
     if (!InitAudio()) {
-        PRINT_ERROR("Audio Device could not be initialized!");
+        PRINT_CRITICAL("Audio Device could not be initialized! Trying to run without Audio");
     }
 
     Input::Init();

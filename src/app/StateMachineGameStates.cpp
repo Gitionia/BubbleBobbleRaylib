@@ -25,7 +25,6 @@ void GameplayState::Update() {
     runner.UpdateSystems();
 
     if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
-        PRINT_INFO("All enemies defeated");
         level++;
         StartLevel();
     }

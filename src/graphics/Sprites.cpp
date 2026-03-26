@@ -60,7 +60,7 @@ void addSingleSpriteToSpriteMap(const Texture2D &sprite, const std::string &name
 void addSpriteSheetToSpriteMap(const Texture2D &spriteSheet, const std::string &sliceInformationFilepath) {
     std::ifstream f(sliceInformationFilepath);
     if (f.fail()) {
-        PRINT_ERROR("Spritesheet information at {} is missing!", sliceInformationFilepath);
+        PRINT_CRITICAL("Spritesheet information missing! Expected to be at {}", sliceInformationFilepath);
         return;
     }
     nlohmann::json data = nlohmann::json::parse(f);

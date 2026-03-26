@@ -6,7 +6,7 @@ void LoadAnimations() {
     const char *animationsFilePath = "res/sprites/Animations.json";
     std::ifstream f(animationsFilePath);
     if (f.fail()) {
-        PRINT_ERROR("Animation information at {} is missing!", animationsFilePath);
+        PRINT_CRITICAL("Animations.json at {} is missing!", animationsFilePath);
         return;
     }
 

@@ -80,7 +80,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 
     std::ifstream f(filepath);
     if (f.fail()) {
-        PRINT_ERROR("Level data at {} is missing!", filepath.c_str());
+        PRINT_CRITICAL("Level data at {} is missing!", filepath.c_str());
         return level;
     }
 
@@ -105,13 +105,15 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             }
 
             if (colorRight.empty() || colorBottem.empty()) {
-                PRINT_INFO("Shade Colors of Level at {} could not be loaded. Maybe missing?", filepath.c_str());
+                PRINT_ERROR("Shade Colors of Level at {} is missing!", filepath.c_str());
+                level.SetColors(BLACK, BLACK);
             } else {
                 level.SetColors(parseColors(colorRight), parseColors(colorBottem));
             }
 
             if (levelData.size() != 26 * 28)
-                PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Tiles'", filepath.c_str());
+                PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Tiles'",
+                            filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
                 level.tiles.set(i, levelData.at(i));
@@ -120,7 +122,8 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             auto levelData = layer.find("data").value();
 
             if (levelData.size() != 26 * 28)
-                PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Airflow'", filepath.c_str());
+                PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Airflow'",
+                            filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
                 level.airflow.set(i, levelData.at(i));
@@ -129,11 +132,14 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             auto levelData = layer.find("data").value();
 
             if (levelData.size() != 26 * 28)
-                PRINT_ERROR("Level at {} contains leveldata with invalid length on layer 'Enemies'", filepath.c_str());
+                PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Enemies'",
+                            filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
                 level.enemies.set(i, levelData.at(i));
             }
+        } else {
+            PRINT_ERROR("Level at {} contains invalid layer! Expected to be 'Tiles', 'Airflow' or 'Enemies'", filepath.c_str());
         }
     }
 
