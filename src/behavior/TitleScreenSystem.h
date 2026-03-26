@@ -11,6 +11,7 @@ class TitleScreenSystem : public SystemBase {
     void Update() override;
 
   private:
+    entt::entity title;
     entt::entity anyKey;
     int timeCounter = 0;
 };
