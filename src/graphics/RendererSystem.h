@@ -4,7 +4,7 @@
 #include "../ecs/SystemBase.h"
 
 class RendererSystem : public SystemBase {
-    SYSTEM_DEF(RendererSystem)
+    SYSTEM_DEF(RendererSystem, SystemTypeFlags::RENDERING)
 
   public:
     void Init() override;

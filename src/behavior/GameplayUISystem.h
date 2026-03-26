@@ -3,7 +3,7 @@
 #include "../ecs/SystemBase.h"
 
 class GameplayUISystem : public SystemBase {
-    SYSTEM_DEF(GameplayUISystem)
+    SYSTEM_DEF(GameplayUISystem, SystemTypeFlags::GAMEPLAY)
 
   protected:
     void Init() override;

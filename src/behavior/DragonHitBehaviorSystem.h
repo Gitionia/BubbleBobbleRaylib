@@ -5,7 +5,7 @@
 #include "../graphics/Animations.h"
 
 class DragonHitBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(DragonHitBehaviorSystem)
+    SYSTEM_DEF(DragonHitBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
   public:
     void Init() override;

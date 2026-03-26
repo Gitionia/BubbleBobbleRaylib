@@ -4,7 +4,7 @@
 #include "entt/entity/fwd.hpp"
 
 class BubblePopBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(BubblePopBehaviorSystem)
+    SYSTEM_DEF(BubblePopBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
   public:
     void Init() override;

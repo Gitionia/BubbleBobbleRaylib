@@ -3,7 +3,7 @@
 #include "../ecs/SystemBase.h"
 
 class TrashCanBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(TrashCanBehaviorSystem)
+    SYSTEM_DEF(TrashCanBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
   public:
     void Init() override;

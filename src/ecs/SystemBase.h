@@ -4,10 +4,16 @@
 
 #include "../app/EventSystem.h"
 
-#define SYSTEM_DEF(Type)                                              \
+namespace SystemTypeFlags {
+static inline constexpr int RENDERING = 1 << 0;
+static inline constexpr int GAMEPLAY = 1 << 1;
+static inline constexpr int LOAD_NEW_LEVEL = 1 << 2;
+} // namespace SystemTypeFlags
+
+#define SYSTEM_DEF(Type, typeFlags)                                   \
   public:                                                             \
     explicit Type(entt::registry &registry, EventSystem &eventSystem) \
-        : SystemBase(registry, eventSystem) {}                        \
+        : SystemBase(registry, eventSystem, typeFlags) {}             \
                                                                       \
   private:
 
@@ -16,11 +22,13 @@ class SystemBase {
   public:
     static void BaseInit();
 
-    SystemBase(entt::registry &registry, EventSystem &eventSystem);
+    SystemBase(entt::registry &registry, EventSystem &eventSystem, int typeFlags);
     virtual ~SystemBase() = default;
     virtual void Init() {}
 
     void BaseUpdate();
+
+    void SetEnabledIfMatchesAnyFlag(int flags);
 
   protected:
     virtual void Update() = 0;
@@ -33,6 +41,12 @@ class SystemBase {
     static constexpr int DEFER_MAX_COUNT = 5;
     static inline std::array<std::vector<entt::entity>, DEFER_MAX_COUNT> deferedEntityCollections{};
     static inline std::array<DeferFunctionType, DEFER_MAX_COUNT> deferFunctions{};
+
     entt::registry &registry;
     EventSystem &eventSystem;
+
+    int typeFlags;
+
+  private:
+    bool enabled = false;
 };

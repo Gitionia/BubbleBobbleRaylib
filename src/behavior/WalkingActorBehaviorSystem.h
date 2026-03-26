@@ -5,7 +5,7 @@
 #include "../graphics/Animations.h"
 
 class WalkingActorBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(WalkingActorBehaviorSystem)
+    SYSTEM_DEF(WalkingActorBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
   public:
     void Init() override;

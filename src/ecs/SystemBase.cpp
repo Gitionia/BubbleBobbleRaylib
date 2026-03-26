@@ -9,8 +9,8 @@ void SystemBase::BaseInit() {
     }
 }
 
-SystemBase::SystemBase(entt::registry &registry, EventSystem& eventSystem)
-    : registry(registry), eventSystem(eventSystem) {
+SystemBase::SystemBase(entt::registry &registry, EventSystem& eventSystem, int typeFlags)
+    : registry(registry), eventSystem(eventSystem), typeFlags(typeFlags) {
 }
 
 void SystemBase::Defer(entt::entity e, DeferFunctionType f, int index) {
@@ -21,6 +21,8 @@ void SystemBase::Defer(entt::entity e, DeferFunctionType f, int index) {
 }
 
 void SystemBase::BaseUpdate() {
+    if (!enabled) return;
+
     Update();
 
     auto view = registry.view<DestroyEntity>();
@@ -45,4 +47,8 @@ void SystemBase::Destroy(const entt::entity &e) const {
     if (!registry.any_of<DestroyEntity>(e)) {
         registry.emplace<DestroyEntity>(e);
     }
+}
+
+void SystemBase::SetEnabledIfMatchesAnyFlag(int flags) {
+    enabled = this->typeFlags & flags;
 }

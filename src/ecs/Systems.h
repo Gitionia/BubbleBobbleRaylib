@@ -11,6 +11,8 @@ class SystemRunner {
     void Init();
     void UpdateSystems() const;
 
+    void OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags);
+
   private:
     template <typename T>
     void registerSystem(entt::registry &registry, EventSystem& eventSystem);
