@@ -12,6 +12,9 @@ void GameplayState::Init() {
 
 void GameplayState::Update() {
     
+    // Move into OnEnter()
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
+
     runner.UpdateSystems();
 
     if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
