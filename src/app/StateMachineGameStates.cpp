@@ -1,6 +1,8 @@
 #include "StateMachineGameStates.h"
 #include "EventSystem.h"
+#include "StateMachine.h"
 #include "entt/entity/fwd.hpp"
+#include <cstddef>
 
 void GameplayState::Init() {
     music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
@@ -17,7 +19,7 @@ void GameplayState::StartLevel() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 }
 
-void GameplayState::Update() {
+std::shared_ptr<StateMachineState> GameplayState::Update() {
 
     // Move into OnEnter()
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
@@ -39,6 +41,8 @@ void GameplayState::Update() {
         SetTargetFPS(TARGET_FPS);
     }
 #endif
+
+    return nullptr;
 }
 
 
@@ -47,10 +51,16 @@ void TitleScreenState::Init() {
     // Play Music
 }
 
-void TitleScreenState::Update() {
+std::shared_ptr<StateMachineState> TitleScreenState::Update() {
     if (Input::IsKeyDown(Key::Any)) {
-        PRINT_INFO("Switch to Game State");
+        // Cleans up Title Screen Entities
+        eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
+        runner.UpdateSystems();
+
+        return std::make_shared<GameplayState>(runner, eventSystem);
     }
 
     runner.UpdateSystems();
+
+    return nullptr;
 }

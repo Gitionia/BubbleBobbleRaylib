@@ -3,6 +3,7 @@
 #include "../ecs/Systems.h"
 #include "EventSystem.h"
 #include "entt/entity/fwd.hpp"
+#include <memory>
 
 class StateMachineState {
   public:
@@ -11,7 +12,7 @@ class StateMachineState {
 
     virtual void Init() {}
     virtual void OnEnter() {}
-    virtual void Update() = 0;
+    virtual std::shared_ptr<StateMachineState> Update() = 0;
     virtual void OnExit() {}
 
   protected:
@@ -21,12 +22,13 @@ class StateMachineState {
 
 class StateMachine {
   public:
-    StateMachine(SystemRunner &runner, StateMachineState* firstState);
+    StateMachine(SystemRunner &runner, std::shared_ptr<StateMachineState> firstState);
     ~StateMachine() = default;
 
     void Init();
     void Update();
 
   private:
-    StateMachineState *currentState;
+    std::shared_ptr<StateMachineState> currentState;
+    bool enterNewState = true;
 };

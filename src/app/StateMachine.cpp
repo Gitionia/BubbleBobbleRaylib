@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
-StateMachine::StateMachine(SystemRunner &runner, StateMachineState* firstState) 
+StateMachine::StateMachine(SystemRunner &runner, std::shared_ptr<StateMachineState> firstState) 
     : currentState(firstState) { }
 
 void StateMachine::Init() {
@@ -8,5 +8,17 @@ void StateMachine::Init() {
 }
 
 void StateMachine::Update() {
-    currentState->Update();
+
+    if (enterNewState) {
+        currentState->OnEnter();
+        enterNewState = false;
+    }
+
+    std::shared_ptr<StateMachineState> newState = currentState->Update();
+
+    if (newState) {
+        currentState->OnExit();
+        currentState = newState;
+        enterNewState = true;
+    }
 }

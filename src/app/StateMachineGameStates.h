@@ -17,7 +17,7 @@ class GameplayState : public StateMachineState {
         : StateMachineState(runner, eventSystem) {}
 
     void Init() override;
-    void Update() override;
+    std::shared_ptr<StateMachineState> Update() override;
 
   private:
     void StartLevel();
@@ -33,5 +33,5 @@ class TitleScreenState : public StateMachineState {
         : StateMachineState(runner, eventSystem) {}
 
     void Init() override;
-    void Update() override;
+    std::shared_ptr<StateMachineState> Update() override;
 };
