@@ -68,14 +68,22 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     return bubble;
 }
 
-entt::entity EntityFactory::CreateEnemy(int x, int y) {
+entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
     registry->emplace<Position>(enemy, x, y);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
-    registry->emplace<EnemyComponent>(enemy, 0);
-    registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
+    if (type == EnemyType::CAN) {
+        registry->emplace<EnemyComponent>(enemy, 0);
+        registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
+    } else if (type == EnemyType::PURPLE_GHOST) {
+        registry->emplace<EnemyComponent>(enemy, 0);
+        registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
+    } else {
+        PRINT_ERROR("Unimplemented enemy type {} in Entityfactory", (int)type);
+    }
+    
     registry->emplace<EnemyTag>(enemy);
 
     registry->emplace<GameplayEntityTag>(enemy);
@@ -201,7 +209,8 @@ void EntityFactory::CreateLevel(const LevelLayout &level) {
     for (int x = 0; x < LevelTilemap::WIDTH; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
             if (!level.GetEnemies().IsEmpty(x, y)) {
-                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0));
+                EnemyType type = GetEnemyTypeFromTile(level.GetEnemies().Get(x, y));
+                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type);
             }
         }
     }

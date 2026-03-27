@@ -92,6 +92,8 @@ add_executable(BubbleBobbleRaylib
         src/utils/Log.h
         src/audio/Audio.cpp
         src/audio/Audio.h
+        src/level/Enemies.cpp
+        src/level/Enemies.h
         src/level/Level.cpp
         src/level/Level.h
         src/level/Physics.h
