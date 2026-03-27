@@ -1,14 +1,23 @@
 #pragma once
 
-// These values should match with the elements in the level layout json
+// Do not change order. It corresponds to the order of the tiles in tilesets of Tiled
 enum class LevelTileType {
-    NONE = 0,
-    TILE = 1,
-    AIRFLOW_UP = 2,
-    AIRFLOW_DOWN = 3,
-    AIRFLOW_RIGHT = 4,
-    AIRFLOW_LEFT = 5,
-    ENEMY_CAN = 6
+    NONE,
+    TILE,
+
+    AIRFLOW_UP,
+    AIRFLOW_DOWN,
+    AIRFLOW_RIGHT,
+    AIRFLOW_LEFT,
+
+    ENEMY_CAN,
+    ENEMY_GHOST,
+    ENEMY_PURPLE,
+    ENEMY_PIG,
+    ENEMY_MUSHROOM,
+    ENEMY_SNOWMAN,
+    ENEMY_POTATO,
+    ENEMY_WITCH,
 };
 
 class LevelTilemap {

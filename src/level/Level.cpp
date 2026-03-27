@@ -85,6 +85,36 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
     }
 
     nlohmann::json data = nlohmann::json::parse(f);
+
+    // Parse tileset gids
+    auto tilesets = data.find("tilesets").value();
+
+    enum TileSetType {
+        TS_BLOCK,
+        TS_AIRFLOW,
+        TS_ENEMY,
+        TILESET_TYPE_COUNT
+    };
+    int gids[TILESET_TYPE_COUNT];
+    DBG_CHECK(tilesets.size() == TILESET_TYPE_COUNT, "Unexpected count of used tilesets at " + std::string(filepath.c_str()));
+    for (auto &tileset : tilesets) {
+
+        auto x = tileset.find("gid");
+        std::string source = tileset.find("source").value();
+        int gid = tileset.find("firstgid").value();
+
+        if (source.find("LevelBlocks.tsx") != std::string::npos) {
+            gids[TS_BLOCK] = gid;
+        } else if (source.find("AirflowTileset.tsx") != std::string::npos) {
+            gids[TS_AIRFLOW] = gid;
+        } else if (source.find("EnemyTiles.tsx") != std::string::npos) {
+            gids[TS_ENEMY] = gid;
+        } else {
+            PRINT_WARN("{} contains invalid tileset {}", filepath.c_str(), source);
+        }
+    }
+
+    // Parse layers
     auto layers = data.find("layers").value();
 
     for (auto &layer : layers) {
@@ -116,7 +146,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                             filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
-                level.tiles.set(i, levelData.at(i));
+                level.tiles.set(i, levelData.at(i) > 0 ? LevelTileType::TILE : LevelTileType::NONE);
             }
         } else if (layer.find("name").value() == "Airflow") {
             auto levelData = layer.find("data").value();
@@ -126,7 +156,14 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                             filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
-                level.airflow.set(i, levelData.at(i));
+                int value = levelData.at(i);
+                int type;
+                if (value == 0)
+                    type = 0;   // None
+                else
+                    type = value - gids[TS_AIRFLOW] + (int)LevelTileType::AIRFLOW_UP;
+
+                level.airflow.set(i, (LevelTileType)type);
             }
         } else if (layer.find("name").value() == "Enemies") {
             auto levelData = layer.find("data").value();
@@ -136,6 +173,13 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                             filepath.c_str(), levelData.size(), 26 * 28);
 
             for (int i = 0; i < levelData.size(); i++) {
+                int value = levelData.at(i);
+                int type;
+                if (value == 0)
+                    type = 0;   // None
+                else
+                    type = value - gids[TS_ENEMY] + (int)LevelTileType::ENEMY_CAN;
+
                 level.enemies.set(i, levelData.at(i));
             }
         } else {
