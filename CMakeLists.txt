@@ -5,7 +5,7 @@ project(BubbleBobbleRaylib C CXX)
 set(CMAKE_CXX_STANDARD 20)
 
 # generates compile_commands.json
-set(CMAKE_EXPORT_COMPILE_COMMANDS OFF)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_C_FLAGS_INIT "-fsanitize=undefined")
 set(CMAKE_CXX_FLAGS_INIT "-fsanitize=undefined")
