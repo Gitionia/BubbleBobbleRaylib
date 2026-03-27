@@ -3,11 +3,10 @@
 #include "../app/Config.h"
 #include "../graphics/Animations.h"
 #include "../graphics/Sprites.h"
+#include "../level/Enemies.h"
+#include "../level/Items.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
-#include "../level/Items.h"
-#include "../level/Enemies.h"
-
 
 struct Position {
     int x, y;
@@ -45,9 +44,9 @@ class Colliders {
     static inline const Collider walkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
     static inline const Collider fullActorCollider = {BP_SIZE(2, 0), BP_SIZE(2, 0), 0, 0};
     static inline const Collider bubbleCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0};
-    // Bubble has width 28 Pixels and height 2 Blocks = 32 Pixel. 
+    // Bubble has width 28 Pixels and height 2 Blocks = 32 Pixel.
     // This is centered collider with half width and height
-    static inline const Collider bubblePopCollider{BP_SIZE(0, 24), BP_SIZE(1, 12), BP_SIZE(0, 4/2), BP_SIZE(0, 4/2)};
+    static inline const Collider bubblePopCollider{BP_SIZE(0, 24), BP_SIZE(1, 12), BP_SIZE(0, 4 / 2), BP_SIZE(0, 4 / 2)};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
 
     // Needs to be resized, because right now it works like a 2x2-block collider
@@ -133,6 +132,67 @@ struct FlyingEnemyComponent {
         UP_LEFT
     };
     FlyingDirection dir;
+
+    int getXDir() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            return 1;
+        case DOWN_RIGHT:
+            return 1;
+        case DOWN_LEFT:
+            return -1;
+        case UP_LEFT:
+            return -1;
+        }
+    }
+    int getYDir() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            return -1;
+        case DOWN_RIGHT:
+            return 1;
+        case DOWN_LEFT:
+            return 1;
+        case UP_LEFT:
+            return -1;
+        }
+    }
+    void flipX() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            dir = UP_LEFT;
+            break;
+        case DOWN_RIGHT:
+            dir = DOWN_LEFT;
+            break;
+        case DOWN_LEFT:
+            dir = DOWN_RIGHT;
+            break;
+        case UP_LEFT:
+            dir = UP_RIGHT;
+            break;
+        }
+    }
+    void flipY() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            dir = DOWN_RIGHT;
+            break;
+        case DOWN_RIGHT:
+            dir = UP_RIGHT;
+            break;
+        case DOWN_LEFT:
+            dir = UP_LEFT;
+            break;
+        case UP_LEFT:
+            dir = DOWN_LEFT;
+            break;
+        }
+    }
 };
 
 struct WalkingEnemyComponent {
@@ -201,7 +261,7 @@ struct BubblePopComponent {
 
     bool poppedFromLifeTime = true;
     // Says wether points should still be given for the pop.
-    // Note that this can be set to true, even if no points were given, 
+    // Note that this can be set to true, even if no points were given,
     // because e. g. the bubble was an enemy where the pop gives no points
     bool gavePointsForPop = false;
 
@@ -218,7 +278,7 @@ struct PositionAnimationComponent {
     Vector2Int end;
     int totalFrameCount;
     int progress = 0;
-    
+
     enum ActionWhenCompleted {
         DELETE_ENTITY
     };
@@ -233,7 +293,7 @@ struct ModifiableUITextComponent {
 };
 
 struct ConstUITextComponent {
-    const char* text;
+    const char *text;
     Color color;
     int fontSize = 32;
     int spacing = 0;

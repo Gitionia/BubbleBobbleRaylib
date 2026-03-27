@@ -7,9 +7,10 @@
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 
-void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
+static void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
     BubbleFloatComponent &c = registry.emplace<BubbleFloatComponent>(e);
-    c.animator.SetNewAnimation(&GetAnimation("Can-Bubbled"));
+    const EnemyInfoComponent &info = registry.get<EnemyInfoComponent>(e);
+    c.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::BUBBLED)));
 }
 
 void TrashCanBehaviorSystem::Init() {
