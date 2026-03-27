@@ -1,0 +1,5 @@
+#pragma once
+
+#define TARGET_WINDOW_WIDTH (32 * 32)
+#define TARGET_WINDOW_HEIGHT (32 * 26)
+#define TARGET_ASPECT_RATIO ((float)TARGET_WINDOW_WIDTH / (float)TARGET_WINDOW_HEIGHT)

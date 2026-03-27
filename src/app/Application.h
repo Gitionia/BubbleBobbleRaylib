@@ -6,6 +6,7 @@
 #include "../graphics/Sprites.h"
 #include "../graphics/Window.h"
 #include "Config.h"
+#include "WindowConfig.h"
 #include "EventSystem.h"
 #include "StateMachine.h"
 

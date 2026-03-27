@@ -2,7 +2,7 @@
 
 #include "../ecs/Components.h"
 
-#include "../app/Config.h"
+#include "../app/WindowConfig.h"
 
 void RendererSystem::Init() {
     renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);

@@ -2,6 +2,7 @@
 #include "EventSystem.h"
 #include "StateMachine.h"
 #include "entt/entity/fwd.hpp"
+#include "raylib.h"
 #include <cstddef>
 
 void GameplayState::OnEnter() {
@@ -37,6 +38,18 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     } else if (IsKeyPressed(KEY_O)) {
         SetTargetFPS(TARGET_FPS);
     }
+    if (IsKeyPressed(KEY_F)) {
+        ToggleFullscreen();
+    }
+    if (IsKeyPressed(KEY_B)) {
+        ToggleBorderlessWindowed();
+    }
+    if (IsKeyPressed(KEY_M)) {
+        MaximizeWindow();
+    }
+
+
+    PRINT_INFO("w:{},h{}", GetScreenWidth(), GetScreenHeight());
 #endif
 
     return nullptr;
