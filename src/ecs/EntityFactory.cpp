@@ -92,7 +92,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     return enemy;
 }
 
-entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, ItemType itemType) {
+entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, EnemyType enemyType, ItemType itemType) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
@@ -104,12 +104,13 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, ItemType 
     static AnimatedValueDefinition<int> yVelHigh{{BP_SIZE(0, 3), s}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 15}, {BP_SIZE(0, 0), 15}, {-BP_SIZE(0, 1), 10}, {-BP_SIZE(0, 2), s}, {-BP_SIZE(0, 3), s}};
 
     registry->emplace<Position>(enemy, x, y, dir);
+    // TODO Replace sprite with empty (transparent or 0 area sprite) handle
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Item-1"), {2, 2}));
 
     bool rand = Random::Get().Bool();
     auto &xVel = rand ? xVelHigh : xVelLow;
     auto &yVel = rand ? yVelHigh : yVelLow;
-    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation("Can-Item"), xVel, yVel, itemType);
+    registry->emplace<EnemyTumbleComponent>(enemy, &GetAnimation(GetEnemyAnimationName(enemyType, EnemyAnimationType::ITEM)), xVel, yVel, itemType);
     registry->emplace<EnemyTumbleTag>(enemy);
 
     registry->emplace<GameplayEntityTag>(enemy);
