@@ -30,7 +30,7 @@ Application::Application(const ApplicationParameters &parameters)
       stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)) {
 
 #ifdef NDEBUG
-    auto logLevel = spdlog::level::error;
+    auto logLevel = spdlog::level::err;
 #else
     auto logLevel = spdlog::level::info;
 #endif

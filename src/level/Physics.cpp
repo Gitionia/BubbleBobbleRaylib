@@ -178,6 +178,7 @@ int calculateMovementToRoundedPosition(const Position &pos, const Collider &col,
     }
 }
 
+
 template <typename Collider1, typename Collider2>
 bool overlaps(const Position &pos1, const Collider1 &col1, const Position &pos2, const Collider2 &col2) {
     int xmin1 = pos1.x + col1.offsetX;
@@ -192,3 +193,5 @@ bool overlaps(const Position &pos1, const Collider1 &col1, const Position &pos2,
     return xmax1 > xmin2 && xmax2 > xmin1 &&
            ymax1 > ymin2 && ymax2 > ymin1;
 }
+
+template bool overlaps<Collider, Collider>(const Position &pos1, const Collider &col1, const Position &pos2, const Collider &col2);
