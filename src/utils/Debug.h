@@ -1,9 +1,12 @@
 #pragma once
 
+struct Collider;
+
 class Debug {
 
   public:
     static void DrawPoint(int x, int y, float radius, Color color);
+    static void DrawCollider(int x, int y, Collider collider, Color color = RED);
     static void PrintNumberOfEntities();
     static void PrintMousePosition();
 

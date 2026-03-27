@@ -15,6 +15,14 @@ void Debug::DrawPoint(int x, int y, float radius, Color color) {
     registry->emplace<DebugCircle>(point, radius, color);
 }
 
+void Debug::DrawCollider(int x, int y, Collider collider, Color color) {
+    auto &registry = get().registry;
+    auto point = registry->create();
+    registry->emplace<DebugDrawTag>(point);
+    registry->emplace<Position>(point, x + collider.offsetX, y + collider.offsetY);
+    registry->emplace<DebugRectangle>(point, collider.width, collider.height, color);
+}
+
 void Debug::PrintNumberOfEntities() {
     int count = 0;
     for (auto entity : get().registry->view<entt::entity>()) {

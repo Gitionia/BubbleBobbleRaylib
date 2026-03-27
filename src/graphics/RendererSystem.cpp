@@ -3,6 +3,7 @@
 #include "../ecs/Components.h"
 
 #include "../app/WindowConfig.h"
+#include "raylib.h"
 
 void RendererSystem::Init() {
     renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);
@@ -76,11 +77,21 @@ void RendererSystem::renderFontText() {
 }
 
 void RendererSystem::drawDebugShapes() {
-    auto viewRenderer = registry.view<Position, DebugCircle>();
-    for (auto entity : viewRenderer) {
-        auto [pos, circle] = viewRenderer.get(entity);
+    {
+        auto viewRenderer = registry.view<Position, DebugCircle>();
+        for (auto entity : viewRenderer) {
+            auto [pos, circle] = viewRenderer.get(entity);
 
-        DrawCircle(pos.x * SCALING_FACTOR, pos.y * SCALING_FACTOR, circle.radius, circle.color);
+            DrawCircle(pos.x * SCALING_FACTOR, pos.y * SCALING_FACTOR, circle.radius, circle.color);
+        }
+    }
+    {
+        auto viewRenderer = registry.view<Position, DebugRectangle>();
+        for (auto entity : viewRenderer) {
+            auto [pos, rect] = viewRenderer.get(entity);
+
+            DrawRectangle(pos.x * SCALING_FACTOR, pos.y * SCALING_FACTOR, rect.width * SCALING_FACTOR, rect.height * SCALING_FACTOR, rect.color);
+        }
     }
 
     auto view = registry.view<DebugDrawTag>();

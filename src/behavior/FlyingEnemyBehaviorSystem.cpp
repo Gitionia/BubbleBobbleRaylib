@@ -10,7 +10,7 @@
 
 static void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
     BubbleFloatComponent &c = registry.emplace<BubbleFloatComponent>(e);
-    const EnemyInfoComponent& info = registry.get<EnemyInfoComponent>(e);
+    const EnemyInfoComponent &info = registry.get<EnemyInfoComponent>(e);
     c.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::BUBBLED)));
 }
 
@@ -48,15 +48,18 @@ void FlyingEnemyBehaviorSystem::Update() {
         int yVel = moveSpeed * enemy.getYDir();
 
         pos.x += xVel;
-        if (collidesWithWall(registry, pos, collider)) {
+        if (collidesWithWall(registry, pos, enemy.getVerticalCollider()) || collidesWithWall(registry, pos, enemy.getHorizontalCollider())) {
             pos.x -= xVel;
             enemy.flipX();
         }
         pos.y += yVel;
-        if (collidesWithWall(registry, pos, collider)) {
+        if (collidesWithWall(registry, pos, enemy.getVerticalCollider()) || collidesWithWall(registry, pos, enemy.getHorizontalCollider())) {
             pos.y -= yVel;
             enemy.flipY();
         }
+
+        Debug::DrawCollider(pos.x, pos.y, enemy.getHorizontalCollider());
+        Debug::DrawCollider(pos.x, pos.y, enemy.getVerticalCollider());
 
         pos.dir = enemy.getXDir();
     }

@@ -52,6 +52,22 @@ class Colliders {
     // Needs to be resized, because right now it works like a 2x2-block collider
     static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
                                                                 BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
+
+  private:
+    constexpr static inline int l = 17;             // length of flying collider
+    constexpr static inline int w = 2;             // width of flying collider
+    constexpr static inline int o = BP_SIZE(0, 1); // width of flying collider
+
+  public:
+    static inline const Collider flyingTopLeftHorizontal{BP_SIZE(0, l), BP_SIZE(0, w), o, o};
+    static inline const Collider flyingTopRightHorizontal{BP_SIZE(0, l), BP_SIZE(0, w), BP_SIZE(2, -l) - o, o};
+    static inline const Collider flyingBottemLeftHorizontal{BP_SIZE(0, l), BP_SIZE(0, w), o, BP_SIZE(2, -w) - o};
+    static inline const Collider flyingBottemRightHorizontal{BP_SIZE(0, l), BP_SIZE(0, w), BP_SIZE(2, -l) - o, BP_SIZE(2, -w) - o};
+
+    static inline const Collider flyingTopLeftVertical{BP_SIZE(0, w), BP_SIZE(0, l), o, o};
+    static inline const Collider flyingTopRightVertical{BP_SIZE(0, w), BP_SIZE(0, l), BP_SIZE(2, -w) - o, o};
+    static inline const Collider flyingBottemLeftVertical{BP_SIZE(0, w), BP_SIZE(0, l), o, BP_SIZE(2, -l) - o};
+    static inline const Collider flyingBottemRightVertical{BP_SIZE(0, w), BP_SIZE(0, l), BP_SIZE(2, -w) - o, BP_SIZE(2, -l) - o};
 };
 
 struct WalkingActorComponent {
@@ -193,6 +209,33 @@ struct FlyingEnemyComponent {
             break;
         }
     }
+
+    Collider getVerticalCollider() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            return Colliders::flyingTopRightVertical;
+        case DOWN_RIGHT:
+            return Colliders::flyingBottemRightVertical;
+        case DOWN_LEFT:
+            return Colliders::flyingBottemLeftVertical;
+        case UP_LEFT:
+            return Colliders::flyingTopLeftVertical;
+        }
+    }
+    Collider getHorizontalCollider() {
+        switch (dir) {
+
+        case UP_RIGHT:
+            return Colliders::flyingTopRightHorizontal;
+        case DOWN_RIGHT:
+            return Colliders::flyingBottemRightHorizontal;
+        case DOWN_LEFT:
+            return Colliders::flyingBottemLeftHorizontal;
+        case UP_LEFT:
+            return Colliders::flyingTopLeftHorizontal;
+        }
+    }
 };
 
 struct WalkingEnemyComponent {
@@ -323,6 +366,12 @@ struct RenderData {
 
 struct DebugCircle {
     float radius;
+    Color color;
+};
+
+struct DebugRectangle {
+    int width;
+    int height;
     Color color;
 };
 
