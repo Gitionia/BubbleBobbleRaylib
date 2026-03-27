@@ -26,7 +26,7 @@ void TrashCanBehaviorSystem::Update() {
         animator.Reset();
     }
 
-    auto view = registry.view<Position, WalkingActorComponent, EnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, actor, enemy, renderData] = view.get(entity);
 

@@ -6,6 +6,8 @@
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
 #include "../level/Items.h"
+#include "../level/Enemies.h"
+
 
 struct Position {
     int x, y;
@@ -119,7 +121,21 @@ struct DragonHitComponent {
     int repetitionCount = 4;
 };
 
-struct EnemyComponent {
+struct EnemyInfoComponent {
+    EnemyType type;
+};
+
+struct FlyingEnemyComponent {
+    enum FlyingDirection {
+        UP_RIGHT,
+        DOWN_RIGHT,
+        DOWN_LEFT,
+        UP_LEFT
+    };
+    FlyingDirection dir;
+};
+
+struct WalkingEnemyComponent {
     int walkingDir;
 };
 

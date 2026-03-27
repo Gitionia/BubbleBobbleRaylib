@@ -75,10 +75,10 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     registry->emplace<Position>(enemy, x, y);
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
     if (type == EnemyType::CAN) {
-        registry->emplace<EnemyComponent>(enemy, 0);
+        registry->emplace<WalkingEnemyComponent>(enemy, 0);
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     } else if (type == EnemyType::PURPLE_GHOST) {
-        registry->emplace<EnemyComponent>(enemy, 0);
+        registry->emplace<WalkingEnemyComponent>(enemy, 0);
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     } else {
         PRINT_ERROR("Unimplemented enemy type {} in Entityfactory", (int)type);
