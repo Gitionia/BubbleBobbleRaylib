@@ -73,17 +73,18 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     auto enemy = registry->create();
 
     registry->emplace<Position>(enemy, x, y);
-    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle("Can-Walk-1"), {2, 2}));
+    // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
+    registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL) + std::string("-1")), {2, 2}));
     if (type == EnemyType::CAN) {
         registry->emplace<WalkingEnemyComponent>(enemy, 0);
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     } else if (type == EnemyType::PURPLE_GHOST) {
-        registry->emplace<WalkingEnemyComponent>(enemy, 0);
-        registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
+        registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
     } else {
         PRINT_ERROR("Unimplemented enemy type {} in Entityfactory", (int)type);
     }
     
+    registry->emplace<EnemyInfoComponent>(enemy, type);
     registry->emplace<EnemyTag>(enemy);
 
     registry->emplace<GameplayEntityTag>(enemy);

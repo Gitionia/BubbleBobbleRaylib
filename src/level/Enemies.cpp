@@ -24,3 +24,58 @@ EnemyType GetEnemyTypeFromTile(LevelTileType tile) {
         return EnemyType::CAN;
     }
 }
+
+const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animationType) {
+    switch (animationType) {
+
+    case EnemyAnimationType::NORMAL:
+        switch (enemyType) {
+
+        case EnemyType::CAN:
+            return "Can-Walk";
+        case EnemyType::PURPLE_GHOST:
+            return "Purple-Fly";
+        case EnemyType::GHOST:
+        case EnemyType::PIG:
+        case EnemyType::MUSHROOM:
+        case EnemyType::SNOWMAN:
+        case EnemyType::POTATO:
+        case EnemyType::WITCH:
+            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
+            return "Can-Walk";
+        }
+    case EnemyAnimationType::BUBBLED:
+        switch (enemyType) {
+
+        case EnemyType::CAN:
+            return "Can-Bubbled";
+        case EnemyType::PURPLE_GHOST:
+            return "Purple-Bubbled";
+        case EnemyType::GHOST:
+        case EnemyType::PIG:
+        case EnemyType::MUSHROOM:
+        case EnemyType::SNOWMAN:
+        case EnemyType::POTATO:
+        case EnemyType::WITCH:
+            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
+            return "Can-Bubbled";
+        }
+    case EnemyAnimationType::ITEM:
+        switch (enemyType) {
+
+        case EnemyType::CAN:
+            return "Can-Item";
+        case EnemyType::PURPLE_GHOST:
+            return "Purple-Item";
+        case EnemyType::GHOST:
+        case EnemyType::PIG:
+        case EnemyType::MUSHROOM:
+        case EnemyType::SNOWMAN:
+        case EnemyType::POTATO:
+        case EnemyType::WITCH:
+            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
+            return "Can-Item";
+        }
+        break;
+    }
+}

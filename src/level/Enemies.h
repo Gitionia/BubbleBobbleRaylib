@@ -14,3 +14,10 @@ enum class EnemyType {
 };
 
 EnemyType GetEnemyTypeFromTile(LevelTileType tile);
+
+enum class EnemyAnimationType {
+    NORMAL,
+    BUBBLED,
+    ITEM
+};
+const char* GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animationType);
