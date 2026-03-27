@@ -8,7 +8,8 @@ namespace SystemTypeFlags {
 static inline constexpr int RENDERING = 1 << 0;
 static inline constexpr int GAMEPLAY = 1 << 1;
 static inline constexpr int LEVEL_INSTANTIATION = 1 << 2;
-static inline constexpr int TITLE_SCREEN = 1 << 3;
+static inline constexpr int GAME_UI = 1 << 3;
+static inline constexpr int TITLE_SCREEN = 1 << 4;
 } // namespace SystemTypeFlags
 
 #define SYSTEM_DEF(Type, typeFlags)                                   \

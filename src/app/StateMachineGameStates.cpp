@@ -7,7 +7,12 @@
 
 void GameplayState::OnEnter() {
     music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
-    StartLevel();
+
+    // creates the level and the game ui
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION | SystemTypeFlags::GAME_UI);
+    eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
+    eventSystem.Notify((entt::entity)0, INSTANTIATE_GAME_UI, level);
+    runner.UpdateSystems();
 
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 }
@@ -47,9 +52,6 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     if (IsKeyPressed(KEY_M)) {
         MaximizeWindow();
     }
-
-
-    PRINT_INFO("w:{},h{}", GetScreenWidth(), GetScreenHeight());
 #endif
 
     return nullptr;
@@ -67,7 +69,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
         runner.UpdateSystems();
 
         return std::make_shared<GameplayState>(runner, eventSystem);
-    
+
     } else {
         runner.UpdateSystems();
 
