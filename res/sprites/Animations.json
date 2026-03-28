@@ -16,6 +16,10 @@
     { "name" : "Purple-Fly", "FramesPerSprite" : 7 },
     { "name" : "Purple-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Purple-Item", "FramesPerSprite" : 5 },
+
+    { "name" : "Pig-Fly", "FramesPerSprite" : 7 },
+    { "name" : "Pig-Bubbled", "FramesPerSprite" : 18 },
+    { "name" : "Pig-Item", "FramesPerSprite" : 5 },
     
     { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },
     { "name" : "Bubble-Green-Shoot", "FramesPerSprite" : 8 },

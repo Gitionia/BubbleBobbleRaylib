@@ -21,11 +21,16 @@ void FlyingEnemyBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::fullActorCollider;
 
-    static Animator animator(&GetAnimation("Purple-Fly"));
+    static Animator purpleAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::PURPLE_GHOST, EnemyAnimationType::NORMAL)));
+    static Animator pigAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::PIG, EnemyAnimationType::NORMAL)));
 
-    animator.Update();
-    if (animator.IsFinished()) {
-        animator.Reset();
+    purpleAnimator.Update();
+    if (purpleAnimator.IsFinished()) {
+        purpleAnimator.Reset();
+    }
+    pigAnimator.Update();
+    if (pigAnimator.IsFinished()) {
+        pigAnimator.Reset();
     }
 
     auto view = registry.view<Position, FlyingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
@@ -40,7 +45,7 @@ void FlyingEnemyBehaviorSystem::Update() {
             continue;
         }
 
-        renderData.spriteHandle = animator.GetSpriteHandle();
+        renderData.spriteHandle = (info.type == EnemyType::PURPLE_GHOST ? purpleAnimator : pigAnimator).GetSpriteHandle();
 
         int moveSpeed = UNITS_PER_BLOCK / 16;
 

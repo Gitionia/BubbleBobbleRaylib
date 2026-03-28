@@ -80,6 +80,8 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
     } else if (type == EnemyType::PURPLE_GHOST) {
         registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
+    } else if (type == EnemyType::PIG) {
+        registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
     } else {
         PRINT_ERROR("Unimplemented enemy type {} in Entityfactory", (int)type);
     }
