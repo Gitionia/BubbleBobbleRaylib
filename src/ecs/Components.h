@@ -56,7 +56,7 @@ class Colliders {
   private:
     constexpr static inline int l = 17;             // length of flying collider
     constexpr static inline int w = 2;             // width of flying collider
-    constexpr static inline int o = BP_SIZE(0, 1); // width of flying collider
+    constexpr static inline int o = BP_SIZE(0, 2); // width of flying collider
 
   public:
     static inline const Collider flyingTopLeftHorizontal{BP_SIZE(0, l), BP_SIZE(0, w), o, o};
