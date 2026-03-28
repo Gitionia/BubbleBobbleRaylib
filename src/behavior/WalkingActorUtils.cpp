@@ -21,7 +21,7 @@ bool isWalkingActorGrounded(entt::registry &registry, Position pos, const Walkin
 
 bool shouldWalkingEnemyGapJump(const Position &pos, int dir) {
     DBG_CHECK(dir == 1 || dir == -1, "Direction for checking for gap jump should be 1 or -1");
-    
+
     int blockX;
     if (dir == -1) {
 
@@ -36,5 +36,5 @@ bool shouldWalkingEnemyGapJump(const Position &pos, int dir) {
 
     int blockY = yPosToTileCoord(pos.y + BP_SIZE(2, 0));
 
-    return !collisionAt(blockX, blockY) && !collisionAt(blockX + dir, blockY);
+    return !collisionAt(blockX, blockY) && !collisionAt(blockX + dir, blockY) && !collisionAt(blockX, blockY - 1) && !collisionAt(blockX + dir, blockY - 1);
 }
