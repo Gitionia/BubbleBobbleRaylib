@@ -67,7 +67,7 @@ void TrashCanBehaviorSystem::Update() {
         const int GAP_JUMP_SPEED = 2 * UNITS_PER_BLOCK / 16;
 
         const int NORMAL_JUMP_FRAME_COUNT = BP_SIZE(5, 8) / NORMAL_JUMP_SPEED;
-        const int GAP_JUMP_FRAME_COUNT = BP_SIZE(3, 8) / GAP_JUMP_SPEED;
+        const int GAP_JUMP_FRAME_COUNT = BP_SIZE(2, 8) / GAP_JUMP_SPEED;
 
         bool shouldGapJump = false;
 
@@ -118,12 +118,6 @@ void TrashCanBehaviorSystem::Update() {
                 enemy.isGapJumping = false;
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
-            }
-        }
-
-        if (enemy.isGapJumping) {
-            if (actor.jumpFrameCount <= GAP_JUMP_FRAME_COUNT * 0.65f) {
-                actor.jumpSpeed = GAP_JUMP_SPEED / 2;
             }
         }
 
