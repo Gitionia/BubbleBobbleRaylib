@@ -44,8 +44,6 @@ void TrashCanBehaviorSystem::Update() {
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
 
-        bool jumpInput = 0; // Random::Get().Range(150) == 1;
-
         const int FALL_SPEED = UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
         const int GAP_JUMP_SPEED = 2 * UNITS_PER_BLOCK / 16;
@@ -83,14 +81,17 @@ void TrashCanBehaviorSystem::Update() {
 
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
+        // TODO: add check for if player is above or below
         // start jump
         if (isGrounded) {
-            if (shouldGapJump) {
+
+            if (shouldGapJump && Random::Get().Chance(0.15f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (jumpInput) {
+            } else if (Random::Get().Chance(0.001f)){
+                enemy.isGapJumping = false;
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
             }

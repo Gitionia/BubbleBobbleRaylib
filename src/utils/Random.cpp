@@ -22,7 +22,11 @@ int Random::Range(int max) {
 }
 
 bool Random::Bool() {
-    return Range(1, 1000) > 500;
+    return Range(1, 1000) <= 500;
+}
+
+bool Random::Chance(float chance) {
+    return Range(1, 100'000) <= 100'000 * chance;
 }
 
 Random &Random::Get() {

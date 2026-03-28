@@ -9,6 +9,7 @@ class Random {
     int Range(int min, int max);
     int Range(int max);
     bool Bool();
+    bool Chance(float chance);
 
   private:
     std::mt19937 rng{};
