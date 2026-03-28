@@ -44,7 +44,7 @@ void TrashCanBehaviorSystem::Update() {
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
 
-        bool jumpInput = 0; //Random::Get().Range(150) == 1;
+        bool jumpInput = 0; // Random::Get().Range(150) == 1;
 
         const int FALL_SPEED = UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
@@ -89,27 +89,35 @@ void TrashCanBehaviorSystem::Update() {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
-            
-            
+
             } else if (jumpInput) {
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
-                
             }
         }
 
         pos.x += velx;
         if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-
-            pos.x -= velx;
-            enemy.walkingDir *= -1;
-
-            // check if enemy is in 2 space gap, in that case don't flip direction
-            pos.x -= velx;
-            if (collidesWithWall(registry, pos, collider)) {
-                enemy.walkingDir *= -1;
+            // Round pos.x to full block position
+            pos.x = (pos.x / BP_SIZE(1, 0)) * BP_SIZE(1, 0);
+            if (enemy.walkingDir == -1) {
+                pos.x += BP_SIZE(1, 0);
             }
-            pos.x += velx;
+
+            // gap jumping enemies should fall down at the wall and not bounce off
+            if (enemy.isGapJumping) {
+                enemy.walkingDir = 0;
+
+            } else {
+                enemy.walkingDir *= -1;
+
+                // check if enemy is in 2 space gap, in that case don't flip direction
+                pos.x -= velx;
+                if (collidesWithWall(registry, pos, collider)) {
+                    enemy.walkingDir *= -1;
+                }
+                pos.x += velx;
+            }
         }
     }
 }
