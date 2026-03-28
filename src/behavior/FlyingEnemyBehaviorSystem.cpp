@@ -47,10 +47,11 @@ void FlyingEnemyBehaviorSystem::Update() {
 
         renderData.spriteHandle = (info.type == EnemyType::PURPLE_GHOST ? purpleAnimator : pigAnimator).GetSpriteHandle();
 
-        int moveSpeed = UNITS_PER_BLOCK / 16;
+        int speedX = BP_SIZE(0, 2);
+        int speedY = info.type == EnemyType::PURPLE_GHOST ? BP_SIZE(0, 2) : BP_SIZE(0, 1);
 
-        int xVel = moveSpeed * enemy.getXDir();
-        int yVel = moveSpeed * enemy.getYDir();
+        int xVel = speedX * enemy.getXDir();
+        int yVel = speedY * enemy.getYDir();
 
         pos.x += xVel;
         if (collidesWithWall(registry, pos, enemy.getVerticalCollider()) || collidesWithWall(registry, pos, enemy.getHorizontalCollider())) {
