@@ -29,6 +29,10 @@ struct Vector2Int {
         return {-1, 0};
     }
 
+    int Dot(const Vector2Int& other) {
+        return X * other.X + Y * other.Y;
+    }
+
     Vector2Int &operator+=(const Vector2Int &other) {
         X += other.X;
         Y += other.Y;

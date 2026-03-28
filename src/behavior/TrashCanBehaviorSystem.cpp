@@ -6,6 +6,7 @@
 #include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
+#include "entt/entity/fwd.hpp"
 
 static void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
     BubbleFloatComponent &c = registry.emplace<BubbleFloatComponent>(e);
@@ -26,6 +27,23 @@ void TrashCanBehaviorSystem::Update() {
     if (animator.IsFinished()) {
         animator.Reset();
     }
+
+    bool foundDragon = false;
+    Vector2Int dragonPos = {-1000, 0};
+    auto dragonView = registry.view<Position, DragonTag>();
+    for (entt::entity dragon : dragonView) {
+        const Position& pos = registry.get<Position>(dragon);
+        dragonPos = { pos.x, pos.y };
+        
+        foundDragon = true;
+        // If there are multiple dragons, maybe take the highest position?
+        break;
+    }
+
+    if (!foundDragon) {
+        PRINT_WARN("Walking enemy did not find dragon position");
+    }
+
 
     auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
@@ -52,6 +70,10 @@ void TrashCanBehaviorSystem::Update() {
         const int GAP_JUMP_FRAME_COUNT = BP_SIZE(2, 8) / GAP_JUMP_SPEED;
 
         bool shouldGapJump = false;
+
+        bool dragonIsAboveEnemy = dragonPos.Y < pos.y;
+        int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
+        bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
 
         // check if grounded
         bool isGrounded = false;
@@ -81,16 +103,16 @@ void TrashCanBehaviorSystem::Update() {
 
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
-        // TODO: add check for if player is above or below
         // start jump
         if (isGrounded) {
 
-            if (shouldGapJump && Random::Get().Chance(0.15f)) {
+            int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 20 : 4 : 1;
+            if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.04f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (Random::Get().Chance(0.001f)){
+            } else if (Random::Get().Chance(chanceMultiplier * 0.0025f)){
                 enemy.isGapJumping = false;
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
