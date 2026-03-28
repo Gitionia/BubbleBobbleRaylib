@@ -62,18 +62,20 @@ void TrashCanBehaviorSystem::Update() {
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
 
-        const int FALL_SPEED = UNITS_PER_BLOCK / 16;
+        const int FALL_SPEED = 2 * UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
         const int GAP_JUMP_SPEED = 2 * UNITS_PER_BLOCK / 16;
 
         const int NORMAL_JUMP_FRAME_COUNT = BP_SIZE(5, 8) / NORMAL_JUMP_SPEED;
-        const int GAP_JUMP_FRAME_COUNT = BP_SIZE(2, 8) / GAP_JUMP_SPEED;
+        const int GAP_JUMP_FRAME_COUNT = BP_SIZE(3, 8) / GAP_JUMP_SPEED;
 
         bool shouldGapJump = false;
 
         bool dragonIsAboveEnemy = dragonPos.Y < pos.y;
         int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
         bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
+
+        actor.fallSpeed = FALL_SPEED;
 
         // check if grounded
         bool isGrounded = false;
@@ -106,16 +108,22 @@ void TrashCanBehaviorSystem::Update() {
         // start jump
         if (isGrounded) {
 
-            int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 20 : 4 : 1;
-            if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.04f)) {
+            int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
+            if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.03f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (Random::Get().Chance(chanceMultiplier * 0.0025f)){
+            } else if (Random::Get().Chance(chanceMultiplier * 0.004f)){
                 enemy.isGapJumping = false;
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
+            }
+        }
+
+        if (enemy.isGapJumping) {
+            if (actor.jumpFrameCount <= GAP_JUMP_FRAME_COUNT * 0.65f) {
+                actor.jumpSpeed = GAP_JUMP_SPEED / 2;
             }
         }
 
