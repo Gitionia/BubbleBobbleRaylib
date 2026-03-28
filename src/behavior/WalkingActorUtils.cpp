@@ -36,5 +36,5 @@ bool shouldWalkingEnemyGapJump(const Position &pos, int dir) {
 
     int blockY = yPosToTileCoord(pos.y + BP_SIZE(2, 0));
 
-    return !collisionAt(blockX, blockY) && !collisionAt(blockX + dir, blockY) && !collisionAt(blockX, blockY - 1) && !collisionAt(blockX + dir, blockY - 1);
+    return !collisionAt(blockX, blockY) && !collisionAt(blockX + dir, blockY) && !collisionAt(blockX, blockY - 1) && !collisionAt(blockX + dir, blockY - 1) && !collisionAt(blockX + 2 * dir, blockY - 1);
 }
