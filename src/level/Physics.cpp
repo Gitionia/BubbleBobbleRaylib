@@ -20,7 +20,10 @@ int yPosToTileCoord(int y) {
 }
 
 bool collisionAt(int blockX, int blockY) {
-    return tiles->IsEmpty(blockX, blockY);
+    if (blockX < 0 || blockX >= LevelTilemap::WIDTH)
+        return true;
+    else
+        return !tiles->IsEmpty(blockX, blockY);
 }
 
 Vector2Int posToTileCoords(int x, int y) {
@@ -181,7 +184,6 @@ int calculateMovementToRoundedPosition(const Position &pos, const Collider &col,
         return -(coord % UNITS_PER_BLOCK);
     }
 }
-
 
 template <typename Collider1, typename Collider2>
 bool overlaps(const Position &pos1, const Collider1 &col1, const Position &pos2, const Collider2 &col2) {
