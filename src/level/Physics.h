@@ -5,6 +5,10 @@
 
 void setPhysicsColliderData(const LevelLayout &level);
 
+int xPosToTileCoord(int x);
+int yPosToTileCoord(int y);
+bool collisionAt(int blockX, int blockY);
+
 bool collidesWithWall(entt::registry &registry, const Position &position, const Collider &collider);
 template <typename ColliderType>
 bool collidesWithCollider(entt::registry &registry, const Position &position, const Collider &collider);

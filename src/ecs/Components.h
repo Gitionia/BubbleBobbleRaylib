@@ -240,6 +240,7 @@ struct FlyingEnemyComponent {
 
 struct WalkingEnemyComponent {
     int walkingDir;
+    bool isGapJumping = false;
 };
 
 struct EnemyTumbleComponent {

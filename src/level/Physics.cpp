@@ -19,6 +19,10 @@ int yPosToTileCoord(int y) {
     return y / UNITS_PER_BLOCK;
 }
 
+bool collisionAt(int blockX, int blockY) {
+    return tiles->IsEmpty(blockX, blockY);
+}
+
 Vector2Int posToTileCoords(int x, int y) {
     return {xPosToTileCoord(x), yPosToTileCoord(y)};
 }

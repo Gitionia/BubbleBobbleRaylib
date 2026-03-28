@@ -10,3 +10,5 @@
 bool shouldWalkingActorIgnoreCollisions(entt::registry &registry, const Position &pos, const Collider& collider);
 
 bool isWalkingActorGrounded(entt::registry &registry, Position pos, const WalkingActorComponent &actor);
+
+bool shouldWalkingEnemyGapJump(const Position &pos, int dir);

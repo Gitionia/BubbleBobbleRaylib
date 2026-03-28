@@ -42,10 +42,18 @@ void TrashCanBehaviorSystem::Update() {
         renderData.spriteHandle = animator.GetSpriteHandle();
 
         int velx = 0;
-        int moveSpeed = UNITS_PER_BLOCK / 16;
-        int JUMP_FRAME_COUNT = BP_SIZE(5, 8) / actor.jumpSpeed;
+        int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
 
-        bool jump = Random::Get().Range(150) == 1;
+        bool jumpInput = 0; //Random::Get().Range(150) == 1;
+
+        const int FALL_SPEED = UNITS_PER_BLOCK / 16;
+        const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
+        const int GAP_JUMP_SPEED = 2 * UNITS_PER_BLOCK / 16;
+
+        const int NORMAL_JUMP_FRAME_COUNT = BP_SIZE(5, 8) / NORMAL_JUMP_SPEED;
+        const int GAP_JUMP_FRAME_COUNT = BP_SIZE(2, 8) / GAP_JUMP_SPEED;
+
+        bool shouldGapJump = false;
 
         // check if grounded
         bool isGrounded = false;
@@ -54,13 +62,21 @@ void TrashCanBehaviorSystem::Update() {
         }
 
         if (isGrounded) {
+
+            enemy.isGapJumping = false;
+            // just landed and didn't have a walking direction
             if (enemy.walkingDir == 0) {
                 enemy.walkingDir = Random::Get().GetDirection();
             }
 
             pos.dir = enemy.walkingDir;
-        } else {
+
+        } else if (!enemy.isGapJumping) {
             enemy.walkingDir = 0;
+        }
+
+        if (isGrounded) {
+            shouldGapJump = shouldWalkingEnemyGapJump(pos, enemy.walkingDir);
         }
 
         velx = moveSpeed * enemy.walkingDir;
@@ -68,9 +84,17 @@ void TrashCanBehaviorSystem::Update() {
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
         // start jump
-        if (jump) {
-            if (isGrounded) {
-                actor.jumpFrameCount = JUMP_FRAME_COUNT;
+        if (isGrounded) {
+            if (shouldGapJump) {
+                enemy.isGapJumping = true;
+                actor.jumpSpeed = GAP_JUMP_SPEED;
+                actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
+            
+            
+            } else if (jumpInput) {
+                actor.jumpSpeed = NORMAL_JUMP_SPEED;
+                actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
+                
             }
         }
 
