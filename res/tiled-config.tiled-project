@@ -1,14 +1,32 @@
 {
     "automappingRulesFile": "",
     "commands": [
+        {
+            "arguments": "",
+            "command": "/home/ben/dev/projects/personal/BubbleBobbleRaylib/build/BubbleBobbleRaylib",
+            "enabled": true,
+            "name": "Run Bubble Bobble",
+            "saveBeforeExecute": true,
+            "shortcut": "G",
+            "showOutput": true,
+            "workingDirectory": "/home/ben/dev/projects/personal/BubbleBobbleRaylib/build/"
+        },
+        {
+            "arguments": " --build build/",
+            "command": "cmake",
+            "enabled": true,
+            "name": "Build Bubble Bobble",
+            "saveBeforeExecute": true,
+            "shortcut": "ោ\ude51",
+            "showOutput": true,
+            "workingDirectory": "/home/ben/dev/projects/personal/BubbleBobbleRaylib/"
+        }
     ],
-    "compatibilityVersion": 1100,
     "extensionsPath": "extensions",
     "folders": [
         "."
     ],
-    "properties": [
-    ],
+    "objectTypesFile": "",
     "propertyTypes": [
     ]
 }
