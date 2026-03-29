@@ -120,7 +120,12 @@ void WalkingEnemyBehaviorSystem::Update() {
             enemy.isGapJumping = false;
             // just landed and didn't have a walking direction
             if (enemy.walkingDir == 0) {
-                enemy.walkingDir = Random::Get().GetDirection();
+                
+                // Most of the time choose direction to player
+                enemy.walkingDir = sign(dragonPos.X - pos.x);
+                if (Random::Get().Chance(0.25f)) {
+                    enemy.walkingDir *= -1;
+                }
             }
 
             pos.dir = enemy.walkingDir;
@@ -129,7 +134,8 @@ void WalkingEnemyBehaviorSystem::Update() {
             enemy.walkingDir = 0;
         }
 
-        if (isGrounded) {
+        // check if should gap jump (mushrooms don't need to check that since they always can)
+        if (isGrounded && !isMushroom) {
             shouldGapJump = shouldWalkingEnemyGapJump(pos, enemy.walkingDir);
         }
 
