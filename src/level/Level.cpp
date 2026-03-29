@@ -265,7 +265,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
                     for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
                         LevelTileType val = level.enemies.Get(x, y);
-                        int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x, y);
+                        int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x - 1, y); // We do an extra -1, because enemies occupy two spaces, but the tile only one
                         level.enemies.set(index, val);
                     }
                 }
