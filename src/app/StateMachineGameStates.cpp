@@ -79,8 +79,13 @@ void TitleScreenState::OnEnter() {
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
-    // For testing, jump directly into gameplay
-    if (true || Input::IsKeyDown(Key::Any)) {
+    #ifdef NDEBUG
+    bool titleScreenSkip = false;
+    #else
+    bool titleScreenSkip = true;
+    #endif 
+
+    if (titleScreenSkip || Input::IsKeyDown(Key::Any)) {
         // Cleans up Title Screen Entities
         eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
         runner.UpdateSystems();

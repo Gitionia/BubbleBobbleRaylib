@@ -15,7 +15,7 @@ void TitleScreenSystem::Init() {
     EntityFactory::CreateSimpleSprite({456, 222}, -1, GetSpriteHandle("Bubble-Green-Idle-1"), WHITE, {2, 2});
 
     anyKey = EntityFactory::CreateConstantUIText({324, 688}, "Press any key", WHITE, 32, -4);
-    EntityFactory::CreateConstantUIText({740, 4}, "Fan Remake\nby Gitionia", BLUE, 24, 0);
+    EntityFactory::CreateConstantUIText({736, 4}, "Fan Remake\nby Gitionia\nusing raylib", BLUE, 24, 0);
 }
 
 void TitleScreenSystem::Update() {
