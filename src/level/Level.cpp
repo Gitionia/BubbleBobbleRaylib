@@ -75,6 +75,27 @@ Color parseColors(const std::string &s) {
     return {r, g, b, a};
 }
 
+static LevelTileType flipAirflowX(LevelTileType tile) {
+    switch (tile) {
+
+    case LevelTileType::NONE:
+        return LevelTileType::NONE;
+        
+    case LevelTileType::AIRFLOW_UP:
+    case LevelTileType::AIRFLOW_DOWN:
+        return tile;
+
+    case LevelTileType::AIRFLOW_RIGHT:
+        return LevelTileType::AIRFLOW_LEFT;
+    case LevelTileType::AIRFLOW_LEFT:
+        return LevelTileType::AIRFLOW_RIGHT;
+
+    default:
+        PRINT_WARN("Tried to flip a non airflow tile '{}' which is not allowed! {}:{}", (int)tile, __FILE__, __LINE__);
+        return LevelTileType::AIRFLOW_UP;
+    }
+}
+
 LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
     LevelLayout level{};
 
@@ -151,6 +172,16 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
         } else if (layer.find("name").value() == "Airflow") {
             auto levelData = layer.find("data").value();
 
+            bool shouldFlipAlongXAxis = false;
+            auto properties = layer.find("properties").value();
+            for (auto &property : properties) {
+                if (property.find("name").value() == "FlipAlongXAxis") {
+                    shouldFlipAlongXAxis = property.find("value").value();
+                } else {
+                    PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
+                }
+            }
+
             if (levelData.size() != 26 * 28)
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Airflow'",
                             filepath.c_str(), levelData.size(), 26 * 28);
@@ -159,12 +190,23 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 int value = levelData.at(i);
                 int type;
                 if (value == 0)
-                    type = 0;   // None
+                    type = 0; // None
                 else
                     type = value - gids[TS_AIRFLOW] + (int)LevelTileType::AIRFLOW_UP;
 
                 level.airflow.set(i, (LevelTileType)type);
             }
+
+            if (shouldFlipAlongXAxis) {
+                for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
+                    for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
+                        LevelTileType val = flipAirflowX(level.airflow.Get(x, y));
+                        int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x, y);
+                        level.airflow.set(index, val);
+                    }
+                }
+            }
+
         } else if (layer.find("name").value() == "Enemies") {
             auto levelData = layer.find("data").value();
 
@@ -176,7 +218,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 int value = levelData.at(i);
                 int type;
                 if (value == 0)
-                    type = 0;   // None
+                    type = 0; // None
                 else
                     type = value - gids[TS_ENEMY] + (int)LevelTileType::ENEMY_CAN;
 
