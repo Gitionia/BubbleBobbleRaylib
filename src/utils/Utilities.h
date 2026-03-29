@@ -2,6 +2,14 @@
 
 #define COLOR_TRANSPARENT (Color {0,0,0,0})
 
+enum class Direction {
+    Left,
+    Right
+};
+
+int GetIntFromDirection(Direction direction);
+Direction GetDirectionFromInt(int dir);
+
 Rectangle ScaleRect(const Rectangle &rectangle, float scale);
 Rectangle OffsetRect(const Rectangle &rectangle, float xOffset, float yOffset);
 

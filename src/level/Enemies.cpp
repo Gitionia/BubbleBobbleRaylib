@@ -33,6 +33,33 @@ EnemyType GetEnemyTypeFromTile(LevelTileType tile) {
     }
 }
 
+Direction GetEnemyDirectionFromTile(LevelTileType tile) {
+    switch (tile) {
+
+    case LevelTileType::ENEMY_CAN_LEFT:
+    case LevelTileType::ENEMY_PURPLE_LEFT:
+    case LevelTileType::ENEMY_GHOST_LEFT:
+    case LevelTileType::ENEMY_PIG_LEFT:
+    case LevelTileType::ENEMY_MUSHROOM_LEFT:
+    case LevelTileType::ENEMY_SNOWMAN_LEFT:
+    case LevelTileType::ENEMY_POTATO_LEFT:
+    case LevelTileType::ENEMY_WITCH_LEFT:
+    return Direction::Left;
+    case LevelTileType::ENEMY_CAN_RIGHT:
+    case LevelTileType::ENEMY_GHOST_RIGHT:
+    case LevelTileType::ENEMY_PURPLE_RIGHT:
+    case LevelTileType::ENEMY_PIG_RIGHT:
+    case LevelTileType::ENEMY_MUSHROOM_RIGHT:
+    case LevelTileType::ENEMY_SNOWMAN_RIGHT:
+    case LevelTileType::ENEMY_POTATO_RIGHT:
+    case LevelTileType::ENEMY_WITCH_RIGHT:
+    return Direction::Right;
+    default:
+        PRINT_ERROR("Tried to get direction of non-enemy tile. Maybe a level tilemap is incorrect?");
+        return Direction::Left;
+    }
+}
+
 const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animationType) {
     switch (animationType) {
 

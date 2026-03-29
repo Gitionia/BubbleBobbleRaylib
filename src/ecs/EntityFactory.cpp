@@ -71,11 +71,11 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     return bubble;
 }
 
-entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
+entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction direction) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
-    registry->emplace<Position>(enemy, x, y);
+    registry->emplace<Position>(enemy, x, y, GetIntFromDirection(direction));
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL) + std::string("-1")), {2, 2}));
     switch (type) {
@@ -85,13 +85,14 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     case EnemyType::MUSHROOM:
     case EnemyType::POTATO:
     case EnemyType::SNOWMAN:
-    case EnemyType::WITCH:
-        registry->emplace<WalkingEnemyComponent>(enemy, 0);
+    case EnemyType::WITCH: {
+        registry->emplace<WalkingEnemyComponent>(enemy, GetIntFromDirection(direction));
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
         break;
+    }
     case EnemyType::PURPLE_GHOST:
     case EnemyType::PIG:
-        registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
+        registry->emplace<FlyingEnemyComponent>(enemy, direction == Direction::Left ? FlyingEnemyComponent::DOWN_LEFT : FlyingEnemyComponent::DOWN_RIGHT);
         break;
     }
 
@@ -222,8 +223,10 @@ void EntityFactory::CreateLevel(const LevelLayout &level, int levelNumber) {
     for (int x = 0; x < LevelTilemap::WIDTH; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
             if (!level.GetEnemies().IsEmpty(x, y)) {
-                EnemyType type = GetEnemyTypeFromTile(level.GetEnemies().Get(x, y));
-                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type);
+                LevelTileType tile = level.GetEnemies().Get(x, y);
+                EnemyType type = GetEnemyTypeFromTile(tile);
+                Direction direction = GetEnemyDirectionFromTile(tile);
+                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type, direction);
             }
         }
     }
