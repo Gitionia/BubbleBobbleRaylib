@@ -3,21 +3,29 @@
 EnemyType GetEnemyTypeFromTile(LevelTileType tile) {
     switch (tile) {
 
-    case LevelTileType::ENEMY_CAN:
+    case LevelTileType::ENEMY_CAN_LEFT:
+    case LevelTileType::ENEMY_CAN_RIGHT:
         return EnemyType::CAN;
-    case LevelTileType::ENEMY_GHOST:
+    case LevelTileType::ENEMY_GHOST_LEFT:
+    case LevelTileType::ENEMY_GHOST_RIGHT:
         return EnemyType::GHOST;
-    case LevelTileType::ENEMY_PURPLE:
+    case LevelTileType::ENEMY_PURPLE_LEFT:
+    case LevelTileType::ENEMY_PURPLE_RIGHT:
         return EnemyType::PURPLE_GHOST;
-    case LevelTileType::ENEMY_PIG:
+    case LevelTileType::ENEMY_PIG_LEFT:
+    case LevelTileType::ENEMY_PIG_RIGHT:
         return EnemyType::PIG;
-    case LevelTileType::ENEMY_MUSHROOM:
+    case LevelTileType::ENEMY_MUSHROOM_LEFT:
+    case LevelTileType::ENEMY_MUSHROOM_RIGHT:
         return EnemyType::MUSHROOM;
-    case LevelTileType::ENEMY_SNOWMAN:
+    case LevelTileType::ENEMY_SNOWMAN_LEFT:
+    case LevelTileType::ENEMY_SNOWMAN_RIGHT:
         return EnemyType::SNOWMAN;
-    case LevelTileType::ENEMY_POTATO:
+    case LevelTileType::ENEMY_POTATO_LEFT:
+    case LevelTileType::ENEMY_POTATO_RIGHT:
         return EnemyType::POTATO;
-    case LevelTileType::ENEMY_WITCH:
+    case LevelTileType::ENEMY_WITCH_LEFT:
+    case LevelTileType::ENEMY_WITCH_RIGHT:
         return EnemyType::WITCH;
     default:
         PRINT_ERROR("Tried to convert non-enemy tile into enemy tile. Maybe a level tilemap is incorrect?");

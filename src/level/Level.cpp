@@ -75,11 +75,13 @@ Color parseColors(const std::string &s) {
     return {r, g, b, a};
 }
 
-static LevelTileType flipAirflowX(LevelTileType tile) {
+static LevelTileType flipTileAlongX(LevelTileType tile) {
     switch (tile) {
 
     case LevelTileType::NONE:
         return LevelTileType::NONE;
+    case LevelTileType::TILE:
+        return LevelTileType::TILE;
 
     case LevelTileType::AIRFLOW_UP:
     case LevelTileType::AIRFLOW_DOWN:
@@ -90,9 +92,45 @@ static LevelTileType flipAirflowX(LevelTileType tile) {
     case LevelTileType::AIRFLOW_LEFT:
         return LevelTileType::AIRFLOW_RIGHT;
 
-    default:
-        PRINT_WARN("Tried to flip a non airflow tile '{}' which is not allowed! {}:{}", (int)tile, __FILE__, __LINE__);
-        return LevelTileType::AIRFLOW_UP;
+    case LevelTileType::ENEMY_CAN_LEFT:
+        return LevelTileType::ENEMY_CAN_RIGHT;
+    case LevelTileType::ENEMY_CAN_RIGHT:
+        return LevelTileType::ENEMY_CAN_LEFT;
+
+    case LevelTileType::ENEMY_GHOST_LEFT:
+        return LevelTileType::ENEMY_GHOST_RIGHT;
+    case LevelTileType::ENEMY_GHOST_RIGHT:
+        return LevelTileType::ENEMY_GHOST_LEFT;
+
+    case LevelTileType::ENEMY_PURPLE_LEFT:
+        return LevelTileType::ENEMY_PURPLE_RIGHT;
+    case LevelTileType::ENEMY_PURPLE_RIGHT:
+        return LevelTileType::ENEMY_PURPLE_LEFT;
+
+    case LevelTileType::ENEMY_PIG_LEFT:
+        return LevelTileType::ENEMY_PIG_RIGHT;
+    case LevelTileType::ENEMY_PIG_RIGHT:
+        return LevelTileType::ENEMY_PIG_LEFT;
+
+    case LevelTileType::ENEMY_MUSHROOM_LEFT:
+        return LevelTileType::ENEMY_MUSHROOM_RIGHT;
+    case LevelTileType::ENEMY_MUSHROOM_RIGHT:
+        return LevelTileType::ENEMY_MUSHROOM_LEFT;
+
+    case LevelTileType::ENEMY_SNOWMAN_LEFT:
+        return LevelTileType::ENEMY_SNOWMAN_RIGHT;
+    case LevelTileType::ENEMY_SNOWMAN_RIGHT:
+        return LevelTileType::ENEMY_SNOWMAN_LEFT;
+
+    case LevelTileType::ENEMY_POTATO_LEFT:
+        return LevelTileType::ENEMY_POTATO_RIGHT;
+    case LevelTileType::ENEMY_POTATO_RIGHT:
+        return LevelTileType::ENEMY_POTATO_LEFT;
+
+    case LevelTileType::ENEMY_WITCH_LEFT:
+        return LevelTileType::ENEMY_WITCH_RIGHT;
+    case LevelTileType::ENEMY_WITCH_RIGHT:
+        return LevelTileType::ENEMY_WITCH_LEFT;
     }
 }
 
@@ -128,7 +166,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             gids[TS_BLOCK] = gid;
         } else if (source.find("AirflowTileset.tsx") != std::string::npos) {
             gids[TS_AIRFLOW] = gid;
-        } else if (source.find("EnemyTiles.tsx") != std::string::npos) {
+        } else if (source.find("EnemyTilesDirected.tsx") != std::string::npos) {
             gids[TS_ENEMY] = gid;
         } else {
             PRINT_WARN("{} contains invalid tileset {}", filepath.c_str(), source);
@@ -222,7 +260,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             if (shouldFlipAlongXAxis) {
                 for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
                     for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
-                        LevelTileType val = flipAirflowX(level.airflow.Get(x, y));
+                        LevelTileType val = flipTileAlongX(level.airflow.Get(x, y));
                         int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x, y);
                         level.airflow.set(index, val);
                     }
@@ -256,15 +294,15 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 if (value == 0)
                     type = 0; // None
                 else
-                    type = value - gids[TS_ENEMY] + (int)LevelTileType::ENEMY_CAN;
+                    type = value - gids[TS_ENEMY] + (int)LevelTileType::ENEMY_CAN_LEFT;
 
-                level.enemies.set(i, levelData.at(i));
+                level.enemies.set(i, (LevelTileType)type);
             }
 
             if (shouldFlipAlongXAxis) {
                 for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
                     for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
-                        LevelTileType val = level.enemies.Get(x, y);
+                        LevelTileType val = flipTileAlongX(level.enemies.Get(x, y));
                         int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x - 1, y); // We do an extra -1, because enemies occupy two spaces, but the tile only one
                         level.enemies.set(index, val);
                     }
