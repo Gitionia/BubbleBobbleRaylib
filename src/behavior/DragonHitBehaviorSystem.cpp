@@ -8,13 +8,6 @@
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 
-void makeDragonRespawn(entt::registry &registry, entt::entity e) {
-    registry.remove<DragonHitComponent>(e);
-    registry.get<WalkingActorComponent>(e).reset(DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
-    registry.get<DragonComponent>(e).reset();
-    registry.get<Position>(e).set(DragonComponent::STARTING_POSITION);
-}
-
 void DragonHitBehaviorSystem::Init() {
 }
 
@@ -45,7 +38,8 @@ void DragonHitBehaviorSystem::Update() {
                     dragon.repetitionCount = 1;
 
                 } else {
-                    Defer(entity, &makeDragonRespawn, 0);
+                    Destroy(entity);
+                    EntityFactory::CreateDragon();
                 }
             }
         }

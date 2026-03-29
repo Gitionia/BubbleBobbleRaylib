@@ -81,12 +81,6 @@ struct WalkingActorComponent {
         return jumpFrameCount > 0;
     }
 
-    void reset(int fallSpeed, int jumpSpeed) {
-        jumpFrameCount = 0;
-        ignoreCollisions = false;
-        this->fallSpeed = fallSpeed;
-        this->jumpSpeed = jumpSpeed;
-    }
 };
 
 struct DragonComponent {
@@ -107,14 +101,7 @@ struct DragonComponent {
         FALLING
     };
 
-    AnimationState state;
-
-    void reset() {
-        animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
-        bubbleShootDelay = 0;
-        jumpSpeed.reset();
-        state = IDLE;
-    }
+    AnimationState state = IDLE;
 
     static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8;
     static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
