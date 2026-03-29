@@ -17,7 +17,7 @@
             "enabled": true,
             "name": "Build Bubble Bobble",
             "saveBeforeExecute": true,
-            "shortcut": "ោ\ude51",
+            "shortcut": "Ü",
             "showOutput": true,
             "workingDirectory": "/home/ben/dev/projects/personal/BubbleBobbleRaylib/"
         }

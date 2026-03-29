@@ -50,6 +50,10 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     if (IsKeyPressed(KEY_Z)) {
         // EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection(), GetItemOfLevel(Random::Get().Range(0, 5)));
     }
+    if (IsKeyPressed(KEY_N)) {
+        level++;
+        StartLevel();   
+    }
     if (IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
     } else if (IsKeyPressed(KEY_O)) {

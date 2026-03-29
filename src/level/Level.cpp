@@ -147,18 +147,20 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             std::string colorBottem;
             bool shouldFlipAlongXAxis = false;
 
-            for (auto &property : properties) {
+            if (layer.contains("properties")) {
+                for (auto &property : properties) {
 
-                if (property.find("name").value() == "ShadeBottom") {
-                    colorBottem = property.find("value").value();
-                } else if (property.find("name").value() == "ShadeRight") {
-                    colorRight = property.find("value").value();
+                    if (property.find("name").value() == "ShadeBottom") {
+                        colorBottem = property.find("value").value();
+                    } else if (property.find("name").value() == "ShadeRight") {
+                        colorRight = property.find("value").value();
 
-                } else if (property.find("name").value() == "FlipAlongXAxis") {
-                    shouldFlipAlongXAxis = property.find("value").value();
+                    } else if (property.find("name").value() == "FlipAlongXAxis") {
+                        shouldFlipAlongXAxis = property.find("value").value();
 
-                } else {
-                    PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
+                    } else {
+                        PRINT_ERROR("Unexpected property {} at {} in Tiles layer", std::string(property.find("name").value()), filepath.c_str());
+                    }
                 }
             }
 
@@ -187,17 +189,18 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 }
             }
 
-
         } else if (layer.find("name").value() == "Airflow") {
             auto levelData = layer.find("data").value();
 
             bool shouldFlipAlongXAxis = false;
-            auto properties = layer.find("properties").value();
-            for (auto &property : properties) {
-                if (property.find("name").value() == "FlipAlongXAxis") {
-                    shouldFlipAlongXAxis = property.find("value").value();
-                } else {
-                    PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
+            if (layer.contains("properties")) {
+                auto properties = layer.find("properties").value();
+                for (auto &property : properties) {
+                    if (property.find("name").value() == "FlipAlongXAxis") {
+                        shouldFlipAlongXAxis = property.find("value").value();
+                    } else {
+                        PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
+                    }
                 }
             }
 
@@ -229,6 +232,20 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
         } else if (layer.find("name").value() == "Enemies") {
             auto levelData = layer.find("data").value();
 
+            bool shouldFlipAlongXAxis = false;
+            if (layer.contains("properties")) {
+                auto properties = layer.find("properties").value();
+                for (auto &property : properties) {
+
+                    if (property.find("name").value() == "FlipAlongXAxis") {
+                        shouldFlipAlongXAxis = property.find("value").value();
+
+                    } else {
+                        PRINT_ERROR("Unexpected property {} at {} in Enemy layer", std::string(property.find("name").value()), filepath.c_str());
+                    }
+                }
+            }
+
             if (levelData.size() != 26 * 28)
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Enemies'",
                             filepath.c_str(), levelData.size(), 26 * 28);
@@ -243,6 +260,17 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
 
                 level.enemies.set(i, levelData.at(i));
             }
+
+            if (shouldFlipAlongXAxis) {
+                for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
+                    for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
+                        LevelTileType val = level.enemies.Get(x, y);
+                        int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x, y);
+                        level.enemies.set(index, val);
+                    }
+                }
+            }
+
         } else {
             PRINT_ERROR("Level at {} contains invalid layer! Expected to be 'Tiles', 'Airflow' or 'Enemies'", filepath.c_str());
         }
