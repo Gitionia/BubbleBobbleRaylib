@@ -82,8 +82,10 @@ void TrashCanBehaviorSystem::Update() {
             break;
         }
 
+        const bool isMushroom = info.type == EnemyType::MUSHROOM;
+
         int velx = 0;
-        int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
+        int moveSpeed = (isMushroom ? 1 : 2) * UNITS_PER_BLOCK / 16;
 
         const int FALL_SPEED = 2 * UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
@@ -132,7 +134,7 @@ void TrashCanBehaviorSystem::Update() {
         if (isGrounded) {
 
             int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
-            if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.03f)) {
+            if (isMushroom || shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.03f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
@@ -154,7 +156,11 @@ void TrashCanBehaviorSystem::Update() {
 
             // gap jumping enemies should fall down at the wall and not bounce off
             if (enemy.isGapJumping) {
-                enemy.walkingDir = 0;
+                if (isMushroom) {
+                    enemy.walkingDir *= -1;
+                } else {
+                    enemy.walkingDir = 0;
+                }
 
             } else {
                 enemy.walkingDir *= -1;
