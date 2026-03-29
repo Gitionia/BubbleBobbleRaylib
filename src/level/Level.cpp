@@ -80,7 +80,7 @@ static LevelTileType flipAirflowX(LevelTileType tile) {
 
     case LevelTileType::NONE:
         return LevelTileType::NONE;
-        
+
     case LevelTileType::AIRFLOW_UP:
     case LevelTileType::AIRFLOW_DOWN:
         return tile;
@@ -142,16 +142,23 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
         if (layer.find("name").value() == "Tiles") {
             auto levelData = layer.find("data").value();
 
-            auto colors = layer.find("properties").value();
+            auto properties = layer.find("properties").value();
             std::string colorRight;
             std::string colorBottem;
+            bool shouldFlipAlongXAxis = false;
 
-            for (auto &color : colors) {
-                if (std::string(color.find("name").value()) == "ShadeBottom") {
-                    colorBottem = color.find("value").value();
-                }
-                if (std::string(color.find("name").value()) == "ShadeRight") {
-                    colorRight = color.find("value").value();
+            for (auto &property : properties) {
+
+                if (property.find("name").value() == "ShadeBottom") {
+                    colorBottem = property.find("value").value();
+                } else if (property.find("name").value() == "ShadeRight") {
+                    colorRight = property.find("value").value();
+
+                } else if (property.find("name").value() == "FlipAlongXAxis") {
+                    shouldFlipAlongXAxis = property.find("value").value();
+
+                } else {
+                    PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
                 }
             }
 
@@ -169,6 +176,18 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             for (int i = 0; i < levelData.size(); i++) {
                 level.tiles.set(i, levelData.at(i) > 0 ? LevelTileType::TILE : LevelTileType::NONE);
             }
+
+            if (shouldFlipAlongXAxis) {
+                for (int x = 0; x < LevelTilemap::WIDTH / 2; x++) {
+                    for (int y = 0; y < LevelTilemap::HEIGHT; y++) {
+                        bool isEmpty = level.tiles.Get(x, y) == LevelTileType::NONE;
+                        int index = LevelTilemap::idx(LevelTilemap::WIDTH - 1 - x, y);
+                        level.tiles.set(index, isEmpty ? LevelTileType::NONE : LevelTileType::TILE);
+                    }
+                }
+            }
+
+
         } else if (layer.find("name").value() == "Airflow") {
             auto levelData = layer.find("data").value();
 

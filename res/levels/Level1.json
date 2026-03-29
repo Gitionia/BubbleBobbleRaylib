@@ -20,12 +20,12 @@
                 {
                  "name":"ShadeBottom",
                  "type":"color",
-                 "value":"#ff810c00"
+                 "value":"#ff730000"
                 }, 
                 {
                  "name":"ShadeRight",
                  "type":"color",
-                 "value":"#ff951143"
+                 "value":"#ff8c0042"
                 }],
          "type":"tilelayer",
          "visible":true,
