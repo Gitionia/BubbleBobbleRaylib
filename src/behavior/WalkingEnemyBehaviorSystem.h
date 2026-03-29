@@ -2,8 +2,8 @@
 
 #include "../ecs/SystemBase.h"
 
-class TrashCanBehaviorSystem : public SystemBase {
-    SYSTEM_DEF(TrashCanBehaviorSystem, SystemTypeFlags::GAMEPLAY)
+class WalkingEnemyBehaviorSystem : public SystemBase {
+    SYSTEM_DEF(WalkingEnemyBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
   public:
     void Init() override;

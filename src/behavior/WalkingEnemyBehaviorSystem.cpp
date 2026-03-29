@@ -1,4 +1,4 @@
-#include "TrashCanBehaviorSystem.h"
+#include "WalkingEnemyBehaviorSystem.h"
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
@@ -14,10 +14,10 @@ static void makeEnemyBubbled(entt::registry &registry, entt::entity e) {
     c.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::BUBBLED)));
 }
 
-void TrashCanBehaviorSystem::Init() {
+void WalkingEnemyBehaviorSystem::Init() {
 }
 
-void TrashCanBehaviorSystem::Update() {
+void WalkingEnemyBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 

@@ -1,5 +1,4 @@
 #include "FlyingEnemyBehaviorSystem.h"
-#include "TrashCanBehaviorSystem.h"
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
