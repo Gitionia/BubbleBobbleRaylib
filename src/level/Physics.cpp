@@ -2,6 +2,7 @@
 
 #include "../app/Config.h"
 #include "Level.h"
+#include "entt/entity/fwd.hpp"
 
 static const LevelTilemap *tiles = nullptr;
 static const LevelTilemap *airflow = nullptr;
@@ -171,6 +172,25 @@ Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos) {
 
     dir.IntegerNormalize();
     return dir;
+}
+
+Vector2Int getBubbleRepelVelocity(const entt::registry &registry, const Collider &col, const Vector2Int &pos) {
+    const auto view = registry.view<Position, BubbleFloatComponent>();
+
+    Vector2Int velocity = Vector2Int::Zero();
+    for (entt::entity entity : view) {
+        const auto [otherPos, floating] = view.get(entity);
+
+        if (overlaps({pos.X, pos.Y}, col, otherPos, col)) {
+            int dx = pos.X - otherPos.x;
+            int dy = pos.Y - otherPos.y;
+            velocity = velocity.Add(dx, dy);
+        }
+    }
+
+    velocity.IntegerNormalize();
+
+    return velocity;
 }
 
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir) {

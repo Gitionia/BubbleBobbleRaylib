@@ -38,6 +38,9 @@ void BubbleFloatBehaviorSystem::Update() {
 
         Vector2Int centerPos = col.getCenter(pos.x, pos.y);
         Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
+        Vector2Int bubbleRepelDirection = getBubbleRepelVelocity(registry, Colliders::bubbleRepelCollider, pos.toVector());
+        const int BUBBLE_REPEL_SPEED = 2;
+        Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);
 
         if (bubble.isWaitingForPop()) {
             bubble.popFrame--;
@@ -48,14 +51,14 @@ void BubbleFloatBehaviorSystem::Update() {
             }
 
         } else {
-            pos.x += airflowVelocity.X;
+            pos.x += velocity.X;
             if (collidesWithWall(registry, pos, col)) {
-                pos.x -= airflowVelocity.X;
+                pos.x -= velocity.X;
             }
 
-            pos.y += airflowVelocity.Y;
+            pos.y += velocity.Y;
             if (collidesWithWall(registry, pos, col)) {
-                pos.y -= airflowVelocity.Y;
+                pos.y -= velocity.Y;
             }
 
             if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 2)) {
@@ -78,5 +81,7 @@ void BubbleFloatBehaviorSystem::Update() {
                 Defer(entity, &makeBubblePopFromDragonSpikes, PopFromDragonSpikes);
             }
         }
+
+        Debug::DrawCollider(pos.x, pos.y, Colliders::bubbleRepelCollider);
     }
 }

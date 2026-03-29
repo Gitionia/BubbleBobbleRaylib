@@ -44,9 +44,10 @@ class Colliders {
     static inline const Collider walkingActorCollider = {BP_SIZE(2, 0), BP_SIZE(1, 0), 0, BP_SIZE(1, 0)};
     static inline const Collider fullActorCollider = {BP_SIZE(2, 0), BP_SIZE(2, 0), 0, 0};
     static inline const Collider bubbleCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), 0, 0};
+    static inline const Collider bubbleRepelCollider{BP_SIZE(0, 14), BP_SIZE(1, 0), BP_SIZE(0, 7), BP_SIZE(0, 8)};
     // Bubble has width 28 Pixels and height 2 Blocks = 32 Pixel.
     // This is centered collider with half width and height
-    static inline const Collider bubblePopCollider{BP_SIZE(0, 24), BP_SIZE(1, 12), BP_SIZE(0, 4 / 2), BP_SIZE(0, 4 / 2)};
+    static inline const Collider bubblePopCollider{BP_SIZE(2, 4), BP_SIZE(2, 8), BP_SIZE(0, -4), BP_SIZE(0, -4)};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
 
     // Needs to be resized, because right now it works like a 2x2-block collider

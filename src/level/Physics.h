@@ -2,6 +2,7 @@
 
 #include "../ecs/Components.h"
 #include "Level.h"
+#include "entt/entity/fwd.hpp"
 
 void setPhysicsColliderData(const LevelLayout &level);
 
@@ -22,6 +23,8 @@ std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry,
 bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider);
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos);
+Vector2Int getBubbleRepelVelocity(const entt::registry& registry, const Collider &col, const Vector2Int &pos);
+
 
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir);
 template <typename Collider1, typename Collider2>
