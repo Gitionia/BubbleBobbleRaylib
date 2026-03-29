@@ -86,6 +86,12 @@ struct WalkingActorComponent {
 struct DragonComponent {
     Animator animator{&GetAnimation("Dragon-Idle")};
 
+    int invincibilityFramesLeft = 0;
+    static constexpr int INVINCIBILITY_FRAME_COUNT = 2.5f * 60;
+    bool isInvincible() {
+        return invincibilityFramesLeft > 0;
+    }
+
     int bubbleShootDelay = 0;
 
     static inline AnimatedValueDefinition<int> jumpSpeedsDefintion{{BP_SIZE(0, 6), 5}, {BP_SIZE(0, 4), 10}, {BP_SIZE(0, 2), 10}};

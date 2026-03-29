@@ -1,5 +1,6 @@
 #pragma once
 
+#define COLOR_TRANSPARENT (Color {0,0,0,0})
 
 Rectangle ScaleRect(const Rectangle &rectangle, float scale);
 Rectangle OffsetRect(const Rectangle &rectangle, float xOffset, float yOffset);

@@ -1,6 +1,5 @@
 #include "DragonBehaviorSystem.h"
 
-
 #include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
@@ -8,6 +7,7 @@
 #include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
+#include "raylib.h"
 
 void makeDragonHit(entt::registry &registry, entt::entity e) {
     registry.emplace<DragonHitComponent>(e);
@@ -24,7 +24,20 @@ void DragonBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, actor, dragon, renderData] = view.get(entity);
 
-        if (collidesWithEnemy(registry, pos, Colliders::fullActorCollider)) {
+        if (dragon.invincibilityFramesLeft > 0) {
+            dragon.invincibilityFramesLeft--;
+
+            if ((dragon.invincibilityFramesLeft / 2) % 2 == 0) {
+                renderData.SetColor(COLOR_TRANSPARENT);
+            } else {
+                renderData.SetColor({255,230,200,255});
+            }
+        }
+        if (!dragon.isInvincible()) {
+            renderData.SetColor(WHITE);
+        }
+
+        if (!dragon.isInvincible() && collidesWithEnemy(registry, pos, Colliders::fullActorCollider)) {
             Defer(entity, &makeDragonHit, 0);
             continue;
         }

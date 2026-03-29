@@ -39,7 +39,7 @@ void DragonHitBehaviorSystem::Update() {
 
                 } else {
                     Destroy(entity);
-                    EntityFactory::CreateDragon();
+                    EntityFactory::CreateDragon(true);
                 }
             }
         }

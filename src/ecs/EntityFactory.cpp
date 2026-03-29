@@ -39,14 +39,17 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     return tile;
 }
 
-entt::entity EntityFactory::CreateDragon() {
+entt::entity EntityFactory::CreateDragon(bool withInvincibility) {
     entt::registry *registry = get().registry;
     auto dragon = registry->create();
 
     registry->emplace<Position>(dragon, DragonComponent::STARTING_POSITION);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
     registry->emplace<WalkingActorComponent>(dragon, DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
-    registry->emplace<DragonComponent>(dragon);
+    auto &dragonComp = registry->emplace<DragonComponent>(dragon);
+    if (withInvincibility) {
+        dragonComp.invincibilityFramesLeft = DragonComponent::INVINCIBILITY_FRAME_COUNT;
+    }
     registry->emplace<DragonTag>(dragon);
 
     registry->emplace<GameplayEntityTag>(dragon);
