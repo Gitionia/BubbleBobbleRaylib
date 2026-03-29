@@ -66,6 +66,16 @@ void Animator::SetNewAnimation(const Animation *animation) {
     this->animation = animation;
 }
 
+int Animator::GetAnimationSpriteCount() const {
+    return animation->Sprites.size();
+}
+
+void Animator::GoToIndex(int i) {
+    currentSprite = i;
+    frame = i * animation->FrameCountPerSprite;
+}
+
+
 SpriteHandle Animator::GetSpriteHandle() const {
     return animation->Sprites.at(currentSprite);
 }

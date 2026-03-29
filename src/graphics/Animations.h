@@ -23,6 +23,10 @@ class Animator {
     bool IsFinished() const;
     void Reset();
     void SetNewAnimation(const Animation *animation);
+
+    int GetAnimationSpriteCount() const;
+    void GoToIndex(int i);
+
     SpriteHandle GetSpriteHandle() const;
     const std::string &GetAnimationName() const;
 

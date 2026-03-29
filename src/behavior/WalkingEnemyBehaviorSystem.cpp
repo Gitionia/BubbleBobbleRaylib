@@ -63,8 +63,11 @@ void WalkingEnemyBehaviorSystem::Update() {
             renderData.spriteHandle = canAnimator.GetSpriteHandle();
             break;
         case EnemyType::MUSHROOM:
-            if (!enemy.animator.IsFinished()) { // Is finished check not needed, but makes behavior more explicit
+            // Create flapping animation by repeating the last to frames
+            if (!enemy.animator.IsFinished()) {
                 enemy.animator.Update();
+            } else {
+                enemy.animator.GoToIndex(enemy.animator.GetAnimationSpriteCount() - 2);
             }
             renderData.spriteHandle = enemy.animator.GetSpriteHandle();
             break;
