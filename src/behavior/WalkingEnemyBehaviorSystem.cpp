@@ -120,11 +120,16 @@ void WalkingEnemyBehaviorSystem::Update() {
             enemy.isGapJumping = false;
             // just landed and didn't have a walking direction
             if (enemy.walkingDir == 0) {
+
+                if (dragonPos.X == pos.x) {
+                    enemy.walkingDir = Random::Get().Chance(0.5f);
                 
-                // Most of the time choose direction to player
-                enemy.walkingDir = sign(dragonPos.X - pos.x);
-                if (Random::Get().Chance(0.25f)) {
-                    enemy.walkingDir *= -1;
+                } else {
+                    // Most of the time choose direction to player
+                    enemy.walkingDir = sign(dragonPos.X - pos.x);
+                    if (Random::Get().Chance(0.25f)) {
+                        enemy.walkingDir *= -1;
+                    }
                 }
             }
 
