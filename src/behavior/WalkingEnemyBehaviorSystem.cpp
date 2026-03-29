@@ -29,12 +29,6 @@ void WalkingEnemyBehaviorSystem::Update() {
         canAnimator.Reset();
     }
 
-    // Could move this animator into WalkingEnemyComponent to sync animation and mushroom jump
-    mushAnimator.Update();
-    if (mushAnimator.IsFinished()) {
-        mushAnimator.Reset();
-    }
-
     bool foundDragon = false;
     Vector2Int dragonPos = {-1000, 0};
     auto dragonView = registry.view<Position, DragonTag>();
@@ -69,7 +63,10 @@ void WalkingEnemyBehaviorSystem::Update() {
             renderData.spriteHandle = canAnimator.GetSpriteHandle();
             break;
         case EnemyType::MUSHROOM:
-            renderData.spriteHandle = mushAnimator.GetSpriteHandle();
+            if (!enemy.animator.IsFinished()) { // Is finished check not needed, but makes behavior more explicit
+                enemy.animator.Update();
+            }
+            renderData.spriteHandle = enemy.animator.GetSpriteHandle();
             break;
         case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
@@ -141,7 +138,13 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (isGrounded) {
 
             int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
-            if (isMushroom || shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.3f)) {
+            if (isMushroom && Random::Get().Chance(chanceMultiplier * 0.3f)) {
+                enemy.animator.Reset();
+                enemy.isGapJumping = true;
+                actor.jumpSpeed = GAP_JUMP_SPEED;
+                actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
+
+            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.3f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;

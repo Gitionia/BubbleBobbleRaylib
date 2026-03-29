@@ -54,7 +54,7 @@ class Colliders {
                                                                 BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
 
   private:
-    constexpr static inline int l = 17;             // length of flying collider
+    constexpr static inline int l = 17;            // length of flying collider
     constexpr static inline int w = 2;             // width of flying collider
     constexpr static inline int o = BP_SIZE(0, 2); // width of flying collider
 
@@ -240,6 +240,8 @@ struct FlyingEnemyComponent {
 
 struct WalkingEnemyComponent {
     int walkingDir;
+    // We only use a custom animator for the mushroom enemy to sync its animation with the jumps
+    Animator animator {&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL))};
     bool isGapJumping = false;
 };
 
