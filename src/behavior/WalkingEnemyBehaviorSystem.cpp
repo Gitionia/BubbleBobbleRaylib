@@ -153,7 +153,7 @@ void WalkingEnemyBehaviorSystem::Update() {
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.3f)) {
+            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.02f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
