@@ -122,7 +122,7 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (enemy.walkingDir == 0) {
 
                 if (dragonPos.X == pos.x) {
-                    enemy.walkingDir = Random::Get().Chance(0.5f);
+                    enemy.walkingDir = Random::Get().GetDirection();
                 
                 } else {
                     // Most of the time choose direction to player
@@ -158,7 +158,7 @@ void WalkingEnemyBehaviorSystem::Update() {
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.02f)) {
+            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.01f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
