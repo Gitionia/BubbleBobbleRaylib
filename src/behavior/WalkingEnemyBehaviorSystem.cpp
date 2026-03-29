@@ -85,11 +85,11 @@ void WalkingEnemyBehaviorSystem::Update() {
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
 
         int velx = 0;
-        int moveSpeed = (isMushroom ? 1 : 2) * UNITS_PER_BLOCK / 16;
+        int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
 
         const int FALL_SPEED = 2 * UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
-        const int GAP_JUMP_SPEED = 2 * UNITS_PER_BLOCK / 16;
+        const int GAP_JUMP_SPEED = 1 * UNITS_PER_BLOCK / 16;
 
         const int NORMAL_JUMP_FRAME_COUNT = BP_SIZE(5, 8) / NORMAL_JUMP_SPEED;
         const int GAP_JUMP_FRAME_COUNT = BP_SIZE(2, 8) / GAP_JUMP_SPEED;
@@ -106,6 +106,13 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool isGrounded = false;
         if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
+        }
+
+        if (!actor.isJumping() && enemy.isGapJumping) {
+            // Transitioned from gap jumping to falling.
+            // Then we should have no
+            enemy.isGapJumping = false;
+            enemy.walkingDir = 0;
         }
 
         if (isGrounded) {
@@ -134,7 +141,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (isGrounded) {
 
             int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
-            if (isMushroom || shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.03f)) {
+            if (isMushroom || shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.3f)) {
                 enemy.isGapJumping = true;
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
@@ -144,6 +151,10 @@ void WalkingEnemyBehaviorSystem::Update() {
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
             }
+        }
+
+        if (enemy.isGapJumping && actor.isJumping() && actor.jumpFrameCount <= GAP_JUMP_FRAME_COUNT / 2) {
+            actor.jumpSpeed = 0;
         }
 
         pos.x += velx;
