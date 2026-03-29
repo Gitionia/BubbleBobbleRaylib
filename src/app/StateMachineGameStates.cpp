@@ -30,8 +30,20 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     runner.UpdateSystems();
 
     if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
+        if (!waitingForCounterToStartNewLevel) {
+            counterTillStartNewLevel = FRAME_COUNT_TILL_STARTING_NEW_LEVEL;
+            waitingForCounterToStartNewLevel = true;
+        }
+    }
+
+    if (counterTillStartNewLevel > 0) {
+        counterTillStartNewLevel--;
+        
+    } else if (waitingForCounterToStartNewLevel && counterTillStartNewLevel == 0) {
         level++;
         StartLevel();
+
+        waitingForCounterToStartNewLevel = false;
     }
 
 #ifdef DEBUG_TOOLS

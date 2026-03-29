@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Config.h"
 #include "EventSystem.h"
 #include "StateMachine.h"
 
@@ -25,6 +26,10 @@ class GameplayState : public StateMachineState {
   private:
     Music *music;
     int level = 1;
+
+    bool waitingForCounterToStartNewLevel = false;
+    int counterTillStartNewLevel = 0;
+    static constexpr int FRAME_COUNT_TILL_STARTING_NEW_LEVEL = 5 * TARGET_FPS;
 };
 
 class TitleScreenState : public StateMachineState {
