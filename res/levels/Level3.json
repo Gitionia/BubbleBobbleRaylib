@@ -90,10 +90,6 @@
          "source":"..\/level_editor\/AirflowTileset.tsx"
         }, 
         {
-         "firstgid":6,
-         "source":"..\/level_editor\/EnemyTiles.tsx"
-        }, 
-        {
          "firstgid":14,
          "source":"..\/level_editor\/EnemyTilesDirected.tsx"
         }],

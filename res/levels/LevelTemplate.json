@@ -88,10 +88,6 @@
         {
          "firstgid":2,
          "source":"..\/level_editor\/AirflowTileset.tsx"
-        }, 
-        {
-         "firstgid":6,
-         "source":"..\/level_editor\/EnemyTiles.tsx"
         }],
  "tilewidth":16,
  "type":"map",
