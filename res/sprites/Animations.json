@@ -13,6 +13,10 @@
     { "name" : "Can-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Can-Item", "FramesPerSprite" : 5 },
     
+    { "name" : "Mushroom-Jump", "FramesPerSprite" : 7 },
+    { "name" : "Mushroom-Bubbled", "FramesPerSprite" : 18 },
+    { "name" : "Mushroom-Item", "FramesPerSprite" : 5 },
+    
     { "name" : "Purple-Fly", "FramesPerSprite" : 7 },
     { "name" : "Purple-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Purple-Item", "FramesPerSprite" : 5 },

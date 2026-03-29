@@ -37,8 +37,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Purple-Fly";
         case EnemyType::PIG:
             return "Pig-Fly";
-        case EnemyType::GHOST:
         case EnemyType::MUSHROOM:
+            return "Mushroom-Jump";
+        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:
@@ -54,8 +55,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Purple-Bubbled";
         case EnemyType::PIG:
             return "Pig-Bubbled";
-        case EnemyType::GHOST:
         case EnemyType::MUSHROOM:
+            return "Mushroom-Bubbled";
+        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:
@@ -71,8 +73,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Purple-Item";
         case EnemyType::PIG:
             return "Pig-Item";
-        case EnemyType::GHOST:
         case EnemyType::MUSHROOM:
+            return "Mushroom-Item";
+        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:

@@ -75,17 +75,23 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type) {
     registry->emplace<Position>(enemy, x, y);
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
     registry->emplace<RenderData>(enemy, RenderData(GetSpriteHandle(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL) + std::string("-1")), {2, 2}));
-    if (type == EnemyType::CAN) {
+    switch (type) {
+
+    case EnemyType::CAN:
+    case EnemyType::GHOST:
+    case EnemyType::MUSHROOM:
+    case EnemyType::POTATO:
+    case EnemyType::SNOWMAN:
+    case EnemyType::WITCH:
         registry->emplace<WalkingEnemyComponent>(enemy, 0);
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
-    } else if (type == EnemyType::PURPLE_GHOST) {
+        break;
+    case EnemyType::PURPLE_GHOST:
+    case EnemyType::PIG:
         registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
-    } else if (type == EnemyType::PIG) {
-        registry->emplace<FlyingEnemyComponent>(enemy, FlyingEnemyComponent::DOWN_RIGHT);
-    } else {
-        PRINT_ERROR("Unimplemented enemy type {} in Entityfactory", (int)type);
+        break;
     }
-    
+
     registry->emplace<EnemyInfoComponent>(enemy, type);
     registry->emplace<EnemyTag>(enemy);
 

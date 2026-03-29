@@ -21,20 +21,27 @@ void TrashCanBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    static Animator animator(&GetAnimation("Can-Walk"));
+    static Animator canAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::CAN, EnemyAnimationType::NORMAL)));
+    static Animator mushAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL)));
 
-    animator.Update();
-    if (animator.IsFinished()) {
-        animator.Reset();
+    canAnimator.Update();
+    if (canAnimator.IsFinished()) {
+        canAnimator.Reset();
+    }
+
+    // Could move this animator into WalkingEnemyComponent to sync animation and mushroom jump
+    mushAnimator.Update();
+    if (mushAnimator.IsFinished()) {
+        mushAnimator.Reset();
     }
 
     bool foundDragon = false;
     Vector2Int dragonPos = {-1000, 0};
     auto dragonView = registry.view<Position, DragonTag>();
     for (entt::entity dragon : dragonView) {
-        const Position& pos = registry.get<Position>(dragon);
-        dragonPos = { pos.x, pos.y };
-        
+        const Position &pos = registry.get<Position>(dragon);
+        dragonPos = {pos.x, pos.y};
+
         foundDragon = true;
         // If there are multiple dragons, maybe take the highest position?
         break;
@@ -44,10 +51,9 @@ void TrashCanBehaviorSystem::Update() {
         PRINT_WARN("Walking enemy did not find dragon position");
     }
 
-
-    auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
-        auto [pos, actor, enemy, renderData] = view.get(entity);
+        auto [pos, actor, enemy, info, renderData] = view.get(entity);
 
         std::optional<entt::entity> bubble = getCollidingShootingBubble(registry, pos, Colliders::fullActorCollider);
         if (bubble.has_value()) {
@@ -57,7 +63,24 @@ void TrashCanBehaviorSystem::Update() {
             continue;
         }
 
-        renderData.spriteHandle = animator.GetSpriteHandle();
+        switch (info.type) {
+
+        case EnemyType::CAN:
+            renderData.spriteHandle = canAnimator.GetSpriteHandle();
+            break;
+        case EnemyType::MUSHROOM:
+            renderData.spriteHandle = mushAnimator.GetSpriteHandle();
+            break;
+        case EnemyType::GHOST:
+        case EnemyType::SNOWMAN:
+        case EnemyType::POTATO:
+        case EnemyType::WITCH:
+            PRINT_WARN("Animator for walking enemy {} is not implemented yet!", (int)info.type);
+            break;
+        default:
+            PRINT_WARN("Walking enemy has enemy type {}, which is not a walking enemy type!", (int)info.type);
+            break;
+        }
 
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
@@ -114,7 +137,7 @@ void TrashCanBehaviorSystem::Update() {
                 actor.jumpSpeed = GAP_JUMP_SPEED;
                 actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (Random::Get().Chance(chanceMultiplier * 0.004f)){
+            } else if (Random::Get().Chance(chanceMultiplier * 0.004f)) {
                 enemy.isGapJumping = false;
                 actor.jumpSpeed = NORMAL_JUMP_SPEED;
                 actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
