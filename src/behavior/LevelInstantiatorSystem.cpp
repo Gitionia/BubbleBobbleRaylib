@@ -23,7 +23,7 @@ void LevelInstantiatorSystem::clearExistingLevel() {
 
 void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
     level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", levelNumber));
-    EntityFactory::CreateLevel(level);
+    EntityFactory::CreateLevel(level, levelNumber);
     setPhysicsColliderData(level);
     auto dragon = EntityFactory::CreateDragon();
 }

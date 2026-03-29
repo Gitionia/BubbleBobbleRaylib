@@ -1,5 +1,5 @@
 { "frames": {
-   "LevelTiles.png": {
+   "LevelTiles.aseprite": {
     "frame": { "x": 0, "y": 0, "w": 504, "h": 564 },
     "rotated": false,
     "trimmed": false,
@@ -9,14 +9,15 @@
    }
  },
  "meta": {
-  "app": "https://www.aseprite.org/",
+  "app": "http://www.aseprite.org/",
   "version": "1.x-dev",
   "format": "I8",
   "size": { "w": 504, "h": 564 },
   "scale": "1",
   "slices": [
-   { "name": "Level2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 12, "y": 45, "w": 8, "h": 8 } }] },
-   { "name": "Level1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 12, "y": 26, "w": 8, "h": 8 } }] }
+   { "name": "Block-Level3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 12, "y": 64, "w": 8, "h": 8 } }] },
+   { "name": "Block-Level2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 12, "y": 45, "w": 8, "h": 8 } }] },
+   { "name": "Block-Level1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 12, "y": 26, "w": 8, "h": 8 } }] }
   ]
  }
 }

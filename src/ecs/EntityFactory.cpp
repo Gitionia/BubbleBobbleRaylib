@@ -2,12 +2,12 @@
 
 #include "Components.h"
 
-entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, bool addShadowRight, bool addShadowBottem) {
+entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, int level, bool addShadowRight, bool addShadowBottem) {
     entt::registry *registry = get().registry;
     auto tile = registry->create();
     {
         registry->emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
-        RenderData data = {GetSpriteHandle("Level1"), {1, 1}};
+        RenderData data = {GetSpriteHandle(std::format("Block-Level{}", level)), {1, 1}};
         data.scale = {2, 2};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
@@ -199,13 +199,13 @@ entt::entity EntityFactory::CreateSimpleSprite(const Vector2Int &pos, int dir, S
     return entity;
 }
 
-void EntityFactory::CreateLevel(const LevelLayout &level) {
+void EntityFactory::CreateLevel(const LevelLayout &level, int levelNumber) {
     for (int x = 2; x < LevelTilemap::WIDTH + 2; ++x) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
             bool addShadowRight = LevelTilemap::OutOfRange((x - 2) + 1, y) ? true : level.GetTiles().IsEmpty((x - 2) + 1, y);
             bool addShadowBottem = LevelTilemap::OutOfRange((x - 2), y + 1) ? true : level.GetTiles().IsEmpty((x - 2), y + 1);
             if (!level.GetTiles().IsEmpty(x - 2, y)) {
-                CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem(), addShadowRight, addShadowBottem);
+                CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem(), levelNumber, addShadowRight, addShadowBottem);
             }
         }
     }
@@ -215,7 +215,7 @@ void EntityFactory::CreateLevel(const LevelLayout &level) {
         for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
             bool addShadowRight = x == 1;
             bool addShadowBottem = false;
-            CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem(), addShadowRight, addShadowBottem);
+            CreateTile(x, y, level.GetShadeColorRight(), level.GetShadeColorBottem(), levelNumber, addShadowRight, addShadowBottem);
         }
     }
 

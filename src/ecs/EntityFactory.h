@@ -7,7 +7,7 @@
 
 class EntityFactory {
   public:
-    static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, bool addShadowRight = true, bool addShadowBottem = true);
+    static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, int level, bool addShadowRight = true, bool addShadowBottem = true);
     static entt::entity CreateDragon(bool withInvincibility = false);
     static entt::entity CreateEnemy(int x, int y, EnemyType type);
     static entt::entity CreateTumblingEnemy(int x, int y, int dir, EnemyType enemyType, ItemType itemType);
@@ -17,7 +17,7 @@ class EntityFactory {
     static entt::entity CreateModifiableUIText(const Vector2Int &position, const std::string& text, Color color, int fontSize = 32, int spacing = 0);
     static entt::entity CreateConstantUIText(const Vector2Int &position, const char* text, Color color, int fontSize = 32, int spacing = 0);
     static entt::entity CreateSimpleSprite(const Vector2Int &position, int dir, SpriteHandle sprite, Color color, Vector2 scale);
-    static void CreateLevel(const LevelLayout &level);
+    static void CreateLevel(const LevelLayout &level, int levelNumber);
 
   private:
     static EntityFactory &get();
