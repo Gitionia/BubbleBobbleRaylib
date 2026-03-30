@@ -57,13 +57,21 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     if (Input::IsKeyPressed(KEY_Q)) {
         level = 101;
         StartLevel();
+    
+    } else if (Input::IsKeyPressed(KEY_W)) {
+        level = 1;
+        StartLevel();
+    
+    } else if (Input::IsKeyPressed(KEY_E)) {
+        StartLevel();
     }
+
     if (Input::IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
-    
+
     } else if (Input::IsKeyPressed(KEY_I)) {
         SetTargetFPS(600);
-    
+
     } else if (Input::IsKeyPressed(KEY_O)) {
         SetTargetFPS(TARGET_FPS);
     }
