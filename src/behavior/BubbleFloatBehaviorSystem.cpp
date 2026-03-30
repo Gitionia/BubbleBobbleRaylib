@@ -32,11 +32,11 @@ void BubbleFloatBehaviorSystem::Update() {
         // calculate repel direction and update group leader
         Vector2Int bubbleRepelDirection = Vector2Int::Zero();
         {
-            if (!bubble.areGroupLeaderInitialized()) {
-                bubble.initGroupLeader((int)entity);
+            if (!bubble.leader.areGroupLeaderInitialized()) {
+                bubble.leader.initGroupLeader((int)entity);
             }
-            if (bubble.updateLeaderSwitchCounterAndSwitch()) {
-                bubble.setLeader((int)entity);
+            if (bubble.leader.updateLeaderSwitchCounterAndSwitch()) {
+                bubble.leader.setLeader((int)entity);
             }
 
             const auto innerBubbleView = registry.view<Position, BubbleFloatComponent>();
@@ -48,9 +48,9 @@ void BubbleFloatBehaviorSystem::Update() {
 
                 const auto [otherPos, otherBubble] = innerBubbleView.get(otherEntity);
 
-                if (otherBubble.areGroupLeaderInitialized() && overlaps(pos, Colliders::bubblePopCollider, otherPos, Colliders::bubblePopCollider)) {
+                if (otherBubble.leader.areGroupLeaderInitialized() && overlaps(pos, Colliders::bubblePopCollider, otherPos, Colliders::bubblePopCollider)) {
 
-                    bubble.groupLeader[bubble.currentGroupLeaderIndex] = std::min(bubble.getLeader(), otherBubble.getLeader());
+                    bubble.leader.setLeader(std::min(bubble.leader.getLeader(), otherBubble.leader.getLeader()));
 
                     if (overlaps(pos, Colliders::bubbleRepelCollider, otherPos, Colliders::bubbleRepelCollider)) {
                         int dx = pos.x - otherPos.x;
@@ -63,7 +63,7 @@ void BubbleFloatBehaviorSystem::Update() {
             bubbleRepelDirection.IntegerNormalize();
         }
 
-        PRINT_INFO("Bubble {} has leader {}", (int)entity, bubble.getLeader());
+        PRINT_INFO("Bubble {} has leader {}", (int)entity, bubble.leader.getLeader());
 
         const int BUBBLE_REPEL_SPEED = 2;
         Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);

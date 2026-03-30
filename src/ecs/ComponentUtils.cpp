@@ -23,7 +23,7 @@ void MakeBubbleAndGroupPopFromLifetime(entt::registry &registry, entt::entity en
         for (entt::entity otherEntity : view) {
             BubbleFloatComponent otherFloatComp = registry.get<BubbleFloatComponent>(otherEntity);
             
-            if (otherFloatComp.sharesLeaderWith(floatComp)) {
+            if (otherFloatComp.leader.sharesLeaderWith(floatComp.leader)) {
                 registry.remove<BubbleFloatComponent>(otherEntity);
                 BubblePopComponent &otherPopComponent = registry.emplace<BubblePopComponent>(otherEntity);
                 otherPopComponent.poppedFromLifeTime = true;
@@ -57,7 +57,7 @@ void MakeBubbleAndGroupPopFromDragonSpikes(entt::registry &registry, entt::entit
         for (entt::entity otherEntity : view) {
             BubbleFloatComponent otherFloatComp = registry.get<BubbleFloatComponent>(otherEntity);
             
-            if (otherFloatComp.sharesLeaderWith(floatComp)) {
+            if (otherFloatComp.leader.sharesLeaderWith(floatComp.leader)) {
                 
                 registry.remove<BubbleFloatComponent>(otherEntity);
                 BubblePopComponent &otherPopComponent = registry.emplace<BubblePopComponent>(otherEntity);

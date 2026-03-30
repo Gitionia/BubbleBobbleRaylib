@@ -6,11 +6,6 @@
 class BubblePopBehaviorSystem : public SystemBase {
     SYSTEM_DEF(BubblePopBehaviorSystem, SystemTypeFlags::GAMEPLAY)
 
-  public:
-    void Init() override;
   protected:
     void Update() override;
-
-  private:
-    void popAdjacentBubbles(const Position &position, int targetItemLevel);
   };

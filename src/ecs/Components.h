@@ -281,57 +281,36 @@ struct BubbleShootComponent {
     int ignoreCollisionWaitFrame = 0;
 };
 
+// Every floating bubble has a group leader which approximates the group of connected bubbles.
+// Every frame a bubble checks if an adjacent bubble has a better (small entity-id) group leader than its own.
+// When a floating bubble gets popped, all bubbles with that leader get popped as well.
+// We keep an old value of a group leader, because the new one might not have a big reach
+class BubbleLeader {
+  public:
+    bool areGroupLeaderInitialized();
+    void initGroupLeader(int initialLeader);
+
+    int getLeader();
+    void setLeader(int leader);
+    bool updateLeaderSwitchCounterAndSwitch();
+    bool sharesLeaderWith(const BubbleLeader &other);
+
+  private:
+    int groupLeader[2] = {-1, -1};
+    int currentGroupLeaderIndex = 0;
+    static constexpr int FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX = 10;
+    int timeToSwitchGroupLeaderIndex = FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX;
+
+    bool groupLeaderInitialized = false;
+};
+
 struct BubbleFloatComponent {
     Animator animator{&GetAnimation("Bubble-Green-Idle")};
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
 
-    // Every floating bubble has a group leader which approximates the group of connected bubbles.
-    // Every frame a bubble checks if an adjacent bubble has a better (small entity-id) group leader than its own.
-    // When a floating bubble gets popped, all bubbles with that leader get popped as well.
-    // We keep an old value of a group leader, because the new one might not have a big reach
-    int groupLeader[2] = {-1, -1};
-    int currentGroupLeaderIndex = 0;
-    static constexpr int FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX = 10;
-    int timeToSwitchGroupLeaderIndex = FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX;
-
-  private:
-    bool groupLeaderInitialized = false;
-
-  public:
-    bool areGroupLeaderInitialized() {
-        return groupLeaderInitialized;
-    }
-    void initGroupLeader(int initialLeader) {
-        groupLeader[0] = initialLeader;
-        groupLeader[1] = initialLeader;
-
-        groupLeaderInitialized = true;
-    }
-
-    int getLeader() {
-        return groupLeader[currentGroupLeaderIndex];
-    }
-    void setLeader(int leader) {
-        groupLeader[currentGroupLeaderIndex] = leader;
-    }
-    bool updateLeaderSwitchCounterAndSwitch() {
-        timeToSwitchGroupLeaderIndex--;
-        if (timeToSwitchGroupLeaderIndex == 0) {
-            timeToSwitchGroupLeaderIndex = FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX;
-            currentGroupLeaderIndex = 1 - currentGroupLeaderIndex;
-
-            return true;
-
-        } else {
-            return false;
-        }
-    }
-
-    bool sharesLeaderWith(const BubbleFloatComponent& other) {
-        return std::min(groupLeader[0], groupLeader[1]) == std::min(other.groupLeader[0], other.groupLeader[1]);
-    }
+    BubbleLeader leader;
 
     // Value > 0, if bubble was shot in ignore collision wait and should be some frames jumpable
     int popFrame = 0;

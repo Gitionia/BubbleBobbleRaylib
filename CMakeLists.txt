@@ -50,6 +50,7 @@ add_executable(BubbleBobbleRaylib
         src/ecs/Systems.cpp
         src/ecs/SystemBase.cpp
         src/ecs/Components.h
+        src/ecs/Components.cpp
         src/behavior/GameplayUISystem.h
         src/behavior/GameplayUISystem.cpp
         src/behavior/GameplayWatcherSystem.h
