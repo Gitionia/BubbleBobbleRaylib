@@ -1,5 +1,7 @@
 #include "Recorder.h"
+#include "Log.h"
 #include "raylib.h"
+#include <cstdint>
 
 Recording::Recording() {
     data.reserve(BUFFER_SIZE);
@@ -8,26 +10,54 @@ Recording::Recording() {
 void Recording::SaveToFile(const std::string &filepath) {
     std::ofstream file(filepath, std::ios::binary);
 
+    if (!file) {
+        PRINT_ERROR("Could not save input recording to {}", filepath);
+        return;
+    }
+
     file.write(reinterpret_cast<const char *>(data.data()), data.size());
+    file.close();
 }
 
 void Recording::ReadFromFile(const std::string &filepath) {
-    std::ifstream file(filepath, std::ios::binary);
-    data = std::vector<uint8_t>((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    std::ifstream file(filepath, std::ios::binary | std::ios::ate);
 
+    if (!file) {
+        PRINT_ERROR("Could not read input recording from {}", filepath);
+        return;
+    }
+
+    std::streamsize size = file.tellg();
+    file.seekg(0, std::ios::beg);
+
+    if (size <= 0) {
+        PRINT_ERROR("Input recording at {} has no elements", filepath);
+        return;
+    }
+
+    data.resize(size);
+    file.read(reinterpret_cast<char *>(data.data()), size);
+
+    file.close();
+    
     frameIndex = 0;
 }
 
 InputSimulator::InputSimulator(Mode mode, std::string filepath)
     : mode(mode), filepath(filepath) {
+    if (mode == REPLAY) {
+        recording.ReadFromFile(filepath);
+    }
 }
 
 void InputSimulator::SaveRecording() {
-    recording.SaveToFile(filepath);
+    if (mode == RECORD) {
+        recording.SaveToFile(filepath);
+    }
 }
 
 void InputSimulator::Update() {
-    if (mode == NO_RECORD) {
+    if (mode == NO_RECORD || exceededRecording) {
         return;
     }
 
@@ -41,8 +71,15 @@ void InputSimulator::Update() {
         }
 
     } else if (mode == REPLAY) {
-        for (int i = 0; i < Recording::KEY_COUNT; i++) {
-            recording.current[i] = i + recording.frameIndex * Recording::KEY_COUNT;
+        for (int key = 0; key < Recording::KEY_COUNT; key++) {
+            int bufferIndex = key + recording.frameIndex * Recording::KEY_COUNT;
+            if (bufferIndex >= recording.data.size()) {
+                PRINT_WARN("Finished using input recording! Switching to live input.");
+                exceededRecording = true;
+                break;
+            }
+
+            recording.current[key] = recording.data.at(bufferIndex);
         }
     }
 
@@ -50,8 +87,8 @@ void InputSimulator::Update() {
 }
 
 bool InputSimulator::IsKeyDown(int key) {
-    if (mode == NO_RECORD) {
-        return IsKeyDown(key);
+    if (mode == NO_RECORD || exceededRecording) {
+        return ::IsKeyDown(key);
 
     } else {
         return recording.current[key];
@@ -59,8 +96,8 @@ bool InputSimulator::IsKeyDown(int key) {
 }
 
 bool InputSimulator::IsKeyPressed(int key) {
-    if (mode == NO_RECORD) {
-        return IsKeyPressed(key);
+    if (mode == NO_RECORD || exceededRecording) {
+        return ::IsKeyPressed(key);
 
     } else {
         return recording.current[key] && !recording.previous[key];

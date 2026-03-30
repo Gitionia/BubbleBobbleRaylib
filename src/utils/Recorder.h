@@ -18,13 +18,13 @@ struct Recording {
 };
 
 class InputSimulator {
+  public:
     enum Mode {
         NO_RECORD,
         RECORD,
         REPLAY
     };
 
-  public:
     InputSimulator(Mode mode, std::string filepath = "");
     void SaveRecording();
 
@@ -37,4 +37,6 @@ class InputSimulator {
     Recording recording;
     Mode mode;
     std::string filepath;
+
+    bool exceededRecording = false;
 };

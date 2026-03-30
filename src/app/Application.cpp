@@ -27,7 +27,8 @@ void update();
 Application::Application(const ApplicationParameters &parameters)
     : window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)) {
+      stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
+      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::REPLAY, "recordedInput.input")) {
 
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
@@ -49,7 +50,7 @@ Application::Application(const ApplicationParameters &parameters)
         PRINT_CRITICAL("Audio Device could not be initialized! Trying to run without Audio");
     }
 
-    Input::Init();
+    Input::Init(inputSimulator);
 
     EntityFactory::get().setRegistry(registry);
     SystemBase::BaseInit();
@@ -71,6 +72,8 @@ Application::~Application() {
     CloseAudioDevice();
 
     UnloadSprites();
+
+    inputSimulator->SaveRecording();
 }
 
 void Application::Run() {
@@ -79,6 +82,7 @@ void Application::Run() {
     emscripten_set_main_loop(update, 0, true);
 #else
     while (window.IsOpen()) {
+        inputSimulator->Update();
         update();
     }
 #endif

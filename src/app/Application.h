@@ -9,6 +9,7 @@
 #include "WindowConfig.h"
 #include "EventSystem.h"
 #include "StateMachine.h"
+#include "../utils/Recorder.h"
 
 struct ApplicationParameters {
     int width = TARGET_WINDOW_WIDTH;
@@ -28,6 +29,7 @@ class Application {
     entt::registry registry{};
     SystemRunner systemRunner;
     StateMachine stateMachine;
+    std::shared_ptr<InputSimulator> inputSimulator;
 
     std::shared_ptr<spdlog::logger> stdoutLogger;
     std::shared_ptr<spdlog::logger> fileLogger;
