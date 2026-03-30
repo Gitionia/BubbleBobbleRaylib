@@ -39,7 +39,7 @@ void RendererSystem::Update() {
     debugDrawColliders<BubbleJumpableTopCollider>(GREEN);
 #endif
 
-    DrawFPS(10, 10);
+    DrawFPS(TARGET_WINDOW_WIDTH - 90, 4);
 
     EndTextureMode();
 

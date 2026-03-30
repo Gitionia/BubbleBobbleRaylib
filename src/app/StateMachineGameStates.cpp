@@ -18,7 +18,7 @@ void GameplayState::OnEnter() {
 }
 
 void GameplayState::StartLevel() {
-    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION | SystemTypeFlags::GAME_UI);
     eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
     runner.UpdateSystems();
 
@@ -81,9 +81,6 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
     if (Input::IsKeyPressed(KEY_B)) {
         ToggleBorderlessWindowed();
-    }
-    if (Input::IsKeyPressed(KEY_M)) {
-        MaximizeWindow();
     }
 #endif
 

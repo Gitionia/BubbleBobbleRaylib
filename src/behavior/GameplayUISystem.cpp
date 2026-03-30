@@ -10,13 +10,24 @@ void GameplayUISystem::Update() {
         points += gainedPoints;
     }
 
-    // This could theoretically break, if the textEntity points to a different UIText entity
-    // However this seems unlikely and for now this is good enough
-    if (registry.valid(textEntity) && registry.any_of<ModifiableUITextComponent>(textEntity)) {
-        registry.get<ModifiableUITextComponent>(textEntity).text = "HI SCORE\n" + std::to_string(points);
-
-    } else if (eventSystem.ReadEvent(INSTANTIATE_GAME_UI).size()) {
-        textEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0), 0}, "HI SCORE\n" + std::to_string(points), GREEN);
+    if (eventSystem.ReadEvent(INSTANTIATE_LEVEL).size()) {
+        Event event = eventSystem.ReadEvent(INSTANTIATE_LEVEL).at(0);
+        level = event.data;
     }
 
+    // This could theoretically break, if the textEntity points to a different UIText entity
+    // However this seems unlikely and for now this is good enough
+    if (registry.valid(scoreEntity) && registry.any_of<ModifiableUITextComponent>(scoreEntity)) {
+        registry.get<ModifiableUITextComponent>(scoreEntity).text = "HI SCORE\n" + std::to_string(points);
+
+    } else if (eventSystem.ReadEvent(INSTANTIATE_GAME_UI).size()) {
+        scoreEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0), 0}, "HI SCORE\n" + std::to_string(points), GREEN);
+    }
+
+    if (registry.valid(levelCounterInCorner) && registry.any_of<ModifiableUITextComponent>(levelCounterInCorner)) {
+        registry.get<ModifiableUITextComponent>(levelCounterInCorner).text = std::to_string(level);
+
+    } else if (eventSystem.ReadEvent(INSTANTIATE_GAME_UI).size()) {
+        levelCounterInCorner = EntityFactory::CreateModifiableUIText({BP_SIZE(0, 0), BP_SIZE(0, 2)}, std::to_string(level), WHITE);
+    }
 }

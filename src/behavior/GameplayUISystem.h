@@ -10,7 +10,9 @@ class GameplayUISystem : public SystemBase {
     void Update() override;
 
   private:
-    int points = 0; 
-    entt::entity textEntity;
-    ModifiableUITextComponent *ui;
+    int points = 0;
+    entt::entity scoreEntity;
+
+    int level = 1;
+    entt::entity levelCounterInCorner;
 };
