@@ -33,7 +33,7 @@ void makeEnemyTumble(entt::registry& registry, entt::entity entity) {
     BubblePopComponent& popComp = registry.get<BubblePopComponent>(entity);
 
     const EnemyInfoComponent& info = registry.get<EnemyInfoComponent>(entity);
-    EntityFactory::CreateTumblingEnemy(pos.x, pos.y, pos.dir, info.type, GetItemOfLevel(popComp.itemLevel));
+    EntityFactory::CreateTumblingEnemy(pos.x, pos.y, Random::Get().GetDirection(), info.type, GetItemOfLevel(popComp.itemLevel));
 }
 
 void PopEnemyBubbleSystem::Update() {
