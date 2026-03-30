@@ -1,6 +1,7 @@
 #include "LevelInstantiatorSystem.h"
 #include "../level/Physics.h"
 #include "entt/entity/fwd.hpp"
+#include <string>
 
 void LevelInstantiatorSystem::Update() {
     const auto &events = eventSystem.ReadEvent(INSTANTIATE_LEVEL);
@@ -21,8 +22,19 @@ void LevelInstantiatorSystem::clearExistingLevel() {
     registry.destroy(view->begin(), view->end());
 }
 
+static std::string convertLevelNumber(int levelNumber) {
+    if (levelNumber >= 100) {
+        return std::to_string(levelNumber);
+    } else if (levelNumber >= 10) {
+        return "0" + std::to_string(levelNumber);
+    } else {
+        return "00" + std::to_string(levelNumber);
+    }
+}
+
 void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
-    level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", levelNumber));
+
+    level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", convertLevelNumber(levelNumber)));
     EntityFactory::CreateLevel(level, levelNumber);
     setPhysicsColliderData(level);
     auto dragon = EntityFactory::CreateDragon();
