@@ -43,16 +43,51 @@ void makeBubblePop(entt::registry &registry, entt::entity e) {
     }
 }
 
+static bool vectorContains(const std::vector<int>& v, int x) {
+    for (int i = 0; i < v.size(); i++) {
+        if (v[i] == x) {
+            return true;
+        }
+    }
+    return false;
+}
+
+static void addToVectorIfNotExists(std::vector<int>& v, int x) {
+    if (!vectorContains(v, x)) {
+        v.push_back(x);
+    }
+}
+
 void BubblePopBehaviorSystem::popAdjacentBubbles(const Position &position, int targetItemLevel) {
     auto view = registry.view<Position, BubbleFloatComponent>();
+
+    static std::vector<int> leaderOfGroupsToPop;
+    leaderOfGroupsToPop.reserve(30);
+    leaderOfGroupsToPop.clear();
 
     for (entt::entity entity : view) {
         auto [pos, bubble] = view.get(entity);
 
         if (overlaps(position, Colliders::bubblePopCollider, pos, Colliders::bubblePopCollider)) {
 
+            addToVectorIfNotExists(leaderOfGroupsToPop, bubble.groupLeader[0]);
+            addToVectorIfNotExists(leaderOfGroupsToPop, bubble.groupLeader[1]);
+
             Defer(entity, &makeBubblePop, 0);
             itemLevels.push_back({entity, targetItemLevel});
+        }
+    }
+
+    auto viewAgain = registry.view<BubbleFloatComponent>();
+    for (entt::entity entity : viewAgain) {
+        auto [bubble] = viewAgain.get(entity);
+        if (vectorContains(leaderOfGroupsToPop, bubble.groupLeader[0]) || vectorContains(leaderOfGroupsToPop, bubble.groupLeader[1])) {
+            Defer(entity, &makeBubblePop, 0);
+            itemLevels.push_back({entity, targetItemLevel});
+            
+            if (registry.any_of<EnemyTag>(entity)) {
+                targetItemLevel++;
+            }
         }
     }
 }

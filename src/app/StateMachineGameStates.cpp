@@ -38,7 +38,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 
     if (counterTillStartNewLevel > 0) {
         counterTillStartNewLevel--;
-        
+
     } else if (waitingForCounterToStartNewLevel && counterTillStartNewLevel == 0) {
         level++;
         StartLevel();
@@ -52,10 +52,14 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
     if (IsKeyPressed(KEY_N)) {
         level++;
-        StartLevel();   
+        StartLevel();
     }
     if (IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
+    
+    } else if (IsKeyPressed(KEY_I)) {
+        SetTargetFPS(600);
+    
     } else if (IsKeyPressed(KEY_O)) {
         SetTargetFPS(TARGET_FPS);
     }
@@ -79,11 +83,11 @@ void TitleScreenState::OnEnter() {
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
-    #ifdef NDEBUG
+#ifdef NDEBUG
     bool titleScreenSkip = false;
-    #else
+#else
     bool titleScreenSkip = true;
-    #endif 
+#endif
 
     if (titleScreenSkip || Input::IsKeyDown(Key::Any)) {
         // Cleans up Title Screen Entities

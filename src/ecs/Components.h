@@ -7,6 +7,7 @@
 #include "../level/Items.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
+#include "entt/entity/fwd.hpp"
 
 struct Position {
     int x, y;
@@ -81,7 +82,6 @@ struct WalkingActorComponent {
     bool isJumping() {
         return jumpFrameCount > 0;
     }
-
 };
 
 struct DragonComponent {
@@ -235,7 +235,7 @@ struct FlyingEnemyComponent {
 struct WalkingEnemyComponent {
     int walkingDir;
     // We only use a custom animator for the mushroom enemy to sync its animation with the jumps
-    Animator animator {&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL))};
+    Animator animator{&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL))};
     bool isGapJumping = false;
 };
 
@@ -285,6 +285,48 @@ struct BubbleFloatComponent {
 
     static constexpr int LIFETIME_FRAME_COUNT = 20 * TARGET_FPS;
     int lifetimeFrame = LIFETIME_FRAME_COUNT;
+
+    // Every floating bubble has a group leader which approximates the group of connected bubbles.
+    // Every frame a bubble checks if an adjacent bubble has a better (small entity-id) group leader than its own.
+    // When a floating bubble gets popped, all bubbles with that leader get popped as well.
+    // We keep an old value of a group leader, because the new one might not have a big reach
+    int groupLeader[2] = {-1, -1};
+    int currentGroupLeaderIndex = 0;
+    static constexpr int FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX = 10;
+    int timeToSwitchGroupLeaderIndex = FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX;
+
+  private:
+    bool groupLeaderInitialized = false;
+
+  public:
+    bool areGroupLeaderInitialized() {
+        return groupLeaderInitialized;
+    }
+    void initGroupLeader(int initialLeader) {
+        groupLeader[0] = initialLeader;
+        groupLeader[1] = initialLeader;
+
+        groupLeaderInitialized = true;
+    }
+
+    int getLeader() {
+        return groupLeader[currentGroupLeaderIndex];
+    }
+    void setLeader(int leader) {
+        groupLeader[currentGroupLeaderIndex] = leader;
+    }
+    bool updateLeaderSwitchCounterAndSwitch() {
+        timeToSwitchGroupLeaderIndex--;
+        if (timeToSwitchGroupLeaderIndex == 0) {
+            timeToSwitchGroupLeaderIndex = FRAME_COUNT_TILL_SWITCHING_GROUP_LEADER_INDEX;
+            currentGroupLeaderIndex = 1 - currentGroupLeaderIndex;
+
+            return true;
+
+        } else {
+            return false;
+        }
+    }
 
     // Value > 0, if bubble was shot in ignore collision wait and should be some frames jumpable
     int popFrame = 0;

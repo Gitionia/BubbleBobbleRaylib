@@ -4,6 +4,7 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../level/Physics.h"
+#include <algorithm>
 
 enum DeferValues {
     PopFromLifeTime = 0,
@@ -38,7 +39,44 @@ void BubbleFloatBehaviorSystem::Update() {
 
         Vector2Int centerPos = col.getCenter(pos.x, pos.y);
         Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
-        Vector2Int bubbleRepelDirection = getBubbleRepelVelocity(registry, Colliders::bubbleRepelCollider, pos.toVector());
+
+
+        // calculate repel direction and update group leader
+        Vector2Int bubbleRepelDirection = Vector2Int::Zero();
+        {
+            if (!bubble.areGroupLeaderInitialized()) {
+                bubble.initGroupLeader((int)entity);
+            }
+            if (bubble.updateLeaderSwitchCounterAndSwitch()) {
+                bubble.setLeader((int)entity);
+            }
+
+            const auto innerBubbleView = registry.view<Position, BubbleFloatComponent>();
+
+            for (entt::entity otherEntity : innerBubbleView) {
+                // we don't check this bubble against itself
+                if (entity == otherEntity)
+                    continue;
+
+                const auto [otherPos, otherBubble] = innerBubbleView.get(otherEntity);
+
+                if (otherBubble.areGroupLeaderInitialized() && overlaps(pos, Colliders::bubblePopCollider, otherPos, Colliders::bubblePopCollider)) {
+
+                    bubble.groupLeader[bubble.currentGroupLeaderIndex] = std::min(bubble.getLeader(), otherBubble.getLeader());
+
+                    if (overlaps(pos, Colliders::bubbleRepelCollider, otherPos, Colliders::bubbleRepelCollider)) {
+                        int dx = pos.x - otherPos.x;
+                        int dy = pos.y - otherPos.y;
+                        bubbleRepelDirection = bubbleRepelDirection.Add(dx, dy);
+                    }
+                }
+            }
+
+            bubbleRepelDirection.IntegerNormalize();
+        }
+
+        PRINT_INFO("Bubble {} has leader {}", (int)entity, bubble.getLeader());
+
         const int BUBBLE_REPEL_SPEED = 2;
         Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);
 
