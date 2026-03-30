@@ -51,6 +51,10 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         level++;
         StartLevel();
     }
+    if (Input::IsKeyPressed(KEY_M)) {
+        level--;
+        StartLevel();
+    }
     if (Input::IsKeyPressed(KEY_Q)) {
         level = 101;
         StartLevel();
