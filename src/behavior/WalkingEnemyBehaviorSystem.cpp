@@ -106,11 +106,17 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool isGrounded = false;
         if (!actor.isJumping()) {
             isGrounded = isWalkingActorGrounded(registry, pos, actor);
+
+            // If we are grounded, but don't touch the floor, then round y-position
+            if (isGrounded && pos.y % BP_SIZE(1, 0) != 0) {
+                // We are at least one pixel above the ground
+                pos.y = (pos.y / BP_SIZE(1, 0) + 1) * BP_SIZE(1, 0);
+            }
         }
 
         if (!actor.isJumping() && enemy.isGapJumping) {
             // Transitioned from gap jumping to falling.
-            // Then we should have no
+            // Then we should have no x-velocity
             enemy.isGapJumping = false;
             enemy.walkingDir = 0;
         }
@@ -123,7 +129,7 @@ void WalkingEnemyBehaviorSystem::Update() {
 
                 if (dragonPos.X == pos.x) {
                     enemy.walkingDir = Random::Get().GetDirection();
-                
+
                 } else {
                     // Most of the time choose direction to player
                     enemy.walkingDir = sign(dragonPos.X - pos.x);
