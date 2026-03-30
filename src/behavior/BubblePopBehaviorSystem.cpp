@@ -114,14 +114,6 @@ void BubblePopBehaviorSystem::Update() {
         pos.dir = -1;
         if (bubble.isInStatePrePop) {
 
-            if (!bubble.poppedFromLifeTime) {
-                int itemLevelForPoppedBubbles = bubble.itemLevel;
-                if (registry.any_of<EnemyTag>(entity)) {
-                    itemLevelForPoppedBubbles++;
-                }
-                popAdjacentBubbles(pos, itemLevelForPoppedBubbles);
-            }
-
             renderData.spriteHandle = bubble.animator.GetSpriteHandle();
             bubble.animator.Update();
 

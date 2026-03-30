@@ -2,6 +2,7 @@
 
 #include "../app/Config.h"
 #include "../ecs/Components.h"
+#include "../ecs/ComponentUtils.h"
 #include "../ecs/EntityFactory.h"
 #include "../level/Physics.h"
 #include <algorithm>
@@ -11,19 +12,6 @@ enum DeferValues {
     PopFromDragonSpikes = 1
 };
 
-static void makeBubblePopFromLifeTime(entt::registry &registry, entt::entity entity) {
-
-    registry.remove<BubbleFloatComponent>(entity);
-    BubblePopComponent &c = registry.emplace<BubblePopComponent>(entity);
-    c.poppedFromLifeTime = true;
-}
-
-static void makeBubblePopFromDragonSpikes(entt::registry &registry, entt::entity entity) {
-
-    registry.remove<BubbleFloatComponent>(entity);
-    BubblePopComponent &c = registry.emplace<BubblePopComponent>(entity);
-    c.poppedFromLifeTime = false;
-}
 
 void BubbleFloatBehaviorSystem::Update() {
     const Collider &col = Colliders::bubbleCollider;
@@ -85,7 +73,7 @@ void BubbleFloatBehaviorSystem::Update() {
             if (bubble.popFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
                 // Note: this should only be reached by actual bubbles and not bubbled enemies,
                 // so we don't care that much, how we set popComponent.poppedFromLifeTime
-                Defer(entity, &makeBubblePopFromDragonSpikes, PopFromDragonSpikes);
+                Defer(entity, &MakeBubbleAndGroupPopFromDragonSpikes, PopFromDragonSpikes);
             }
 
         } else {
@@ -113,10 +101,10 @@ void BubbleFloatBehaviorSystem::Update() {
             }
 
             if (bubble.lifetimeFrame == 0) {
-                Defer(entity, &makeBubblePopFromLifeTime, PopFromLifeTime);
+                Defer(entity, &MakeBubbleAndGroupPopFromLifetime, PopFromLifeTime);
             }
             if (collidesWithDragonSpikes(registry, pos, col)) {
-                Defer(entity, &makeBubblePopFromDragonSpikes, PopFromDragonSpikes);
+                Defer(entity, &MakeBubbleAndGroupPopFromDragonSpikes, PopFromDragonSpikes);
             }
         }
 
