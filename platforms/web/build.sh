@@ -2,7 +2,7 @@
 
 mkdir build
 cd build
-emcmake cmake -S ../../../ -B . -DPLATFORM=Web
+emcmake cmake -S ../../../ -B . -DPLATFORM=Web -DCMAKE_BUILD_TYPE=Debug
 make
 
 mv BubbleBobbleRaylib.html index.html
