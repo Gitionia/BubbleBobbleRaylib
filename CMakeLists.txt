@@ -107,6 +107,8 @@ add_executable(BubbleBobbleRaylib
         src/utils/Debug.h
         src/utils/Debug.cpp
         src/utils/Input.cpp
+        src/utils/Recorder.cpp
+        src/utils/Recorder.h
         src/utils/Random.cpp
         src/utils/Utilities.cpp
         src/utils/AnimatedObjects.h
