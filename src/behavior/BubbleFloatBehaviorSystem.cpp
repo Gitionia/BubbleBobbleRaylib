@@ -68,6 +68,10 @@ void BubbleFloatBehaviorSystem::Update() {
         const int BUBBLE_REPEL_SPEED = 2;
         Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);
 
+        if (velocity.X == 0 && Random::Get().Chance(0.05f)) {
+            velocity.X = 2 * Random::Get().GetDirection();
+        }
+
         if (bubble.isWaitingForPop()) {
             bubble.popFrame--;
             if (bubble.popFrame == 0 || collidesWithDragonSpikes(registry, pos, col)) {
@@ -108,7 +112,7 @@ void BubbleFloatBehaviorSystem::Update() {
             }
         }
 
-        Debug::DrawCollider(pos.x, pos.y, Colliders::bubbleRepelCollider);
-        Debug::DrawCollider(pos.x, pos.y, Colliders::bubblePopCollider, BLUE);
+        // Debug::DrawCollider(pos.x, pos.y, Colliders::bubbleRepelCollider);
+        // Debug::DrawCollider(pos.x, pos.y, Colliders::bubblePopCollider, BLUE);
     }
 }

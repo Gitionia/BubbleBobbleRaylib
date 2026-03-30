@@ -24,13 +24,21 @@ void DragonBehaviorSystem::Update() {
     for (auto entity : view) {
         auto [pos, actor, dragon, renderData] = view.get(entity);
 
+#ifdef DEBUG_TOOLS
+        if (Input::IsKeyPressed(KEY_U)) {
+            dragon.invincibilityFramesLeft = 60 * 30;
+        }
+        else if (Input::IsKeyPressed(KEY_Y)) {
+            dragon.invincibilityFramesLeft = 60 * 1000;
+        }
+#endif
         if (dragon.invincibilityFramesLeft > 0) {
             dragon.invincibilityFramesLeft--;
 
             if ((dragon.invincibilityFramesLeft / 2) % 2 == 0) {
                 renderData.SetColor(COLOR_TRANSPARENT);
             } else {
-                renderData.SetColor({255,230,200,255});
+                renderData.SetColor({255, 230, 200, 255});
             }
         }
         if (!dragon.isInvincible()) {
