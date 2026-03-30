@@ -109,5 +109,6 @@ void BubbleFloatBehaviorSystem::Update() {
         }
 
         Debug::DrawCollider(pos.x, pos.y, Colliders::bubbleRepelCollider);
+        Debug::DrawCollider(pos.x, pos.y, Colliders::bubblePopCollider, BLUE);
     }
 }
