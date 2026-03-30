@@ -53,3 +53,5 @@ struct Vector2Int {
         Y = sign(Y);
     }
 };
+
+std::string GetCurrentTimeStamp();

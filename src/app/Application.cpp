@@ -30,7 +30,7 @@ Application::Application(const ApplicationParameters &parameters)
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
       stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
-      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::RECORD, "./recordedInput/log123.input")) {
+      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::RECORD, std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp()))) {
 
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;

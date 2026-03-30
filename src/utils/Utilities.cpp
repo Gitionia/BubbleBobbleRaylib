@@ -1,7 +1,6 @@
 #include "Utilities.h"
 #include "Debug.h"
 
-
 int GetIntFromDirection(Direction direction) {
     if (direction == Direction::Left) {
         return -1;
@@ -33,4 +32,14 @@ int sign(int x) {
         return -1;
     else
         return 0;
+}
+
+std::string GetCurrentTimeStamp() {
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+
+    std::ostringstream oss;
+    oss << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+
+    return oss.str();
 }
