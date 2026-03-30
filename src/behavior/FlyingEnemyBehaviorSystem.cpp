@@ -63,6 +63,13 @@ void FlyingEnemyBehaviorSystem::Update() {
             enemy.flipY();
         }
 
+        // apply warping
+        if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT + 1, 0)) {
+            pos.y = BP_SIZE(-2, 0);
+        } else if (pos.y < BP_SIZE(-3, 0)) {
+            pos.y = BP_SIZE(LevelTilemap::HEIGHT, 0);
+        }
+
         Debug::DrawCollider(pos.x, pos.y, enemy.getHorizontalCollider());
         Debug::DrawCollider(pos.x, pos.y, enemy.getVerticalCollider());
 
