@@ -18,6 +18,9 @@ void Recording::SaveToFile(const std::string &filepath) {
     }
 
     file.write(reinterpret_cast<const char *>(data.data()), data.size());
+
+    PRINT_INFO("Saved recording to {}", filepath);
+    
     file.close();
 }
 
@@ -39,6 +42,8 @@ void Recording::ReadFromFile(const std::string &filepath) {
 
     data.resize(size);
     file.read(reinterpret_cast<char *>(data.data()), size);
+
+    PRINT_INFO("Read recording from {}", filepath);
 
     file.close();
 

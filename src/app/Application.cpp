@@ -25,18 +25,18 @@ static EventSystem *g_eventSystem;
 void update();
 
 Application::Application(const ApplicationParameters &parameters)
-    : window(parameters.width, parameters.height, parameters.title),
+    : stdoutLogger(spdlog::stdout_color_mt("console")),
+      fileLogger(spdlog::basic_logger_mt("file", "logs/log.txt")),
+      window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
       stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
-      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::REPLAY, "recordedInput.input")) {
+      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::RECORD, "./recordedInput/log123.input")) {
 
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
 #else
     auto logLevel = spdlog::level::info;
 #endif
-    stdoutLogger = spdlog::stdout_color_mt("console");
-    fileLogger = spdlog::basic_logger_mt("file", "logs/log.txt");
     stdoutLogger->set_level(logLevel);
     fileLogger->set_level(logLevel);
 
@@ -61,7 +61,6 @@ Application::Application(const ApplicationParameters &parameters)
     LoadAnimations();
 
     systemRunner.Init();
-    
 
     g_stateMachine = &stateMachine;
     g_eventSystem = &eventSystem;
