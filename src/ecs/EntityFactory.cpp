@@ -7,7 +7,7 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     auto tile = registry->create();
     {
         registry->emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
-        RenderData data = {GetSpriteHandle(std::format("Block-Level{}", level)), {1, 1}};
+        RenderData data = {GetSpriteHandle(std::format("Block-Level{}", level % 100)), {1, 1}};
         data.scale = {2, 2};
         registry->emplace<RenderData>(tile, data);
         registry->emplace<LevelTileTag>(tile);
