@@ -8,6 +8,7 @@
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
 #include "entt/entity/fwd.hpp"
+#include <algorithm>
 
 struct Position {
     int x, y;
@@ -326,6 +327,10 @@ struct BubbleFloatComponent {
         } else {
             return false;
         }
+    }
+
+    bool sharesLeaderWith(const BubbleFloatComponent& other) {
+        return std::min(groupLeader[0], groupLeader[1]) == std::min(other.groupLeader[0], other.groupLeader[1]);
     }
 
     // Value > 0, if bubble was shot in ignore collision wait and should be some frames jumpable

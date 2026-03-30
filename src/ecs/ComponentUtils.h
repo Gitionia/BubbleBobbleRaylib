@@ -36,3 +36,8 @@ COLLIDER_LAYER(Collider)
             }                                 \
         }                                     \
     };
+
+
+void MakeBubbleAndGroupPopFromLifetime(entt::registry &registry, entt::entity entity);
+void MakeBubbleAndGroupPopFromDragonSpikes(entt::registry &registry, entt::entity entity);
+
