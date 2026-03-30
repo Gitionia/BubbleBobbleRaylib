@@ -15,6 +15,7 @@ struct ApplicationParameters {
     int width = TARGET_WINDOW_WIDTH;
     int height = TARGET_WINDOW_HEIGHT;
     const char *title = "Bubble Bobble";
+    std::string recordedFilePath = "";
 };
 
 class Application {

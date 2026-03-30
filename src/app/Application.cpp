@@ -24,14 +24,39 @@ static StateMachine *g_stateMachine;
 static EventSystem *g_eventSystem;
 void update();
 
+static InputSimulator::Mode inputSimulationModeChooser(const std::string& path) {
+    #ifdef NDEBUG
+    return InputSimulator::NO_RECORD;
+    #else
+    if (path.empty()) {
+        return InputSimulator::RECORD;
+    } else {
+        return InputSimulator::REPLAY;
+    }
+    #endif
+}
+
+static std::string inputRecorderFileChooser(const std::string& path) {
+    #ifdef NDEBUG
+    return "";
+    #else
+    if (path.empty()) {
+        return std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
+    } else {
+        return path;
+    }
+    #endif
+}
+
 Application::Application(const ApplicationParameters &parameters)
     : stdoutLogger(spdlog::stdout_color_mt("console")),
       fileLogger(spdlog::basic_logger_mt("file", "logs/log.txt")),
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
       stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
-      inputSimulator(std::make_shared<InputSimulator>(InputSimulator::RECORD, std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp()))) {
+      inputSimulator(std::make_shared<InputSimulator>(inputSimulationModeChooser(parameters.recordedFilePath), inputRecorderFileChooser(parameters.recordedFilePath))) {
 
+        
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
 #else
