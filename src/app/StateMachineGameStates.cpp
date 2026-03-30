@@ -47,33 +47,33 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
 
 #ifdef DEBUG_TOOLS
-    if (IsKeyPressed(KEY_Z)) {
+    if (Input::IsKeyPressed(KEY_Z)) {
         // EntityFactory::CreateTumblingEnemy(Random::Get().Range(100, 400), 250, Random::Get().GetDirection(), GetItemOfLevel(Random::Get().Range(0, 5)));
     }
-    if (IsKeyPressed(KEY_N)) {
+    if (Input::IsKeyPressed(KEY_N)) {
         level++;
         StartLevel();
     }
-    if (IsKeyPressed(KEY_Q)) {
+    if (Input::IsKeyPressed(KEY_Q)) {
         level = 101;
         StartLevel();
     }
-    if (IsKeyPressed(KEY_P)) {
+    if (Input::IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
     
-    } else if (IsKeyPressed(KEY_I)) {
+    } else if (Input::IsKeyPressed(KEY_I)) {
         SetTargetFPS(600);
     
-    } else if (IsKeyPressed(KEY_O)) {
+    } else if (Input::IsKeyPressed(KEY_O)) {
         SetTargetFPS(TARGET_FPS);
     }
-    if (IsKeyPressed(KEY_F)) {
+    if (Input::IsKeyPressed(KEY_F)) {
         ToggleFullscreen();
     }
-    if (IsKeyPressed(KEY_B)) {
+    if (Input::IsKeyPressed(KEY_B)) {
         ToggleBorderlessWindowed();
     }
-    if (IsKeyPressed(KEY_M)) {
+    if (Input::IsKeyPressed(KEY_M)) {
         MaximizeWindow();
     }
 #endif

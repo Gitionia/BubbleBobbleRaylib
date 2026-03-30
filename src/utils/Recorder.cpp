@@ -3,8 +3,10 @@
 #include "raylib.h"
 #include <cstdint>
 
-Recording::Recording() {
-    data.reserve(BUFFER_SIZE);
+Recording::Recording(bool reserveSpace) {
+    if (reserveSpace) {
+        data.reserve(BUFFER_SIZE);
+    }
 }
 
 void Recording::SaveToFile(const std::string &filepath) {
@@ -39,12 +41,13 @@ void Recording::ReadFromFile(const std::string &filepath) {
     file.read(reinterpret_cast<char *>(data.data()), size);
 
     file.close();
-    
+
     frameIndex = 0;
 }
 
 InputSimulator::InputSimulator(Mode mode, std::string filepath)
-    : mode(mode), filepath(filepath) {
+    : mode(mode), filepath(filepath), recording(mode == NO_RECORD ? false : true) {
+    
     if (mode == REPLAY) {
         recording.ReadFromFile(filepath);
     }

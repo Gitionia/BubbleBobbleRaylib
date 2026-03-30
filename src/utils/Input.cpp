@@ -9,6 +9,14 @@ void Input::Init(std::shared_ptr<InputSimulator> _inputSimulator) {
     ::inputSimulator = _inputSimulator;
 }
 
+bool Input::IsKeyDown(int key) {
+    return inputSimulator->IsKeyDown(key);
+}
+
+bool Input::IsKeyPressed(int key) {
+    return inputSimulator->IsKeyPressed(key);
+}
+
 bool Input::IsKeyDown(Key key) {
     switch (key) {
     case Key::Jump:

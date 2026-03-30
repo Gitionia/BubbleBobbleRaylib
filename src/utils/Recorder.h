@@ -2,7 +2,7 @@
 
 struct Recording {
   public:
-    Recording();
+    Recording(bool reserveSpace);
 
     void SaveToFile(const std::string &filepath);
     void ReadFromFile(const std::string &filepath);
