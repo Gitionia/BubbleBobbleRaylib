@@ -113,7 +113,8 @@ void RendererSystem::renderAllWithTag() {
         Rectangle dest = {(float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset,
                           sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y};
 
-        dest = OffsetRect(dest, sprite.xOffset, sprite.yOffset);
+        int spriteXOffset =  pos.dir == -1 ? sprite.xOffset : 0;
+        dest = OffsetRect(dest, spriteXOffset, sprite.yOffset);
         dest = ScaleRect(dest, SCALING_FACTOR);
 
         DrawTexturePro(sprite.spriteSheet, sourceRect,
