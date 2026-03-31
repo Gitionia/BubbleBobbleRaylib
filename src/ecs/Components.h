@@ -235,6 +235,26 @@ struct WalkingEnemyComponent {
     int walkingDir;
     Animator animator;
     bool isGapJumping = false;
+    
+    int freezeXPosDuration = 0;
+    enum FreezeState {
+        NOT_FREEZING,
+        FREEZE_FOR_JUMP,
+        FREEZE_FOR_SHOOT
+    };
+    FreezeState freezeState = WalkingEnemyComponent::NOT_FREEZING;
+
+    bool isFreezing() {
+        return freezeXPosDuration > 0;
+    }
+
+    void setFreezing(int freezeDuration, FreezeState state) {
+        DBG_CHECK(state != NOT_FREEZING, "Tried to freeze walking enemy, but set freeze state  to not freezing");
+        freezeXPosDuration = freezeDuration;
+        freezeState = state;
+    }
+
+    int shootCooldown = 0;
 };
 
 struct EnemyTumbleComponent {

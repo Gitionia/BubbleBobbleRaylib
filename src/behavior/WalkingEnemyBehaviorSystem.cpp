@@ -49,7 +49,6 @@ void WalkingEnemyBehaviorSystem::Update() {
             continue;
         }
 
-
         enemy.animator.Update();
         if (enemy.animator.IsFinished()) {
             enemy.animator.Reset();
@@ -57,6 +56,10 @@ void WalkingEnemyBehaviorSystem::Update() {
         renderData.spriteHandle = enemy.animator.GetSpriteHandle();
 
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
+        const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::WITCH;
+
+        const int FREEZE_FOR_SHOOT_DURATION = 30;
+        const int SHOOTING_COOLDOWN = 80;
 
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
@@ -71,8 +74,11 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool shouldGapJump = false;
 
         bool dragonIsAboveEnemy = dragonPos.Y < pos.y;
+        bool dragonAtSameYPos = dragonPos.Y == pos.y;
         int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
         bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
+
+        bool lookingAtDragon = sign(dragonPos.X - pos.x) == enemy.walkingDir;
 
         actor.fallSpeed = FALL_SPEED;
 
@@ -119,17 +125,43 @@ void WalkingEnemyBehaviorSystem::Update() {
             enemy.walkingDir = 0;
         }
 
-        // check if should gap jump (mushrooms don't need to check that since they always can)
-        if (isGrounded && !isMushroom) {
-            shouldGapJump = shouldWalkingEnemyGapJump(pos, enemy.walkingDir);
+        // Handle freezing
+        if (enemy.shootCooldown > 0) {
+            enemy.shootCooldown--;
+        }
+        if (enemy.freezeXPosDuration > 0) {
+            enemy.freezeXPosDuration--;
+
+            if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
+                enemy.shootCooldown = SHOOTING_COOLDOWN;
+            }
+
+        } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.shootCooldown == 0) {
+            if (Random::Get().Chance(0.05f)) {
+                enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
+            }
         }
 
-        velx = moveSpeed * enemy.walkingDir;
+        // check if should gap jump (mushrooms should always gap jump)
+        if (isGrounded && !enemy.isFreezing()) {
+            if (isMushroom) {
+                shouldGapJump = true;
+            } else {
+                shouldGapJump = shouldWalkingEnemyGapJump(pos, enemy.walkingDir);
+            }
+        }
+
+        if (enemy.isFreezing()) {
+            velx = 0;
+
+        } else {
+            velx = moveSpeed * enemy.walkingDir;
+        }
 
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
         // start jump
-        if (isGrounded) {
+        if (isGrounded && !enemy.isFreezing()) {
 
             int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
             if (isMushroom && Random::Get().Chance(chanceMultiplier * 0.3f)) {
@@ -154,31 +186,35 @@ void WalkingEnemyBehaviorSystem::Update() {
             actor.jumpSpeed = 0;
         }
 
-        pos.x += velx;
-        if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
-            // Round pos.x to full block position
-            pos.x = (pos.x / BP_SIZE(1, 0)) * BP_SIZE(1, 0);
-            if (enemy.walkingDir == -1) {
-                pos.x += BP_SIZE(1, 0);
-            }
 
-            // gap jumping enemies should fall down at the wall and not bounce off
-            if (enemy.isGapJumping) {
-                if (isMushroom) {
-                    enemy.walkingDir *= -1;
+        // handle x movement
+        if (!enemy.isFreezing()) {
+            pos.x += velx;
+            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
+                // Round pos.x to full block position
+                pos.x = (pos.x / BP_SIZE(1, 0)) * BP_SIZE(1, 0);
+                if (enemy.walkingDir == -1) {
+                    pos.x += BP_SIZE(1, 0);
+                }
+
+                // gap jumping enemies should fall down at the wall and not bounce off
+                if (enemy.isGapJumping) {
+                    if (isMushroom) {
+                        enemy.walkingDir *= -1;
+                    } else {
+                        enemy.walkingDir = 0;
+                    }
+
                 } else {
-                    enemy.walkingDir = 0;
-                }
-
-            } else {
-                enemy.walkingDir *= -1;
-
-                // check if enemy is in 2 space gap, in that case don't flip direction
-                pos.x -= velx;
-                if (collidesWithWall(registry, pos, collider)) {
                     enemy.walkingDir *= -1;
+
+                    // check if enemy is in 2 space gap, in that case don't flip direction
+                    pos.x -= velx;
+                    if (collidesWithWall(registry, pos, collider)) {
+                        enemy.walkingDir *= -1;
+                    }
+                    pos.x += velx;
                 }
-                pos.x += velx;
             }
         }
     }
