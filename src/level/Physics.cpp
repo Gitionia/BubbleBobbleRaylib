@@ -108,15 +108,15 @@ bool collidesWithDragonSpikes(entt::registry &registry, const Position &position
     const auto view = registry.view<Position, DragonTag>();
 
     for (const auto entity : view) {
-        auto [pos] = view.get(entity);
+        auto [otherPos] = view.get(entity);
 
         DragonSpikeCollider multiCollider = Colliders::dragonSpikeCollider;
-        if (pos.dir > 0) {
+        if (otherPos.dir > 0) {
             multiCollider.flipX(BP_SIZE(2, 0));
         }
 
         for (Collider &col : multiCollider.colliders) {
-            if (overlaps(position, collider, pos, col)) {
+            if (overlaps(position, collider, otherPos, col)) {
                 return true;
             }
         }
@@ -126,7 +126,7 @@ bool collidesWithDragonSpikes(entt::registry &registry, const Position &position
 }
 
 bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, EnemyTag>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    const auto view = registry.view<Position, EnemyTag>(entt::exclude<BubbleFloatComponent, BubblePopComponent, BossComponent>);
 
     for (const auto entity : view) {
         const auto [pos] = view.get(entity);
@@ -146,6 +146,20 @@ bool collidesWithEnemyProjectile(entt::registry &registry, const Position &posit
         const auto [otherPos] = view.get(entity);
 
         if (overlaps(position, collider, otherPos, Colliders::enemyProjectileCollider)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool collidesWithBoss(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, BossComponent>();
+
+    for (const auto entity : view) {
+        const auto [othePos, boss] = view.get(entity);
+
+        if (overlaps(position, collider, othePos, Colliders::bossCollider)) {
             return true;
         }
     }

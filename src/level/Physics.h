@@ -22,6 +22,7 @@ std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry,
 
 bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider);
 bool collidesWithEnemyProjectile(entt::registry &registry, const Position &position, const Collider &collider);
+bool collidesWithBoss(entt::registry &registry, const Position &position, const Collider &collider);
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos);
 

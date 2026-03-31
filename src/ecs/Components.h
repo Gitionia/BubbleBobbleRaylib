@@ -55,6 +55,7 @@ class Colliders {
                                                                 BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
 
     static inline const Collider enemyProjectileCollider{BP_SIZE(0, 12), BP_SIZE(1, 0), BP_SIZE(0, 10), BP_SIZE(0, 8)};
+    static inline const Collider bossCollider{BP_SIZE(8, 0), BP_SIZE(8, 0), BP_SIZE(0, 0), BP_SIZE(0, 0)};
 
   private:
     constexpr static inline int l = 17;            // length of flying collider

@@ -4,8 +4,8 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "../level/Level.h"
 #include "../level/GameModifiers.h"
+#include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 #include "raylib.h"
@@ -45,7 +45,7 @@ void DragonBehaviorSystem::Update() {
             renderData.SetColor(WHITE);
         }
 
-        if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider))) {
+        if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider) || collidesWithBoss(registry, pos, Colliders::fullActorCollider))) {
             Defer(entity, &makeDragonHit, 0);
             continue;
         }
