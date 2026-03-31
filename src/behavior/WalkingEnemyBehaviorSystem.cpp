@@ -62,9 +62,25 @@ void WalkingEnemyBehaviorSystem::Update() {
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
         const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::WITCH;
 
-        const int FREEZE_FOR_SHOOT_DURATION = 30;
-        const int SHOOTING_COOLDOWN = 80;
         const int FREEZE_FOR_JUMP_DURATION = 15;
+        int FREEZE_FOR_SHOOT_DURATION = 30;
+        int SHOOTING_COOLDOWN = 80;
+
+        if (info.type == EnemyType::GHOST) {
+            FREEZE_FOR_SHOOT_DURATION = 30;
+            SHOOTING_COOLDOWN = 80;
+
+        } else if (info.type == EnemyType::POTATO) {
+            FREEZE_FOR_SHOOT_DURATION = 30;
+            SHOOTING_COOLDOWN = 50;
+
+        } else if (info.type == EnemyType::WITCH) {
+            FREEZE_FOR_SHOOT_DURATION = 50;
+            SHOOTING_COOLDOWN = 120;
+
+        } else if (info.type == EnemyType::SNOWMAN) {
+            DBG_CHECK(false, "Not implemented");
+        }
 
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
@@ -165,7 +181,7 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (Random::Get().Chance(0.05f)) {
                 enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
-         
+
                 EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
             }
         }
