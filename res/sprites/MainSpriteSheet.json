@@ -15,6 +15,12 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Ghost-Shoot-6", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 187, "y": 278, "w": 23, "h": 16 }, "pivot": {"x": -14, "y": 0 } }] },
+   { "name": "Ghost-Shoot-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 162, "y": 278, "w": 21, "h": 16 }, "pivot": {"x": -10, "y": 0 } }] },
+   { "name": "Ghost-Shoot-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 140, "y": 278, "w": 18, "h": 16 }, "pivot": {"x": -4, "y": 0 } }] },
+   { "name": "Ghost-Shoot-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 120, "y": 278, "w": 16, "h": 16 } }] },
+   { "name": "Ghost-Shoot-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 100, "y": 278, "w": 16, "h": 16 } }] },
+   { "name": "Ghost-Shoot-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 81, "y": 278, "w": 16, "h": 16 } }] },
    { "name": "Ghost-Item-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 606, "y": 278, "w": 16, "h": 16 } }] },
    { "name": "Ghost-Item-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 583, "y": 278, "w": 16, "h": 16 } }] },
    { "name": "Ghost-Item-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 561, "y": 278, "w": 16, "h": 16 } }] },
