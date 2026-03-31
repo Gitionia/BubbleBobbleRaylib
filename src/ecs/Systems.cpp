@@ -12,6 +12,7 @@
 #include "../behavior/PopEnemyBubbleSystem.h"
 #include "../behavior/PositionAnimationBehaviorSystem.h"
 #include "../behavior/WalkingEnemyBehaviorSystem.h"
+#include "../behavior/EnemyProjectileBehaviorSystem.h"
 #include "../behavior/FlyingEnemyBehaviorSystem.h"
 #include "../behavior/WalkingActorBehaviorSystem.h"
 #include "../behavior/LevelInstantiatorSystem.h"
@@ -23,6 +24,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     : registry(registry) {
 
     registerSystem<WalkingEnemyBehaviorSystem>(registry, eventSystem);
+    registerSystem<EnemyProjectileBehaviorSystem>(registry, eventSystem);
     registerSystem<FlyingEnemyBehaviorSystem>(registry, eventSystem);
     registerSystem<PopEnemyBubbleSystem>(registry, eventSystem);
     registerSystem<EnemyTumbleBehaviorSystem>(registry, eventSystem);

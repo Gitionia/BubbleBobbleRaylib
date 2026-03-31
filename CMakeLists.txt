@@ -82,6 +82,8 @@ add_executable(BubbleBobbleRaylib
         src/behavior/WalkingActorBehaviorSystem.h
         src/behavior/WalkingEnemyBehaviorSystem.h
         src/behavior/ItemPickupBehaviorSystem.h
+        src/behavior/EnemyProjectileBehaviorSystem.h
+        src/behavior/EnemyProjectileBehaviorSystem.cpp
         src/behavior/WalkingActorUtils.cpp
         src/behavior/TitleScreenSystem.h
         src/behavior/TitleScreenSystem.cpp
