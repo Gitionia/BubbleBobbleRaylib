@@ -8,6 +8,7 @@ enum class ItemType {
     Melon,
     Grapes,
     Pineapple,
+    Shoe,
     ElementCount
 };
 
