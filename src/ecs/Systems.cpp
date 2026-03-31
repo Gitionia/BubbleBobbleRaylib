@@ -18,6 +18,7 @@
 #include "../behavior/LevelInstantiatorSystem.h"
 #include "../behavior/TitleScreenSystem.h"
 #include "../graphics/RendererSystem.h"
+#include "../level/GameModifiers.h"
 #include "SystemBase.h"
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
@@ -40,6 +41,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<GameplayWatcherSystem>(registry, eventSystem);
     registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
     registerSystem<TitleScreenSystem>(registry, eventSystem);
+    registerSystem<GameModifierData>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
 

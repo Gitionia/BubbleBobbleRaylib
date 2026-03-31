@@ -1,6 +1,7 @@
 #include "ItemPickupBehaviorSystem.h"
 #include "../level/Physics.h"
-#include <memory>
+#include "../level/GameModifiers.h"
+#include <cstdint>
 
 void ItemPickupBehaviorSystem::Update() {
     auto dragonView = registry.view<Position, DragonTag>(entt::exclude<DragonHitComponent>);
@@ -18,6 +19,11 @@ void ItemPickupBehaviorSystem::Update() {
                 Destroy(item);
 
                 eventSystem.Notify(dragon, POINTS_GAINED, GetItemPoints(itemComp.type));
+                
+                // for testing every item will give this effect for now
+                if (true || itemComp.type == ItemType::Shoe) {
+                    eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::SPEED_UP);
+                }
             }
         }
     }

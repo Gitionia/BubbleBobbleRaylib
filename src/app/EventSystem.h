@@ -9,6 +9,7 @@ enum EventType {
     INSTANTIATE_LEVEL,
     INSTANTIATE_GAME_UI,
     START_GAMEPLAY,
+    USING_GAME_MODIFIER,
     EventType_Count
 };
 

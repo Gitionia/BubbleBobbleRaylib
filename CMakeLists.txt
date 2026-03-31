@@ -106,6 +106,8 @@ add_executable(BubbleBobbleRaylib
         src/level/Physics.cpp
         src/level/Items.h
         src/level/Items.cpp
+        src/level/GameModifiers.h
+        src/level/GameModifiers.cpp
         src/utils/Debug.h
         src/utils/Debug.cpp
         src/utils/Input.cpp
