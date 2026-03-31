@@ -119,7 +119,7 @@ void WalkingEnemyBehaviorSystem::Update() {
                 } else {
                     // Most of the time choose direction to player
                     enemy.walkingDir = sign(dragonPos.X - pos.x);
-                    if (Random::Get().Chance(0.25f)) {
+                    if (Random::Get().Chance(0.33f)) {
                         enemy.walkingDir *= -1;
                     }
                 }
@@ -190,7 +190,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (isGrounded && !actor.isJumping() && !enemy.isFreezing()) {
 
             if (isMushroom) {
-                if (dragonIsAboveEnemy && Random::Get().Chance(0.92f) || dragonAtSameYPos && Random::Get().Chance(0.995f) || dragonIsBelowEnemy && Random::Get().Chance(0.95f)) {
+                if (dragonIsAboveEnemy && Random::Get().Chance(0.84f) || dragonAtSameYPos && Random::Get().Chance(0.92f) || dragonIsBelowEnemy && Random::Get().Chance(0.98f)) {
                     enemy.animator.Reset();
                     enemy.isGapJumping = true;
                     actor.jumpSpeed = GAP_JUMP_SPEED;
