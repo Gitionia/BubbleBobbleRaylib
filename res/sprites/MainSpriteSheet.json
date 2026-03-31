@@ -15,6 +15,12 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Projectile-Potato-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 7, "y": 477, "w": 16, "h": 16 } }] },
+   { "name": "Projectile-Potato-Spawn-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 28, "y": 477, "w": 10, "h": 16 }, "pivot": {"x": 12, "y": 0 } }] },
+   { "name": "Projectile-Potato-Spawn-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 477, "w": 9, "h": 16 }, "pivot": {"x": 14, "y": 0 } }] },
+   { "name": "Projectile-Potato-Spawn-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 57, "y": 477, "w": 7, "h": 16 }, "pivot": {"x": 18, "y": 0 } }] },
+   { "name": "Projectile-Potato-Spawn-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 69, "y": 477, "w": 3, "h": 16 }, "pivot": {"x": 26, "y": 0 } }] },
+   { "name": "Projectile-Potato-Spawn-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 78, "y": 477, "w": 2, "h": 16 }, "pivot": {"x": 28, "y": 0 } }] },
    { "name": "Potato-Item-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 384, "y": 455, "w": 16, "h": 16 } }] },
    { "name": "Potato-Item-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 366, "y": 455, "w": 16, "h": 16 } }] },
    { "name": "Potato-Item-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 348, "y": 455, "w": 16, "h": 16 } }] },
