@@ -11,6 +11,7 @@ enum class EnemyType {
     SNOWMAN,
     POTATO,
     WITCH,
+    BOSS
 };
 
 EnemyType GetEnemyTypeFromTile(LevelTileType tile);

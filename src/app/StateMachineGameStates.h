@@ -25,7 +25,7 @@ class GameplayState : public StateMachineState {
 
   private:
     Music *music;
-    int level = 1;
+    int level = 7;
 
     bool waitingForCounterToStartNewLevel = false;
     int counterTillStartNewLevel = 0;

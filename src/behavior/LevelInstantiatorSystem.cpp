@@ -36,6 +36,12 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
 
     level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", convertLevelNumber(levelNumber)));
     EntityFactory::CreateLevel(level, levelNumber);
+    const int bossLevel = 7;
+
+    if (levelNumber == bossLevel) {
+        EntityFactory::CreateEnemy(BP_SIZE(10, 0),BP_SIZE(12, 0), EnemyType::BOSS, Direction::Left);
+    }
+
     setPhysicsColliderData(level);
     auto dragon = EntityFactory::CreateDragon();
 }

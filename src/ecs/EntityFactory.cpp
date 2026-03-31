@@ -86,6 +86,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
     case EnemyType::POTATO:
     case EnemyType::SNOWMAN:
     case EnemyType::WITCH: {
+    case EnemyType::BOSS:
         registry->emplace<WalkingEnemyComponent>(enemy, GetIntFromDirection(direction), &GetAnimation(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL)));
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
         break;
@@ -111,7 +112,7 @@ entt::entity EntityFactory::CreateEnemyProjectile(int x, int y, int dir, EnemyTy
     registry->emplace<Position>(projectile, x, y, dir);
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
     registry->emplace<RenderData>(projectile, RenderData(GetSpriteHandle("Projectile-Ghost-1"), {2, 2}));
-    
+
     registry->emplace<EnemyProjectileComponent>(projectile, shooterEnemy, &GetAnimation(GetEnemyProjectileAnimationName(shooterEnemy)));
     registry->emplace<EnemyProjectileTag>(projectile);
 

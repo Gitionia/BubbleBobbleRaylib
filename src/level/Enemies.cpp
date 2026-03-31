@@ -82,6 +82,8 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Witch-Walk";
         case EnemyType::SNOWMAN:
             return "Snowman-Walk";
+        case EnemyType::BOSS:
+            return "Boss-Walk";
         }
         break;
 
@@ -96,6 +98,8 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Witch-Shoot";
         case EnemyType::SNOWMAN:
             return "Snowman-Walk";
+        case EnemyType::BOSS:
+            return "Boss-Walk";
 
         case EnemyType::CAN:
         case EnemyType::PURPLE_GHOST:
@@ -125,6 +129,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Witch-Bubbled";
         case EnemyType::SNOWMAN:
             return "Snowman-Bubbled";
+        case EnemyType::BOSS:
+            DBG_CHECK(false, "Not implemented yet!");
+            return "Can-Bubbled";
         }
         break;
 
@@ -147,6 +154,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Witch-Item";
         case EnemyType::SNOWMAN:
             return "Snowman-Item";
+        case EnemyType::BOSS:
+            DBG_CHECK(false, "Not implemented yet!");
+            return "Can-Item";
         }
         break;
     }
