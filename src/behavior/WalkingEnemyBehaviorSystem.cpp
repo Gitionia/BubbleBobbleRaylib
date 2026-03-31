@@ -22,11 +22,16 @@ void WalkingEnemyBehaviorSystem::Update() {
     const Collider &collider = Colliders::walkingActorCollider;
 
     static Animator canAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::CAN, EnemyAnimationType::NORMAL)));
-    static Animator mushAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL)));
+    static Animator ghostAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::GHOST, EnemyAnimationType::NORMAL)));
 
     canAnimator.Update();
     if (canAnimator.IsFinished()) {
         canAnimator.Reset();
+    }
+
+    ghostAnimator.Update();
+    if (ghostAnimator.IsFinished()) {
+        ghostAnimator.Reset();
     }
 
     bool foundDragon = false;
@@ -62,6 +67,9 @@ void WalkingEnemyBehaviorSystem::Update() {
         case EnemyType::CAN:
             renderData.spriteHandle = canAnimator.GetSpriteHandle();
             break;
+        case EnemyType::GHOST:
+            renderData.spriteHandle = ghostAnimator.GetSpriteHandle();
+            break;
         case EnemyType::MUSHROOM:
             // Create flapping animation by repeating the last to frames
             if (!enemy.animator.IsFinished()) {
@@ -71,7 +79,6 @@ void WalkingEnemyBehaviorSystem::Update() {
             }
             renderData.spriteHandle = enemy.animator.GetSpriteHandle();
             break;
-        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:

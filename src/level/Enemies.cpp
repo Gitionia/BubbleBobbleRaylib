@@ -44,7 +44,7 @@ Direction GetEnemyDirectionFromTile(LevelTileType tile) {
     case LevelTileType::ENEMY_SNOWMAN_LEFT:
     case LevelTileType::ENEMY_POTATO_LEFT:
     case LevelTileType::ENEMY_WITCH_LEFT:
-    return Direction::Left;
+        return Direction::Left;
     case LevelTileType::ENEMY_CAN_RIGHT:
     case LevelTileType::ENEMY_GHOST_RIGHT:
     case LevelTileType::ENEMY_PURPLE_RIGHT:
@@ -53,7 +53,7 @@ Direction GetEnemyDirectionFromTile(LevelTileType tile) {
     case LevelTileType::ENEMY_SNOWMAN_RIGHT:
     case LevelTileType::ENEMY_POTATO_RIGHT:
     case LevelTileType::ENEMY_WITCH_RIGHT:
-    return Direction::Right;
+        return Direction::Right;
     default:
         PRINT_ERROR("Tried to get direction of non-enemy tile. Maybe a level tilemap is incorrect?");
         return Direction::Left;
@@ -68,13 +68,14 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
 
         case EnemyType::CAN:
             return "Can-Walk";
+        case EnemyType::GHOST:
+            return "Ghost-Walk";
         case EnemyType::PURPLE_GHOST:
             return "Purple-Fly";
         case EnemyType::PIG:
             return "Pig-Fly";
         case EnemyType::MUSHROOM:
             return "Mushroom-Jump";
-        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:
@@ -86,13 +87,14 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
 
         case EnemyType::CAN:
             return "Can-Bubbled";
+        case EnemyType::GHOST:
+            return "Ghost-Bubbled";
         case EnemyType::PURPLE_GHOST:
             return "Purple-Bubbled";
         case EnemyType::PIG:
             return "Pig-Bubbled";
         case EnemyType::MUSHROOM:
             return "Mushroom-Bubbled";
-        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:
@@ -104,13 +106,14 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
 
         case EnemyType::CAN:
             return "Can-Item";
+        case EnemyType::GHOST:
+            return "Ghost-Item";
         case EnemyType::PURPLE_GHOST:
             return "Purple-Item";
         case EnemyType::PIG:
             return "Pig-Item";
         case EnemyType::MUSHROOM:
             return "Mushroom-Item";
-        case EnemyType::GHOST:
         case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
         case EnemyType::WITCH:
