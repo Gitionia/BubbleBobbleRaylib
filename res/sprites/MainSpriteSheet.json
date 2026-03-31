@@ -15,6 +15,7 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Projectile-Potato-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 87, "y": 477, "w": 16, "h": 16 } }] },
    { "name": "Projectile-Potato-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 7, "y": 477, "w": 16, "h": 16 } }] },
    { "name": "Projectile-Potato-Spawn-5", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 28, "y": 477, "w": 10, "h": 16 }, "pivot": {"x": 12, "y": 0 } }] },
    { "name": "Projectile-Potato-Spawn-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 43, "y": 477, "w": 9, "h": 16 }, "pivot": {"x": 14, "y": 0 } }] },

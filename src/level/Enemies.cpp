@@ -91,7 +91,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::GHOST:
             return "Ghost-Shoot";
         case EnemyType::POTATO:
-            return "Potato-Walk";   // Potato has no special animation for shooting
+            return "Potato-Walk"; // Potato has no special animation for shooting
         case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
@@ -156,8 +156,9 @@ const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
 
     case EnemyType::GHOST:
         return "Projectile-Ghost";
-    case EnemyType::SNOWMAN:
     case EnemyType::POTATO:
+        return "Projectile-Potato";
+    case EnemyType::SNOWMAN:
     case EnemyType::WITCH:
         PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
         return GetEnemyProjectileAnimationName(EnemyType::GHOST);
