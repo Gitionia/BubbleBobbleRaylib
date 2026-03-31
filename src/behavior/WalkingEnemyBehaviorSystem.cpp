@@ -80,7 +80,19 @@ void WalkingEnemyBehaviorSystem::Update() {
         }
 
         int velx = 0;
-        int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
+
+        int moveSpeed = 2;
+        if (info.type == EnemyType::SNOWMAN) {
+            moveSpeed = BP_SIZE(0, 4);
+        
+            // snowman should always have pos.x be multiple of 4, so it can fit into 2 space gaps
+            if (pos.x % 4 != 0) {
+                pos.x = (pos.x / 4) * 4;
+            }
+
+        } else {
+            moveSpeed = BP_SIZE(0, 2);
+        }
 
         const int FALL_SPEED = 2 * UNITS_PER_BLOCK / 16;
         const int NORMAL_JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
