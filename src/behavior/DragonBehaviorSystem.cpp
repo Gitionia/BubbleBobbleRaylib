@@ -5,6 +5,7 @@
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
 #include "../level/Level.h"
+#include "../level/GameModifiers.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
 #include "raylib.h"
@@ -55,6 +56,12 @@ void DragonBehaviorSystem::Update() {
         bool jump = Input::IsKeyDown(Key::Jump);
 
         int moveSpeed = UNITS_PER_BLOCK / 16;
+        if (GameModifierData::IsModifierSet(ModifierTypes::SPEED_UP)) {
+            moveSpeed *= 2;
+
+            pos.x = (pos.x / 2) * 2;
+        }
+
         int velx = moveSpeed * inputDir;
 
         bool startedShootingAnimation = false;
