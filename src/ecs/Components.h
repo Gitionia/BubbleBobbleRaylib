@@ -233,6 +233,12 @@ struct FlyingEnemyComponent {
     }
 };
 
+struct BossComponent {
+    Animator animator;
+    int xDir = -1;
+    int yDir = -1;
+};
+
 struct WalkingEnemyComponent {
     int walkingDir;
     Animator animator;
