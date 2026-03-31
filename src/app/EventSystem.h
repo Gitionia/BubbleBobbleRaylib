@@ -10,6 +10,7 @@ enum EventType {
     INSTANTIATE_GAME_UI,
     START_GAMEPLAY,
     USING_GAME_MODIFIER,
+    PLAYER_DIED,
     EventType_Count
 };
 

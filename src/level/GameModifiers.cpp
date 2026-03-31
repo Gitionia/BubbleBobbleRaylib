@@ -2,10 +2,14 @@
 
 static std::array<bool, (size_t)ModifierTypes::Count> g_modifierValues;
 
-void GameModifierData::Init() {
+static void resetModifiers() {
     for (int i = 0; i < (int)ModifierTypes::Count; i++) {
         g_modifierValues.at(i) = false;
     }
+}
+
+void GameModifierData::Init() {
+    resetModifiers();
 }
 
 void GameModifierData::Update() {
@@ -16,6 +20,10 @@ void GameModifierData::Update() {
 
             PRINT_INFO("Picked up Modifier {}", event.data);
         }
+    }
+
+    if (eventSystem.ReadEvent(PLAYER_DIED).size()) {
+        resetModifiers();
     }
 }
 

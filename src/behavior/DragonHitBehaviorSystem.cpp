@@ -7,6 +7,11 @@
 #include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
+#include "entt/entity/fwd.hpp"
+
+static void makeNewDragon(entt::registry &registry, entt::entity e) {
+    EntityFactory::CreateDragon(true);
+}
 
 void DragonHitBehaviorSystem::Init() {
 }
@@ -39,7 +44,8 @@ void DragonHitBehaviorSystem::Update() {
 
                 } else {
                     Destroy(entity);
-                    EntityFactory::CreateDragon(true);
+                    Defer((entt::entity)0, &makeNewDragon, 0);
+                    eventSystem.Notify(entity, PLAYER_DIED, 0);
                 }
             }
         }
