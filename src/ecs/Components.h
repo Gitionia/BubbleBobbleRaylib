@@ -54,7 +54,7 @@ class Colliders {
     static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
                                                                 BP_SIZE(2, 0), BP_SIZE(0, 4), 0, BP_SIZE(2, -6)};
 
-    static inline const Collider enemyProjectileCollider{BP_SIZE(0, 28), BP_SIZE(1, 0), BP_SIZE(0, 2), BP_SIZE(0, 8)};
+    static inline const Collider enemyProjectileCollider{BP_SIZE(0, 12), BP_SIZE(1, 0), BP_SIZE(0, 10), BP_SIZE(0, 8)};
 
   private:
     constexpr static inline int l = 17;            // length of flying collider
