@@ -27,8 +27,7 @@ void DragonBehaviorSystem::Update() {
 #ifdef DEBUG_TOOLS
         if (Input::IsKeyPressed(KEY_U)) {
             dragon.invincibilityFramesLeft = 60 * 30;
-        }
-        else if (Input::IsKeyPressed(KEY_Y)) {
+        } else if (Input::IsKeyPressed(KEY_Y)) {
             dragon.invincibilityFramesLeft = 60 * 1000;
         }
 #endif
@@ -45,7 +44,7 @@ void DragonBehaviorSystem::Update() {
             renderData.SetColor(WHITE);
         }
 
-        if (!dragon.isInvincible() && collidesWithEnemy(registry, pos, Colliders::fullActorCollider)) {
+        if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider))) {
             Defer(entity, &makeDragonHit, 0);
             continue;
         }

@@ -139,6 +139,20 @@ bool collidesWithEnemy(entt::registry &registry, const Position &position, const
     return false;
 }
 
+bool collidesWithEnemyProjectile(entt::registry &registry, const Position &position, const Collider &collider) {
+    const auto view = registry.view<Position, EnemyProjectileTag>();
+
+    for (const auto entity : view) {
+        const auto [otherPos] = view.get(entity);
+
+        if (overlaps(position, collider, otherPos, Colliders::enemyProjectileCollider)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // template bool collidesWithCollider<DragonSpikeCollider>(entt::registry& registry, const Position& position, const Collider& collider);
 template bool collidesWithCollider<BubbleJumpableTopCollider>(entt::registry &registry, const Position &position, const Collider &collider);
 

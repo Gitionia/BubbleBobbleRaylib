@@ -12,7 +12,7 @@ void EnemyProjectileBehaviorSystem::Init() {
 
 void EnemyProjectileBehaviorSystem::Update() {
 
-    const Collider &collider = Colliders::projectileCollider;
+    const Collider &collider = Colliders::enemyProjectileCollider;
 
     auto view = registry.view<Position, EnemyProjectileComponent, RenderData>();
     for (auto entity : view) {
@@ -24,7 +24,7 @@ void EnemyProjectileBehaviorSystem::Update() {
         }
         renderData.spriteHandle = projectile.animator.GetSpriteHandle();
 
-        const int shootVelocity = BP_SIZE(0, 2);
+        const int shootVelocity = BP_SIZE(0, 3);
 
         pos.x += shootVelocity * pos.dir;
 

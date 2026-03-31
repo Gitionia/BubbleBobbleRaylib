@@ -21,6 +21,7 @@ bool collidesWithJumpableBubble(entt::registry &registry, const Position &positi
 std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry, const Position &position, const Collider &collider);
 
 bool collidesWithEnemy(entt::registry &registry, const Position &position, const Collider &collider);
+bool collidesWithEnemyProjectile(entt::registry &registry, const Position &position, const Collider &collider);
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos);
 
