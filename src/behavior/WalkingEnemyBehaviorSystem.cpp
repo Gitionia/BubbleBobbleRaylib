@@ -134,11 +134,13 @@ void WalkingEnemyBehaviorSystem::Update() {
 
             if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
                 enemy.shootCooldown = SHOOTING_COOLDOWN;
+                enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::NORMAL)));
             }
 
         } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.shootCooldown == 0) {
             if (Random::Get().Chance(0.05f)) {
                 enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
+                enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
             }
         }
 

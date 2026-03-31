@@ -82,6 +82,28 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Walk";
         }
+        break;
+
+    case EnemyAnimationType::SHOOTING:
+        switch (enemyType) {
+
+        case EnemyType::GHOST:
+            return "Ghost-Shoot";
+        case EnemyType::SNOWMAN:
+        case EnemyType::POTATO:
+        case EnemyType::WITCH:
+            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
+            return "Ghost-Shoot";
+
+        case EnemyType::CAN:
+        case EnemyType::PURPLE_GHOST:
+        case EnemyType::PIG:
+        case EnemyType::MUSHROOM:
+            PRINT_ERROR("Enemy {} has no shooting animation {}:{}", (int)enemyType, __FILE__, __LINE__);
+            return "Ghost-Shoot";
+        }
+        break;
+
     case EnemyAnimationType::BUBBLED:
         switch (enemyType) {
 
@@ -101,6 +123,8 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Bubbled";
         }
+        break;
+
     case EnemyAnimationType::ITEM:
         switch (enemyType) {
 

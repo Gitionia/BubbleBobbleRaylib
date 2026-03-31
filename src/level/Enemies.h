@@ -18,6 +18,7 @@ Direction GetEnemyDirectionFromTile(LevelTileType tile);
 
 enum class EnemyAnimationType {
     NORMAL,
+    SHOOTING,
     BUBBLED,
     ITEM
 };
