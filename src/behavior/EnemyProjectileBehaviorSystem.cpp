@@ -54,38 +54,49 @@ void EnemyProjectileBehaviorSystem::Update() {
 
         int velocity = shootSpeed * pos.dir;
 
+        // Snowman projectile simply moves downwards
+        if (projectile.shooterType == EnemyType::SNOWMAN) {
+            pos.y += shootSpeed;
+
+            if (pos.y >= BP_SIZE(LevelTilemap::HEIGHT, 0)) {
+                Destroy(entity);
+            }
+        }
         // Reversing only happens for with projectiles (when they hit a wall or traveled maxDistance)
-        if (projectile.state == EnemyProjectileComponent::SHOOTING_REVERSING) {
+        else if (projectile.state == EnemyProjectileComponent::SHOOTING_REVERSING) {
             pos.x -= velocity;
             // check if witch projectile reached its starting position and if so, destroy projectile
             if (pos.dir > 0 && pos.x <= projectile.xPosStartPosition || pos.dir < 0 && pos.x >= projectile.xPosStartPosition) {
                 Destroy(entity);
             }
 
-        // Normally travel forwards
+            // Normally travel forwards
         } else if (projectile.state != EnemyProjectileComponent::DESTROYED) {
             pos.x += velocity;
         }
 
-        projectile.distanceMoved += shootSpeed;
+        // Move in x-direction (ignore snowman)
+        if (projectile.shooterType != EnemyType::SNOWMAN) {
+            projectile.distanceMoved += shootSpeed;
 
-        // Check if hit wall or traveled maxDistance
-        if (((projectile.distanceMoved > maxDistance && projectile.state != EnemyProjectileComponent::SHOOTING_REVERSING) || collidesWithWall(registry, pos, collider)) && projectile.state != EnemyProjectileComponent::DESTROYED) {
-            pos.x -= velocity;
+            // Check if hit wall or traveled maxDistance
+            if (((projectile.distanceMoved > maxDistance && projectile.state != EnemyProjectileComponent::SHOOTING_REVERSING) || collidesWithWall(registry, pos, collider)) && projectile.state != EnemyProjectileComponent::DESTROYED) {
+                pos.x -= velocity;
 
-            if (projectile.shooterType == EnemyType::GHOST) {
-                projectile.animator.SetNewAnimation(&GetAnimation("Projectile-Ghost-Destroy"));
-                projectile.state = EnemyProjectileComponent::DESTROYED;
+                if (projectile.shooterType == EnemyType::GHOST) {
+                    projectile.animator.SetNewAnimation(&GetAnimation("Projectile-Ghost-Destroy"));
+                    projectile.state = EnemyProjectileComponent::DESTROYED;
 
-                Defer(entity, &makeProjectileDestroyed, 0);
+                    Defer(entity, &makeProjectileDestroyed, 0);
 
-            } else if (projectile.shooterType == EnemyType::WITCH) {
-                projectile.state = EnemyProjectileComponent::SHOOTING_REVERSING;
-            }
+                } else if (projectile.shooterType == EnemyType::WITCH) {
+                    projectile.state = EnemyProjectileComponent::SHOOTING_REVERSING;
+                }
 
-            else {
-                Destroy(entity);
-                continue;
+                else {
+                    Destroy(entity);
+                    continue;
+                }
             }
         }
     }
