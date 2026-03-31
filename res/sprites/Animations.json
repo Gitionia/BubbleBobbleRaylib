@@ -23,6 +23,11 @@
     { "name" : "Potato-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Potato-Item", "FramesPerSprite" : 5 },
 
+    { "name" : "Witch-Walk", "FramesPerSprite" : 7 },
+    { "name" : "Witch-Shoot", "FramesPerSprite" : 7 },
+    { "name" : "Witch-Bubbled", "FramesPerSprite" : 18 },
+    { "name" : "Witch-Item", "FramesPerSprite" : 5 },
+
     { "name" : "Mushroom-Jump", "FramesPerSprite" : 7 },
     { "name" : "Mushroom-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Mushroom-Item", "FramesPerSprite" : 5 },
@@ -38,7 +43,6 @@
     { "name" : "Projectile-Ghost", "FramesPerSprite" : 5 },
     { "name" : "Projectile-Ghost-Destroy", "FramesPerSprite" : 5 },
     
-    { "name" : "Projectile-Potato-Spawn", "FramesPerSprite" : 5 },
     { "name" : "Projectile-Potato", "FramesPerSprite" : 5 },
     
     { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },
