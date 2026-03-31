@@ -202,12 +202,12 @@ void WalkingEnemyBehaviorSystem::Update() {
                 }
 
             } else {
-                if (shouldGapJump && (dragonIsAboveEnemy && Random::Get().Chance(0.02f) || dragonAtSameYPos && (Random::Get().Chance(0.05f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.01f)))) {
+                if (shouldGapJump && (dragonIsAboveEnemy && Random::Get().Chance(0.05f) || dragonAtSameYPos && (Random::Get().Chance(0.08f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.015f)))) {
                     enemy.isGapJumping = true;
                     actor.jumpSpeed = GAP_JUMP_SPEED;
                     actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-                } else if (dragonIsAboveEnemy && Random::Get().Chance(0.01f) || dragonAtSameYPos && (Random::Get().Chance(0.005f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.005f))) {
+                } else if (dragonIsAboveEnemy && Random::Get().Chance(0.011f) || dragonAtSameYPos && (Random::Get().Chance(0.005f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.005f))) {
                     enemy.isGapJumping = false;
                     enemy.jumpTurnAroundsCount = 3;
                     enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
