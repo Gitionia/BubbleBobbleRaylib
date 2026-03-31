@@ -76,8 +76,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Pig-Fly";
         case EnemyType::MUSHROOM:
             return "Mushroom-Jump";
-        case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
+            return "Potato-Walk";
+        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Walk";
@@ -89,8 +90,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
 
         case EnemyType::GHOST:
             return "Ghost-Shoot";
-        case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
+            return "Potato-Walk";   // Potato has no special animation for shooting
+        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Ghost-Shoot";
@@ -117,8 +119,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Pig-Bubbled";
         case EnemyType::MUSHROOM:
             return "Mushroom-Bubbled";
-        case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
+            return "Potato-Bubbled";
+        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Bubbled";
@@ -138,8 +141,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Pig-Item";
         case EnemyType::MUSHROOM:
             return "Mushroom-Item";
-        case EnemyType::SNOWMAN:
         case EnemyType::POTATO:
+            return "Potato-Item";
+        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Item";
@@ -157,7 +161,7 @@ const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
     case EnemyType::WITCH:
         PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
         return GetEnemyProjectileAnimationName(EnemyType::GHOST);
-        
+
     default:
         PRINT_ERROR("Projectile of enemy of type {} has no animation");
         return GetEnemyProjectileAnimationName(EnemyType::GHOST);
