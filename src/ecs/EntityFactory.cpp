@@ -86,7 +86,7 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
     case EnemyType::POTATO:
     case EnemyType::SNOWMAN:
     case EnemyType::WITCH: {
-        registry->emplace<WalkingEnemyComponent>(enemy, GetIntFromDirection(direction));
+        registry->emplace<WalkingEnemyComponent>(enemy, GetIntFromDirection(direction), &GetAnimation(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL)));
         registry->emplace<WalkingActorComponent>(enemy, UNITS_PER_BLOCK / 16, 3 * UNITS_PER_BLOCK / 16);
         break;
     }

@@ -233,8 +233,7 @@ struct FlyingEnemyComponent {
 
 struct WalkingEnemyComponent {
     int walkingDir;
-    // We only use a custom animator for the mushroom enemy to sync its animation with the jumps
-    Animator animator{&GetAnimation(GetEnemyAnimationName(EnemyType::MUSHROOM, EnemyAnimationType::NORMAL))};
+    Animator animator;
     bool isGapJumping = false;
 };
 

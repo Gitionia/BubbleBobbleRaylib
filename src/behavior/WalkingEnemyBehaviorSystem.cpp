@@ -21,19 +21,6 @@ void WalkingEnemyBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    static Animator canAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::CAN, EnemyAnimationType::NORMAL)));
-    static Animator ghostAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::GHOST, EnemyAnimationType::NORMAL)));
-
-    canAnimator.Update();
-    if (canAnimator.IsFinished()) {
-        canAnimator.Reset();
-    }
-
-    ghostAnimator.Update();
-    if (ghostAnimator.IsFinished()) {
-        ghostAnimator.Reset();
-    }
-
     bool foundDragon = false;
     Vector2Int dragonPos = {-1000, 0};
     auto dragonView = registry.view<Position, DragonTag>();
@@ -62,32 +49,12 @@ void WalkingEnemyBehaviorSystem::Update() {
             continue;
         }
 
-        switch (info.type) {
 
-        case EnemyType::CAN:
-            renderData.spriteHandle = canAnimator.GetSpriteHandle();
-            break;
-        case EnemyType::GHOST:
-            renderData.spriteHandle = ghostAnimator.GetSpriteHandle();
-            break;
-        case EnemyType::MUSHROOM:
-            // Create flapping animation by repeating the last to frames
-            if (!enemy.animator.IsFinished()) {
-                enemy.animator.Update();
-            } else {
-                enemy.animator.GoToIndex(enemy.animator.GetAnimationSpriteCount() - 2);
-            }
-            renderData.spriteHandle = enemy.animator.GetSpriteHandle();
-            break;
-        case EnemyType::SNOWMAN:
-        case EnemyType::POTATO:
-        case EnemyType::WITCH:
-            PRINT_WARN("Animator for walking enemy {} is not implemented yet!", (int)info.type);
-            break;
-        default:
-            PRINT_WARN("Walking enemy has enemy type {}, which is not a walking enemy type!", (int)info.type);
-            break;
+        enemy.animator.Update();
+        if (enemy.animator.IsFinished()) {
+            enemy.animator.Reset();
         }
+        renderData.spriteHandle = enemy.animator.GetSpriteHandle();
 
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
 
