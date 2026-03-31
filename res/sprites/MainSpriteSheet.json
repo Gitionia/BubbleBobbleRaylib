@@ -15,6 +15,9 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Projectile-Ghost-Destroy-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 114, "y": 299, "w": 16, "h": 16 } }] },
+   { "name": "Projectile-Ghost-Destroy-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 96, "y": 299, "w": 16, "h": 16 } }] },
+   { "name": "Projectile-Ghost-Destroy-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 78, "y": 299, "w": 16, "h": 16 } }] },
    { "name": "Projectile-Ghost-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 59, "y": 299, "w": 16, "h": 16 } }] },
    { "name": "Projectile-Ghost-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 41, "y": 299, "w": 16, "h": 16 } }] },
    { "name": "Projectile-Ghost-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 24, "y": 299, "w": 16, "h": 16 } }] },
