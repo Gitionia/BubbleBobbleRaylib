@@ -18,6 +18,11 @@
     { "name" : "Ghost-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Ghost-Item", "FramesPerSprite" : 5 },
 
+    { "name" : "Potato-Walk", "FramesPerSprite" : 7 },
+    { "name" : "Potato-Shoot", "FramesPerSprite" : 7 },
+    { "name" : "Potato-Bubbled", "FramesPerSprite" : 18 },
+    { "name" : "Potato-Item", "FramesPerSprite" : 5 },
+
     { "name" : "Mushroom-Jump", "FramesPerSprite" : 7 },
     { "name" : "Mushroom-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Mushroom-Item", "FramesPerSprite" : 5 },
