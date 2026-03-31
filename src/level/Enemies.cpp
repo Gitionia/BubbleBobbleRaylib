@@ -78,8 +78,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Mushroom-Jump";
         case EnemyType::POTATO:
             return "Potato-Walk";
-        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
+            return "Witch-Walk";
+        case EnemyType::SNOWMAN:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Walk";
         }
@@ -92,8 +93,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Ghost-Shoot";
         case EnemyType::POTATO:
             return "Potato-Walk"; // Potato has no special animation for shooting
-        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
+            return "Witch-Shoot";
+        case EnemyType::SNOWMAN:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Ghost-Shoot";
 
@@ -121,8 +123,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Mushroom-Bubbled";
         case EnemyType::POTATO:
             return "Potato-Bubbled";
-        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
+            return "Witch-Bubbled";
+        case EnemyType::SNOWMAN:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Bubbled";
         }
@@ -143,8 +146,9 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
             return "Mushroom-Item";
         case EnemyType::POTATO:
             return "Potato-Item";
-        case EnemyType::SNOWMAN:
         case EnemyType::WITCH:
+            return "Witch-Item";
+        case EnemyType::SNOWMAN:
             PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
             return "Can-Item";
         }
@@ -158,8 +162,9 @@ const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
         return "Projectile-Ghost";
     case EnemyType::POTATO:
         return "Projectile-Potato";
-    case EnemyType::SNOWMAN:
     case EnemyType::WITCH:
+        return "Projectile-Witch";
+    case EnemyType::SNOWMAN:
         PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
         return GetEnemyProjectileAnimationName(EnemyType::GHOST);
 

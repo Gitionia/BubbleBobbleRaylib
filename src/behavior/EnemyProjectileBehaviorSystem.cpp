@@ -41,6 +41,10 @@ void EnemyProjectileBehaviorSystem::Update() {
             shootSpeed = BP_SIZE(0, 3);
         } else if (projectile.shooterType == EnemyType::POTATO) {
             shootSpeed = BP_SIZE(0, 4);
+        } else if (projectile.shooterType == EnemyType::WITCH) {
+            shootSpeed = BP_SIZE(0, 5);
+        } else {
+            DBG_CHECK(false, "Not implemented");
         }
 
         int velocity = shootSpeed * pos.dir;
