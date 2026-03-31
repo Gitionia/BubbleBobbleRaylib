@@ -259,6 +259,10 @@ struct WalkingEnemyComponent {
     int jumpTurnAroundsCount = 0;
 };
 
+struct EnemyProjectileComponent {
+    Animator animator;
+};
+
 struct EnemyTumbleComponent {
     Animator animator;
 
@@ -425,6 +429,7 @@ struct LevelTileShadowTag {};
 struct DragonTag {};
 struct BubbleTag {};
 struct EnemyTag {};
+struct EnemyProjectileTag {};
 struct EnemyTumbleTag {};
 struct ItemTag {};
 struct InGameTextTag {};
