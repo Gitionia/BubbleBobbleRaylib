@@ -20,16 +20,35 @@ void EnemyProjectileBehaviorSystem::Update() {
 
         projectile.animator.Update();
         if (projectile.animator.IsFinished()) {
+            if (projectile.state == EnemyProjectileComponent::DESTROYED) {
+                Destroy(entity);
+                continue;
+            }
+
             projectile.animator.Reset();
         }
         renderData.spriteHandle = projectile.animator.GetSpriteHandle();
 
-        const int shootVelocity = BP_SIZE(0, 3);
 
-        pos.x += shootVelocity * pos.dir;
 
-        if (collidesWithWall(registry, pos, collider)) {
-            Destroy(entity);
+        const int shootSpeed = BP_SIZE(0, 3);
+        int velocity = shootSpeed * pos.dir;
+
+        if (projectile.state != EnemyProjectileComponent::DESTROYED) {
+            pos.x += velocity;
+        }
+
+        if (collidesWithWall(registry, pos, collider) && projectile.state != EnemyProjectileComponent::DESTROYED) {
+            pos.x -= velocity;
+
+            if (projectile.shooterType == EnemyType::GHOST) {
+                projectile.animator.SetNewAnimation(&GetAnimation("Projectile-Ghost-Destroy"));
+                projectile.state = EnemyProjectileComponent::DESTROYED;
+            } 
+            else {
+                Destroy(entity);
+                continue;
+            }
         }
     }
 }

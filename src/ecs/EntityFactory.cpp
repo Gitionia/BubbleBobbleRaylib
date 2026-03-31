@@ -112,7 +112,7 @@ entt::entity EntityFactory::CreateEnemyProjectile(int x, int y, int dir, EnemyTy
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
     registry->emplace<RenderData>(projectile, RenderData(GetSpriteHandle("Projectile-Ghost-1"), {2, 2}));
     
-    registry->emplace<EnemyProjectileComponent>(projectile, &GetAnimation(GetEnemyProjectileAnimationName(shooterEnemy)));
+    registry->emplace<EnemyProjectileComponent>(projectile, shooterEnemy, &GetAnimation(GetEnemyProjectileAnimationName(shooterEnemy)));
     registry->emplace<EnemyProjectileTag>(projectile);
 
     registry->emplace<GameplayEntityTag>(projectile);

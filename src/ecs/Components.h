@@ -262,7 +262,13 @@ struct WalkingEnemyComponent {
 };
 
 struct EnemyProjectileComponent {
+    EnemyType shooterType;
     Animator animator;
+    enum State {
+        SHOOTING,
+        DESTROYED
+    };
+    State state = EnemyProjectileComponent::SHOOTING;
 };
 
 struct EnemyTumbleComponent {
