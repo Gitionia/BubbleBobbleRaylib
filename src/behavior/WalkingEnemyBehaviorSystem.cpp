@@ -50,7 +50,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         }
 
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
-        const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::WITCH;
+        const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::SNOWMAN || info.type == EnemyType::WITCH;
 
         const int FREEZE_FOR_JUMP_DURATION = 15;
         int FREEZE_FOR_SHOOT_DURATION = 30;

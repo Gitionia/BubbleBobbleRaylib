@@ -48,8 +48,8 @@ void EnemyProjectileBehaviorSystem::Update() {
         } else if (projectile.shooterType == EnemyType::WITCH) {
             shootSpeed = BP_SIZE(0, 5);
             maxDistance = BP_SIZE(14, 0);
-        } else {
-            DBG_CHECK(false, "Not implemented");
+        } else if (projectile.shooterType == EnemyType::SNOWMAN) {
+            shootSpeed = BP_SIZE(0, 4);
         }
 
         int velocity = shootSpeed * pos.dir;
