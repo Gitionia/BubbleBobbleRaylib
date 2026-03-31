@@ -60,6 +60,7 @@ void WalkingEnemyBehaviorSystem::Update() {
 
         const int FREEZE_FOR_SHOOT_DURATION = 30;
         const int SHOOTING_COOLDOWN = 80;
+        const int FREEZE_FOR_JUMP_DURATION = 15;
 
         int velx = 0;
         int moveSpeed = 2 * UNITS_PER_BLOCK / 16;
@@ -135,6 +136,19 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
                 enemy.shootCooldown = SHOOTING_COOLDOWN;
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::NORMAL)));
+            
+            } else if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_JUMP) {
+                // Turn around and check if this was the last turn around before the jump.
+                // If so then jump, otherwise freeze again
+                enemy.walkingDir *= -1;
+                enemy.jumpTurnAroundsCount--;
+
+                if (enemy.jumpTurnAroundsCount == 0) {
+                    actor.jumpSpeed = NORMAL_JUMP_SPEED;
+                    actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
+                } else {
+                    enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
+                }
             }
 
         } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.shootCooldown == 0) {
@@ -179,8 +193,8 @@ void WalkingEnemyBehaviorSystem::Update() {
 
             } else if (Random::Get().Chance(chanceMultiplier * 0.004f)) {
                 enemy.isGapJumping = false;
-                actor.jumpSpeed = NORMAL_JUMP_SPEED;
-                actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
+                enemy.jumpTurnAroundsCount = 3;
+                enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
             }
         }
 

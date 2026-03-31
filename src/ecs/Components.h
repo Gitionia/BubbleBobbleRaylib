@@ -255,6 +255,8 @@ struct WalkingEnemyComponent {
     }
 
     int shootCooldown = 0;
+
+    int jumpTurnAroundsCount = 0;
 };
 
 struct EnemyTumbleComponent {
