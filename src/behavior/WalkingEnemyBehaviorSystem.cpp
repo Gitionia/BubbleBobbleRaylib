@@ -73,7 +73,9 @@ void WalkingEnemyBehaviorSystem::Update() {
             SHOOTING_COOLDOWN = 240;
 
         } else if (info.type == EnemyType::SNOWMAN) {
-            DBG_CHECK(false, "Not implemented");
+            FREEZE_FOR_SHOOT_DURATION = 10;
+            FREEZE_TIME_TO_SHOOT = 0;
+            SHOOTING_COOLDOWN = 20;
         }
 
         int velx = 0;

@@ -81,8 +81,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::WITCH:
             return "Witch-Walk";
         case EnemyType::SNOWMAN:
-            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
-            return "Can-Walk";
+            return "Snowman-Walk";
         }
         break;
 
@@ -126,8 +125,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::WITCH:
             return "Witch-Bubbled";
         case EnemyType::SNOWMAN:
-            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
-            return "Can-Bubbled";
+            return "Snowman-Bubbled";
         }
         break;
 
@@ -149,8 +147,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::WITCH:
             return "Witch-Item";
         case EnemyType::SNOWMAN:
-            PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
-            return "Can-Item";
+            return "Snowman-Item";
         }
         break;
     }
