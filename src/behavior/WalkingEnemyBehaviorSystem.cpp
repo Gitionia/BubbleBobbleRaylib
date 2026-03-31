@@ -190,7 +190,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (isGrounded && !actor.isJumping() && !enemy.isFreezing()) {
 
             if (isMushroom) {
-                if (dragonIsAboveEnemy && Random::Get().Chance(0.01f)) {
+                if (dragonIsAboveEnemy && Random::Get().Chance(0.92f) || dragonAtSameYPos && Random::Get().Chance(0.995f) || dragonIsBelowEnemy && Random::Get().Chance(0.95f)) {
                     enemy.animator.Reset();
                     enemy.isGapJumping = true;
                     actor.jumpSpeed = GAP_JUMP_SPEED;
