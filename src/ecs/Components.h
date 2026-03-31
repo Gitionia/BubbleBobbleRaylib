@@ -266,9 +266,12 @@ struct EnemyProjectileComponent {
     Animator animator;
     enum State {
         SHOOTING,
+        SHOOTING_REVERSING,
         DESTROYED
     };
     State state = EnemyProjectileComponent::SHOOTING;
+    int distanceMoved = 0;
+    int xPosStartPosition = -100000;
 };
 
 struct EnemyTumbleComponent {
