@@ -430,6 +430,8 @@ struct DebugRectangle {
 };
 
 struct EnemyBubblePoppedTag {};
+struct EnemyProjectileInDestroyedAnimationTag {};
+
 struct DestroyEntity {};
 
 struct LevelTileTag {};

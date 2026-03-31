@@ -140,7 +140,7 @@ bool collidesWithEnemy(entt::registry &registry, const Position &position, const
 }
 
 bool collidesWithEnemyProjectile(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, EnemyProjectileTag>();
+    const auto view = registry.view<Position, EnemyProjectileTag>(entt::exclude<EnemyProjectileInDestroyedAnimationTag>);
 
     for (const auto entity : view) {
         const auto [otherPos] = view.get(entity);
