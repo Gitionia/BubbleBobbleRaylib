@@ -50,6 +50,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         }
 
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
+        const bool isSnowman = info.type == EnemyType::SNOWMAN;
         const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::SNOWMAN || info.type == EnemyType::WITCH;
 
         const int FREEZE_FOR_JUMP_DURATION = 15;
@@ -75,7 +76,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         } else if (info.type == EnemyType::SNOWMAN) {
             FREEZE_FOR_SHOOT_DURATION = 10;
             FREEZE_TIME_TO_SHOOT = 0;
-            SHOOTING_COOLDOWN = 20;
+            SHOOTING_COOLDOWN = 10;
         }
 
         int velx = 0;
@@ -100,7 +101,6 @@ void WalkingEnemyBehaviorSystem::Update() {
 
         actor.fallSpeed = FALL_SPEED;
 
-        
         if (enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_JUMP || (enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT && enemy.freezeXPosDuration < FREEZE_TIME_TO_SHOOT)) {
 
             enemy.animator.GoToIndex(0);
@@ -189,16 +189,29 @@ void WalkingEnemyBehaviorSystem::Update() {
                 }
             }
 
-        } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.freezeXPosDuration == 0 && enemy.shootCooldown == 0) {
-            if (Random::Get().Chance(0.05f)) {
-                enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
-                enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
+            // else (not frozen): check if should start shooting
+        } else if (isSnowman) {
+            if (enemy.freezeXPosDuration == 0 && enemy.shootCooldown == 0) {
+                // snowman doesn't freeze while shooting (obviously!)
+                if (Random::Get().Chance(0.01f)) {
+                    enemy.shootCooldown = SHOOTING_COOLDOWN;
+                    EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
+                }
+            }
+        } else {
+            if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.freezeXPosDuration == 0 && enemy.shootCooldown == 0) {
+                if (Random::Get().Chance(0.05f)) {
+                    enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
+                    enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
+                }
             }
         }
 
         // check if should gap jump (mushrooms should always gap jump)
         if (isGrounded && !enemy.isFreezing()) {
-            if (isMushroom) {
+            if (isSnowman) {
+                shouldGapJump = false;
+            } else if (isMushroom) {
                 shouldGapJump = true;
             } else {
                 shouldGapJump = shouldWalkingEnemyGapJump(pos, enemy.walkingDir);
@@ -214,8 +227,8 @@ void WalkingEnemyBehaviorSystem::Update() {
 
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
-        // start jump
-        if (isGrounded && !actor.isJumping() && !enemy.isFreezing()) {
+        // start jump (snowmen can't jump)
+        if (isGrounded && !actor.isJumping() && !enemy.isFreezing() && !isSnowman) {
 
             if (isMushroom) {
                 if (dragonIsAboveEnemy && Random::Get().Chance(0.84f) || dragonAtSameYPos && Random::Get().Chance(0.92f) || dragonIsBelowEnemy && Random::Get().Chance(0.98f)) {
