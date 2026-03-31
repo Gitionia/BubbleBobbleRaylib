@@ -49,16 +49,6 @@ void WalkingEnemyBehaviorSystem::Update() {
             continue;
         }
 
-        if (enemy.freezeState != WalkingEnemyComponent::FREEZE_FOR_JUMP) {
-            enemy.animator.Update();
-            if (enemy.animator.IsFinished()) {
-                enemy.animator.Reset();
-            }
-        } else {
-            enemy.animator.GoToIndex(0);
-        }
-        renderData.spriteHandle = enemy.animator.GetSpriteHandle();
-
         const bool isMushroom = info.type == EnemyType::MUSHROOM;
         const bool canShoot = info.type == EnemyType::GHOST || info.type == EnemyType::POTATO || info.type == EnemyType::WITCH;
 
@@ -107,6 +97,19 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool lookingAtDragon = sign(dragonPos.X - pos.x) == enemy.walkingDir;
 
         actor.fallSpeed = FALL_SPEED;
+
+        
+        if (enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_JUMP || (enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT && enemy.freezeXPosDuration < FREEZE_TIME_TO_SHOOT)) {
+
+            enemy.animator.GoToIndex(0);
+        } else {
+            enemy.animator.Update();
+            if (enemy.animator.IsFinished()) {
+                enemy.animator.Reset();
+            }
+        }
+
+        renderData.spriteHandle = enemy.animator.GetSpriteHandle();
 
         // check if grounded
         bool isGrounded = false;
