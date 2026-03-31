@@ -64,19 +64,23 @@ void WalkingEnemyBehaviorSystem::Update() {
 
         const int FREEZE_FOR_JUMP_DURATION = 15;
         int FREEZE_FOR_SHOOT_DURATION = 30;
+        int FREEZE_TIME_TO_SHOOT = 10;
         int SHOOTING_COOLDOWN = 80;
 
         if (info.type == EnemyType::GHOST) {
             FREEZE_FOR_SHOOT_DURATION = 30;
+            FREEZE_TIME_TO_SHOOT = 10;
             SHOOTING_COOLDOWN = 80;
 
         } else if (info.type == EnemyType::POTATO) {
             FREEZE_FOR_SHOOT_DURATION = 30;
+            FREEZE_TIME_TO_SHOOT = 0;
             SHOOTING_COOLDOWN = 50;
 
         } else if (info.type == EnemyType::WITCH) {
-            FREEZE_FOR_SHOOT_DURATION = 50;
-            SHOOTING_COOLDOWN = 120;
+            FREEZE_FOR_SHOOT_DURATION = 100;
+            FREEZE_TIME_TO_SHOOT = 40;
+            SHOOTING_COOLDOWN = 240;
 
         } else if (info.type == EnemyType::SNOWMAN) {
             DBG_CHECK(false, "Not implemented");
@@ -154,7 +158,10 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (enemy.freezeXPosDuration > 0) {
             enemy.freezeXPosDuration--;
 
-            if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
+            if (enemy.freezeXPosDuration == FREEZE_TIME_TO_SHOOT && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
+                EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
+
+            } else if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
                 enemy.shootCooldown = SHOOTING_COOLDOWN;
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::NORMAL)));
 
@@ -181,8 +188,6 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (Random::Get().Chance(0.05f)) {
                 enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
-
-                EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
             }
         }
 

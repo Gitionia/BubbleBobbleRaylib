@@ -24,7 +24,7 @@
     { "name" : "Potato-Item", "FramesPerSprite" : 5 },
 
     { "name" : "Witch-Walk", "FramesPerSprite" : 7 },
-    { "name" : "Witch-Shoot", "FramesPerSprite" : 7 },
+    { "name" : "Witch-Shoot", "FramesPerSprite" : 8 },
     { "name" : "Witch-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Witch-Item", "FramesPerSprite" : 5 },
 
