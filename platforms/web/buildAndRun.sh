@@ -1,6 +1,6 @@
 #!/bin/sh
 
 
-./build.sh
+./buildRelease.sh
 cd build
 python3 -m http.server 8080
