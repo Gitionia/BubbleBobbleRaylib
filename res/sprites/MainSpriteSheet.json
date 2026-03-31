@@ -15,6 +15,10 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Boss-Walk-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 216, "y": 598, "w": 64, "h": 64 } }] },
+   { "name": "Boss-Walk3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 146, "y": 598, "w": 64, "h": 64 } }] },
+   { "name": "Boss-Walk-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 76, "y": 598, "w": 64, "h": 64 } }] },
+   { "name": "Boss-Walk-1", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 3, "y": 598, "w": 64, "h": 64 } }] },
    { "name": "Item-Poison-Pink", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 289, "y": 846, "w": 15, "h": 16 } }] },
    { "name": "Item-Poison-Yellow", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 274, "y": 846, "w": 15, "h": 16 } }] },
    { "name": "Item-Poison-Green", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 258, "y": 846, "w": 16, "h": 16 } }] },

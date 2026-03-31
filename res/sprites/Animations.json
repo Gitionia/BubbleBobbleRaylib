@@ -45,6 +45,8 @@
     { "name" : "Pig-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Pig-Item", "FramesPerSprite" : 5 },
 
+    { "name" : "Boss-Walk", "FramesPerSprite" : 5 },
+
     { "name" : "Projectile-Ghost", "FramesPerSprite" : 5 },
     { "name" : "Projectile-Ghost-Destroy", "FramesPerSprite" : 5 },
     { "name" : "Projectile-Potato", "FramesPerSprite" : 5 },
