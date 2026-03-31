@@ -187,7 +187,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
 
         // start jump
-        if (isGrounded && !enemy.isFreezing()) {
+        if (isGrounded && !actor.isJumping() && !enemy.isFreezing()) {
 
             if (isMushroom) {
                 if (dragonIsAboveEnemy && Random::Get().Chance(0.01f)) {
