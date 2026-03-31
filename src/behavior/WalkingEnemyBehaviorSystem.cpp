@@ -79,6 +79,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool shouldGapJump = false;
 
         bool dragonIsAboveEnemy = dragonPos.Y < pos.y;
+        bool dragonIsBelowEnemy = dragonPos.Y > pos.y;
         bool dragonAtSameYPos = dragonPos.Y == pos.y;
         int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
         bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
@@ -188,22 +189,29 @@ void WalkingEnemyBehaviorSystem::Update() {
         // start jump
         if (isGrounded && !enemy.isFreezing()) {
 
-            int chanceMultiplier = dragonIsAboveEnemy ? dragonIsNear ? 10 : 5 : 1;
-            if (isMushroom && Random::Get().Chance(chanceMultiplier * 0.3f)) {
-                enemy.animator.Reset();
-                enemy.isGapJumping = true;
-                actor.jumpSpeed = GAP_JUMP_SPEED;
-                actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
+            if (isMushroom) {
+                if (dragonIsAboveEnemy && Random::Get().Chance(0.01f)) {
+                    enemy.animator.Reset();
+                    enemy.isGapJumping = true;
+                    actor.jumpSpeed = GAP_JUMP_SPEED;
+                    actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
+                } else {
+                    enemy.isGapJumping = false;
+                    enemy.jumpTurnAroundsCount = 3;
+                    enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
+                }
 
-            } else if (shouldGapJump && Random::Get().Chance(chanceMultiplier * 0.01f)) {
-                enemy.isGapJumping = true;
-                actor.jumpSpeed = GAP_JUMP_SPEED;
-                actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
+            } else {
+                if (shouldGapJump && (dragonIsAboveEnemy && Random::Get().Chance(0.02f) || dragonAtSameYPos && (Random::Get().Chance(0.05f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.01f)))) {
+                    enemy.isGapJumping = true;
+                    actor.jumpSpeed = GAP_JUMP_SPEED;
+                    actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-            } else if (Random::Get().Chance(chanceMultiplier * 0.004f)) {
-                enemy.isGapJumping = false;
-                enemy.jumpTurnAroundsCount = 3;
-                enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
+                } else if (dragonIsAboveEnemy && Random::Get().Chance(0.01f) || dragonAtSameYPos && (Random::Get().Chance(0.005f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.005f))) {
+                    enemy.isGapJumping = false;
+                    enemy.jumpTurnAroundsCount = 3;
+                    enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
+                }
             }
         }
 
