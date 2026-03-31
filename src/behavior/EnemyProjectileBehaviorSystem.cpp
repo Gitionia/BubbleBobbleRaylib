@@ -36,7 +36,13 @@ void EnemyProjectileBehaviorSystem::Update() {
 
 
 
-        const int shootSpeed = BP_SIZE(0, 3);
+        int shootSpeed; 
+        if (projectile.shooterType == EnemyType::GHOST) {
+            shootSpeed = BP_SIZE(0, 3);
+        } else if (projectile.shooterType == EnemyType::POTATO) {
+            shootSpeed = BP_SIZE(0, 4);
+        }
+
         int velocity = shootSpeed * pos.dir;
 
         if (projectile.state != EnemyProjectileComponent::DESTROYED) {
