@@ -70,12 +70,12 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (info.type == EnemyType::GHOST) {
             FREEZE_FOR_SHOOT_DURATION = 30;
             FREEZE_TIME_TO_SHOOT = 10;
-            SHOOTING_COOLDOWN = 80;
+            SHOOTING_COOLDOWN = 90;
 
         } else if (info.type == EnemyType::POTATO) {
-            FREEZE_FOR_SHOOT_DURATION = 30;
+            FREEZE_FOR_SHOOT_DURATION = 10;
             FREEZE_TIME_TO_SHOOT = 0;
-            SHOOTING_COOLDOWN = 50;
+            SHOOTING_COOLDOWN = 30;
 
         } else if (info.type == EnemyType::WITCH) {
             FREEZE_FOR_SHOOT_DURATION = 100;
@@ -160,9 +160,9 @@ void WalkingEnemyBehaviorSystem::Update() {
 
             if (enemy.freezeXPosDuration == FREEZE_TIME_TO_SHOOT && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
                 EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
+                enemy.shootCooldown = SHOOTING_COOLDOWN;
 
             } else if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
-                enemy.shootCooldown = SHOOTING_COOLDOWN;
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::NORMAL)));
 
                 enemy.freezeState = WalkingEnemyComponent::NOT_FREEZING;
@@ -184,7 +184,7 @@ void WalkingEnemyBehaviorSystem::Update() {
                 }
             }
 
-        } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.shootCooldown == 0) {
+        } else if (canShoot && isGrounded && dragonAtSameYPos && lookingAtDragon && enemy.freezeXPosDuration == 0 && enemy.shootCooldown == 0) {
             if (Random::Get().Chance(0.05f)) {
                 enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
