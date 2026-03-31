@@ -49,9 +49,13 @@ void WalkingEnemyBehaviorSystem::Update() {
             continue;
         }
 
-        enemy.animator.Update();
-        if (enemy.animator.IsFinished()) {
-            enemy.animator.Reset();
+        if (enemy.freezeState != WalkingEnemyComponent::FREEZE_FOR_JUMP) {
+            enemy.animator.Update();
+            if (enemy.animator.IsFinished()) {
+                enemy.animator.Reset();
+            }
+        } else {
+            enemy.animator.GoToIndex(0);
         }
         renderData.spriteHandle = enemy.animator.GetSpriteHandle();
 
@@ -136,7 +140,9 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_SHOOT) {
                 enemy.shootCooldown = SHOOTING_COOLDOWN;
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::NORMAL)));
-            
+
+                enemy.freezeState = WalkingEnemyComponent::NOT_FREEZING;
+
             } else if (enemy.freezeXPosDuration == 0 && enemy.freezeState == WalkingEnemyComponent::FREEZE_FOR_JUMP) {
                 // Turn around and check if this was the last turn around before the jump.
                 // If so then jump, otherwise freeze again
@@ -146,6 +152,9 @@ void WalkingEnemyBehaviorSystem::Update() {
                 if (enemy.jumpTurnAroundsCount == 0) {
                     actor.jumpSpeed = NORMAL_JUMP_SPEED;
                     actor.jumpFrameCount = NORMAL_JUMP_FRAME_COUNT;
+
+                    enemy.freezeState = WalkingEnemyComponent::NOT_FREEZING;
+
                 } else {
                     enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
                 }
@@ -201,7 +210,6 @@ void WalkingEnemyBehaviorSystem::Update() {
         if (enemy.isGapJumping && actor.isJumping() && actor.jumpFrameCount <= GAP_JUMP_FRAME_COUNT / 2) {
             actor.jumpSpeed = 0;
         }
-
 
         // handle x movement
         if (!enemy.isFreezing()) {
