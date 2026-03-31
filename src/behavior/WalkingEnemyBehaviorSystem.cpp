@@ -165,6 +165,8 @@ void WalkingEnemyBehaviorSystem::Update() {
             if (Random::Get().Chance(0.05f)) {
                 enemy.setFreezing(FREEZE_FOR_SHOOT_DURATION, WalkingEnemyComponent::FREEZE_FOR_SHOOT);
                 enemy.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(info.type, EnemyAnimationType::SHOOTING)));
+         
+                EntityFactory::CreateEnemyProjectile(pos.x, pos.y, pos.dir, info.type);
             }
         }
 

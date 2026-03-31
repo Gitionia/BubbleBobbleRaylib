@@ -23,3 +23,4 @@ enum class EnemyAnimationType {
     ITEM
 };
 const char* GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animationType);
+const char *GetEnemyProjectileAnimationName(EnemyType shooterEnem);

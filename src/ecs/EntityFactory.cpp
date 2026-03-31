@@ -104,6 +104,22 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
     return enemy;
 }
 
+entt::entity EntityFactory::CreateEnemyProjectile(int x, int y, int dir, EnemyType shooterEnemy) {
+    entt::registry *registry = get().registry;
+    auto projectile = registry->create();
+
+    registry->emplace<Position>(projectile, x, y, dir);
+    // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
+    registry->emplace<RenderData>(projectile, RenderData(GetSpriteHandle("Projectile-Ghost-1"), {2, 2}));
+    
+    registry->emplace<EnemyProjectileComponent>(projectile, &GetAnimation(GetEnemyProjectileAnimationName(shooterEnemy)));
+    registry->emplace<EnemyProjectileTag>(projectile);
+
+    registry->emplace<GameplayEntityTag>(projectile);
+
+    return projectile;
+}
+
 entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, EnemyType enemyType, ItemType itemType) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();

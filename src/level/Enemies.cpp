@@ -147,3 +147,19 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         break;
     }
 }
+const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
+    switch (shooterEnemy) {
+
+    case EnemyType::GHOST:
+        return "Projectile-Ghost";
+    case EnemyType::SNOWMAN:
+    case EnemyType::POTATO:
+    case EnemyType::WITCH:
+        PRINT_ERROR("Unimplemented {}:{}", __FILE__, __LINE__);
+        return GetEnemyProjectileAnimationName(EnemyType::GHOST);
+        
+    default:
+        PRINT_ERROR("Projectile of enemy of type {} has no animation");
+        return GetEnemyProjectileAnimationName(EnemyType::GHOST);
+    }
+}
