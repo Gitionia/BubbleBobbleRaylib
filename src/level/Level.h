@@ -29,9 +29,9 @@ enum class LevelTileType {
 
     ITEM_SOUP,
     ITEM_MEAL,
+    ITEM_DOOR,
     ITEM_SHOE,
     ITEM_POTION,
-    ITEM_DOOR,
     ITEM_FLAMINGO
 };
 

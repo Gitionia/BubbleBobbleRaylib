@@ -28,9 +28,9 @@ const char *GetItemSpriteName(ItemType item) {
         return "Item-Meal";
     case ItemType::Potion:
         DBG_CHECK(false, "Multiple potions not implemented yet!");
-        return "Item-Potion-Green";
+        return "Item-Poison-Green";
     case ItemType::Door:
-        return "ITem-Door";
+        return "Item-Door";
     case ItemType::ElementCount:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
