@@ -50,6 +50,12 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         } else if (level == BOSS_LEVEL) {
             PRINT_INFO("You beat the game!");
 
+            runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
+            eventSystem.Notify((entt::entity)0, DELETE_GAMEPLAY, 0);
+            runner.UpdateSystems();
+
+            Debug::PrintNumberOfEntities();
+
             return std::make_shared<TitleScreenState>(runner, eventSystem);
         }
     }

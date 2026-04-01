@@ -4,16 +4,19 @@
 #include <string>
 
 void LevelInstantiatorSystem::Update() {
+    if (eventSystem.ReadEvent(DELETE_GAMEPLAY).size()) {
+        clearExistingLevel();
+    }
+
     const auto &events = eventSystem.ReadEvent(INSTANTIATE_LEVEL);
-    DBG_CHECK(events.size() == 1, 
-        std::format("Expected event count = 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
+    DBG_CHECK(events.size() == 1,
+              std::format("Expected event count = 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
 
     if (!events.empty()) {
         int newLevel = events.at(0).data;
 
         clearExistingLevel();
         loadNewLevel(newLevel);
-
     }
 }
 
@@ -36,9 +39,9 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
 
     level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", convertLevelNumber(levelNumber)));
     EntityFactory::CreateLevel(level, levelNumber);
-    
+
     if (level.ContainsBoss()) {
-        EntityFactory::CreateEnemy(BP_SIZE(10, 0),BP_SIZE(12, 0), EnemyType::BOSS, Direction::Left);
+        EntityFactory::CreateEnemy(BP_SIZE(10, 0), BP_SIZE(12, 0), EnemyType::BOSS, Direction::Left);
     }
 
     setPhysicsColliderData(level);
