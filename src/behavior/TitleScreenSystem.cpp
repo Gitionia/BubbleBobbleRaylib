@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <cstdint>
 
-void TitleScreenSystem::Init() {
+void TitleScreenSystem::Setup() {
     title = EntityFactory::CreateSimpleSprite({80, 0}, -1, GetSpriteHandle("TitleScreen-Title"), WHITE, {2, 2});
     EntityFactory::CreateSimpleSprite({0, 288}, 1, GetSpriteHandle("TitleScreen-Dragon"), WHITE, {2, 2});
     EntityFactory::CreateSimpleSprite({390, 288}, -1, GetSpriteHandle("TitleScreen-Dragon"), DARKBLUE, {2, 2});

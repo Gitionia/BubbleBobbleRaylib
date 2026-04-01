@@ -49,6 +49,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 
         } else if (level == BOSS_LEVEL) {
             PRINT_INFO("You beat the game!");
+
             return std::make_shared<TitleScreenState>(runner, eventSystem);
         }
     }
@@ -106,7 +107,8 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 
 void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
-    // Play Music
+    runner.SetupSystems();
+    // TODO:Play Music
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
@@ -116,7 +118,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
     bool titleScreenSkip = true;
 #endif
 
-    if (titleScreenSkip || Input::IsKeyDown(Key::Any)) {
+    if (false || Input::IsKeyDown(Key::Any)) {
         // Cleans up Title Screen Entities
         eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
         runner.UpdateSystems();

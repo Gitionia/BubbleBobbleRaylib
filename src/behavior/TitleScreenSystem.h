@@ -7,7 +7,7 @@ class TitleScreenSystem : public SystemBase {
     SYSTEM_DEF(TitleScreenSystem, SystemTypeFlags::TITLE_SCREEN)
 
   protected:
-    void Init() override;
+    void Setup() override;
     void Update() override;
 
   private:

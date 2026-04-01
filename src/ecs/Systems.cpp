@@ -59,6 +59,12 @@ void SystemRunner::Init() {
     }
 }
 
+void SystemRunner::SetupSystems() {
+    for (SystemBase* system : systems) {
+        system->Setup();
+    }
+}
+
 void SystemRunner::UpdateSystems() const {
     for (SystemBase* system : systems) {
         system->BaseUpdate();

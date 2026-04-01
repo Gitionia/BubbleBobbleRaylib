@@ -28,6 +28,7 @@ class SystemBase {
     SystemBase(entt::registry &registry, EventSystem &eventSystem, int typeFlags);
     virtual ~SystemBase() = default;
     virtual void Init() {}
+    virtual void Setup() {}
 
     void BaseUpdate();
 
