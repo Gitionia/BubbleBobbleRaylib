@@ -26,6 +26,11 @@ void ItemPickupBehaviorSystem::Update() {
                 if (itemComp.type == ItemType::Shoe) {
                     eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::SPEED_UP);
 
+                } else if (itemComp.type == ItemType::ToyFlamingo) {
+                    eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::SPEED_UP);
+                    // TODO: add firerate up
+                    // TODO: add range up
+
                 } else if (itemComp.type == ItemType::Door || itemComp.type == ItemType::Book) {
                     eventSystem.Notify(item, STORY_ITEM_PICKED_UP, (int64_t)itemComp.type);
                 }
