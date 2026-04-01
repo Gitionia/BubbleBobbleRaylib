@@ -1,6 +1,7 @@
 #include "Physics.h"
 
 #include "../app/Config.h"
+#include "Enemies.h"
 #include "Level.h"
 #include "entt/entity/fwd.hpp"
 
@@ -105,7 +106,7 @@ std::optional<entt::entity> getCollidingShootingBubble(entt::registry &registry,
 }
 
 bool collidesWithDragonSpikes(entt::registry &registry, const Position &position, const Collider &collider) {
-    const auto view = registry.view<Position, DragonTag>();
+    const auto view = registry.view<Position, DragonTag>(entt::exclude<DragonHitComponent>);
 
     for (const auto entity : view) {
         auto [otherPos] = view.get(entity);
@@ -159,7 +160,7 @@ bool collidesWithBoss(entt::registry &registry, const Position &position, const 
     for (const auto entity : view) {
         const auto [othePos, boss] = view.get(entity);
 
-        if (overlaps(position, collider, othePos, Colliders::bossCollider)) {
+        if (boss.state == EnemyAnimationType::NORMAL && overlaps(position, collider, othePos, Colliders::bossCollider)) {
             return true;
         }
     }

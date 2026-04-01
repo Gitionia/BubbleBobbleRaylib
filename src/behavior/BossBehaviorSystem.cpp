@@ -74,6 +74,10 @@ void BossBehaviorSystem::Update() {
             const int SPEED = BP_SIZE(0, 4);
             pos.x += SPEED * boss.xDir;
             pos.y -= SPEED;
+
+            if (pos.y + BOSS_HEIGHT < 0) {
+                Destroy(entity);
+            }
             break;
         }
     }
