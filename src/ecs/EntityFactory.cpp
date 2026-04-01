@@ -1,6 +1,7 @@
 #include "EntityFactory.h"
 
 #include "Components.h"
+#include "../level/GameModifiers.h"
 
 entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, int level, bool addShadowRight, bool addShadowBottem) {
     entt::registry *registry = get().registry;
@@ -63,7 +64,10 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
 
     registry->emplace<Position>(bubble, centre.X - BP_SIZE(0, 14), centre.Y - BP_SIZE(1, 0));
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
-    registry->emplace<BubbleShootComponent>(bubble, direction);
+    auto& c = registry->emplace<BubbleShootComponent>(bubble, direction);
+    if (GameModifierData::IsModifierSet(ModifierTypes::RANGE_UP)) {
+        c.shootFrame *= 2;
+    }
     registry->emplace<BubbleTag>(bubble);
 
     registry->emplace<GameplayEntityTag>(bubble);

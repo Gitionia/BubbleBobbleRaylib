@@ -74,6 +74,9 @@ void DragonBehaviorSystem::Update() {
         if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), pos.dir);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
+            if (GameModifierData::IsModifierSet(ModifierTypes::FIRERATE_UP)) {
+                dragon.bubbleShootDelay /= 2;
+            }
 
             startedShootingAnimation = true;
 

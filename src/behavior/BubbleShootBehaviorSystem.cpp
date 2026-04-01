@@ -4,6 +4,7 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../level/Physics.h"
+#include "../level/GameModifiers.h"
 
 enum DeferValues {
     Floating = 0,
@@ -64,6 +65,9 @@ void BubbleShootBehaviorSystem::Update() {
 
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
+        if (bubble.animator.IsFinished()) {
+            bubble.animator.SetNewAnimation(&GetAnimation("Bubble-Green-Idle"));
+        }
 
         if (bubble.state == BubbleShootComponent::NONE) {
             if (collidesWithWall(registry, pos, col)) {

@@ -7,6 +7,8 @@
 enum class ModifierTypes {
 
     SPEED_UP,
+    FIRERATE_UP,
+    RANGE_UP,
     Count
 };
 
