@@ -17,6 +17,10 @@ const char *GetItemSpriteName(ItemType item) {
         return "Item-Pineapple";
     case ItemType::Shoe:
         return "Item-Shoe";
+    case ItemType::ToyFlamingo:
+        return "Item-ToyFlamingo";
+    case ItemType::Book:
+        return "Item-Book";
     case ItemType::ElementCount:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
@@ -41,6 +45,9 @@ int GetItemPoints(ItemType item) {
         return 8000;
     case ItemType::Shoe:
         return 1000;
+    case ItemType::ToyFlamingo:
+    case ItemType::Book:
+        return 0;
     case ItemType::ElementCount:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
@@ -72,6 +79,10 @@ const char *GetPointTextSpriteNameFromItemType(ItemType item) {
         return "Points-8000";
     case ItemType::Shoe:
         return "Points-1000";
+    case ItemType::ToyFlamingo:
+    case ItemType::Book:
+        DBG_CHECK(false, "Item has no points and doesn't spawn a point text");
+        return GetPointTextSpriteNameFromItemType(ItemType::Banana);
     case ItemType::ElementCount:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);

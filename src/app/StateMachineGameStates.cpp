@@ -25,6 +25,10 @@ void GameplayState::StartLevel() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
 }
 
+bool GameplayState::isStoryLevel() {
+    return level == PREVIOUS_TO_BOSS_LEVEL || level == BOSS_LEVEL;
+}
+
 std::shared_ptr<StateMachineState> GameplayState::Update() {
 
     runner.UpdateSystems();
@@ -36,20 +40,19 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         }
     }
 
+    // If is story level and story item picked up
+    if (isStoryLevel() && false) {
+        // handle case
+    }
+
     if (counterTillStartNewLevel > 0) {
         counterTillStartNewLevel--;
 
-    } else if (waitingForCounterToStartNewLevel && counterTillStartNewLevel == 0) {
-        if (level == PREVIOUS_TO_BOSS_LEVEL || level == BOSS_LEVEL) {
-            // Require item pickup to progress level
-            // TODO: check if story item was picked up
-            // then start boss or ending sequence
-        } else  {
-            level++;
-            StartLevel();
-    
-            waitingForCounterToStartNewLevel = false;
-        }
+    } else if (waitingForCounterToStartNewLevel && counterTillStartNewLevel == 0 && !isStoryLevel()) {
+        level++;
+        StartLevel();
+
+        waitingForCounterToStartNewLevel = false;
     }
 
 #ifdef DEBUG_TOOLS
@@ -64,11 +67,11 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     if (Input::IsKeyPressed(KEY_Q)) {
         level = 101;
         StartLevel();
-    
+
     } else if (Input::IsKeyPressed(KEY_W)) {
         level = 1;
         StartLevel();
-    
+
     } else if (Input::IsKeyPressed(KEY_E)) {
         StartLevel();
     }

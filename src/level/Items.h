@@ -9,6 +9,8 @@ enum class ItemType {
     Grapes,
     Pineapple,
     Shoe,
+    ToyFlamingo,
+    Book,
     ElementCount
 };
 
