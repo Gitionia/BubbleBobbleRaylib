@@ -8,6 +8,7 @@ struct Position;
 struct DebugCircle;
 
 void Debug::DrawPoint(int x, int y, float radius, Color color) {
+#ifdef DEBUG_TOOLS
     auto &registry = get().registry;
     auto point = registry->create();
 
@@ -17,9 +18,11 @@ void Debug::DrawPoint(int x, int y, float radius, Color color) {
     registry->emplace<DebugDrawTag>(point);
     registry->emplace<Position>(point, x, y);
     registry->emplace<DebugCircle>(point, radius, color);
+#endif
 }
 
 void Debug::DrawCollider(int x, int y, Collider collider, Color color) {
+#ifdef DEBUG_TOOLS
     auto &registry = get().registry;
     auto colliderEntity = registry->create();
 
@@ -29,27 +32,34 @@ void Debug::DrawCollider(int x, int y, Collider collider, Color color) {
     registry->emplace<DebugDrawTag>(colliderEntity);
     registry->emplace<Position>(colliderEntity, x + collider.offsetX, y + collider.offsetY);
     registry->emplace<DebugRectangle>(colliderEntity, collider.width, collider.height, color);
+#endif
 }
 
 void Debug::PrintNumberOfEntities() {
+#ifdef DEBUG_TOOLS
     int count = 0;
     for (auto entity : get().registry->view<entt::entity>()) {
         count++;
     }
 
     PRINT_INFO("Number of entities: {}", count);
+#endif
 }
 
 void Debug::PrintAllDebuggingLabels() {
+#ifdef DEBUG_TOOLS
     for (auto entity : get().registry->view<DebugEntityLabelComponent>()) {
         auto debugLabel = get().registry->get<DebugEntityLabelComponent>(entity);
         PRINT_INFO("Entity: {}", debugLabel.label);
     }
     PrintNumberOfEntities();
+#endif
 }
 
 void Debug::PrintMousePosition() {
+#ifdef DEBUG_TOOLS
     PRINT_INFO("X: {}, Y: {}", GetMousePosition().x, GetMousePosition().y);
+#endif
 }
 
 void Debug::setRegistry(entt::registry &_registry) {
