@@ -27,7 +27,6 @@ const char *GetItemSpriteName(ItemType item) {
     case ItemType::Meal:
         return "Item-Meal";
     case ItemType::Potion:
-        DBG_CHECK(false, "Multiple potions not implemented yet!");
         return "Item-Poison-Green";
     case ItemType::Door:
         return "Item-Door";

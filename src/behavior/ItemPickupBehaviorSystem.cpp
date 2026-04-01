@@ -15,15 +15,18 @@ void ItemPickupBehaviorSystem::Update() {
 
             if (overlaps(dragonPos, Colliders::fullActorCollider,
                          itemPos, Colliders::fullActorCollider)) {
-                EntityFactory::CreateItemPointsText(itemPos.toVector(), itemComp.type);
+
                 Destroy(item);
+                if (GetItemPoints(itemComp.type) > 0) {
+                    EntityFactory::CreateItemPointsText(itemPos.toVector(), itemComp.type);
+                }
 
                 eventSystem.Notify(dragon, POINTS_GAINED, GetItemPoints(itemComp.type));
 
                 // for testing every item will give this effect for now
                 if (itemComp.type == ItemType::Shoe) {
                     eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::SPEED_UP);
-                
+
                 } else if (itemComp.type == ItemType::Book) {
                     eventSystem.Notify(item, STORY_ITEM_PICKED_UP, (int64_t)itemComp.type);
                 }
