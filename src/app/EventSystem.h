@@ -11,6 +11,7 @@ enum EventType {
     START_GAMEPLAY,
     USING_GAME_MODIFIER,
     PLAYER_DIED,
+    STORY_ITEM_PICKED_UP,
     EventType_Count
 };
 

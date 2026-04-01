@@ -4,6 +4,7 @@
 #include "entt/entity/fwd.hpp"
 #include "raylib.h"
 #include <cstddef>
+#include <memory>
 
 void GameplayState::OnEnter() {
     music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
@@ -41,8 +42,11 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
 
     // If is story level and story item picked up
-    if (isStoryLevel() && false) {
-        // handle case
+    if (isStoryLevel() && eventSystem.ReadEvent(STORY_ITEM_PICKED_UP).size()) {
+        if (level == BOSS_LEVEL) {
+            PRINT_INFO("You beat the game!");
+            return std::make_shared<TitleScreenState>(runner, eventSystem);
+        }
     }
 
     if (counterTillStartNewLevel > 0) {
