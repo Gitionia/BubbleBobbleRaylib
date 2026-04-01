@@ -40,10 +40,16 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         counterTillStartNewLevel--;
 
     } else if (waitingForCounterToStartNewLevel && counterTillStartNewLevel == 0) {
-        level++;
-        StartLevel();
-
-        waitingForCounterToStartNewLevel = false;
+        if (level == PREVIOUS_TO_BOSS_LEVEL || level == BOSS_LEVEL) {
+            // Require item pickup to progress level
+            // TODO: check if story item was picked up
+            // then start boss or ending sequence
+        } else  {
+            level++;
+            StartLevel();
+    
+            waitingForCounterToStartNewLevel = false;
+        }
     }
 
 #ifdef DEBUG_TOOLS
