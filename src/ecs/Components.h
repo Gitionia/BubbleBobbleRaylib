@@ -238,6 +238,10 @@ struct BossComponent {
     Animator animator;
     int xDir = -1;
     int yDir = -1;
+
+    int timeTillCanBubbledCanBePopped = 1;
+
+    EnemyAnimationType state;
 };
 
 struct WalkingEnemyComponent {
