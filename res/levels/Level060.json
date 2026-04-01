@@ -31,6 +31,11 @@
                  "name":"ShadeRight",
                  "type":"color",
                  "value":"#ff8c0000"
+                }, 
+                {
+                 "name":"SpawnBoss",
+                 "type":"bool",
+                 "value":true
                 }],
          "type":"tilelayer",
          "visible":true,

@@ -67,6 +67,8 @@ class LevelLayout {
     const LevelTilemap &GetAirflow() const;
     const LevelTilemap &GetEnemies() const;
 
+    bool ContainsBoss() const;
+    
     static LevelLayout LoadLevel(const std::string &filepath);
 
   private:
@@ -75,4 +77,6 @@ class LevelLayout {
     LevelTilemap enemies;
     Color tileShadeColorRight;
     Color tileShadeColorBottem;
+
+    bool containsBoss = false;
 };

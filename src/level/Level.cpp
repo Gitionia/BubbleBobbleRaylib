@@ -196,6 +196,9 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                     } else if (property.find("name").value() == "FlipAlongXAxis") {
                         shouldFlipAlongXAxis = property.find("value").value();
 
+                    } else if (property.find("name").value() == "SpawnBoss") {
+                        level.containsBoss = property.find("value").value();
+
                     } else {
                         PRINT_ERROR("Unexpected property {} at {} in Tiles layer", std::string(property.find("name").value()), filepath.c_str());
                     }
@@ -315,4 +318,8 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
     }
 
     return level;
+}
+
+bool LevelLayout::ContainsBoss() const {
+    return containsBoss;
 }
