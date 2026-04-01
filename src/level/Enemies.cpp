@@ -130,8 +130,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::SNOWMAN:
             return "Snowman-Bubbled";
         case EnemyType::BOSS:
-            DBG_CHECK(false, "Not implemented yet!");
-            return "Can-Bubbled";
+            return "Boss-Bubbled";
         }
         break;
 
@@ -155,8 +154,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::SNOWMAN:
             return "Snowman-Item";
         case EnemyType::BOSS:
-            DBG_CHECK(false, "Not implemented yet!");
-            return "Can-Item";
+            return "Boss-Item";
         }
         break;
     }
