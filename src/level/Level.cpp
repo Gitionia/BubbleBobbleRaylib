@@ -58,6 +58,10 @@ const LevelTilemap &LevelLayout::GetEnemies() const {
     return enemies;
 }
 
+const LevelTilemap &LevelLayout::GetItems() const {
+    return items;
+}
+
 unsigned int parseColorChannel(const std::string &str) {
     unsigned int x;
     std::stringstream ss;
@@ -131,6 +135,15 @@ static LevelTileType flipTileAlongX(LevelTileType tile) {
         return LevelTileType::ENEMY_WITCH_RIGHT;
     case LevelTileType::ENEMY_WITCH_RIGHT:
         return LevelTileType::ENEMY_WITCH_LEFT;
+
+    case LevelTileType::ITEM_SOUP:
+    case LevelTileType::ITEM_MEAL:
+    case LevelTileType::ITEM_SHOE:
+    case LevelTileType::ITEM_POTION:
+    case LevelTileType::ITEM_DOOR:
+    case LevelTileType::ITEM_FLAMINGO:
+        DBG_CHECK(false, "Should not be trying to flip an item along x axis")
+        return tile;
     }
 }
 
@@ -152,6 +165,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
         TS_BLOCK,
         TS_AIRFLOW,
         TS_ENEMY,
+        TS_ITEMS,
         TILESET_TYPE_COUNT
     };
     int gids[TILESET_TYPE_COUNT];
@@ -168,6 +182,8 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
             gids[TS_AIRFLOW] = gid;
         } else if (source.find("EnemyTilesDirected.tsx") != std::string::npos) {
             gids[TS_ENEMY] = gid;
+        } else if (source.find("SpecialItems.tsx") != std::string::npos) {
+            gids[TS_ITEMS] = gid;
         } else {
             PRINT_WARN("{} contains invalid tileset {}", filepath.c_str(), source);
         }
@@ -310,6 +326,24 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                         level.enemies.set(index, val);
                     }
                 }
+            }
+
+        } else if (layer.find("name").value() == "Items") {
+            auto levelData = layer.find("data").value();
+
+            if (levelData.size() != 26 * 28)
+                PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Items'",
+                            filepath.c_str(), levelData.size(), 26 * 28);
+
+            for (int i = 0; i < levelData.size(); i++) {
+                int value = levelData.at(i);
+                int type;
+                if (value == 0)
+                    type = 0; // None
+                else
+                    type = value - gids[TS_ITEMS] + (int)LevelTileType::ITEM_SOUP;
+
+                level.items.set(i, (LevelTileType)type);
             }
 
         } else {

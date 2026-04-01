@@ -15,6 +15,7 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "Item-Door", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 508, "y": 868, "w": 16, "h": 16 } }] },
    { "name": "Item-ToyFlamingo", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 352, "y": 867, "w": 16, "h": 16 } }] },
    { "name": "Item-Book", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 7, "y": 867, "w": 16, "h": 16 } }] },
    { "name": "Boss-Item-4", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 221, "y": 670, "w": 64, "h": 64 } }] },

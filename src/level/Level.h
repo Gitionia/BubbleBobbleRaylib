@@ -26,6 +26,13 @@ enum class LevelTileType {
     ENEMY_POTATO_RIGHT,
     ENEMY_WITCH_LEFT,
     ENEMY_WITCH_RIGHT,
+
+    ITEM_SOUP,
+    ITEM_MEAL,
+    ITEM_SHOE,
+    ITEM_POTION,
+    ITEM_DOOR,
+    ITEM_FLAMINGO
 };
 
 class LevelTilemap {
@@ -66,15 +73,17 @@ class LevelLayout {
     const LevelTilemap &GetTiles() const;
     const LevelTilemap &GetAirflow() const;
     const LevelTilemap &GetEnemies() const;
+    const LevelTilemap &GetItems() const;
 
     bool ContainsBoss() const;
-    
+
     static LevelLayout LoadLevel(const std::string &filepath);
 
   private:
     LevelTilemap tiles;
     LevelTilemap airflow;
     LevelTilemap enemies;
+    LevelTilemap items;
     Color tileShadeColorRight;
     Color tileShadeColorBottem;
 

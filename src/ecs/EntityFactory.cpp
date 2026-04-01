@@ -92,8 +92,8 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
     }
     case EnemyType::PURPLE_GHOST:
     case EnemyType::PIG:
-    registry->emplace<FlyingEnemyComponent>(enemy, direction == Direction::Left ? FlyingEnemyComponent::DOWN_LEFT : FlyingEnemyComponent::DOWN_RIGHT);
-    break;
+        registry->emplace<FlyingEnemyComponent>(enemy, direction == Direction::Left ? FlyingEnemyComponent::DOWN_LEFT : FlyingEnemyComponent::DOWN_RIGHT);
+        break;
     case EnemyType::BOSS:
         registry->emplace<BossComponent>(enemy, &GetAnimation(GetEnemyAnimationName(EnemyType::BOSS, EnemyAnimationType::NORMAL)));
     }
@@ -245,6 +245,18 @@ void EntityFactory::CreateLevel(const LevelLayout &level, int levelNumber) {
                 EnemyType type = GetEnemyTypeFromTile(tile);
                 Direction direction = GetEnemyDirectionFromTile(tile);
                 CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type, direction);
+            }
+        }
+    }
+
+    for (int x = 0; x < LevelTilemap::WIDTH; ++x) {
+        for (int y = 0; y < LevelTilemap::HEIGHT; ++y) {
+            if (!level.GetItems().IsEmpty(x, y)) {
+                LevelTileType tile = level.GetItems().Get(x, y);
+                if (tile != LevelTileType::NONE) {
+                    ItemType itemType = GetItemTypeFromTile(tile);
+                    CreateItem({BP_SIZE(x + 2, 0), BP_SIZE(y, 0)}, itemType);
+                }
             }
         }
     }
