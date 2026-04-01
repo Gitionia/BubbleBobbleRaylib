@@ -6,17 +6,18 @@
 void LevelInstantiatorSystem::Update() {
     if (eventSystem.ReadEvent(DELETE_GAMEPLAY).size()) {
         clearExistingLevel();
-    }
 
-    const auto &events = eventSystem.ReadEvent(INSTANTIATE_LEVEL);
-    DBG_CHECK(events.size() == 1,
-              std::format("Expected event count = 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
+    } else {
+        const auto &events = eventSystem.ReadEvent(INSTANTIATE_LEVEL);
+        DBG_CHECK(events.size() == 1,
+                  std::format("Expected event count = 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
 
-    if (!events.empty()) {
-        int newLevel = events.at(0).data;
+        if (!events.empty()) {
+            int newLevel = events.at(0).data;
 
-        clearExistingLevel();
-        loadNewLevel(newLevel);
+            clearExistingLevel();
+            loadNewLevel(newLevel);
+        }
     }
 }
 
