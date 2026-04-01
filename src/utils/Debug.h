@@ -8,6 +8,7 @@ class Debug {
     static void DrawPoint(int x, int y, float radius, Color color);
     static void DrawCollider(int x, int y, Collider collider, Color color = RED);
     static void PrintNumberOfEntities();
+    static void PrintAllDebuggingLabels();
     static void PrintMousePosition();
 
   private:
@@ -18,6 +19,16 @@ class Debug {
     friend class Application;
 };
 
+
+struct DebugEntityLabelComponent {
+    std::string label;
+};
+
+#ifdef NDEBUG
+#define DBG_ADD_ENTITY_LABEL(registry, entity, label, number) 
+#else
+#define DBG_ADD_ENTITY_LABEL(registry, entity, label, number) (registry)->emplace<DebugEntityLabelComponent>((entity), (std::format("{}:{}", (label), (number))))
+#endif
 
 #ifdef NDEBUG
 #define DBG_ASSERT(x)

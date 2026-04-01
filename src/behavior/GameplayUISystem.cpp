@@ -15,6 +15,11 @@ void GameplayUISystem::Update() {
         level = event.data;
     }
 
+    if (eventSystem.ReadEvent(DELETE_GAMEPLAY).size()) {
+        auto view = registry.view<UITextEntityTag>();
+        registry.destroy(view->begin(), view->end());
+    }
+
     // This could theoretically break, if the textEntity points to a different UIText entity
     // However this seems unlikely and for now this is good enough
     if (registry.valid(scoreEntity) && registry.any_of<ModifiableUITextComponent>(scoreEntity)) {

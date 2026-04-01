@@ -1,11 +1,15 @@
 #include "EntityFactory.h"
 
-#include "Components.h"
 #include "../level/GameModifiers.h"
+#include "Components.h"
 
 entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Color colorShadowBottem, int level, bool addShadowRight, bool addShadowBottem) {
     entt::registry *registry = get().registry;
     auto tile = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, tile, "TILE", debugEntityLabelNumber++);
+
     {
         registry->emplace<Position>(tile, x * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle(std::format("Block-Level{}", level % 100)), {1, 1}};
@@ -18,6 +22,10 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
 
     if (addShadowRight) {
         auto shadowRight = registry->create();
+
+        static int debugEntityLabelNumber_ShadowRight = 0;
+        DBG_ADD_ENTITY_LABEL(registry, shadowRight, "TILE_SHADOW_RIGHT", debugEntityLabelNumber_ShadowRight++);
+    
         registry->emplace<Position>(shadowRight, (x + 1) * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle("TileShadowRight"), {2, 2}};
         data.SetColor(colorShadowRight);
@@ -28,6 +36,10 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     }
     if (addShadowBottem) {
         auto shadowBottem = registry->create();
+
+        static int debugEntityLabelNumber_ShadowBottem = 0;
+        DBG_ADD_ENTITY_LABEL(registry, shadowBottem, "TILE_SHADOW_BOTTEM", debugEntityLabelNumber_ShadowBottem++);
+
         registry->emplace<Position>(shadowBottem, x * UNITS_PER_BLOCK, (y + 1) * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle("TileShadowBottem"), {2, 2}};
         data.SetColor(colorShadowBottem);
@@ -43,6 +55,9 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
 entt::entity EntityFactory::CreateDragon(bool withInvincibility) {
     entt::registry *registry = get().registry;
     auto dragon = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, dragon, "DRAGON", debugEntityLabelNumber++);
 
     registry->emplace<Position>(dragon, DragonComponent::STARTING_POSITION);
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
@@ -62,9 +77,12 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     entt::registry *registry = get().registry;
     auto bubble = registry->create();
 
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, bubble, "BUBBLE", debugEntityLabelNumber++);
+
     registry->emplace<Position>(bubble, centre.X - BP_SIZE(0, 14), centre.Y - BP_SIZE(1, 0));
     registry->emplace<RenderData>(bubble, RenderData(GetSpriteHandle("Bubble-Green-Idle-1"), {2, 2}));
-    auto& c = registry->emplace<BubbleShootComponent>(bubble, direction);
+    auto &c = registry->emplace<BubbleShootComponent>(bubble, direction);
     if (GameModifierData::IsModifierSet(ModifierTypes::RANGE_UP)) {
         c.shootFrame *= 2;
     }
@@ -78,6 +96,9 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
 entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction direction) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, enemy, "ENEMY", debugEntityLabelNumber++);
 
     registry->emplace<Position>(enemy, x, y, GetIntFromDirection(direction));
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
@@ -114,6 +135,9 @@ entt::entity EntityFactory::CreateEnemyProjectile(int x, int y, int dir, EnemyTy
     entt::registry *registry = get().registry;
     auto projectile = registry->create();
 
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, projectile, "PROJECTILE", debugEntityLabelNumber++);
+
     registry->emplace<Position>(projectile, x, y, dir);
     // TODO: Don't need to set the renderdata, because it gets overwritten anyways. Replace in the future
     registry->emplace<RenderData>(projectile, RenderData(GetSpriteHandle("Projectile-Ghost-1"), {2, 2}));
@@ -129,6 +153,9 @@ entt::entity EntityFactory::CreateEnemyProjectile(int x, int y, int dir, EnemyTy
 entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, EnemyType enemyType, ItemType itemType) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, enemy, "ENEMY", debugEntityLabelNumber++);
 
     int s = 20;
     static AnimatedValueDefinition<int> xVelLow{{BP_SIZE(0, 0), 10}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 3), 15}, {BP_SIZE(0, 2), s}, {BP_SIZE(0, 1), 10}, {BP_SIZE(0, 0), 10}};
@@ -154,8 +181,11 @@ entt::entity EntityFactory::CreateTumblingEnemy(int x, int y, int dir, EnemyType
 
 entt::entity EntityFactory::CreateItem(const Vector2Int &pos, ItemType itemType) {
     entt::registry *registry = get().registry;
-
     auto item = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, item, "ITEM", debugEntityLabelNumber++);
+
     registry->emplace<Position>(item, pos.X, pos.Y);
     registry->emplace<RenderData>(item, RenderData(GetSpriteHandle(GetItemSpriteName(itemType)), {2, 2}));
     registry->emplace<ItemComponent>(item, itemType);
@@ -168,10 +198,13 @@ entt::entity EntityFactory::CreateItem(const Vector2Int &pos, ItemType itemType)
 
 entt::entity EntityFactory::CreateItemPointsText(Vector2Int pos, ItemType itemType) {
     entt::registry *registry = get().registry;
+    auto entity = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, entity, "ITEM_POINTS_TEXT", debugEntityLabelNumber++);
 
     pos.Y += BP_SIZE(0, 8);
 
-    auto entity = registry->create();
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<RenderData>(entity,
                                   RenderData(GetSpriteHandle(GetPointTextSpriteNameFromItemType(itemType)), {2, 2}));
@@ -188,6 +221,10 @@ entt::entity EntityFactory::CreateModifiableUIText(const Vector2Int &pos, const 
     entt::registry *registry = get().registry;
 
     auto entity = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, entity, "MODIFIABLE_UI_TEXT", debugEntityLabelNumber++);
+
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<ModifiableUITextComponent>(entity, text, color, fontSize, spacing);
 
@@ -200,6 +237,10 @@ entt::entity EntityFactory::CreateConstantUIText(const Vector2Int &pos, const ch
     entt::registry *registry = get().registry;
 
     auto entity = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, entity, "CONSTANT_UI_TEXT", debugEntityLabelNumber++);
+
     registry->emplace<Position>(entity, pos.X, pos.Y);
     registry->emplace<ConstUITextComponent>(entity, text, color, fontSize, spacing);
 
@@ -212,6 +253,10 @@ entt::entity EntityFactory::CreateSimpleSprite(const Vector2Int &pos, int dir, S
     entt::registry *registry = get().registry;
 
     auto entity = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, entity, "SIMPLE_SPRITE", debugEntityLabelNumber++);
+
     registry->emplace<Position>(entity, pos.X, pos.Y, dir);
     RenderData data(sprite, scale);
     registry->emplace<RenderData>(entity, data.SetColor(color));
