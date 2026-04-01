@@ -43,7 +43,11 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 
     // If is story level and story item picked up
     if (isStoryLevel() && eventSystem.ReadEvent(STORY_ITEM_PICKED_UP).size()) {
-        if (level == BOSS_LEVEL) {
+        if (level == PREVIOUS_TO_BOSS_LEVEL) {
+            level++;
+            StartLevel();
+
+        } else if (level == BOSS_LEVEL) {
             PRINT_INFO("You beat the game!");
             return std::make_shared<TitleScreenState>(runner, eventSystem);
         }
