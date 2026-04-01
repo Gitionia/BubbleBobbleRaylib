@@ -20,7 +20,7 @@
                 {
                  "name":"FlipAlongXAxis",
                  "type":"bool",
-                 "value":true
+                 "value":false
                 }, 
                 {
                  "name":"ShadeBottom",
