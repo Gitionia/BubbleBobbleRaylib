@@ -27,6 +27,8 @@ void BossBehaviorSystem::Update() {
                 boss.state = EnemyAnimationType::BUBBLED;
                 boss.animator.SetNewAnimation(&GetAnimation(GetEnemyAnimationName(EnemyType::BOSS, EnemyAnimationType::BUBBLED)));
                 boss.timeTillCanBubbledCanBePopped = 90;
+
+                Destroy(bubble.value());
                 continue;
             }
 
