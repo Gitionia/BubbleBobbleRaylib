@@ -32,23 +32,22 @@ bool Input::IsKeyDown(Key key) {
 
 int Input::GetXAxis() {
 
-    if (useGamepad && IsGamepadAvailable(0)) {
+    int dir = 0;
+
+    if (useGamepad) {
         float axis = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
-        return axis > deadZone ? 1 : axis < -deadZone ? -1
+        dir += axis > deadZone ? 1 : axis < -deadZone ? -1
                                                       : 0;
-
-    } else {
-        int dir = 0;
-
-        if (inputSimulator->IsKeyDown(KEY_RIGHT)) {
-            dir += 1;
-        }
-        if (inputSimulator->IsKeyDown(KEY_LEFT)) {
-            dir += -1;
-        }
-
-        return dir;
     }
+
+    if (inputSimulator->IsKeyDown(KEY_RIGHT)) {
+        dir += 1;
+    }
+    if (inputSimulator->IsKeyDown(KEY_LEFT)) {
+        dir += -1;
+    }
+
+    return dir;
 }
 
 int Input::GetYAxis() {
