@@ -3,7 +3,7 @@ This is a fan remake of the game Bubble Bobble using raylib and written in c++.
 Note that I do not *own* any of the assets (sprites and audio) included in this repository.
 You can play the game immediatly here: https://itchybeee.itch.io/bubble-bobble
 
-<img width="2104" height="1794" alt="Screenshot from 2026-04-02 15-21-36" src="https://github.com/user-attachments/assets/830b458e-e1c7-4dba-9e72-2737e3d9ffd4" />
+<img width="2104" height="1794" alt="Screenshot from 2026-04-02 22-21-06" src="https://github.com/user-attachments/assets/b324bfe6-dc68-4899-8111-191c58f141e6" />
 
 ## Platforms
 This game supports Linux, Windows and Web. 
