@@ -59,7 +59,9 @@ void RendererSystem::Update() {
 
     float scale = std::min(scaleX, scaleY);
 
-    Rectangle dest = {0, 0, TARGET_WINDOW_WIDTH * scale, TARGET_WINDOW_HEIGHT * scale};
+    float usedWidth = TARGET_WINDOW_WIDTH * scale;
+    float usedHeight = TARGET_WINDOW_HEIGHT * scale;
+    Rectangle dest = {(width - usedWidth) / 2, 0, usedWidth, usedHeight};
     DrawTexturePro(renderTexture.texture, src, dest, {0, 0}, 0, WHITE);
     EndDrawing();
 }
@@ -116,7 +118,7 @@ void RendererSystem::renderAllWithTag() {
         Rectangle dest = {(float)pos.x / UNITS_TO_PIXEL_SCALE + renderData.xoffset, (float)pos.y / UNITS_TO_PIXEL_SCALE + renderData.yoffset,
                           sprite.coords.width * renderData.scale.x, sprite.coords.height * renderData.scale.y};
 
-        int spriteXOffset =  pos.dir == -1 ? sprite.xOffset : 0;
+        int spriteXOffset = pos.dir == -1 ? sprite.xOffset : 0;
         dest = OffsetRect(dest, spriteXOffset, sprite.yOffset);
         dest = ScaleRect(dest, SCALING_FACTOR);
 
