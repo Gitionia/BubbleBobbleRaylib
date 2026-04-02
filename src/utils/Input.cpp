@@ -24,7 +24,7 @@ bool Input::IsKeyDown(Key key) {
     case Key::Fire:
         return inputSimulator->IsKeyDown(KEY_A) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
     case Key::Any:
-        return GetKeyPressed() != 0;
+        return GetKeyPressed() != 0 || GetGamepadButtonPressed() != 0;
     default:
         return false;
     }
