@@ -24,28 +24,28 @@ static StateMachine *g_stateMachine;
 static EventSystem *g_eventSystem;
 void update();
 
-static InputSimulator::Mode inputSimulationModeChooser(const std::string& path) {
-    #ifdef NDEBUG
+static InputSimulator::Mode inputSimulationModeChooser(const std::string &path) {
+#ifdef NDEBUG
     return InputSimulator::NO_RECORD;
-    #else
+#else
     if (path.empty()) {
         return InputSimulator::RECORD;
     } else {
         return InputSimulator::REPLAY;
     }
-    #endif
+#endif
 }
 
-static std::string inputRecorderFileChooser(const std::string& path) {
-    #ifdef NDEBUG
+static std::string inputRecorderFileChooser(const std::string &path) {
+#ifdef NDEBUG
     return "";
-    #else
+#else
     if (path.empty()) {
         return std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
     } else {
         return path;
     }
-    #endif
+#endif
 }
 
 Application::Application(const ApplicationParameters &parameters)
@@ -56,7 +56,6 @@ Application::Application(const ApplicationParameters &parameters)
       stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
       inputSimulator(std::make_shared<InputSimulator>(inputSimulationModeChooser(parameters.recordedFilePath), inputRecorderFileChooser(parameters.recordedFilePath))) {
 
-        
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
 #else
@@ -120,6 +119,7 @@ void update() {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 #endif
 
+    Input::UpdateTouchInput();
     g_stateMachine->Update();
     UpdateAudio();
     g_eventSystem->Clear();
