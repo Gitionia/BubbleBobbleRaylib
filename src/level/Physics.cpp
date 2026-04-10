@@ -117,6 +117,7 @@ bool collidesWithDragonSpikes(entt::registry &registry, const Position &position
         }
 
         for (Collider &col : multiCollider.colliders) {
+            // Debug::DrawCollider(otherPos.x, otherPos.y, col, {0, 255, 0, 122});
             if (overlaps(position, collider, otherPos, col)) {
                 return true;
             }
@@ -200,6 +201,36 @@ Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos) {
     }
 
     dir.IntegerNormalize();
+    return dir;
+}
+
+int getDragonBubblePushDirection(entt::registry &registry, const Position &pos, const Collider &collider) {
+    int dir = 0;
+
+    const auto view = registry.view<Position, DragonTag>(entt::exclude<DragonHitComponent>);
+
+    for (const auto entity : view) {
+        auto [dragonPos] = view.get(entity);
+
+        Collider weakDragonCol = Colliders::weakdragonBubblePushCollider;
+        if (dragonPos.dir == 1) {
+            weakDragonCol.flipX(BP_SIZE(2, 0));
+        }
+        Collider strongDragonCol = Colliders::strongdragonBubblePushCollider;
+        if (dragonPos.dir == 1) {
+            strongDragonCol.flipX(BP_SIZE(2, 0));
+        }
+
+        // Debug::DrawCollider(dragonPos.x, dragonPos.y, weakDragonCol, {255, 0, 0, 122});
+        // Debug::DrawCollider(dragonPos.x, dragonPos.y, strongDragonCol, {0, 0, 255, 122});
+
+        if (overlaps(pos, collider, dragonPos, strongDragonCol)) {
+            dir += 2 * dragonPos.dir;
+        } else if (overlaps(pos, collider, dragonPos, weakDragonCol)) {
+            dir += dragonPos.dir;
+        }
+    }
+
     return dir;
 }
 

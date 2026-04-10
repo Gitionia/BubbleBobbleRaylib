@@ -1,8 +1,8 @@
 #include "BubbleFloatBehaviorSystem.h"
 
 #include "../app/Config.h"
-#include "../ecs/Components.h"
 #include "../ecs/ComponentUtils.h"
+#include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../level/Physics.h"
 #include <algorithm>
@@ -27,7 +27,8 @@ void BubbleFloatBehaviorSystem::Update() {
 
         Vector2Int centerPos = col.getCenter(pos.x, pos.y);
         Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
-
+        int dragonBubblePushSpeed = BP_SIZE(0, 1);
+        int dragonBubblePushVelocity = dragonBubblePushSpeed * getDragonBubblePushDirection(registry, pos, col);
 
         // calculate repel direction and update group leader
         Vector2Int bubbleRepelDirection = Vector2Int::Zero();
@@ -67,6 +68,7 @@ void BubbleFloatBehaviorSystem::Update() {
 
         const int BUBBLE_REPEL_SPEED = 2;
         Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);
+        velocity = velocity.Add(dragonBubblePushVelocity, 0);
 
         if (velocity.X == 0 && Random::Get().Chance(0.05f)) {
             velocity.X = 2 * Random::Get().GetDirection();

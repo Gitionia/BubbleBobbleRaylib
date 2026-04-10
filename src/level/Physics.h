@@ -25,6 +25,7 @@ bool collidesWithEnemyProjectile(entt::registry &registry, const Position &posit
 bool collidesWithBoss(entt::registry &registry, const Position &position, const Collider &collider);
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos);
+int getDragonBubblePushDirection(entt::registry& registry, const Position& pos, const Collider& collider);
 
 int calculateMovementToRoundedPosition(const Position &pos, const Collider &col, int dir);
 template <typename Collider1, typename Collider2>
