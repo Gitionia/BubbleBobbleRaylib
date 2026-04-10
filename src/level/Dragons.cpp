@@ -5,21 +5,21 @@ const char *GetDragonAnimation(DragonAnimationType animation, DragonColor color)
 
         switch (animation) {
         case DragonAnimationType::IDLE:
-            return "Dragon-Idle";
+            return "DragonGreen-Idle";
         case DragonAnimationType::WALKING:
-            return "Dragon-Walking";
+            return "DragonGreen-Walking";
         case DragonAnimationType::SHOOTING:
-            return "Dragon-Shooting";
+            return "DragonGreen-Shooting";
         case DragonAnimationType::JUMPING:
-            return "Dragon-Jumping";
+            return "DragonGreen-Jumping";
         case DragonAnimationType::FALLING:
-            return "Dragon-Falling";
+            return "DragonGreen-Falling";
         case DragonAnimationType::HIT:
-            return "Dragon-Hit";
+            return "DragonGreen-Hit";
         case DragonAnimationType::HIT_STARE:
-            return "Dragon-HitStare";
+            return "DragonGreen-HitStare";
         case DragonAnimationType::RESPAWN:
-            return "Dragon-Respawn";
+            return "DragonGreen-Respawn";
         default:
             DBG_CHECK(false, "Tried to get name of invalid dragon animation type");
             return GetDragonAnimation(DragonAnimationType::IDLE, color);
@@ -27,7 +27,26 @@ const char *GetDragonAnimation(DragonAnimationType animation, DragonColor color)
     }
 
     else {
-        // DBG_CHECK(false, "Blue Dragon animations not implemented");
-        return GetDragonAnimation(animation, DRAGON_GREEN);
+        switch (animation) {
+        case DragonAnimationType::IDLE:
+            return "DragonBlue-Idle";
+        case DragonAnimationType::WALKING:
+            return "DragonBlue-Walking";
+        case DragonAnimationType::SHOOTING:
+            return "DragonBlue-Shooting";
+        case DragonAnimationType::JUMPING:
+            return "DragonBlue-Jumping";
+        case DragonAnimationType::FALLING:
+            return "DragonBlue-Falling";
+        case DragonAnimationType::HIT:
+            return "DragonBlue-Hit";
+        case DragonAnimationType::HIT_STARE:
+            return "DragonBlue-HitStare";
+        case DragonAnimationType::RESPAWN:
+            return "DragonBlue-Respawn";
+        default:
+            DBG_CHECK(false, "Tried to get name of invalid dragon animation type");
+            return GetDragonAnimation(DragonAnimationType::IDLE, color);
+        }
     }
 }
