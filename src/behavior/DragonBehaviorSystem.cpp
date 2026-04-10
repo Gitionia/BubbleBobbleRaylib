@@ -53,8 +53,9 @@ void DragonBehaviorSystem::Update() {
 
         const int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
 
-        int inputDir = Input::GetXAxis();
-        bool jump = Input::IsKeyDown(Key::Jump);
+        int inputDir = Input::GetXAxis(dragonInfo.color);
+        bool inputJump = Input::IsKeyDown(Key::Jump, dragonInfo.color);
+        bool inputFire = Input::IsKeyDown(Key::Fire, dragonInfo.color);
 
         int moveSpeed = UNITS_PER_BLOCK / 16;
         if (GameModifierData::IsModifierSet(ModifierTypes::SPEED_UP)) {
@@ -72,7 +73,7 @@ void DragonBehaviorSystem::Update() {
         }
 
         // shooting
-        if (dragon.bubbleShootDelay == 0 && Input::IsKeyDown(Key::Fire)) {
+        if (dragon.bubbleShootDelay == 0 && inputFire) {
             EntityFactory::CreateBubbleCenteredAt(pos.toVector().Add(BP_SIZE(1, 0), BP_SIZE(1, 0)), pos.dir);
             dragon.bubbleShootDelay = dragon.MAX_BUBBLE_SHOOT_DELAY;
             if (GameModifierData::IsModifierSet(ModifierTypes::FIRERATE_UP)) {
@@ -100,7 +101,7 @@ void DragonBehaviorSystem::Update() {
         }
 
         // start jump
-        if (jump && !actor.isJumping()) {
+        if (inputJump && !actor.isJumping()) {
             if (isGrounded || collidesWithJumpableBubble(registry, pos, collider)) {
                 dragon.jumpSpeed.reset();
                 actor.jumpFrameCount = dragon.jumpSpeed.getLength();

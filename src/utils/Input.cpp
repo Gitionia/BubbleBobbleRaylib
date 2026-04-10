@@ -3,9 +3,9 @@
 #include "Utilities.h"
 #include "raylib.h"
 
-#include "../app/WindowConfig.h"
 
 static std::shared_ptr<InputSimulator> inputSimulator;
+static InputConfiguration config;
 
 #define MAX_TOUCH_POINTS 10
 static Vector2 touchPositions[MAX_TOUCH_POINTS] = {0};
@@ -38,7 +38,7 @@ bool Input::IsKeyPressed(int key) {
     return inputSimulator->IsKeyPressed(key);
 }
 
-bool Input::IsKeyDown(Key key) {
+bool Input::IsKeyDown(Key key, DragonColor playerColor) {
     if (useTouchInput) {
         for (int i = 0; i < touchCount; i++) {
             Vector2 touchPos = touchPositions[i];
@@ -53,26 +53,53 @@ bool Input::IsKeyDown(Key key) {
         }
     }
 
+    int jumpKey = KEY_SPACE;
+    int fireKey = KEY_A;
+    bool useGamepadInput = false;
+
+    if (config == InputConfiguration::SINGLEPLAYER) {
+        jumpKey = KEY_SPACE;
+        fireKey = KEY_A;
+        useGamepadInput = true;
+
+    } else if (config == InputConfiguration::MULTIPLAYER) {
+
+        if (playerColor == DRAGON_GREEN) {
+            jumpKey = KEY_UP;
+            fireKey = KEY_L;
+            useGamepadInput = false;
+
+        } else {
+            jumpKey = KEY_S;
+            fireKey = KEY_T;
+            useGamepadInput = true;
+        }
+    }
+
     switch (key) {
     case Key::Jump:
-        return inputSimulator->IsKeyDown(KEY_SPACE) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
+        return inputSimulator->IsKeyDown(jumpKey) || useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
     case Key::Fire:
-        return inputSimulator->IsKeyDown(KEY_A) || IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
-    case Key::Any:
-        return GetKeyPressed() != 0 || GetGamepadButtonPressed() != 0 || GetTouchPointCount() > 0;
+        return inputSimulator->IsKeyDown(fireKey) || useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
     default:
         return false;
     }
 }
 
-int Input::GetXAxis() {
+bool Input::AnyKeyPressed() {
+    return GetKeyPressed() != 0 || GetGamepadButtonPressed() != 0 || GetTouchPointCount() > 0;
+}
+
+int Input::GetXAxis(DragonColor color) {
 
     int dir = 0;
 
-    if (useGamepad) {
-        float axis = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
-        dir += axis > deadZone ? 1 : axis < -deadZone ? -1
-                                                      : 0;
+    if (config == InputConfiguration::SINGLEPLAYER || color == DRAGON_BLUE) {
+        if (useGamepad) {
+            float axis = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
+            dir += axis > deadZone ? 1 : axis < -deadZone ? -1
+                                                          : 0;
+        }
     }
 
     if (useTouchInput) {
@@ -90,10 +117,22 @@ int Input::GetXAxis() {
         }
     }
 
-    if (inputSimulator->IsKeyDown(KEY_RIGHT)) {
+    int keyRight = KEY_RIGHT;
+    int keyLeft = KEY_LEFT;
+
+    if (color == DRAGON_GREEN) {
+        keyRight = KEY_RIGHT;
+        keyLeft = KEY_LEFT;
+    
+    } else {
+        keyRight = KEY_D;
+        keyLeft = KEY_A;
+    }
+
+    if (inputSimulator->IsKeyDown(keyRight)) {
         dir += 1;
     }
-    if (inputSimulator->IsKeyDown(KEY_LEFT)) {
+    if (inputSimulator->IsKeyDown(keyLeft)) {
         dir += -1;
     }
 
@@ -121,4 +160,8 @@ int Input::GetYAxis() {
 
         return dir;
     }
+}
+
+void Input::SetInputConfiguration(InputConfiguration _config) {
+    config = _config;
 }

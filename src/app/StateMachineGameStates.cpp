@@ -86,6 +86,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         }
 
         playerCount = 1;
+        Input::SetInputConfiguration(InputConfiguration::SINGLEPLAYER);
     } else if (Input::IsKeyDown(KEY_TWO)) {
         if (playerCount != 2) {
             runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
@@ -96,6 +97,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         }
 
         playerCount = 2;
+        Input::SetInputConfiguration(InputConfiguration::MULTIPLAYER);
     }
 
 #ifdef DEBUG_TOOLS
@@ -152,7 +154,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
     bool titleScreenSkip = true;
 #endif
 
-    if (false || Input::IsKeyDown(Key::Any)) {
+    if (false || Input::AnyKeyPressed()) {
         // Cleans up Title Screen Entities
         eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
         runner.UpdateSystems();
