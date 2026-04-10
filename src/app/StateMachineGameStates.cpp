@@ -77,8 +77,24 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
 
     if (Input::IsKeyDown(KEY_ONE)) {
+        if (playerCount != 1) {
+            runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
+
+            eventSystem.Notify((entt::entity)0, DESTROY_ADDITIONAL_PLAYER, 0);
+            runner.UpdateSystems();
+            runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
+        }
+
         playerCount = 1;
     } else if (Input::IsKeyDown(KEY_TWO)) {
+        if (playerCount != 2) {
+            runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
+
+            eventSystem.Notify((entt::entity)0, INSTANTIATE_ADDITIONAL_PLAYER, 0);
+            runner.UpdateSystems();
+            runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
+        }
+
         playerCount = 2;
     }
 

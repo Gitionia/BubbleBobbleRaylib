@@ -20,6 +20,23 @@ void LevelInstantiatorSystem::Update() {
             clearExistingLevel();
             loadNewLevel(newLevel, addSecondPlayer);
         }
+
+        if (eventSystem.ReadEvent(INSTANTIATE_ADDITIONAL_PLAYER).size()) {
+            if (registry.view<DragonTag>()->size() < 2) {
+                auto dragon = EntityFactory::CreateDragon(DRAGON_BLUE);
+            }
+        }
+        if (eventSystem.ReadEvent(DESTROY_ADDITIONAL_PLAYER).size()) {
+            auto view = registry.view<DragonTag>();
+            if (view->size() >= 2) {
+                for (entt::entity entity : view) {
+                    // TODO: move color into a constant DragonInfo component for Dragon entity
+                    if ((registry.any_of<DragonComponent>(entity) && registry.get<DragonComponent>(entity).color == DRAGON_BLUE) || (registry.any_of<DragonHitComponent>(entity) && registry.get<DragonHitComponent>(entity).color == DRAGON_BLUE)) {
+                        Destroy(entity);
+                    }
+                }
+            }
+        }
     }
 }
 
