@@ -12,6 +12,9 @@ void GameplayState::OnEnter() {
     // creates the level and the game ui
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION | SystemTypeFlags::GAME_UI);
     eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
+    if (playerCount > 1) {
+        eventSystem.Notify((entt::entity)0, INSTANTIATE_ADDITIONAL_PLAYER, 0);
+    }
     eventSystem.Notify((entt::entity)0, INSTANTIATE_GAME_UI, level);
     runner.UpdateSystems();
 
@@ -21,6 +24,9 @@ void GameplayState::OnEnter() {
 void GameplayState::StartLevel() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION | SystemTypeFlags::GAME_UI);
     eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
+    if (playerCount > 1) {
+        eventSystem.Notify((entt::entity)0, INSTANTIATE_ADDITIONAL_PLAYER, 0);
+    }
     runner.UpdateSystems();
 
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
@@ -68,6 +74,12 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         StartLevel();
 
         waitingForCounterToStartNewLevel = false;
+    }
+
+    if (Input::IsKeyDown(KEY_ONE)) {
+        playerCount = 1;
+    } else if (Input::IsKeyDown(KEY_TWO)) {
+        playerCount = 2;
     }
 
 #ifdef DEBUG_TOOLS

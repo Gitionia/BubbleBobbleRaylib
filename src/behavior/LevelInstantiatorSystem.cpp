@@ -15,8 +15,10 @@ void LevelInstantiatorSystem::Update() {
         if (!events.empty()) {
             int newLevel = events.at(0).data;
 
+            bool addSecondPlayer = eventSystem.ReadEvent(INSTANTIATE_ADDITIONAL_PLAYER).size();
+
             clearExistingLevel();
-            loadNewLevel(newLevel);
+            loadNewLevel(newLevel, addSecondPlayer);
         }
     }
 }
@@ -36,7 +38,7 @@ static std::string convertLevelNumber(int levelNumber) {
     }
 }
 
-void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
+void LevelInstantiatorSystem::loadNewLevel(int levelNumber, bool addSecondPlayer) {
 
     level = LevelLayout::LoadLevel(std::format("res/levels/Level{}.json", convertLevelNumber(levelNumber)));
     EntityFactory::CreateLevel(level, levelNumber);
@@ -47,4 +49,7 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber) {
 
     setPhysicsColliderData(level);
     auto dragon = EntityFactory::CreateDragon();
+    if (addSecondPlayer) {
+        auto dragon = EntityFactory::CreateDragon();
+    }
 }

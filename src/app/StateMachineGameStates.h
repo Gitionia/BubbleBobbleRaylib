@@ -33,7 +33,9 @@ class GameplayState : public StateMachineState {
     bool waitingForCounterToStartNewLevel = false;
     int counterTillStartNewLevel = 0;
     static constexpr int FRAME_COUNT_TILL_STARTING_NEW_LEVEL = 5 * TARGET_FPS;
-};
+
+    int playerCount = 1;
+  };
 
 class TitleScreenState : public StateMachineState {
   public:

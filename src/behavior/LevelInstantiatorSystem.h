@@ -11,7 +11,7 @@ class LevelInstantiatorSystem : public SystemBase {
 
   private:
     void clearExistingLevel();
-    void loadNewLevel(int newLevel);
+    void loadNewLevel(int newLevel, bool addSecondPlayer);
 
   private:
     LevelLayout level;
