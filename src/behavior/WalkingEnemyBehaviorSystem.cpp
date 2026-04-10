@@ -26,10 +26,13 @@ void WalkingEnemyBehaviorSystem::Update() {
     auto dragonView = registry.view<Position, DragonTag>();
     for (entt::entity dragon : dragonView) {
         const Position &pos = registry.get<Position>(dragon);
-        dragonPos = {pos.x, pos.y};
+
+        // If there are multiple dragon, select one by chance
+        if (!foundDragon || Random::Get().Chance(0.5f)) {
+            dragonPos = {pos.x, pos.y};
+        }
 
         foundDragon = true;
-        // If there are multiple dragons, maybe take the highest position?
         break;
     }
 
@@ -84,7 +87,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         int moveSpeed = 2;
         if (info.type == EnemyType::SNOWMAN) {
             moveSpeed = BP_SIZE(0, 4);
-        
+
             // snowman should always have pos.x be multiple of 4, so it can fit into 2 space gaps
             if (pos.x % 4 != 0) {
                 pos.x = (pos.x / 4) * 4;
