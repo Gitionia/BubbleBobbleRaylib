@@ -86,8 +86,11 @@ struct WalkingActorComponent {
     }
 };
 
-struct DragonComponent {
+struct DragonInfoComponent {
     DragonColor color;
+};
+
+struct DragonComponent {
     Animator animator;
 
     int invincibilityFramesLeft = 0;
@@ -128,8 +131,6 @@ struct DragonComponent {
 };
 
 struct DragonHitComponent {
-    DragonColor color;
-
     Animator animator;
     enum AnimationState {
         HIT = 0,

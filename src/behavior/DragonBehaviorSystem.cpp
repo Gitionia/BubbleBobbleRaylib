@@ -10,12 +10,9 @@
 #include "WalkingActorUtils.h"
 #include "raylib.h"
 
-void makeGreenDragonHit(entt::registry &registry, entt::entity e) {
-    registry.emplace<DragonHitComponent>(e, DRAGON_GREEN, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, DRAGON_GREEN)));
-}
-
-void makeBlueDragonHit(entt::registry &registry, entt::entity e) {
-    registry.emplace<DragonHitComponent>(e, DRAGON_BLUE, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, DRAGON_BLUE)));
+void makeDragonHit(entt::registry &registry, entt::entity e) {
+    DragonColor color = registry.get<DragonInfoComponent>(e).color;
+    registry.emplace<DragonHitComponent>(e, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, color)));
 }
 
 void DragonBehaviorSystem::Init() {
@@ -25,9 +22,9 @@ void DragonBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, RenderData>(entt::exclude<DragonHitComponent>);
+    auto view = registry.view<Position, WalkingActorComponent, DragonComponent, DragonInfoComponent, RenderData>(entt::exclude<DragonHitComponent>);
     for (auto entity : view) {
-        auto [pos, actor, dragon, renderData] = view.get(entity);
+        auto [pos, actor, dragon, dragonInfo, renderData] = view.get(entity);
 
 #ifdef DEBUG_TOOLS
         if (Input::IsKeyPressed(KEY_U)) {
@@ -50,11 +47,7 @@ void DragonBehaviorSystem::Update() {
         }
 
         if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider) || collidesWithBoss(registry, pos, Colliders::fullActorCollider))) {
-            if (dragon.color == DRAGON_GREEN) {
-                Defer(entity, &makeGreenDragonHit, 0);
-            } else {
-                Defer(entity, &makeBlueDragonHit, 0);
-            }
+            Defer(entity, &makeDragonHit, 0);
             continue;
         }
 
@@ -125,28 +118,28 @@ void DragonBehaviorSystem::Update() {
 
             if (startedShootingAnimation) {
 
-                dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::SHOOTING, dragon.color)));
+                dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::SHOOTING, dragonInfo.color)));
                 dragon.state = DragonComponent::SHOOTING;
 
             } else if (isGrounded) {
 
                 if (inputDir == 0 && dragon.state != DragonComponent::IDLE) {
-                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::IDLE, dragon.color)));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::IDLE, dragonInfo.color)));
                     dragon.state = DragonComponent::IDLE;
 
                 } else if (inputDir != 0 && dragon.state != DragonComponent::WALKING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::WALKING, dragon.color)));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::WALKING, dragonInfo.color)));
                     dragon.state = DragonComponent::WALKING;
                 }
 
             } else {
 
                 if (actor.isJumping() && dragon.state != DragonComponent::JUMPING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::JUMPING, dragon.color)));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::JUMPING, dragonInfo.color)));
                     dragon.state = DragonComponent::JUMPING;
 
                 } else if (!actor.isJumping() && dragon.state != DragonComponent::FALLING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::FALLING, dragon.color)));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::FALLING, dragonInfo.color)));
                     dragon.state = DragonComponent::FALLING;
                 }
             }

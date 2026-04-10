@@ -27,11 +27,11 @@ void LevelInstantiatorSystem::Update() {
             }
         }
         if (eventSystem.ReadEvent(DESTROY_ADDITIONAL_PLAYER).size()) {
-            auto view = registry.view<DragonTag>();
+            auto view = registry.view<DragonInfoComponent>();
             if (view->size() >= 2) {
                 for (entt::entity entity : view) {
-                    // TODO: move color into a constant DragonInfo component for Dragon entity
-                    if ((registry.any_of<DragonComponent>(entity) && registry.get<DragonComponent>(entity).color == DRAGON_BLUE) || (registry.any_of<DragonHitComponent>(entity) && registry.get<DragonHitComponent>(entity).color == DRAGON_BLUE)) {
+                    DragonInfoComponent dragonInfo = registry.get<DragonInfoComponent>(entity);
+                    if (dragonInfo.color == DRAGON_BLUE) {
                         Destroy(entity);
                     }
                 }
