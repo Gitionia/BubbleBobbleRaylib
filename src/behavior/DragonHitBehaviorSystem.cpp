@@ -10,7 +10,8 @@
 #include "entt/entity/fwd.hpp"
 
 static void makeNewDragon(entt::registry &registry, entt::entity e) {
-    EntityFactory::CreateDragon(true);
+    DBG_CHECK(false, "Color of newly created dragon should depend on old dragon")
+    EntityFactory::CreateDragon(DRAGON_GREEN, true);
 }
 
 void DragonHitBehaviorSystem::Init() {

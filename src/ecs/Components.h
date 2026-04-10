@@ -3,12 +3,12 @@
 #include "../app/Config.h"
 #include "../graphics/Animations.h"
 #include "../graphics/Sprites.h"
+#include "../level/Dragons.h"
 #include "../level/Enemies.h"
 #include "../level/Items.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
 #include "entt/entity/fwd.hpp"
-#include "../level/Dragons.h"
 
 struct Position {
     int x, y;
@@ -89,7 +89,7 @@ struct WalkingActorComponent {
 struct DragonComponent {
     DragonColor color;
     Animator animator;
-    
+
     int invincibilityFramesLeft = 0;
     static constexpr int INVINCIBILITY_FRAME_COUNT = 2.5f * 60;
     bool isInvincible() {
@@ -116,12 +116,20 @@ struct DragonComponent {
     static constexpr int FALL_SPEED = UNITS_PER_BLOCK / 8;
     static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
 
-    static inline const Position STARTING_POSITION{BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
+    static inline const Position DRAGON_GREEN_STARTING_POSITION{BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
+    static inline const Position DRAGON_BLUE_STARTING_POSITION{BP_SIZE(LevelTilemap::WIDTH - 3 - 1, 0), BP_SIZE(23, 0), -1};
+    static inline const Position &GetStartingPosition(DragonColor color) {
+        if (color == DRAGON_GREEN) {
+            return DRAGON_GREEN_STARTING_POSITION;
+        } else {
+            return DRAGON_BLUE_STARTING_POSITION;
+        }
+    }
 };
 
 struct DragonHitComponent {
     DragonColor color;
-    
+
     Animator animator;
     enum AnimationState {
         HIT = 0,
@@ -250,7 +258,7 @@ struct WalkingEnemyComponent {
     int walkingDir;
     Animator animator;
     bool isGapJumping = false;
-    
+
     int freezeXPosDuration = 0;
     enum FreezeState {
         NOT_FREEZING,

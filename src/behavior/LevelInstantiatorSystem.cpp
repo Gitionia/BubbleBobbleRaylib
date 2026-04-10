@@ -48,8 +48,8 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber, bool addSecondPlayer
     }
 
     setPhysicsColliderData(level);
-    auto dragon = EntityFactory::CreateDragon();
+    auto dragon = EntityFactory::CreateDragon(DRAGON_GREEN);
     if (addSecondPlayer) {
-        auto dragon = EntityFactory::CreateDragon();
+        auto dragon = EntityFactory::CreateDragon(DRAGON_BLUE);
     }
 }

@@ -52,14 +52,14 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
     return tile;
 }
 
-entt::entity EntityFactory::CreateDragon(bool withInvincibility) {
+entt::entity EntityFactory::CreateDragon(DragonColor color, bool withInvincibility) {
     entt::registry *registry = get().registry;
     auto dragon = registry->create();
 
     static int debugEntityLabelNumber = 0;
     DBG_ADD_ENTITY_LABEL(registry, dragon, "DRAGON", debugEntityLabelNumber++);
 
-    registry->emplace<Position>(dragon, DragonComponent::STARTING_POSITION);
+    registry->emplace<Position>(dragon, DragonComponent::GetStartingPosition(color));
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
     registry->emplace<WalkingActorComponent>(dragon, DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
     DBG_CHECK(false, "Make Dragon hit color dynamic, based on dragon color");
