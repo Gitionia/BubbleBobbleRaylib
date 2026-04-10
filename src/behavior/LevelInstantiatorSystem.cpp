@@ -9,8 +9,8 @@ void LevelInstantiatorSystem::Update() {
 
     } else {
         const auto &events = eventSystem.ReadEvent(INSTANTIATE_LEVEL);
-        DBG_CHECK(events.size() == 1,
-                  std::format("Expected event count = 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
+        bool didSomething = false;
+        DBG_CHECK(events.size() <= 1, std::format("Expected INSTANTIATE_LEVEL event count <= 1, but was {} for instantiating new levels. Probably a bug?", events.size()));
 
         if (!events.empty()) {
             int newLevel = events.at(0).data;
@@ -19,12 +19,16 @@ void LevelInstantiatorSystem::Update() {
 
             clearExistingLevel();
             loadNewLevel(newLevel, addSecondPlayer);
+
+            didSomething = true;
         }
 
         if (eventSystem.ReadEvent(INSTANTIATE_ADDITIONAL_PLAYER).size()) {
             if (registry.view<DragonTag>()->size() < 2) {
                 auto dragon = EntityFactory::CreateDragon(DRAGON_BLUE);
             }
+
+            didSomething = true;
         }
         if (eventSystem.ReadEvent(DESTROY_ADDITIONAL_PLAYER).size()) {
             auto view = registry.view<DragonInfoComponent>();
@@ -36,7 +40,11 @@ void LevelInstantiatorSystem::Update() {
                     }
                 }
             }
+
+            didSomething = true;
         }
+
+        DBG_CHECK(didSomething, "Used LevelInstantiatorSystem, but it didn't have to do anything. Probably a bug?");
     }
 }
 

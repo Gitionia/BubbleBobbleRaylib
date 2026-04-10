@@ -27,7 +27,7 @@ const char *GetDragonAnimation(DragonAnimationType animation, DragonColor color)
     }
 
     else {
-        DBG_CHECK(false, "Blue Dragon animations not implemented");
+        // DBG_CHECK(false, "Blue Dragon animations not implemented");
         return GetDragonAnimation(animation, DRAGON_GREEN);
     }
 }
