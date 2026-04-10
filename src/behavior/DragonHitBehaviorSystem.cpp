@@ -33,12 +33,12 @@ void DragonHitBehaviorSystem::Update() {
 
             if (dragon.repetitionCount == 0) {
                 if (dragon.state == DragonHitComponent::HIT) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-HitStare"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::HIT_STARE, dragon.color)));
                     dragon.state = DragonHitComponent::HIT_STARE;
                     dragon.repetitionCount = 5;
 
                 } else if (dragon.state == DragonHitComponent::HIT_STARE) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Respawn"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::RESPAWN, dragon.color)));
                     dragon.state = DragonHitComponent::RESPAWN;
                     dragon.repetitionCount = 1;
 

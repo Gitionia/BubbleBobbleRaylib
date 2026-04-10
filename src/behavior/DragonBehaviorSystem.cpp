@@ -11,7 +11,8 @@
 #include "raylib.h"
 
 void makeDragonHit(entt::registry &registry, entt::entity e) {
-    registry.emplace<DragonHitComponent>(e);
+    DBG_CHECK(false, "Make Dragon hit color dynamic, based on dragon color");
+    registry.emplace<DragonHitComponent>(e, DRAGON_GREEN, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, DRAGON_GREEN)));
 }
 
 void DragonBehaviorSystem::Init() {
@@ -117,28 +118,28 @@ void DragonBehaviorSystem::Update() {
 
             if (startedShootingAnimation) {
 
-                dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Shooting"));
+                dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::SHOOTING, dragon.color)));
                 dragon.state = DragonComponent::SHOOTING;
 
             } else if (isGrounded) {
 
                 if (inputDir == 0 && dragon.state != DragonComponent::IDLE) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Idle"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::IDLE, dragon.color)));
                     dragon.state = DragonComponent::IDLE;
 
                 } else if (inputDir != 0 && dragon.state != DragonComponent::WALKING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Walking"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::WALKING, dragon.color)));
                     dragon.state = DragonComponent::WALKING;
                 }
 
             } else {
 
                 if (actor.isJumping() && dragon.state != DragonComponent::JUMPING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Jumping"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::JUMPING, dragon.color)));
                     dragon.state = DragonComponent::JUMPING;
 
                 } else if (!actor.isJumping() && dragon.state != DragonComponent::FALLING) {
-                    dragon.animator.SetNewAnimation(&GetAnimation("Dragon-Falling"));
+                    dragon.animator.SetNewAnimation(&GetAnimation(GetDragonAnimation(DragonAnimationType::FALLING, dragon.color)));
                     dragon.state = DragonComponent::FALLING;
                 }
             }

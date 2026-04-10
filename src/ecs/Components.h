@@ -8,7 +8,7 @@
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
 #include "entt/entity/fwd.hpp"
-#include <algorithm>
+#include "../level/Dragons.h"
 
 struct Position {
     int x, y;
@@ -87,8 +87,9 @@ struct WalkingActorComponent {
 };
 
 struct DragonComponent {
-    Animator animator{&GetAnimation("Dragon-Idle")};
-
+    DragonColor color;
+    Animator animator;
+    
     int invincibilityFramesLeft = 0;
     static constexpr int INVINCIBILITY_FRAME_COUNT = 2.5f * 60;
     bool isInvincible() {
@@ -119,8 +120,9 @@ struct DragonComponent {
 };
 
 struct DragonHitComponent {
-    Animator animator{&GetAnimation("Dragon-Hit")};
-
+    DragonColor color;
+    
+    Animator animator;
     enum AnimationState {
         HIT = 0,
         HIT_STARE = 1,
