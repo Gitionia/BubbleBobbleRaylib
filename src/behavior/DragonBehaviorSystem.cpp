@@ -10,9 +10,12 @@
 #include "WalkingActorUtils.h"
 #include "raylib.h"
 
-void makeDragonHit(entt::registry &registry, entt::entity e) {
-    DBG_CHECK(false, "Make Dragon hit color dynamic, based on dragon color");
+void makeGreenDragonHit(entt::registry &registry, entt::entity e) {
     registry.emplace<DragonHitComponent>(e, DRAGON_GREEN, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, DRAGON_GREEN)));
+}
+
+void makeBlueDragonHit(entt::registry &registry, entt::entity e) {
+    registry.emplace<DragonHitComponent>(e, DRAGON_BLUE, &GetAnimation(GetDragonAnimation(DragonAnimationType::HIT, DRAGON_BLUE)));
 }
 
 void DragonBehaviorSystem::Init() {
@@ -47,7 +50,11 @@ void DragonBehaviorSystem::Update() {
         }
 
         if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider) || collidesWithBoss(registry, pos, Colliders::fullActorCollider))) {
-            Defer(entity, &makeDragonHit, 0);
+            if (dragon.color == DRAGON_GREEN) {
+                Defer(entity, &makeGreenDragonHit, 0);
+            } else {
+                Defer(entity, &makeBlueDragonHit, 0);
+            }
             continue;
         }
 

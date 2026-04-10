@@ -62,8 +62,7 @@ entt::entity EntityFactory::CreateDragon(DragonColor color, bool withInvincibili
     registry->emplace<Position>(dragon, DragonComponent::GetStartingPosition(color));
     registry->emplace<RenderData>(dragon, RenderData(GetSpriteHandle("Dragon-Idle-1"), {2, 2}));
     registry->emplace<WalkingActorComponent>(dragon, DragonComponent::FALL_SPEED, DragonComponent::JUMP_SPEED);
-    DBG_CHECK(false, "Make Dragon hit color dynamic, based on dragon color");
-    auto &dragonComp = registry->emplace<DragonComponent>(dragon, DRAGON_GREEN, &GetAnimation(GetDragonAnimation(DragonAnimationType::IDLE, DRAGON_GREEN)));
+    auto &dragonComp = registry->emplace<DragonComponent>(dragon, color, &GetAnimation(GetDragonAnimation(DragonAnimationType::IDLE, color)));
     if (withInvincibility) {
         dragonComp.invincibilityFramesLeft = DragonComponent::INVINCIBILITY_FRAME_COUNT;
     }

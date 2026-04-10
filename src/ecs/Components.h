@@ -117,7 +117,7 @@ struct DragonComponent {
     static constexpr int JUMP_SPEED = 3 * UNITS_PER_BLOCK / 16;
 
     static inline const Position DRAGON_GREEN_STARTING_POSITION{BP_SIZE(3, 0), BP_SIZE(23, 0), 1};
-    static inline const Position DRAGON_BLUE_STARTING_POSITION{BP_SIZE(LevelTilemap::WIDTH - 3 - 1, 0), BP_SIZE(23, 0), -1};
+    static inline const Position DRAGON_BLUE_STARTING_POSITION{BP_SIZE(LevelTilemap::WIDTH - 1, 0), BP_SIZE(23, 0), -1};
     static inline const Position &GetStartingPosition(DragonColor color) {
         if (color == DRAGON_GREEN) {
             return DRAGON_GREEN_STARTING_POSITION;

@@ -9,9 +9,12 @@
 #include "WalkingActorUtils.h"
 #include "entt/entity/fwd.hpp"
 
-static void makeNewDragon(entt::registry &registry, entt::entity e) {
-    DBG_CHECK(false, "Color of newly created dragon should depend on old dragon")
+static void makeNewGreenDragon(entt::registry &registry, entt::entity e) {
     EntityFactory::CreateDragon(DRAGON_GREEN, true);
+}
+
+static void makeNewBlueDragon(entt::registry &registry, entt::entity e) {
+    EntityFactory::CreateDragon(DRAGON_BLUE, true);
 }
 
 void DragonHitBehaviorSystem::Init() {
@@ -45,7 +48,12 @@ void DragonHitBehaviorSystem::Update() {
 
                 } else {
                     Destroy(entity);
-                    Defer((entt::entity)0, &makeNewDragon, 0);
+
+                    if (dragon.color == DRAGON_GREEN) {
+                        Defer((entt::entity)0, &makeNewGreenDragon, 0);
+                    } else {
+                        Defer((entt::entity)0, &makeNewBlueDragon, 0);
+                    }
                     eventSystem.Notify(entity, PLAYER_DIED, 0);
                 }
             }
