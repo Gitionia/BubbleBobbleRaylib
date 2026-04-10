@@ -31,7 +31,7 @@ void EnemyAppearanceBehaviorSystem::Update() {
             continue;
         }
 
-        PRINT_INFO("offset {} delay{}", appearance.yOffset, appearance.waitingDelay);
+        // PRINT_INFO("offset {} delay{}", appearance.yOffset, appearance.waitingDelay);
         pos.x = appearance.targetPosX;
         pos.y = appearance.targetPosY + appearance.yOffset;
     }

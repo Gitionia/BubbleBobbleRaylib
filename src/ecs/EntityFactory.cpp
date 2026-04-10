@@ -129,12 +129,12 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
         int targetOffset = BP_SIZE(-26, 0);
         int actualOffset = targetOffset;
 
-        int offsetCutOff = BP_SIZE(-10, 0);
+        int offsetCutOff = BP_SIZE(-2, 0);
         if (y + targetOffset < offsetCutOff) {
             actualOffset = offsetCutOff - y;
         }
 
-        int baseDelay = TARGET_FPS * 1.0f;
+        int baseDelay = TARGET_FPS * 1.5f;
         int delayAddition = (actualOffset - targetOffset) / 2;
         registry->emplace<EnemyAppearanceComponent>(enemy, &GetAnimation(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL)),
                                                     x, y, actualOffset, baseDelay + delayAddition);
