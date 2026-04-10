@@ -32,7 +32,7 @@ void FlyingEnemyBehaviorSystem::Update() {
         pigAnimator.Reset();
     }
 
-    auto view = registry.view<Position, FlyingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    auto view = registry.view<Position, FlyingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<EnemyAppearanceComponent, BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, enemy, info, renderData] = view.get(entity);
 

@@ -18,6 +18,7 @@
 #include "../behavior/LevelInstantiatorSystem.h"
 #include "../behavior/TitleScreenSystem.h"
 #include "../behavior/BossBehaviorSystem.h"
+#include "../behavior/EnemyAppearanceBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../level/GameModifiers.h"
 #include "SystemBase.h"
@@ -25,6 +26,7 @@
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     : registry(registry) {
 
+    registerSystem<EnemyAppearanceBehaviorSystem>(registry, eventSystem);
     registerSystem<WalkingEnemyBehaviorSystem>(registry, eventSystem);
     registerSystem<BossBehaviorSystem>(registry, eventSystem);
     registerSystem<EnemyProjectileBehaviorSystem>(registry, eventSystem);

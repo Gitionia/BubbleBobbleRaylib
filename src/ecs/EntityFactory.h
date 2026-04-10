@@ -10,7 +10,7 @@ class EntityFactory {
   public:
     static entt::entity CreateTile(int x, int y, Color shadowRight, Color shadowBottem, int level, bool addShadowRight = true, bool addShadowBottem = true);
     static entt::entity CreateDragon(DragonColor color, bool withInvincibility = false);
-    static entt::entity CreateEnemy(int x, int y, EnemyType type, Direction direction);
+    static entt::entity CreateEnemy(int x, int y, EnemyType type, Direction direction, bool withAppearanceAnimation);
     static entt::entity CreateEnemyProjectile(int x, int y, int dir, EnemyType shooterEnemy);
     static entt::entity CreateTumblingEnemy(int x, int y, int dir, EnemyType enemyType, ItemType itemType);
     static entt::entity CreateItem(const Vector2Int& pos, ItemType itemType);

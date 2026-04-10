@@ -15,7 +15,7 @@ void WalkingActorBehaviorSystem::Update() {
 
     const Collider &collider = Colliders::walkingActorCollider;
 
-    auto view = registry.view<Position, WalkingActorComponent>(entt::exclude<BubbleFloatComponent, BubblePopComponent, DragonHitComponent>);
+    auto view = registry.view<Position, WalkingActorComponent>(entt::exclude<EnemyAppearanceComponent, BubbleFloatComponent, BubblePopComponent, DragonHitComponent>);
     for (auto entity : view) {
         auto [pos, actor] = view.get(entity);
 

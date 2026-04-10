@@ -40,7 +40,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         PRINT_WARN("Walking enemy did not find dragon position");
     }
 
-    auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);
+    auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<EnemyAppearanceComponent, BubbleFloatComponent, BubblePopComponent>);
     for (auto entity : view) {
         auto [pos, actor, enemy, info, renderData] = view.get(entity);
 

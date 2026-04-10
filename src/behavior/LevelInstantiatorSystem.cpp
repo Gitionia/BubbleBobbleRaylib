@@ -69,7 +69,7 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber, bool addSecondPlayer
     EntityFactory::CreateLevel(level, levelNumber);
 
     if (level.ContainsBoss()) {
-        EntityFactory::CreateEnemy(BP_SIZE(10, 0), BP_SIZE(12, 0), EnemyType::BOSS, Direction::Left);
+        EntityFactory::CreateEnemy(BP_SIZE(10, 0), BP_SIZE(12, 0), EnemyType::BOSS, Direction::Left, false);
     }
 
     setPhysicsColliderData(level);

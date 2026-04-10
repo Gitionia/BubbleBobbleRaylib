@@ -308,6 +308,15 @@ struct EnemyTumbleComponent {
     bool isFalling = false;
 };
 
+struct EnemyAppearanceComponent {
+    Animator animator;
+    int targetPosX;
+    int targetPosY;
+    int yOffset;
+
+    int waitingDelay;
+};
+
 struct BubbleShootComponent {
     int shootDirection;
     Animator animator{&GetAnimation("Bubble-Green-Shoot")};

@@ -95,7 +95,7 @@ entt::entity EntityFactory::CreateBubbleCenteredAt(const Vector2Int &centre, int
     return bubble;
 }
 
-entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction direction) {
+entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction direction, bool withAppearanceAnimation) {
     entt::registry *registry = get().registry;
     auto enemy = registry->create();
 
@@ -123,6 +123,21 @@ entt::entity EntityFactory::CreateEnemy(int x, int y, EnemyType type, Direction 
         break;
     case EnemyType::BOSS:
         registry->emplace<BossComponent>(enemy, &GetAnimation(GetEnemyAnimationName(EnemyType::BOSS, EnemyAnimationType::NORMAL)));
+    }
+
+    if (withAppearanceAnimation) {
+        int targetOffset = BP_SIZE(-26, 0);
+        int actualOffset = targetOffset;
+
+        int offsetCutOff = BP_SIZE(-10, 0);
+        if (y + targetOffset < offsetCutOff) {
+            actualOffset = offsetCutOff - y;
+        }
+
+        int baseDelay = TARGET_FPS * 1.0f;
+        int delayAddition = (actualOffset - targetOffset) / 2;
+        registry->emplace<EnemyAppearanceComponent>(enemy, &GetAnimation(GetEnemyAnimationName(type, EnemyAnimationType::NORMAL)),
+                                                    x, y, actualOffset, baseDelay + delayAddition);
     }
 
     registry->emplace<EnemyInfoComponent>(enemy, type);
@@ -295,7 +310,7 @@ void EntityFactory::CreateLevel(const LevelLayout &level, int levelNumber) {
                 LevelTileType tile = level.GetEnemies().Get(x, y);
                 EnemyType type = GetEnemyTypeFromTile(tile);
                 Direction direction = GetEnemyDirectionFromTile(tile);
-                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type, direction);
+                CreateEnemy(BP_SIZE(x + 2, 0), BP_SIZE(y, 0), type, direction, true);
             }
         }
     }

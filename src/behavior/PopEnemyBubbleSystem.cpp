@@ -21,7 +21,7 @@ void makeEnemyNormal(entt::registry& registry, entt::entity entity) {
     Position pos = registry.get<Position>(entity);
     pos.x -= BP_SIZE(0, 2);
     EnemyInfoComponent info = registry.get<EnemyInfoComponent>(entity);
-    EntityFactory::CreateEnemy(pos.x, pos.y, info.type, GetDirectionFromInt(Random::Get().GetDirection()));
+    EntityFactory::CreateEnemy(pos.x, pos.y, info.type, GetDirectionFromInt(Random::Get().GetDirection()), false);
 }
 
 void makeEnemyTumble(entt::registry& registry, entt::entity entity) {
