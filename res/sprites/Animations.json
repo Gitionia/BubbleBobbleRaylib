@@ -67,6 +67,9 @@
     { "name" : "Bubble-Green-Idle", "FramesPerSprite" : 18 },
     { "name" : "Bubble-Green-Shoot", "FramesPerSprite" : 6 },
     { "name" : "Bubble-PrePop", "FramesPerSprite" : 4 },
-    { "name" : "Bubble-Pop", "FramesPerSprite" : 6 }
+    { "name" : "Bubble-Pop", "FramesPerSprite" : 6 },
+    
+    { "name" : "SmallLightning-Normal", "FramesPerSprite" : 4 },
+    { "name" : "SmallLightning-Hit", "FramesPerSprite" : 4 }
   ]
 }
