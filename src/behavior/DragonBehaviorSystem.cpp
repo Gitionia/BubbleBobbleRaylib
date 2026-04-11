@@ -19,6 +19,7 @@ void makeDragonHit(entt::registry &registry, entt::entity e) {
 void DragonBehaviorSystem::Init() {
     shootSound = &GetSound("bubble-shoot-sound");
     jumpSound = &GetSound("dragon-jump-sound");
+    dragonHitSound = &GetSound("dragon-dying-sound");
 }
 
 void DragonBehaviorSystem::Update() {
@@ -51,6 +52,8 @@ void DragonBehaviorSystem::Update() {
 
         if (!dragon.isInvincible() && (collidesWithEnemy(registry, pos, Colliders::fullActorCollider) || collidesWithEnemyProjectile(registry, pos, Colliders::fullActorCollider) || collidesWithBoss(registry, pos, Colliders::fullActorCollider))) {
             Defer(entity, &makeDragonHit, 0);
+
+            PlaySound(*dragonHitSound);
             continue;
         }
 

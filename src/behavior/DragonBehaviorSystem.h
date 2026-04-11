@@ -16,5 +16,6 @@ class DragonBehaviorSystem : public SystemBase {
   private:
     const Sound *shootSound = 0;
     const Sound *jumpSound = 0;
+    const Sound *dragonHitSound = 0;
     Animation idleAnimation{};
 };

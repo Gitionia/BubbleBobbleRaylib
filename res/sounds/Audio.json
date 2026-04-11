@@ -2,6 +2,7 @@
   "sound" : [
     { "name" : "bubble-shoot-sound", "path" : "res/sounds/soundEffects/BubbleShootSound.wav" },
     { "name" : "dragon-jump-sound", "volume" : 0.4, "path" : "res/sounds/soundEffects/DragonJumpSound.wav" },
+    { "name" : "dragon-dying-sound", "volume" : 0.6, "path" : "res/sounds/soundEffects/Player Death.wav" },
     { "name" : "item-pickup-1", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 1.wav" },
     { "name" : "item-pickup-2", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 2.wav" },
     { "name" : "item-pickup-3", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 3.wav" },
