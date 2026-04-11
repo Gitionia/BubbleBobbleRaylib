@@ -1,7 +1,31 @@
 #include "ComponentUtils.h"
 
+#include "../audio/Audio.h"
 #include "Components.h"
 #include "entt/entity/fwd.hpp"
+
+static const Sound *getEnemyBubblePopSound(int index) {
+    static std::array<const Sound *, 3> sounds{};
+    static bool initialized = false;
+    if (!initialized) {
+        for (int i = 0; i < sounds.size(); i++) {
+            sounds.at(i) = &GetSound(std::format("enemy-bubble-pop-level-{}", i + 1));
+        }
+        initialized = true;
+    }
+
+    return sounds.at(index);
+}
+
+static int choosePopSound(int poppedCount) {
+    if (poppedCount <= 1) {
+        return 0;
+    } else if (poppedCount <= 4) {
+        return 1;
+    } else {
+        return 2;
+    }
+}
 
 void MakeBubbleAndGroupPopFromLifetime(entt::registry &registry, entt::entity entity) {
 
@@ -22,8 +46,9 @@ void MakeBubbleAndGroupPopFromLifetime(entt::registry &registry, entt::entity en
         auto view = registry.view<BubbleFloatComponent>(entt::exclude<EnemyTag, BubblePopComponent>);
         for (entt::entity otherEntity : view) {
             BubbleFloatComponent otherFloatComp = registry.get<BubbleFloatComponent>(otherEntity);
-            
+
             if (otherFloatComp.leader.sharesLeaderWith(floatComp.leader)) {
+                // TODO: removing component here technically not safe!
                 registry.remove<BubbleFloatComponent>(otherEntity);
                 BubblePopComponent &otherPopComponent = registry.emplace<BubblePopComponent>(otherEntity);
                 otherPopComponent.poppedFromLifeTime = true;
@@ -56,9 +81,10 @@ void MakeBubbleAndGroupPopFromDragonSpikes(entt::registry &registry, entt::entit
         auto view = registry.view<BubbleFloatComponent>(entt::exclude<BubblePopComponent>);
         for (entt::entity otherEntity : view) {
             BubbleFloatComponent otherFloatComp = registry.get<BubbleFloatComponent>(otherEntity);
-            
+
             if (otherFloatComp.leader.sharesLeaderWith(floatComp.leader)) {
-                
+
+                // TODO: removing component here technically not safe!
                 registry.remove<BubbleFloatComponent>(otherEntity);
                 BubblePopComponent &otherPopComponent = registry.emplace<BubblePopComponent>(otherEntity);
                 otherPopComponent.poppedFromLifeTime = false;
@@ -68,6 +94,10 @@ void MakeBubbleAndGroupPopFromDragonSpikes(entt::registry &registry, entt::entit
                     itemLevel++;
                 }
             }
+        }
+
+        if (itemLevel > 0) {
+            PlaySound(*getEnemyBubblePopSound(choosePopSound(itemLevel)));
         }
     }
 }

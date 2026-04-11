@@ -55,3 +55,5 @@ struct Vector2Int {
 };
 
 std::string GetCurrentTimeStamp();
+
+int ClampInt(int value, int min, int max);
