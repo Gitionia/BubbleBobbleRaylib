@@ -145,7 +145,8 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
     runner.SetupSystems();
-    // TODO:Play Music
+
+    PlayMusicStream(GetMusic("main-theme"));
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
