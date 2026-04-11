@@ -14,5 +14,7 @@ class DragonBehaviorSystem : public SystemBase {
     void Update() override;
 
   private:
+    const Sound *shootSound = 0;
+    const Sound *jumpSound = 0;
     Animation idleAnimation{};
 };

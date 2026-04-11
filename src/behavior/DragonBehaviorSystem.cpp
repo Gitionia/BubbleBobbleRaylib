@@ -1,6 +1,7 @@
 #include "DragonBehaviorSystem.h"
 
 #include "../app/Config.h"
+#include "../audio/Audio.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
@@ -16,6 +17,8 @@ void makeDragonHit(entt::registry &registry, entt::entity e) {
 }
 
 void DragonBehaviorSystem::Init() {
+    shootSound = &GetSound("bubble-shoot-sound");
+    jumpSound = &GetSound("dragon-jump-sound");
 }
 
 void DragonBehaviorSystem::Update() {
@@ -80,6 +83,8 @@ void DragonBehaviorSystem::Update() {
                 dragon.bubbleShootDelay /= 2;
             }
 
+            PlaySound(*shootSound);
+
             startedShootingAnimation = true;
 
         } else if (dragon.bubbleShootDelay > 0) {
@@ -105,6 +110,8 @@ void DragonBehaviorSystem::Update() {
             if (isGrounded || collidesWithJumpableBubble(registry, pos, collider)) {
                 dragon.jumpSpeed.reset();
                 actor.jumpFrameCount = dragon.jumpSpeed.getLength();
+
+                PlaySound(*jumpSound);
             }
         }
 

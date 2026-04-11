@@ -24,7 +24,7 @@ class GameplayState : public StateMachineState {
     void StartLevel();
 
     private:
-    Music *music;
+    const Music *mainThemeMusic;
     int level = 1;
     static constexpr int BOSS_LEVEL = 60;
     static constexpr int PREVIOUS_TO_BOSS_LEVEL = BOSS_LEVEL - 1;

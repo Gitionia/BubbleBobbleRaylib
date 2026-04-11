@@ -7,7 +7,8 @@
 #include <memory>
 
 void GameplayState::OnEnter() {
-    // music = &PlayMusic("res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3");
+    mainThemeMusic = &GetMusic("main-theme");
+    PlayMusicStream(*mainThemeMusic);
 
     // creates the level and the game ui
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION | SystemTypeFlags::GAME_UI);
@@ -101,21 +102,6 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     }
 
 #ifdef DEBUG_TOOLS
-
-    if (Input::IsKeyPressed(KEY_A)) {
-        static Sound bubbleShootSound;
-        bubbleShootSound = GetSound("bubble-shoot-sound-1");
-        PlaySound(bubbleShootSound);
-    }
-
-    static Music music;
-    music = GetMusic("main-theme");
-    if (Input::IsKeyPressed(KEY_X)) {
-        PlayMusicStream(music);
-    }
-    if (Input::IsKeyPressed(KEY_L)) {
-        StopMusicStream(music);
-    }
     if (Input::IsKeyPressed(KEY_N)) {
         level++;
         StartLevel();

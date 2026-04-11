@@ -1,8 +1,6 @@
 {
   "sound" : [
-    { "name" : "bubble-shoot-sound-1", "path" : "res/sounds/soundEffects/BubbleShootSound-1.wav" },
-    { "name" : "bubble-shoot-sound-2", "path" : "res/sounds/soundEffects/BubbleShootSound-2.wav" },
-    { "name" : "bubble-shoot-sound-3", "path" : "res/sounds/soundEffects/BubbleShootSound-3.wav" },
+    { "name" : "bubble-shoot-sound", "path" : "res/sounds/soundEffects/BubbleShootSound.wav" },
     { "name" : "dragon-jump-sound", "path" : "res/sounds/soundEffects/DragonJumpSound.wav" }
   ],
   "music" : [
