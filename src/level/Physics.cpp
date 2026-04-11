@@ -131,9 +131,10 @@ bool collidesWithEnemy(entt::registry &registry, const Position &position, const
     const auto view = registry.view<Position, EnemyTag>(entt::exclude<EnemyAppearanceComponent, BubbleFloatComponent, BubblePopComponent, BossComponent>);
 
     for (const auto entity : view) {
-        const auto [pos] = view.get(entity);
+        const auto [enemyPos] = view.get(entity);
 
-        if (overlaps(position, collider, pos, Colliders::fullActorCollider)) {
+        // Debug::DrawCollider(enemyPos.x, enemyPos.y, Colliders::enemyHitCollider, {122,0,122,122});
+        if (overlaps(position, collider, enemyPos, Colliders::enemyHitCollider)) {
             return true;
         }
     }

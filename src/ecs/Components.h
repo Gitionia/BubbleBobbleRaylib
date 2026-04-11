@@ -49,6 +49,7 @@ class Colliders {
     static inline const Collider bubbleRepelCollider{BP_SIZE(0, 14), BP_SIZE(1, 0), BP_SIZE(0, 7), BP_SIZE(0, 8)};
     static inline const Collider bubblePopCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), BP_SIZE(0, 0), BP_SIZE(0, 0)};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
+    static inline const Collider enemyHitCollider {BP_SIZE(0, 24), BP_SIZE(1, 0), BP_SIZE(0, 4), BP_SIZE(1, -4)};
 
     // Needs to be resized, because right now it works like a 2x2-block collider
     static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
