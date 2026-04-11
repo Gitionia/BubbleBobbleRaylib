@@ -1,0 +1,11 @@
+{
+  "sound" : [
+    { "name" : "bubble-shoot-sound-1", "path" : "res/sounds/soundEffects/BubbleShootSound-1.wav" },
+    { "name" : "bubble-shoot-sound-2", "path" : "res/sounds/soundEffects/BubbleShootSound-2.wav" },
+    { "name" : "bubble-shoot-sound-3", "path" : "res/sounds/soundEffects/BubbleShootSound-3.wav" },
+    { "name" : "dragon-jump-sound", "path" : "res/sounds/soundEffects/DragonJumpSound.wav" }
+  ],
+  "music" : [
+    { "name" : "main-theme", "path" : "res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3" }
+  ]
+}

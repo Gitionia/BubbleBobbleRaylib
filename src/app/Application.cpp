@@ -83,6 +83,7 @@ Application::Application(const ApplicationParameters &parameters)
 
     LoadSprites();
     LoadAnimations();
+    LoadAudio();
 
     systemRunner.Init();
 
@@ -91,7 +92,7 @@ Application::Application(const ApplicationParameters &parameters)
 }
 
 Application::~Application() {
-    UnloadAllAudio();
+    CleanUpAudio();
     CloseAudioDevice();
 
     UnloadSprites();

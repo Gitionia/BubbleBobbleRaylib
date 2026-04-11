@@ -1,7 +1,9 @@
 #pragma once
 
 bool InitAudio();
-void UnloadAllAudio();
+void LoadAudio();
+void CleanUpAudio();
 void UpdateAudio();
 
-Music &PlayMusic(const std::string &filepath);
+const Sound& GetSound(const std::string& name);
+const Music& GetMusic(const std::string& name);
