@@ -27,12 +27,24 @@ void LoadAudio() {
         for (auto &jsonElement : jsonArray) {
             std::string name = jsonElement.find("name").value();
             std::string path = jsonElement.find("path").value();
+            float volume = 1.0f;
+            if (jsonElement.contains("volume")) {
+                volume = jsonElement.find("volume").value();
+            }
 
             if (i == 0) {
                 Sound sound = LoadSound(path.c_str());
+                if (volume < 0.99f) {
+                    SetSoundVolume(sound, volume);
+                    PRINT_INFO("Setting volume of {} to {}", name, volume);
+                }
                 s_soundMap.insert({name, sound});
             } else {
                 Music music = LoadMusicStream(path.c_str());
+                if (volume < 0.99f) {
+                    SetMusicVolume(music, volume);
+                    PRINT_INFO("Setting volume of {} to {}", name, volume);
+                }
                 s_musicList.push_back(music);
                 s_musicMap.insert({name, music});
             }
