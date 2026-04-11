@@ -1,7 +1,20 @@
 #include "ItemPickupBehaviorSystem.h"
+#include "../audio/Audio.h"
 #include "../level/GameModifiers.h"
 #include "../level/Physics.h"
+#include "raylib.h"
 #include <cstdint>
+
+const Sound *ItemPickupBehaviorSystem::getRandomItemPickupSound() {
+    int i = Random::Get().Range(0,2);
+    return itemPickupSounds.at(i);
+}
+
+void ItemPickupBehaviorSystem::Init() {
+    for (int i = 0; i < itemPickupSounds.size(); i++) {
+        itemPickupSounds.at(i) = &GetSound(std::format("item-pickup-{}", i + 1));
+    }
+}
 
 void ItemPickupBehaviorSystem::Update() {
     auto dragonView = registry.view<Position, DragonTag>(entt::exclude<DragonHitComponent>);
@@ -20,6 +33,8 @@ void ItemPickupBehaviorSystem::Update() {
                 if (GetItemPoints(itemComp.type) > 0) {
                     EntityFactory::CreateItemPointsText(itemPos.toVector(), itemComp.type);
                 }
+
+                PlaySound(*getRandomItemPickupSound());
 
                 eventSystem.Notify(dragon, POINTS_GAINED, GetItemPoints(itemComp.type));
 
