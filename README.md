@@ -25,7 +25,7 @@ The project uses *Tiled* to create the levels (in res/levels). It should be pret
 The Build system being used is cmake. That means you can build it using (if you have cmake and a c++ build system installed):
 ```console
 mkdir build
-cmake -S . -B build/
+cmake -S . -B build
 cmake --build build
 ```
 
