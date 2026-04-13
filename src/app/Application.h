@@ -16,7 +16,13 @@ struct ApplicationParameters {
     int height = TARGET_WINDOW_HEIGHT;
     const char *title = "Bubble Bobble";
     std::string recordedFilePath = "";
+    int level = 1;
+
+    bool printHelp = false;
+    bool runApp = true;
 };
+
+ApplicationParameters ParseApplicationParametersAndPrintErrors(int argc, char **argv);
 
 class Application {
   public:

@@ -14,8 +14,8 @@
 
 class GameplayState : public StateMachineState {
   public:
-    GameplayState(SystemRunner &runner, EventSystem &eventSystem)
-        : StateMachineState(runner, eventSystem) {}
+    GameplayState(SystemRunner &runner, EventSystem &eventSystem, int level)
+        : StateMachineState(runner, eventSystem), level(level) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
@@ -23,7 +23,7 @@ class GameplayState : public StateMachineState {
   private:
     void StartLevel();
 
-    private:
+  private:
     const Music *mainThemeMusic;
     int level = 1;
     static constexpr int BOSS_LEVEL = 60;
@@ -35,23 +35,28 @@ class GameplayState : public StateMachineState {
     static constexpr int FRAME_COUNT_TILL_STARTING_NEW_LEVEL = 5 * TARGET_FPS;
 
     int playerCount = 1;
-  };
+};
 
 class IntroSceneState : public StateMachineState {
-    public:
-    IntroSceneState(SystemRunner &runner, EventSystem &eventSystem)
-        : StateMachineState(runner, eventSystem) {}
+  public:
+    IntroSceneState(SystemRunner &runner, EventSystem &eventSystem, int level)
+        : StateMachineState(runner, eventSystem), level(level) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
 
+  private:
+    int level;
 };
 
 class TitleScreenState : public StateMachineState {
   public:
-    TitleScreenState(SystemRunner &runner, EventSystem &eventSystem)
-        : StateMachineState(runner, eventSystem) {}
+    TitleScreenState(SystemRunner &runner, EventSystem &eventSystem, int level = 1)
+        : StateMachineState(runner, eventSystem), level(level) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
+
+  private:
+    int level;
 };

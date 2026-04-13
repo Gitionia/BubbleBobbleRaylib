@@ -159,7 +159,7 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
         eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
         runner.UpdateSystems();
 
-        return std::make_shared<GameplayState>(runner, eventSystem);
+        return std::make_shared<GameplayState>(runner, eventSystem, level);
 
     } else {
         runner.UpdateSystems();
@@ -188,7 +188,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
         eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
         runner.UpdateSystems();
 
-        return std::make_shared<IntroSceneState>(runner, eventSystem);
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
 
     } else {
         runner.UpdateSystems();

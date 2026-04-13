@@ -53,7 +53,7 @@ Application::Application(const ApplicationParameters &parameters)
       fileLogger(spdlog::basic_logger_mt("file", "logs/log.txt")),
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem)),
+      stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)),
       inputSimulator(std::make_shared<InputSimulator>(inputSimulationModeChooser(parameters.recordedFilePath), inputRecorderFileChooser(parameters.recordedFilePath))) {
 
 #ifdef NDEBUG
@@ -130,4 +130,83 @@ void update() {
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
     PRINT_INFO("FPS: {}, Frame Time: {}µs", 1000000 / elapsed, elapsed);
 #endif
+}
+
+static bool nextArg(int &argc, char **&argv) {
+    if (argc > 0) {
+        argc--;
+        argv++;
+    }
+
+    return argc > 0;
+}
+
+ApplicationParameters ParseApplicationParametersAndPrintErrors(int argc, char **argv) {
+    ApplicationParameters params;
+
+    nextArg(argc, argv);
+    while (argc > 0) {
+        std::string current = argv[0];
+
+        if (current == "--levelFile") {
+            nextArg(argc, argv);
+            if (argc > 0) {
+                std::string levelStr = argv[0];
+
+                if (levelStr.size() < 13) {
+                    printf("argument %s should be like path/to/LevelXYZ.json\n", levelStr.c_str());
+                    params.runApp = false;
+                    params.printHelp = true;
+                    break;
+                }
+                // LevelXYZ.json
+                levelStr = levelStr.substr(levelStr.size() - 8, 3);
+                if (!hasStringOnlyDigits(levelStr)) {
+                    printf("argument %s should be like path/to/LevelXYZ.json\n", levelStr.c_str());
+                    params.runApp = false;
+                    params.printHelp = true;
+                    break;
+                }
+                int levelNr = std::stoi(levelStr);
+
+                params.level = levelNr;
+            }
+
+        } else if (current == "--levelNr") {
+            nextArg(argc, argv);
+            if (argc > 0) {
+                std::string levelStr = argv[0];
+                if (!hasStringOnlyDigits(levelStr)) {
+                    printf("argument %s should be number between 001 and 999\n", levelStr.c_str());
+                    params.runApp = false;
+                    params.printHelp = true;
+                    break;
+                }
+
+                int levelNr = std::stoi(levelStr);
+                params.level = levelNr;
+            }
+
+        } else if (current == "--playRecording") {
+            nextArg(argc, argv);
+            if (argc > 0) {
+                std::string recordingPath = argv[0];
+
+                params.recordedFilePath = recordingPath;
+            }
+
+        } else if (current == "--help") {
+            params.runApp = false;
+            params.printHelp = true;
+
+        } else {
+            printf("Could not parse arg %s\n", argv[0]);
+            params.runApp = false;
+            params.printHelp = true;
+        }
+
+        nextArg(argc, argv);
+    }
+
+    return params;
 }

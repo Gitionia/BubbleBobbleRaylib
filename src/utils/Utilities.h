@@ -1,6 +1,6 @@
 #pragma once
 
-#define COLOR_TRANSPARENT (Color {0,0,0,0})
+#define COLOR_TRANSPARENT (Color{0, 0, 0, 0})
 
 enum class Direction {
     Left,
@@ -19,7 +19,7 @@ struct Vector2Int {
     int X, Y;
 
     Vector2Int Add(int vx, int vy) {
-        return { X + vx, Y + vy };
+        return {X + vx, Y + vy};
     }
 
     static Vector2Int Zero() {
@@ -38,7 +38,7 @@ struct Vector2Int {
         return {-1, 0};
     }
 
-    int Dot(const Vector2Int& other) {
+    int Dot(const Vector2Int &other) {
         return X * other.X + Y * other.Y;
     }
 
@@ -57,3 +57,5 @@ struct Vector2Int {
 std::string GetCurrentTimeStamp();
 
 int ClampInt(int value, int min, int max);
+
+bool hasStringOnlyDigits(const std::string &s);
