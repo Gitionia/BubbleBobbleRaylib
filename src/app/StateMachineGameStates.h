@@ -37,6 +37,16 @@ class GameplayState : public StateMachineState {
     int playerCount = 1;
   };
 
+class IntroSceneState : public StateMachineState {
+    public:
+    IntroSceneState(SystemRunner &runner, EventSystem &eventSystem)
+        : StateMachineState(runner, eventSystem) {}
+
+    void OnEnter() override;
+    std::shared_ptr<StateMachineState> Update() override;
+
+};
+
 class TitleScreenState : public StateMachineState {
   public:
     TitleScreenState(SystemRunner &runner, EventSystem &eventSystem)

@@ -19,6 +19,7 @@
 #include "../behavior/TitleScreenSystem.h"
 #include "../behavior/BossBehaviorSystem.h"
 #include "../behavior/EnemyAppearanceBehaviorSystem.h"
+#include "../behavior/IntroSceneBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../level/GameModifiers.h"
 #include "SystemBase.h"
@@ -45,6 +46,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<GameplayWatcherSystem>(registry, eventSystem);
     registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
     registerSystem<TitleScreenSystem>(registry, eventSystem);
+    registerSystem<IntroSceneBehaviorSystem>(registry, eventSystem);
     registerSystem<GameModifierData>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }
