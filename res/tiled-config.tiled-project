@@ -20,6 +20,16 @@
             "shortcut": "Ü",
             "showOutput": true,
             "workingDirectory": "%projectpath/../"
+        },
+        {
+            "arguments": "--levelFile %mapfile",
+            "command": "./BubbleBobbleRaylib",
+            "enabled": true,
+            "name": "Run level",
+            "saveBeforeExecute": true,
+            "shortcut": "Ä",
+            "showOutput": true,
+            "workingDirectory": "%projectpath/../build"
         }
     ],
     "extensionsPath": "extensions",
