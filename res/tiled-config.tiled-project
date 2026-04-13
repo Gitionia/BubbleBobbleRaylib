@@ -30,6 +30,16 @@
             "shortcut": "Ä",
             "showOutput": true,
             "workingDirectory": "%projectpath/../build"
+        },
+        {
+            "arguments": "%mapfile",
+            "command": "./../createNextLevel.sh",
+            "enabled": true,
+            "name": "Create New Level",
+            "saveBeforeExecute": true,
+            "shortcut": "Ö",
+            "showOutput": true,
+            "workingDirectory": "%projectpath/levels"
         }
     ],
     "extensionsPath": "extensions",
