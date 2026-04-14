@@ -10,9 +10,10 @@
     { "name" : "enemy-bubble-pop-level-2", "volume" : 0.5, "path" : "res/sounds/soundEffects/Medium Bubble Group Pop.wav" },
     { "name" : "enemy-bubble-pop-level-3", "volume" : 0.5, "path" : "res/sounds/soundEffects/Large Bubble Group Pop.wav" },
     
-    { "name" : "intro-scene-musicsound", "volume" : 0.5, "path" : "res/sounds/soundEffects/Chimes Sweep.wav" }
+    { "name" : "title-screen-musicsound", "volume" : 0.5, "path" : "res/sounds/soundEffects/Chimes Sweep.wav" }
   ],
   "music" : [
+    { "name" : "intro-theme", "path" : "res/sounds/tim-follin-atari/01 Bubble Bobble - Start.mp3" },
     { "name" : "main-theme", "path" : "res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3" }
   ]
 }
