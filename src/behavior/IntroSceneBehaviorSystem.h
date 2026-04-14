@@ -18,7 +18,7 @@ class IntroSceneBehaviorSystem : public SystemBase {
     Vector2Int blueDragonCenterPos;
     entt::entity greenDragon;
     entt::entity blueDragon;
-    entt::entity textEntity;
+    std::array<entt::entity, 4> textEntities;
     int counter = 0;
 
     // Time when intro music stops

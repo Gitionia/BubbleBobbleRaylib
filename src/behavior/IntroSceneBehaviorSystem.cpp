@@ -22,14 +22,26 @@ void IntroSceneBehaviorSystem::Setup() {
     blueDragon = EntityFactory::CreateSimpleAnimatedSprite(blueDragonCenterPos, -1,
                                                            GetAnimation(GetDragonAnimation(DragonAnimationType::BIG_BUBBLE_IDLE, DRAGON_BLUE)), {2, 2});
 
+    std::array<const char *, 4> texts = {" NOW, IT IS THE BEGINNING OF A  \n",
+                                         " FANTASTIC STORY!! LET'S MAKE A \n",
+                                         "JOURNEY TO THE CAVE OF MONSTERS!\n",
+                                         "            GOOD LUCK!          "};
+
+    for (int i = 0; i < texts.size(); i++) {
+        int yOffset = i * 64;
+        textEntities.at(i) = EntityFactory::CreateConstantUIText(center.Add(-160, -80 + yOffset), texts.at(i), RED, 32, -4);
+    }
+
     counter = 0;
 }
 
 void IntroSceneBehaviorSystem::Update() {
+    Debug::PrintMousePosition();
 
     if (eventSystem.ReadEvent(DELETE_INTRO_SCENE).size()) {
         registry.destroy(greenDragon);
         registry.destroy(blueDragon);
+        registry.destroy(textEntities.begin(), textEntities.end());
 
         auto bubbles = registry.view<PositionAnimationComponent>();
         registry.destroy(bubbles.begin(), bubbles.end());
