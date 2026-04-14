@@ -8,7 +8,9 @@
     { "name" : "item-pickup-3", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 3.wav" },
     { "name" : "enemy-bubble-pop-level-1", "volume" : 0.5, "path" : "res/sounds/soundEffects/Small Bubble Group Pop.wav" },
     { "name" : "enemy-bubble-pop-level-2", "volume" : 0.5, "path" : "res/sounds/soundEffects/Medium Bubble Group Pop.wav" },
-    { "name" : "enemy-bubble-pop-level-3", "volume" : 0.5, "path" : "res/sounds/soundEffects/Large Bubble Group Pop.wav" }
+    { "name" : "enemy-bubble-pop-level-3", "volume" : 0.5, "path" : "res/sounds/soundEffects/Large Bubble Group Pop.wav" },
+    
+    { "name" : "intro-scene-musicsound", "volume" : 0.5, "path" : "res/sounds/soundEffects/Chimes Sweep.wav" }
   ],
   "music" : [
     { "name" : "main-theme", "path" : "res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3" }

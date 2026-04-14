@@ -1,25 +1,25 @@
 #include "Systems.h"
 
+#include "../behavior/BossBehaviorSystem.h"
 #include "../behavior/BubbleFloatBehaviorSystem.h"
 #include "../behavior/BubblePopBehaviorSystem.h"
 #include "../behavior/BubbleShootBehaviorSystem.h"
 #include "../behavior/DragonBehaviorSystem.h"
 #include "../behavior/DragonHitBehaviorSystem.h"
+#include "../behavior/EnemyAppearanceBehaviorSystem.h"
+#include "../behavior/EnemyProjectileBehaviorSystem.h"
 #include "../behavior/EnemyTumbleBehaviorSystem.h"
+#include "../behavior/FlyingEnemyBehaviorSystem.h"
 #include "../behavior/GameplayUISystem.h"
 #include "../behavior/GameplayWatcherSystem.h"
+#include "../behavior/IntroSceneBehaviorSystem.h"
 #include "../behavior/ItemPickupBehaviorSystem.h"
+#include "../behavior/LevelInstantiatorSystem.h"
 #include "../behavior/PopEnemyBubbleSystem.h"
 #include "../behavior/PositionAnimationBehaviorSystem.h"
-#include "../behavior/WalkingEnemyBehaviorSystem.h"
-#include "../behavior/EnemyProjectileBehaviorSystem.h"
-#include "../behavior/FlyingEnemyBehaviorSystem.h"
-#include "../behavior/WalkingActorBehaviorSystem.h"
-#include "../behavior/LevelInstantiatorSystem.h"
 #include "../behavior/TitleScreenSystem.h"
-#include "../behavior/BossBehaviorSystem.h"
-#include "../behavior/EnemyAppearanceBehaviorSystem.h"
-#include "../behavior/IntroSceneBehaviorSystem.h"
+#include "../behavior/WalkingActorBehaviorSystem.h"
+#include "../behavior/WalkingEnemyBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "../level/GameModifiers.h"
 #include "SystemBase.h"
@@ -52,31 +52,39 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
 }
 
 SystemRunner::~SystemRunner() {
-    for (SystemBase* system : systems) {
+    for (SystemBase *system : systems) {
         delete system;
     }
 }
 
 void SystemRunner::Init() {
-    for (SystemBase* system : systems) {
+    for (SystemBase *system : systems) {
         system->Init();
     }
 }
 
-void SystemRunner::SetupSystems() {
-    for (SystemBase* system : systems) {
+void SystemRunner::SetupAllSystems() {
+    for (SystemBase *system : systems) {
         system->Setup();
     }
 }
 
+void SystemRunner::SetupOnlyEnabledSystems() {
+    for (SystemBase *system : systems) {
+        if (system->IsEnabled()) {
+            system->Setup();
+        }
+    }
+}
+
 void SystemRunner::UpdateSystems() const {
-    for (SystemBase* system : systems) {
+    for (SystemBase *system : systems) {
         system->BaseUpdate();
     }
 }
 
 void SystemRunner::OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags) {
-    for (SystemBase* system : systems) {
+    for (SystemBase *system : systems) {
         system->SetEnabledIfMatchesAnyFlag(flags);
     }
 }

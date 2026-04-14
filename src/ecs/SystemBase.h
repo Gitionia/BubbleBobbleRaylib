@@ -35,6 +35,8 @@ class SystemBase {
 
     void SetEnabledIfMatchesAnyFlag(int flags);
 
+    bool IsEnabled();
+
   protected:
     virtual void Update() = 0;
     void Destroy(const entt::entity &e) const;

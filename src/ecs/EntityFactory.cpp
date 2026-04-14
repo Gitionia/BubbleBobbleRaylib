@@ -25,7 +25,7 @@ entt::entity EntityFactory::CreateTile(int x, int y, Color colorShadowRight, Col
 
         static int debugEntityLabelNumber_ShadowRight = 0;
         DBG_ADD_ENTITY_LABEL(registry, shadowRight, "TILE_SHADOW_RIGHT", debugEntityLabelNumber_ShadowRight++);
-    
+
         registry->emplace<Position>(shadowRight, (x + 1) * UNITS_PER_BLOCK, y * UNITS_PER_BLOCK);
         RenderData data = {GetSpriteHandle("TileShadowRight"), {2, 2}};
         data.SetColor(colorShadowRight);
@@ -278,6 +278,25 @@ entt::entity EntityFactory::CreateSimpleSprite(const Vector2Int &pos, int dir, S
     RenderData data(sprite, scale);
     registry->emplace<RenderData>(entity, data.SetColor(color));
     registry->emplace<SimpleSpriteTag>(entity);
+
+    registry->emplace<SpriteEntityTag>(entity);
+
+    return entity;
+}
+
+entt::entity EntityFactory::CreateSimpleAnimatedSprite(const Vector2Int &pos, int dir, Animation &animation) {
+    entt::registry *registry = get().registry;
+
+    auto entity = registry->create();
+
+    static int debugEntityLabelNumber = 0;
+    DBG_ADD_ENTITY_LABEL(registry, entity, "SIMPLE_ANIMATED_SPRITE", debugEntityLabelNumber++);
+
+    registry->emplace<Position>(entity, pos.X, pos.Y, dir);
+    registry->emplace<RenderData>(entity, animation.Sprites.at(0));
+    registry->emplace<SimpleAnimatedSpriteComponent>(entity, &animation);
+
+    registry->emplace<SimpleAnimatedSpriteTag>(entity);
 
     registry->emplace<SpriteEntityTag>(entity);
 

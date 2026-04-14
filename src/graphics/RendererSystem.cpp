@@ -29,6 +29,7 @@ void RendererSystem::Update() {
     renderAllWithTag<BubbleTag>();
     renderAllWithTag<DragonTag>();
     renderAllWithTag<SimpleSpriteTag>();
+    renderAllWithTag<SimpleAnimatedSpriteTag>();
 
     renderFontText();
 

@@ -9,6 +9,7 @@ enum class DragonAnimationType {
     HIT,
     HIT_STARE,
     RESPAWN,
+    BIG_BUBBLE_IDLE,
 };
 
 enum DragonColor {

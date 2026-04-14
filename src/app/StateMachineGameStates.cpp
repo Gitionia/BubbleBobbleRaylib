@@ -145,10 +145,9 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 void IntroSceneState::OnEnter() {
     // TODO: replace with actual intro scene code
 
-    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
-    runner.SetupSystems();
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::INTRO_SCENE);
+    runner.SetupOnlyEnabledSystems();
 
-    PlayMusicStream(GetMusic("main-theme"));
 }
 
 std::shared_ptr<StateMachineState> IntroSceneState::Update() {
@@ -156,7 +155,7 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
     
     if (false || Input::AnyKeyPressed()) {
         // Cleans up Title Screen Entities
-        eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
+        eventSystem.Notify((entt::entity)0, DELETE_TITLE_SCREEN, 0);
         runner.UpdateSystems();
 
         return std::make_shared<GameplayState>(runner, eventSystem, level);
@@ -171,9 +170,9 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
 
 void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
-    runner.SetupSystems();
+    runner.SetupOnlyEnabledSystems();
 
-    PlayMusicStream(GetMusic("main-theme"));
+    PlaySound(GetSound("intro-scene-musicsound"));
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
@@ -185,7 +184,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
 
     if (false || Input::AnyKeyPressed()) {
         // Cleans up Title Screen Entities
-        eventSystem.Notify((entt::entity)0, START_GAMEPLAY, 0);
+        eventSystem.Notify((entt::entity)0, DELETE_TITLE_SCREEN, 0);
         runner.UpdateSystems();
 
         return std::make_shared<IntroSceneState>(runner, eventSystem, level);

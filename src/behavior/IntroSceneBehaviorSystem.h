@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
+#include "entt/entity/fwd.hpp"
+#include <vector>
 
 class IntroSceneBehaviorSystem : public SystemBase {
     SYSTEM_DEF(IntroSceneBehaviorSystem, SystemTypeFlags::INTRO_SCENE)
@@ -10,4 +12,10 @@ class IntroSceneBehaviorSystem : public SystemBase {
 
   protected:
     void Update() override;
-};
+
+  private:
+    entt::entity greenDragon;
+    entt::entity blueDragon;
+    std::vector<entt::entity> bubbles;
+    entt::entity textEntity;
+  };

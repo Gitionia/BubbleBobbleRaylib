@@ -18,6 +18,9 @@
     { "name" : "DragonBlue-HitStare", "FramesPerSprite" : 4 },
     { "name" : "DragonBlue-Respawn", "FramesPerSprite" : 16 },
 
+    { "name" : "DragonGreen-BigBubble-Idle", "FramesPerSprite" : 16 },
+    { "name" : "DragonBlue-BigBubble-Idle", "FramesPerSprite" : 16 },
+
     { "name" : "Can-Walk", "FramesPerSprite" : 7 },
     { "name" : "Can-Bubbled", "FramesPerSprite" : 18 },
     { "name" : "Can-Item", "FramesPerSprite" : 5 },

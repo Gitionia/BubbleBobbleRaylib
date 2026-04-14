@@ -9,7 +9,8 @@ class SystemRunner {
     explicit SystemRunner(entt::registry &registry, EventSystem& eventSystem);
     ~SystemRunner();
     void Init();
-    void SetupSystems();
+    void SetupAllSystems();
+    void SetupOnlyEnabledSystems();
     void UpdateSystems() const;
 
     void OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags);

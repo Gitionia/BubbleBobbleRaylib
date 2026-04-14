@@ -20,7 +20,7 @@ void TitleScreenSystem::Setup() {
 
 void TitleScreenSystem::Update() {
 
-    if (eventSystem.ReadEvent(START_GAMEPLAY).size()) {
+    if (eventSystem.ReadEvent(DELETE_TITLE_SCREEN).size()) {
         auto sprites = registry.view<SpriteEntityTag>();
         registry.destroy(sprites->begin(), sprites->end());
 

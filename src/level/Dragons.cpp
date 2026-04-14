@@ -20,6 +20,8 @@ const char *GetDragonAnimation(DragonAnimationType animation, DragonColor color)
             return "DragonGreen-HitStare";
         case DragonAnimationType::RESPAWN:
             return "DragonGreen-Respawn";
+        case DragonAnimationType::BIG_BUBBLE_IDLE:
+            return "DragonGreen-BigBubble-Idle";
         default:
             DBG_CHECK(false, "Tried to get name of invalid dragon animation type");
             return GetDragonAnimation(DragonAnimationType::IDLE, color);
@@ -44,6 +46,8 @@ const char *GetDragonAnimation(DragonAnimationType animation, DragonColor color)
             return "DragonBlue-HitStare";
         case DragonAnimationType::RESPAWN:
             return "DragonBlue-Respawn";
+        case DragonAnimationType::BIG_BUBBLE_IDLE:
+            return "DragonBlue-BigBubble-Idle";
         default:
             DBG_CHECK(false, "Tried to get name of invalid dragon animation type");
             return GetDragonAnimation(DragonAnimationType::IDLE, color);

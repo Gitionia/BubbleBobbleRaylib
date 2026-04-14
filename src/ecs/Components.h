@@ -433,6 +433,10 @@ struct ConstUITextComponent {
     int spacing = 0;
 };
 
+struct SimpleAnimatedSpriteComponent {
+    Animator animator;
+};
+
 struct RenderData {
     SpriteHandle spriteHandle;
     Vector2 scale;
@@ -481,7 +485,10 @@ struct EnemyTumbleTag {};
 struct ItemTag {};
 struct InGameTextTag {};
 struct SimpleSpriteTag {};
+struct SimpleAnimatedSpriteTag {};
 
+
+// ---
 // These Tags should never be removed from an entity since they identify the group of the entity
 
 // An entity in gameplay (dragon, enemies, walls, bubbles, etc.) excluding any UI

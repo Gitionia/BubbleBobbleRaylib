@@ -52,3 +52,7 @@ void SystemBase::Destroy(const entt::entity &e) const {
 void SystemBase::SetEnabledIfMatchesAnyFlag(int flags) {
     enabled = this->typeFlags & flags;
 }
+
+bool SystemBase::IsEnabled() {
+    return enabled;
+}
