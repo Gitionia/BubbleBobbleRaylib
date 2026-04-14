@@ -13,6 +13,7 @@
 #include "../behavior/GameplayUISystem.h"
 #include "../behavior/GameplayWatcherSystem.h"
 #include "../behavior/IntroSceneBehaviorSystem.h"
+#include "../behavior/VictorySceneBehaviorSystem.h"
 #include "../behavior/ItemPickupBehaviorSystem.h"
 #include "../behavior/LevelInstantiatorSystem.h"
 #include "../behavior/PopEnemyBubbleSystem.h"
@@ -47,6 +48,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
     registerSystem<TitleScreenSystem>(registry, eventSystem);
     registerSystem<IntroSceneBehaviorSystem>(registry, eventSystem);
+    registerSystem<VictorySceneBehaviorSystem>(registry, eventSystem);
     registerSystem<GameModifierData>(registry, eventSystem);
     registerSystem<RendererSystem>(registry, eventSystem);
 }

@@ -13,6 +13,7 @@ static inline constexpr int GAME_UI = 1 << 3;
 static inline constexpr int TITLE_SCREEN = 1 << 4;
 static inline constexpr int GAME_MODIFIER = 1 << 5;
 static inline constexpr int INTRO_SCENE = 1 << 6;
+static inline constexpr int VICTORY_SCENE = 1 << 7;
 } // namespace SystemTypeFlags
 
 #define SYSTEM_DEF(Type, typeFlags)                                   \

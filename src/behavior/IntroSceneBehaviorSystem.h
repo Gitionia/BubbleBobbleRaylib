@@ -2,7 +2,6 @@
 
 #include "../ecs/SystemBase.h"
 #include "entt/entity/fwd.hpp"
-#include <vector>
 
 class IntroSceneBehaviorSystem : public SystemBase {
     SYSTEM_DEF(IntroSceneBehaviorSystem, SystemTypeFlags::INTRO_SCENE)
