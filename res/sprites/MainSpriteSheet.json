@@ -15,6 +15,7 @@
   "size": { "w": 645, "h": 1746 },
   "scale": "1",
   "slices": [
+   { "name": "BigHeart", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 428, "y": 1466, "w": 64, "h": 64 } }] },
    { "name": "Item-Wand", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 259, "y": 867, "w": 16, "h": 16 } }] },
    { "name": "SmallLightning-Hit-3", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 338, "y": 1146, "w": 16, "h": 16 } }] },
    { "name": "SmallLightning-Hit-2", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 318, "y": 1146, "w": 16, "h": 16 } }] },

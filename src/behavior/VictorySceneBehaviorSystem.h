@@ -15,5 +15,6 @@ class VictorySceneBehaviorSystem : public SystemBase {
   private:
     entt::entity humanLeft;
     entt::entity humanRight;
-    std::array<entt::entity, 4> textEntities;
+    entt::entity heart;
+    std::array<entt::entity, 5> textEntities;
 };

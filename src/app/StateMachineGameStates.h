@@ -47,7 +47,7 @@ class VictorySceneState : public StateMachineState {
 
   private:
     int counter = 0;
-    constexpr static int COUNTER_TILL_CAN_EXIT = 60 * 6;
+    constexpr static int COUNTER_TILL_CAN_EXIT = 60 * 10;
 };
 
 class IntroSceneState : public StateMachineState {

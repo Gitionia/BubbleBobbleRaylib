@@ -53,7 +53,7 @@ Application::Application(const ApplicationParameters &parameters)
       fileLogger(spdlog::basic_logger_mt("file", "logs/log.txt")),
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(systemRunner, std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)),
+      stateMachine(systemRunner, std::make_shared<VictorySceneState>(systemRunner, eventSystem)),
       inputSimulator(std::make_shared<InputSimulator>(inputSimulationModeChooser(parameters.recordedFilePath), inputRecorderFileChooser(parameters.recordedFilePath))) {
 
 #ifdef NDEBUG
