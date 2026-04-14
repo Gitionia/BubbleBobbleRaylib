@@ -142,12 +142,11 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
     return nullptr;
 }
 
-
 void VictorySceneState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::VICTORY_SCENE);
     runner.SetupOnlyEnabledSystems();
 
-    PlayMusicStream(GetMusic("intro-theme"));
+    PlayMusicStream(GetMusic("victory-theme"));
 }
 
 std::shared_ptr<StateMachineState> VictorySceneState::Update() {
@@ -159,15 +158,16 @@ std::shared_ptr<StateMachineState> VictorySceneState::Update() {
 
     runner.UpdateSystems();
 
-    if (Input::AnyKeyPressed()) {
-    // if (eventSystem.ReadEvent(INTRO_SCENE_FINISHED).size() || isDebug && Input::AnyKeyPressed()) {
-        // eventSystem.Notify((entt::entity)0, DELETE_INTRO_SCENE, 0);
-        // runner.UpdateSystems();
-    
-        // StopMusicStream(GetMusic("intro-theme"));
+    counter++;
+
+    if (counter > COUNTER_TILL_CAN_EXIT && Input::AnyKeyPressed()) {
+        eventSystem.Notify((entt::entity)0, DELETE_VICTORY_SCENE, 0);
+        runner.UpdateSystems();
+
+        StopMusicStream(GetMusic("victory-theme"));
 
         return std::make_shared<TitleScreenState>(runner, eventSystem);
-    
+
     } else {
         return nullptr;
     }
@@ -192,11 +192,11 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
     if (eventSystem.ReadEvent(INTRO_SCENE_FINISHED).size() || isDebug && Input::AnyKeyPressed()) {
         eventSystem.Notify((entt::entity)0, DELETE_INTRO_SCENE, 0);
         runner.UpdateSystems();
-    
+
         StopMusicStream(GetMusic("intro-theme"));
 
         return std::make_shared<GameplayState>(runner, eventSystem, level);
-    
+
     } else {
         return nullptr;
     }

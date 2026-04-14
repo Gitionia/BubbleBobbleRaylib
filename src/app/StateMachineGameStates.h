@@ -46,6 +46,8 @@ class VictorySceneState : public StateMachineState {
     std::shared_ptr<StateMachineState> Update() override;
 
   private:
+    int counter = 0;
+    constexpr static int COUNTER_TILL_CAN_EXIT = 60 * 6;
 };
 
 class IntroSceneState : public StateMachineState {

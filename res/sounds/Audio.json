@@ -14,6 +14,7 @@
   ],
   "music" : [
     { "name" : "intro-theme", "path" : "res/sounds/tim-follin-atari/01 Bubble Bobble - Start.mp3" },
-    { "name" : "main-theme", "path" : "res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3" }
+    { "name" : "main-theme", "path" : "res/sounds/tim-follin-atari/02 Bubble Bobble - Ingame-Title__Loop.mp3" },
+    { "name" : "victory-theme", "path" : "res/sounds/other/Staff Roll.mp3" }
   ]
 }
