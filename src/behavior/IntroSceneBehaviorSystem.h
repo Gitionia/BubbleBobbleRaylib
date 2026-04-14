@@ -14,6 +14,8 @@ class IntroSceneBehaviorSystem : public SystemBase {
     void Update() override;
 
   private:
+    Vector2Int greenDragonCenterPos;
+    Vector2Int blueDragonCenterPos;
     entt::entity greenDragon;
     entt::entity blueDragon;
     entt::entity textEntity;
@@ -21,4 +23,4 @@ class IntroSceneBehaviorSystem : public SystemBase {
 
     // Time when intro music stops
     constexpr static int COUNTER_FINISHED = 344;
-  };
+};
