@@ -52,7 +52,7 @@ void ItemPickupBehaviorSystem::Update() {
                     eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::FIRERATE_UP);
                     eventSystem.Notify(item, USING_GAME_MODIFIER, (uint64_t)ModifierTypes::RANGE_UP);
 
-                } else if (itemComp.type == ItemType::Door || itemComp.type == ItemType::Book) {
+                } else if (itemComp.type == ItemType::Door || itemComp.type == ItemType::Wand) {
                     eventSystem.Notify(item, STORY_ITEM_PICKED_UP, (int64_t)itemComp.type);
                 }
             }

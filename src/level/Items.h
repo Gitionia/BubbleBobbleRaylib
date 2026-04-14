@@ -15,7 +15,7 @@ enum class ItemType {
     Potion,
     ToyFlamingo,
     Door,
-    Book,
+    Wand,
     ElementCount
 };
 

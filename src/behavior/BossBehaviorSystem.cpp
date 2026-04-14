@@ -69,7 +69,7 @@ void BossBehaviorSystem::Update() {
                     boss.xDir = -1;
                 }
 
-                EntityFactory::CreateTumblingEnemy(pos.x, pos.y, -boss.xDir, EnemyType::WITCH, ItemType::Book);
+                EntityFactory::CreateTumblingEnemy(pos.x, pos.y, -boss.xDir, EnemyType::WITCH, ItemType::Wand);
                 continue;
             }
             break;
