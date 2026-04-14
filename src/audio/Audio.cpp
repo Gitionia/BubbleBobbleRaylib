@@ -68,6 +68,13 @@ void UpdateAudio() {
     }
 }
 
+void StopAllMusic() {
+    for (const auto &music : s_musicList) {
+        StopMusicStream(music);
+    }
+}
+
+
 const Sound &GetSound(const std::string &name) {
     return s_soundMap.at(name);
 }

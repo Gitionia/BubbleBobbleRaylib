@@ -175,6 +175,7 @@ void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
     runner.SetupOnlyEnabledSystems();
 
+    StopAllMusic();
     PlaySound(GetSound("title-screen-musicsound"));
 }
 
