@@ -16,6 +16,9 @@ class IntroSceneBehaviorSystem : public SystemBase {
   private:
     entt::entity greenDragon;
     entt::entity blueDragon;
-    std::vector<entt::entity> bubbles;
     entt::entity textEntity;
+    int counter = 0;
+
+    // Time when intro music stops
+    constexpr static int COUNTER_FINISHED = 350;
   };

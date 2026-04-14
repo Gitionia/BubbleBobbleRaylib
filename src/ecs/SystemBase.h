@@ -5,6 +5,7 @@
 #include "../app/EventSystem.h"
 
 namespace SystemTypeFlags {
+static inline constexpr int ALL = 0xFFFFFFFF;
 static inline constexpr int RENDERING = 1 << 0;
 static inline constexpr int GAMEPLAY = 1 << 1;
 static inline constexpr int LEVEL_INSTANTIATION = 1 << 2;
