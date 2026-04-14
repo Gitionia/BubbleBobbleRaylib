@@ -35,14 +35,18 @@ void Debug::DrawCollider(int x, int y, Collider collider, Color color) {
 #endif
 }
 
-void Debug::PrintNumberOfEntities() {
-#ifdef DEBUG_TOOLS
+int Debug::GetNumberOfEntities() {
     int count = 0;
     for (auto entity : get().registry->view<entt::entity>()) {
         count++;
     }
 
-    PRINT_INFO("Number of entities: {}", count);
+    return count;
+}
+
+void Debug::PrintNumberOfEntities() {
+#ifdef DEBUG_TOOLS
+    PRINT_INFO("Number of entities: {}", GetNumberOfEntities());
 #endif
 }
 

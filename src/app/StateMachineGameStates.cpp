@@ -155,7 +155,7 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
     
     if (false || Input::AnyKeyPressed()) {
         // Cleans up Title Screen Entities
-        eventSystem.Notify((entt::entity)0, DELETE_TITLE_SCREEN, 0);
+        eventSystem.Notify((entt::entity)0, DELETE_INTRO_SCENE, 0);
         runner.UpdateSystems();
 
         return std::make_shared<GameplayState>(runner, eventSystem, level);
@@ -186,6 +186,8 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
         // Cleans up Title Screen Entities
         eventSystem.Notify((entt::entity)0, DELETE_TITLE_SCREEN, 0);
         runner.UpdateSystems();
+
+        StopSound(GetSound("intro-scene-musicsound"));
 
         return std::make_shared<IntroSceneState>(runner, eventSystem, level);
 

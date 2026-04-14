@@ -27,6 +27,8 @@ void TitleScreenSystem::Update() {
         auto texts = registry.view<UITextEntityTag>();
         registry.destroy(texts->begin(), texts->end());
 
+        DBG_CHECK(Debug::GetNumberOfEntities() == 0, std::format("There should be no entities after deleting the title screen, but there are {}!", Debug::GetNumberOfEntities()));
+
     } else {
         timeCounter++;
 
