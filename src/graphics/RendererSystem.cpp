@@ -72,13 +72,13 @@ void RendererSystem::renderFontText() {
     for (auto entity : viewM) {
         auto [pos, ui] = viewM.get(entity);
 
-        DrawTextEx(font, ui.text.c_str(), pos.toRLVector(), ui.fontSize, ui.spacing, ui.color);
+        DrawTextEx(font, ui.text.c_str(), pos.toRLVector() * SCALING_FACTOR, ui.fontSize, ui.spacing, ui.color);
     }
     auto viewC = registry.view<Position, ConstUITextComponent>();
     for (auto entity : viewC) {
         auto [pos, ui] = viewC.get(entity);
 
-        DrawTextEx(font, ui.text, pos.toRLVector() * 2, ui.fontSize, ui.spacing, ui.color);
+        DrawTextEx(font, ui.text, pos.toRLVector() * SCALING_FACTOR, ui.fontSize, ui.spacing, ui.color);
     }
 }
 

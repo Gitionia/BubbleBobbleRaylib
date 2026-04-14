@@ -61,8 +61,7 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
             eventSystem.Notify((entt::entity)0, DELETE_GAMEPLAY, 0);
             runner.UpdateSystems();
 
-            Debug::PrintAllDebuggingLabels();
-
+            StopMusicStream(GetMusic("main-theme"));
             return std::make_shared<VictorySceneState>(runner, eventSystem);
         }
     }

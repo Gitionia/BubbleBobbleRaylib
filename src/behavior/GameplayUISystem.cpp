@@ -26,7 +26,7 @@ void GameplayUISystem::Update() {
         registry.get<ModifiableUITextComponent>(scoreEntity).text = "HI SCORE\n" + std::to_string(points);
 
     } else if (eventSystem.ReadEvent(INSTANTIATE_GAME_UI).size()) {
-        scoreEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0), 0}, "HI SCORE\n" + std::to_string(points), GREEN);
+        scoreEntity = EntityFactory::CreateModifiableUIText({BP_SIZE(26, 0) / 2, 0}, "HI SCORE\n" + std::to_string(points), GREEN);
     }
 
     if (registry.valid(levelCounterInCorner) && registry.any_of<ModifiableUITextComponent>(levelCounterInCorner)) {

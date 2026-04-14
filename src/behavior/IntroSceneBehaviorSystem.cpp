@@ -28,8 +28,8 @@ void IntroSceneBehaviorSystem::Setup() {
                                          "            GOOD LUCK!          "};
 
     for (int i = 0; i < texts.size(); i++) {
-        int yOffset = i * 64;
-        textEntities.at(i) = EntityFactory::CreateConstantUIText(center.Add(-160, -80 + yOffset), texts.at(i), RED, 32, -4);
+        int yOffset = i * 32;
+        textEntities.at(i) = EntityFactory::CreateConstantUIText({32, 32 + yOffset}, texts.at(i), RED, 32, -4);
     }
 
     counter = 0;
