@@ -36,8 +36,6 @@ void IntroSceneBehaviorSystem::Setup() {
 }
 
 void IntroSceneBehaviorSystem::Update() {
-    Debug::PrintMousePosition();
-
     if (eventSystem.ReadEvent(DELETE_INTRO_SCENE).size()) {
         registry.destroy(greenDragon);
         registry.destroy(blueDragon);

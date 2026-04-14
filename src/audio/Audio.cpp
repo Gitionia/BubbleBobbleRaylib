@@ -36,14 +36,12 @@ void LoadAudio() {
                 Sound sound = LoadSound(path.c_str());
                 if (volume < 0.99f) {
                     SetSoundVolume(sound, volume);
-                    PRINT_INFO("Setting volume of {} to {}", name, volume);
                 }
                 s_soundMap.insert({name, sound});
             } else {
                 Music music = LoadMusicStream(path.c_str());
                 if (volume < 0.99f) {
                     SetMusicVolume(music, volume);
-                    PRINT_INFO("Setting volume of {} to {}", name, volume);
                 }
                 s_musicList.push_back(music);
                 s_musicMap.insert({name, music});
