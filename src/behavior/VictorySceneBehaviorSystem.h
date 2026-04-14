@@ -16,5 +16,10 @@ class VictorySceneBehaviorSystem : public SystemBase {
     entt::entity humanLeft;
     entt::entity humanRight;
     entt::entity heart;
-    std::array<entt::entity, 5> textEntities;
+    std::array<entt::entity, 5> gameTextEntities;
+    std::array<entt::entity, 34> creditTextEntities;
+
+    int counter = 0;
+    constexpr static int COUNTER_TILL_ENTITIES_MOVE = 60 * 10;
+    constexpr static int COUNTER_WHEN_ENTITIES_STOP = 3400;
 };

@@ -78,7 +78,7 @@ void RendererSystem::renderFontText() {
     for (auto entity : viewC) {
         auto [pos, ui] = viewC.get(entity);
 
-        DrawTextEx(font, ui.text, pos.toRLVector(), ui.fontSize, ui.spacing, ui.color);
+        DrawTextEx(font, ui.text, pos.toRLVector() * 2, ui.fontSize, ui.spacing, ui.color);
     }
 }
 
