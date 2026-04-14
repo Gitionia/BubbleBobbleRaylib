@@ -143,37 +143,38 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
 }
 
 void IntroSceneState::OnEnter() {
-    // TODO: replace with actual intro scene code
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::INTRO_SCENE);
     runner.SetupOnlyEnabledSystems();
-    
+
     PlayMusicStream(GetMusic("intro-theme"));
 }
 
 std::shared_ptr<StateMachineState> IntroSceneState::Update() {
-    // TODO: replace with actual intro scene code
-    
-    if (false || Input::AnyKeyPressed()) {
-        // Cleans up Title Screen Entities
+#ifdef NDEBUG
+    bool isDebug = false;
+#else
+    bool isDebug = true;
+#endif
+
+    runner.UpdateSystems();
+
+    if (eventSystem.ReadEvent(INTRO_SCENE_FINISHED).size() || isDebug && Input::AnyKeyPressed()) {
         eventSystem.Notify((entt::entity)0, DELETE_INTRO_SCENE, 0);
         runner.UpdateSystems();
-
+    
         StopMusicStream(GetMusic("intro-theme"));
 
         return std::make_shared<GameplayState>(runner, eventSystem, level);
-
+    
     } else {
-        runner.UpdateSystems();
-
         return nullptr;
     }
 }
 
-
 void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
     runner.SetupOnlyEnabledSystems();
-    
+
     PlaySound(GetSound("title-screen-musicsound"));
 }
 

@@ -27,9 +27,9 @@ void IntroSceneBehaviorSystem::Update() {
 
         DBG_CHECK(Debug::GetNumberOfEntities() == 0, std::format("There should be no entities after deleting the intro scene, but there are {}!", Debug::GetNumberOfEntities()));
 
-    } else {
+    } else if (counter < COUNTER_FINISHED) {
         counter++;
-
+        
         Vector2Int start{TARGET_WINDOW_WIDTH / 4, TARGET_WINDOW_HEIGHT / 4};
         
         int radius = 400;
@@ -38,5 +38,8 @@ void IntroSceneBehaviorSystem::Update() {
         int circleY = std::sin(angle) * radius;
         entt::entity newBubble = EntityFactory::CreateSimpleSprite(start, -1, GetSpriteHandle("WhiteBubble-Idle-1"), WHITE, {1, 1});
         registry.emplace<PositionAnimationComponent>(newBubble, start, start.Add(circleX, circleY), 80, PositionAnimationComponent::DELETE_ENTITY);
+        
+    } else {
+        eventSystem.Notify((entt::entity)0, INTRO_SCENE_FINISHED, 0);
     }
 }

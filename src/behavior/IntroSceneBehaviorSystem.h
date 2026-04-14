@@ -20,5 +20,5 @@ class IntroSceneBehaviorSystem : public SystemBase {
     int counter = 0;
 
     // Time when intro music stops
-    constexpr static int COUNTER_FINISHED = 350;
+    constexpr static int COUNTER_FINISHED = 344;
   };
