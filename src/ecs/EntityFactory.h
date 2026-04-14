@@ -19,7 +19,7 @@ class EntityFactory {
     static entt::entity CreateModifiableUIText(const Vector2Int &position, const std::string& text, Color color, int fontSize = 32, int spacing = 0);
     static entt::entity CreateConstantUIText(const Vector2Int &position, const char* text, Color color, int fontSize = 32, int spacing = 0);
     static entt::entity CreateSimpleSprite(const Vector2Int &position, int dir, SpriteHandle sprite, Color color, Vector2 scale);
-    static entt::entity CreateSimpleAnimatedSprite(const Vector2Int &position, int dir, Animation& animation);
+    static entt::entity CreateSimpleAnimatedSprite(const Vector2Int &position, int dir, Animation& animation, Vector2 scale);
     static void CreateLevel(const LevelLayout &level, int levelNumber);
 
   private:

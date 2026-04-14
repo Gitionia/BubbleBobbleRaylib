@@ -6,9 +6,9 @@ void IntroSceneBehaviorSystem::Init() {
 
 void IntroSceneBehaviorSystem::Setup() {
     greenDragon = EntityFactory::CreateSimpleAnimatedSprite({100, 200}, -1,
-                                                            GetAnimation(GetDragonAnimation(DragonAnimationType::BIG_BUBBLE_IDLE, DRAGON_GREEN)));
+                                                            GetAnimation(GetDragonAnimation(DragonAnimationType::BIG_BUBBLE_IDLE, DRAGON_GREEN)), {2, 2});
     blueDragon = EntityFactory::CreateSimpleAnimatedSprite({400, 200}, -1,
-                                                            GetAnimation(GetDragonAnimation(DragonAnimationType::BIG_BUBBLE_IDLE, DRAGON_BLUE)));
+                                                           GetAnimation(GetDragonAnimation(DragonAnimationType::BIG_BUBBLE_IDLE, DRAGON_BLUE)), {2, 2});
 }
 
 void IntroSceneBehaviorSystem::Update() {

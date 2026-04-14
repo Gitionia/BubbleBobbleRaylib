@@ -284,7 +284,7 @@ entt::entity EntityFactory::CreateSimpleSprite(const Vector2Int &pos, int dir, S
     return entity;
 }
 
-entt::entity EntityFactory::CreateSimpleAnimatedSprite(const Vector2Int &pos, int dir, Animation &animation) {
+entt::entity EntityFactory::CreateSimpleAnimatedSprite(const Vector2Int &pos, int dir, Animation &animation, Vector2 scale) {
     entt::registry *registry = get().registry;
 
     auto entity = registry->create();
@@ -293,7 +293,7 @@ entt::entity EntityFactory::CreateSimpleAnimatedSprite(const Vector2Int &pos, in
     DBG_ADD_ENTITY_LABEL(registry, entity, "SIMPLE_ANIMATED_SPRITE", debugEntityLabelNumber++);
 
     registry->emplace<Position>(entity, pos.X, pos.Y, dir);
-    registry->emplace<RenderData>(entity, animation.Sprites.at(0));
+    registry->emplace<RenderData>(entity, animation.Sprites.at(0), scale);
     registry->emplace<SimpleAnimatedSpriteComponent>(entity, &animation);
 
     registry->emplace<SimpleAnimatedSpriteTag>(entity);
