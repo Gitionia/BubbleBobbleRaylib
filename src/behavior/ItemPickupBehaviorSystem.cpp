@@ -32,9 +32,9 @@ void ItemPickupBehaviorSystem::Update() {
                 Destroy(item);
                 if (GetItemPoints(itemComp.type) > 0) {
                     EntityFactory::CreateItemPointsText(itemPos.toVector(), itemComp.type);
+                    PlaySound(*getRandomItemPickupSound());
                 }
 
-                PlaySound(*getRandomItemPickupSound());
 
                 eventSystem.Notify(dragon, POINTS_GAINED, GetItemPoints(itemComp.type));
 
