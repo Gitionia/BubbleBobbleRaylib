@@ -3,14 +3,16 @@
     { "name" : "bubble-shoot-sound", "path" : "res/sounds/soundEffects/BubbleShootSound.wav" },
     { "name" : "dragon-jump-sound", "volume" : 0.4, "path" : "res/sounds/soundEffects/DragonJumpSound.wav" },
     { "name" : "dragon-dying-sound", "volume" : 0.6, "path" : "res/sounds/soundEffects/Player Death.wav" },
+ 
     { "name" : "item-pickup-1", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 1.wav" },
     { "name" : "item-pickup-2", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 2.wav" },
     { "name" : "item-pickup-3", "volume" : 0.4, "path" : "res/sounds/soundEffects/Collect Food 3.wav" },
+ 
     { "name" : "enemy-bubble-pop-level-1", "volume" : 0.5, "path" : "res/sounds/soundEffects/Small Bubble Group Pop.wav" },
     { "name" : "enemy-bubble-pop-level-2", "volume" : 0.5, "path" : "res/sounds/soundEffects/Medium Bubble Group Pop.wav" },
     { "name" : "enemy-bubble-pop-level-3", "volume" : 0.5, "path" : "res/sounds/soundEffects/Large Bubble Group Pop.wav" },
     
-    { "name" : "title-screen-musicsound", "volume" : 0.5, "path" : "res/sounds/soundEffects/Chimes Sweep.wav" }
+    { "name" : "title-screen-musicsound", "volume" : 0.5, "path" : "res/sounds/soundEffects/Extra Life.wav" }
   ],
   "music" : [
     { "name" : "intro-theme", "path" : "res/sounds/tim-follin-atari/01 Bubble Bobble - Start.mp3" },
