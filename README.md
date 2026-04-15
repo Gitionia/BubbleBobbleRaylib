@@ -6,7 +6,7 @@ You can play the game immediatly here: https://itchybeee.itch.io/bubble-bobble
 <img width="2104" height="1794" alt="Screenshot from 2026-04-02 22-21-06" src="https://github.com/user-attachments/assets/b324bfe6-dc68-4899-8111-191c58f141e6" />
 
 ## Platforms
-This game supports Linux, Windows and Web. 
+This game supports Linux, Windows and Web. See [releases](https://github.com/Gitionia/BubbleBobbleRaylib/releases) for the executables.
 
 ## Notes
 This project includes the first 24 levels of the original game (with maybe more to come). It includes all the original enemies and implements almost all of the core gameplay mechanics of the original (such as bubble jumping and spawning items).
