@@ -4,9 +4,9 @@
 #include <cstdint>
 
 void TitleScreenSystem::Setup() {
-    title = EntityFactory::CreateSimpleSprite({80, 0}, -1, GetSpriteHandle("TitleScreen-Title"), WHITE, {2, 2});
-    EntityFactory::CreateSimpleSprite({0, 288}, 1, GetSpriteHandle("TitleScreen-Dragon"), WHITE, {2, 2});
-    EntityFactory::CreateSimpleSprite({390, 288}, -1, GetSpriteHandle("TitleScreen-Dragon"), DARKBLUE, {2, 2});
+    title = EntityFactory::CreateSimpleSprite({80 - 50, 0}, -1, GetSpriteHandle("TitleScreen-NewTitle"), WHITE, {2, 2});
+    EntityFactory::CreateSimpleSprite({0, 288}, 1, GetSpriteHandle("TitleScreen-DragonGreen"), WHITE, {2, 2});
+    EntityFactory::CreateSimpleSprite({390, 288}, -1, GetSpriteHandle("TitleScreen-DragonBlue"), WHITE, {2, 2});
 
     EntityFactory::CreateSimpleSprite({56, 122}, -1, GetSpriteHandle("Bubble-Green-Idle-1"), WHITE, {2, 2});
     EntityFactory::CreateSimpleSprite({-5, 250}, -1, GetSpriteHandle("Bubble-Green-Idle-1"), WHITE, {2, 2});

@@ -18,6 +18,9 @@ void LoadSprites() {
     Texture2D levelTilesSpriteSheet = LoadTexture("res/sprites/LevelTiles.png");
     addSpriteSheetToSpriteMap(levelTilesSpriteSheet, "res/sprites/LevelTiles.json");
 
+    Texture2D customSprites = LoadTexture("res/sprites/CustomSprites.png");
+    addSpriteSheetToSpriteMap(customSprites, "res/sprites/CustomSprites.json");
+
     Texture2D levelTileShadowRight = LoadTexture("res/sprites/LevelTileShadowRight.png");
     addSingleSpriteToSpriteMap(levelTileShadowRight, "TileShadowRight");
 

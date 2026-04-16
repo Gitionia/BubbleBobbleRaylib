@@ -1,0 +1,23 @@
+{ "frames": {
+   "CustomSprites.png": {
+    "frame": { "x": 0, "y": 0, "w": 1024, "h": 1024 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1024, "h": 1024 },
+    "sourceSize": { "w": 1024, "h": 1024 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.x-dev",
+  "format": "RGBA8888",
+  "size": { "w": 1024, "h": 1024 },
+  "scale": "1",
+  "slices": [
+   { "name": "TitleScreen-DragonBlue", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 99, "y": 185, "w": 61, "h": 64 } }] },
+   { "name": "TitleScreen-DragonGreen", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 22, "y": 185, "w": 61, "h": 64 } }] },
+   { "name": "TitleScreen-NewTitle", "color": "#0000ffff", "keys": [{ "frame": 0, "bounds": {"x": 5, "y": 8, "w": 203, "h": 162 } }] }
+  ]
+ }
+}
