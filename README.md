@@ -46,11 +46,32 @@ BubbleBobbleRaylib --levelFile <path/to/LevelXYZ.json>     # the path is optiona
 
 
 ## Building
-You need cmake and a c++ build system, e.g. MSVC on Windows.
+### Requirements
+- You need cmake and a c++ build system, e.g. MSVC on Windows.
+
+Linux (Ubuntu or similar):
+- To install cmake and the compiler, run:
 ```console
-mkdir build
-cmake -S . -B build
-cmake --build build
+sudo apt install cmake build-essential
+```
+- To install required c++ headers, run:
+```console
+sudo apt install libxv-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
+```
+- If cmake says, OPENGL_INCLUDE_DIR not found, install libgl1-mesa-dev:
+```console
+sudo apt install libgl1-mesa-dev
+```
+
+Windows:
+- Install Visual Studio Build Tools
+- Should work out of the box, otherwise some dependecies may need to be resolved
+
+### Compile
+```console
+mkdir build            # creates the build folder
+cmake -S . -B build    # generates platform specific build files (from a "S"ource directory to a "B"uild directory)
+cmake --build build    # builds the project into build/ folder
 ```
 
 
