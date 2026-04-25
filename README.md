@@ -74,4 +74,12 @@ cmake -S . -B build    # generates platform specific build files (from a "S"ourc
 cmake --build build    # builds the project into build/ folder
 ```
 
+### Different configurations
+The top commands build the Debug version of the game. 
+If you want to build specifically the Debug (default) or Release configuration use the following commands instead:
+```console
+cmake -S . -B build -DCMAKE_BUILD_TYPE=<the-configuration>  # replace with Debug or Release
+cmake --build build
+```
+
 
