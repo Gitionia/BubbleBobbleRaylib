@@ -12,6 +12,7 @@ void RendererSystem::Init() {
 
 RendererSystem::~RendererSystem() {
     UnloadRenderTexture(renderTexture);
+    UnloadFont(font);
 }
 
 void RendererSystem::Update() {

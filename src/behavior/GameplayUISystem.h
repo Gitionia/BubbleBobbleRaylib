@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
+#include "entt/entity/entity.hpp"
+#include "entt/entity/fwd.hpp"
 
 class GameplayUISystem : public SystemBase {
     SYSTEM_DEF(GameplayUISystem, SystemTypeFlags::GAMEPLAY | SystemTypeFlags::GAME_UI)
@@ -11,8 +13,8 @@ class GameplayUISystem : public SystemBase {
 
   private:
     int points = 0;
-    entt::entity scoreEntity;
+    entt::entity scoreEntity = entt::null;
 
     int level = 1;
-    entt::entity levelCounterInCorner;
+    entt::entity levelCounterInCorner = entt::null;
 };

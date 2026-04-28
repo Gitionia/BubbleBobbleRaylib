@@ -13,7 +13,7 @@ void Recording::SaveToFile(const std::string &filepath) {
     std::ofstream file(filepath, std::ios::binary);
 
     if (!file) {
-        PRINT_ERROR("Could not save input recording to {}", filepath);
+        PRINT_WARN("Could not save input recording to {}", filepath);
         return;
     }
 
