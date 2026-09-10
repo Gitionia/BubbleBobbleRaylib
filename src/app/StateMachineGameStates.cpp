@@ -149,11 +149,6 @@ void VictorySceneState::OnEnter() {
 }
 
 std::shared_ptr<StateMachineState> VictorySceneState::Update() {
-#ifdef NDEBUG
-    bool isDebug = false;
-#else
-    bool isDebug = true;
-#endif
 
     runner.UpdateSystems();
 
@@ -188,7 +183,7 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
 
     runner.UpdateSystems();
 
-    if (eventSystem.ReadEvent(INTRO_SCENE_FINISHED).size() || isDebug && Input::AnyKeyPressed()) {
+    if (eventSystem.ReadEvent(INTRO_SCENE_FINISHED).size() || (isDebug && Input::AnyKeyPressed())) {
         eventSystem.Notify((entt::entity)0, DELETE_INTRO_SCENE, 0);
         runner.UpdateSystems();
 
@@ -210,11 +205,6 @@ void TitleScreenState::OnEnter() {
 }
 
 std::shared_ptr<StateMachineState> TitleScreenState::Update() {
-#ifdef NDEBUG
-    bool titleScreenSkip = false;
-#else
-    bool titleScreenSkip = true;
-#endif
 
     if (false || Input::AnyKeyPressed()) {
         // Cleans up Title Screen Entities

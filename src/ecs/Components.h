@@ -49,7 +49,7 @@ class Colliders {
     static inline const Collider bubbleRepelCollider{BP_SIZE(0, 14), BP_SIZE(1, 0), BP_SIZE(0, 7), BP_SIZE(0, 8)};
     static inline const Collider bubblePopCollider{BP_SIZE(0, 28), BP_SIZE(2, 0), BP_SIZE(0, 0), BP_SIZE(0, 0)};
     static inline const Collider bubbleJumpableCollider{BP_SIZE(0, 28), BP_SIZE(0, 4), 0, BP_SIZE(0, -2)};
-    static inline const Collider enemyHitCollider {BP_SIZE(0, 24), BP_SIZE(1, 0), BP_SIZE(0, 4), BP_SIZE(1, -4)};
+    static inline const Collider enemyHitCollider{BP_SIZE(0, 24), BP_SIZE(1, 0), BP_SIZE(0, 4), BP_SIZE(1, -4)};
 
     // Needs to be resized, because right now it works like a 2x2-block collider
     static inline const DragonSpikeCollider dragonSpikeCollider{BP_SIZE(0, 12), BP_SIZE(2, -4), BP_SIZE(2, -12), 0, // Spikes on the back
@@ -170,6 +170,9 @@ struct FlyingEnemyComponent {
             return -1;
         case UP_LEFT:
             return -1;
+        default:
+            UNREACHABLE();
+            return 1;
         }
     }
     int getYDir() {
@@ -183,6 +186,9 @@ struct FlyingEnemyComponent {
             return 1;
         case UP_LEFT:
             return -1;
+        default:
+            UNREACHABLE();
+            return 1;
         }
     }
     void flipX() {
@@ -231,6 +237,9 @@ struct FlyingEnemyComponent {
             return Colliders::flyingBottemLeftVertical;
         case UP_LEFT:
             return Colliders::flyingTopLeftVertical;
+        default:
+            UNREACHABLE();
+            return Colliders::flyingTopRightVertical;
         }
     }
     Collider getHorizontalCollider() {
@@ -243,6 +252,9 @@ struct FlyingEnemyComponent {
         case DOWN_LEFT:
             return Colliders::flyingBottemLeftHorizontal;
         case UP_LEFT:
+            return Colliders::flyingTopLeftHorizontal;
+        default:
+            UNREACHABLE();
             return Colliders::flyingTopLeftHorizontal;
         }
     }
@@ -486,7 +498,6 @@ struct ItemTag {};
 struct InGameTextTag {};
 struct SimpleSpriteTag {};
 struct SimpleAnimatedSpriteTag {};
-
 
 // ---
 // These Tags should never be removed from an entity since they identify the group of the entity

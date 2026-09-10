@@ -18,8 +18,6 @@ void FlyingEnemyBehaviorSystem::Init() {
 
 void FlyingEnemyBehaviorSystem::Update() {
 
-    const Collider &collider = Colliders::fullActorCollider;
-
     static Animator purpleAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::PURPLE_GHOST, EnemyAnimationType::NORMAL)));
     static Animator pigAnimator(&GetAnimation(GetEnemyAnimationName(EnemyType::PIG, EnemyAnimationType::NORMAL)));
 
@@ -53,12 +51,12 @@ void FlyingEnemyBehaviorSystem::Update() {
         int yVel = speedY * enemy.getYDir();
 
         pos.x += xVel;
-        if (collidesWithWall(registry, pos, enemy.getVerticalCollider()) || collidesWithWall(registry, pos, enemy.getHorizontalCollider())) {
+        if (collidesWithWall(pos, enemy.getVerticalCollider()) || collidesWithWall(pos, enemy.getHorizontalCollider())) {
             pos.x -= xVel;
             enemy.flipX();
         }
         pos.y += yVel;
-        if (collidesWithWall(registry, pos, enemy.getVerticalCollider()) || collidesWithWall(registry, pos, enemy.getHorizontalCollider())) {
+        if (collidesWithWall(pos, enemy.getVerticalCollider()) || collidesWithWall(pos, enemy.getHorizontalCollider())) {
             pos.y -= yVel;
             enemy.flipY();
         }

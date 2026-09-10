@@ -8,7 +8,7 @@ static const Sound *getEnemyBubblePopSound(int index) {
     static std::array<const Sound *, 3> sounds{};
     static bool initialized = false;
     if (!initialized) {
-        for (int i = 0; i < sounds.size(); i++) {
+        for (size_t i = 0; i < sounds.size(); i++) {
             sounds.at(i) = &GetSound(std::format("enemy-bubble-pop-level-{}", i + 1));
         }
         initialized = true;

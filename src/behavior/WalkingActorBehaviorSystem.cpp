@@ -33,7 +33,7 @@ void WalkingActorBehaviorSystem::Update() {
         // execute falling
         pos.y += vely;
         if (!actor.isJumping()) {
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
+            if (!actor.ignoreCollisions && collidesWithWall(pos, collider)) {
                 pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
             }
         }

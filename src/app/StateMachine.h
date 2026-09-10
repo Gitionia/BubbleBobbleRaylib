@@ -21,7 +21,7 @@ class StateMachineState {
 
 class StateMachine {
   public:
-    StateMachine(SystemRunner &runner, std::shared_ptr<StateMachineState> firstState);
+    StateMachine(std::shared_ptr<StateMachineState> firstState);
     ~StateMachine() = default;
 
     void Update();

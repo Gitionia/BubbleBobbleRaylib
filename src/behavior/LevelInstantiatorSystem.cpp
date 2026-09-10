@@ -25,7 +25,7 @@ void LevelInstantiatorSystem::Update() {
 
         if (eventSystem.ReadEvent(INSTANTIATE_ADDITIONAL_PLAYER).size()) {
             if (registry.view<DragonTag>()->size() < 2) {
-                auto dragon = EntityFactory::CreateDragon(DRAGON_BLUE);
+                EntityFactory::CreateDragon(DRAGON_BLUE);
             }
 
             didSomething = true;
@@ -73,8 +73,8 @@ void LevelInstantiatorSystem::loadNewLevel(int levelNumber, bool addSecondPlayer
     }
 
     setPhysicsColliderData(level);
-    auto dragon = EntityFactory::CreateDragon(DRAGON_GREEN);
+    EntityFactory::CreateDragon(DRAGON_GREEN);
     if (addSecondPlayer) {
-        auto dragon = EntityFactory::CreateDragon(DRAGON_BLUE);
+        EntityFactory::CreateDragon(DRAGON_BLUE);
     }
 }

@@ -2,6 +2,7 @@
 
 #include "../app/WindowConfig.h"
 #include "raylib.h"
+#include <cstddef>
 
 void VictorySceneBehaviorSystem::Init() {
 }
@@ -24,7 +25,7 @@ void VictorySceneBehaviorSystem::Setup() {
 
         gameTextEntities.at(0) = EntityFactory::CreateConstantUIText({128 - 39, 128 - 90}, gameTexts.at(0), YELLOW, 48, -4);
 
-        for (int i = 1; i < gameTexts.size(); i++) {
+        for (size_t i = 1; i < gameTexts.size(); i++) {
             int yOffset = i * 32;
             gameTextEntities.at(i) = EntityFactory::CreateConstantUIText({128 - 104, 128 - 65 + yOffset}, gameTexts.at(i), PURPLE, 32, -4);
         }
@@ -69,7 +70,7 @@ void VictorySceneBehaviorSystem::Setup() {
                                                 };
 
         int creditOffsetY = 520;
-        for (int i = 0; i < creditTextEntities.size(); i++) {
+        for (size_t i = 0; i < creditTextEntities.size(); i++) {
             int yOffset = i * 32;
             creditTextEntities.at(i) = EntityFactory::CreateConstantUIText({32, 128 - 65 + yOffset + creditOffsetY}, creditTexts.at(i), WHITE, 32, -4);
         }

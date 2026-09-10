@@ -25,7 +25,6 @@ void BubbleFloatBehaviorSystem::Update() {
         renderData.spriteHandle = bubble.animator.GetSpriteHandle();
         bubble.animator.Update();
 
-        Vector2Int centerPos = col.getCenter(pos.x, pos.y);
         Vector2Int airflowVelocity = getAirflowDirection(col, pos.toVector());
         int dragonBubblePushSpeed = BP_SIZE(0, 1);
         int dragonBubblePushVelocity = dragonBubblePushSpeed * getDragonBubblePushDirection(registry, pos, col);
@@ -84,12 +83,12 @@ void BubbleFloatBehaviorSystem::Update() {
 
         } else {
             pos.x += velocity.X;
-            if (collidesWithWall(registry, pos, col)) {
+            if (collidesWithWall(pos, col)) {
                 pos.x -= velocity.X;
             }
 
             pos.y += velocity.Y;
-            if (collidesWithWall(registry, pos, col)) {
+            if (collidesWithWall(pos, col)) {
                 pos.y -= velocity.Y;
             }
 

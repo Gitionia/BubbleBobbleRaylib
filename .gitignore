@@ -1,4 +1,6 @@
 /cmake-build-debug/
+CMakeFiles
+out
 build
 build-debug
 build-release
@@ -6,6 +8,7 @@ windows-debug
 windows-release
 linux-debug
 linux-release
+compile_commands.json
 
 logs
 recordedInput

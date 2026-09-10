@@ -30,7 +30,7 @@ const char *GetItemSpriteName(ItemType item) {
         return "Item-Poison-Green";
     case ItemType::Door:
         return "Item-Door";
-    case ItemType::ElementCount:
+    default:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetItemSpriteName(ItemType::Banana);
@@ -62,7 +62,7 @@ int GetItemPoints(ItemType item) {
     case ItemType::Door:
     case ItemType::Wand:
         return 0;
-    case ItemType::ElementCount:
+    default:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetItemPoints(ItemType::Banana);
@@ -102,7 +102,7 @@ const char *GetPointTextSpriteNameFromItemType(ItemType item) {
     case ItemType::Wand:
         DBG_CHECK(false, "Item has no points and doesn't spawn a point text");
         return GetPointTextSpriteNameFromItemType(ItemType::Banana);
-    case ItemType::ElementCount:
+    default:
         PRINT_ERROR("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetPointTextSpriteNameFromItemType(ItemType::Banana);
@@ -147,6 +147,10 @@ ItemType GetItemTypeFromTile(LevelTileType levelTile) {
     case LevelTileType::ENEMY_WITCH_LEFT:
     case LevelTileType::ENEMY_WITCH_RIGHT:
         DBG_CHECK(false, "Tried to create item from non item tile");
+        return GetItemTypeFromTile(LevelTileType::ITEM_MEAL);
+
+    default:
+        UNREACHABLE();
         return GetItemTypeFromTile(LevelTileType::ITEM_MEAL);
     }
 }

@@ -8,7 +8,7 @@ static std::shared_ptr<InputSimulator> inputSimulator;
 static InputConfiguration config;
 
 #define MAX_TOUCH_POINTS 10
-static Vector2 touchPositions[MAX_TOUCH_POINTS] = {0};
+static Vector2 touchPositions[MAX_TOUCH_POINTS] {};
 static int touchCount = 0;
 
 void Input::Init(std::shared_ptr<InputSimulator> _inputSimulator) {
@@ -78,9 +78,9 @@ bool Input::IsKeyDown(Key key, DragonColor playerColor) {
 
     switch (key) {
     case Key::Jump:
-        return inputSimulator->IsKeyDown(jumpKey) || useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
+        return inputSimulator->IsKeyDown(jumpKey) || (useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN));
     case Key::Fire:
-        return inputSimulator->IsKeyDown(fireKey) || useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT);
+        return inputSimulator->IsKeyDown(fireKey) || (useGamepadInput && IsGamepadButtonDown(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT));
     default:
         return false;
     }

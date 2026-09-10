@@ -1,19 +1,19 @@
 #include "DragonHitBehaviorSystem.h"
 
-#include "../app/Config.h"
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "../level/Level.h"
-#include "../level/Physics.h"
-#include "WalkingActorUtils.h"
 #include "entt/entity/fwd.hpp"
 
 static void makeNewGreenDragon(entt::registry &registry, entt::entity e) {
+    UNUSED(registry);
+    UNUSED(e);
     EntityFactory::CreateDragon(DRAGON_GREEN, true);
 }
 
 static void makeNewBlueDragon(entt::registry &registry, entt::entity e) {
+    UNUSED(registry);
+    UNUSED(e);
     EntityFactory::CreateDragon(DRAGON_BLUE, true);
 }
 

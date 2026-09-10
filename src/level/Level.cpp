@@ -1,4 +1,5 @@
 #include "Level.h"
+#include <cstddef>
 
 LevelTilemap::LevelTilemap()
     : data(SIZE) {
@@ -144,6 +145,9 @@ static LevelTileType flipTileAlongX(LevelTileType tile) {
     case LevelTileType::ITEM_FLAMINGO:
         DBG_CHECK(false, "Should not be trying to flip an item along x axis")
         return tile;
+    default:
+        UNREACHABLE();
+        return LevelTileType::NONE;
     }
 }
 
@@ -172,7 +176,6 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
     DBG_CHECK(tilesets.size() == TILESET_TYPE_COUNT, "Unexpected count of used tilesets at " + std::string(filepath.c_str()));
     for (auto &tileset : tilesets) {
 
-        auto x = tileset.find("gid");
         std::string source = tileset.find("source").value();
         int gid = tileset.find("firstgid").value();
 
@@ -232,7 +235,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Tiles'",
                             filepath.c_str(), levelData.size(), 26 * 28);
 
-            for (int i = 0; i < levelData.size(); i++) {
+            for (size_t i = 0; i < levelData.size(); i++) {
                 level.tiles.set(i, levelData.at(i) > 0 ? LevelTileType::TILE : LevelTileType::NONE);
             }
 
@@ -265,7 +268,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Airflow'",
                             filepath.c_str(), levelData.size(), 26 * 28);
 
-            for (int i = 0; i < levelData.size(); i++) {
+            for (size_t i = 0; i < levelData.size(); i++) {
                 int value = levelData.at(i);
                 int type;
                 if (value == 0)
@@ -307,7 +310,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Enemies'",
                             filepath.c_str(), levelData.size(), 26 * 28);
 
-            for (int i = 0; i < levelData.size(); i++) {
+            for (size_t i = 0; i < levelData.size(); i++) {
                 int value = levelData.at(i);
                 int type;
                 if (value == 0)
@@ -335,7 +338,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                 PRINT_ERROR("Level at {} contains leveldata with invalid length of {} instead of {} on layer 'Items'",
                             filepath.c_str(), levelData.size(), 26 * 28);
 
-            for (int i = 0; i < levelData.size(); i++) {
+            for (size_t i = 0; i < levelData.size(); i++) {
                 int value = levelData.at(i);
                 int type;
                 if (value == 0)

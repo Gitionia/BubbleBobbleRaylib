@@ -51,7 +51,7 @@ class AnimatedValue {
 
   private:
     int frame = 0;
-    int currentIndex = 0;
+    unsigned int currentIndex = 0;
     int length;
     const AnimatedValueDefinition<T> &frames;
 };

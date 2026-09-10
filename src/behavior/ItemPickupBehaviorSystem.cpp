@@ -11,7 +11,7 @@ const Sound *ItemPickupBehaviorSystem::getRandomItemPickupSound() {
 }
 
 void ItemPickupBehaviorSystem::Init() {
-    for (int i = 0; i < itemPickupSounds.size(); i++) {
+    for (size_t i = 0; i < itemPickupSounds.size(); i++) {
         itemPickupSounds.at(i) = &GetSound(std::format("item-pickup-{}", i + 1));
     }
 }

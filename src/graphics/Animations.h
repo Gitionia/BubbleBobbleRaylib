@@ -3,8 +3,15 @@
 #include "Sprites.h"
 
 struct Animation {
+    Animation() = default;
+    Animation(const Animation &other) = default;
     Animation &operator=(const Animation &other) = default;
 
+    Animation(const std::vector<SpriteHandle> &sprites, const std::string &name, int frameCountPerSprite) {
+        Sprites = sprites;
+        this->name = name;
+        FrameCountPerSprite = frameCountPerSprite;
+    }
     std::vector<SpriteHandle> Sprites;
 
     std::string name;
@@ -32,7 +39,7 @@ class Animator {
 
   private:
     const Animation *animation;
-    int currentSprite = 0;
+    unsigned int currentSprite = 0;
     // How many frames the animation has been played
-    int frame = 0;
+    unsigned int frame = 0;
 };

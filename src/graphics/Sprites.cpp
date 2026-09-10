@@ -43,9 +43,9 @@ SpriteHandle GetSpriteHandle(const std::string &name) {
     return spriteMap.at(name);
 }
 
-SpriteHandle GetSpriteHandleChecked(const std::string &name) {
+std::optional<SpriteHandle> GetSpriteHandleChecked(const std::string &name) {
     if (spriteMap.find(name) == std::end(spriteMap)) {
-        return -1;
+        return {};
     }
     return GetSpriteHandle(name);
 }

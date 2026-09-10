@@ -158,6 +158,8 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         }
         break;
     }
+    UNREACHABLE();
+    return GetEnemyAnimationName(EnemyType::CAN, EnemyAnimationType::NORMAL);
 }
 const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
     switch (shooterEnemy) {

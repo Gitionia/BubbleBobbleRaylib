@@ -66,7 +66,7 @@ void EnemyProjectileBehaviorSystem::Update() {
         else if (projectile.state == EnemyProjectileComponent::SHOOTING_REVERSING) {
             pos.x -= velocity;
             // check if witch projectile reached its starting position and if so, destroy projectile
-            if (pos.dir > 0 && pos.x <= projectile.xPosStartPosition || pos.dir < 0 && pos.x >= projectile.xPosStartPosition) {
+            if ((pos.dir > 0 && pos.x <= projectile.xPosStartPosition) || (pos.dir < 0 && pos.x >= projectile.xPosStartPosition)) {
                 Destroy(entity);
             }
 
@@ -80,7 +80,7 @@ void EnemyProjectileBehaviorSystem::Update() {
             projectile.distanceMoved += shootSpeed;
 
             // Check if hit wall or traveled maxDistance
-            if (((projectile.distanceMoved > maxDistance && projectile.state != EnemyProjectileComponent::SHOOTING_REVERSING) || collidesWithWall(registry, pos, collider)) && projectile.state != EnemyProjectileComponent::DESTROYED) {
+            if (((projectile.distanceMoved > maxDistance && projectile.state != EnemyProjectileComponent::SHOOTING_REVERSING) || collidesWithWall(pos, collider)) && projectile.state != EnemyProjectileComponent::DESTROYED) {
                 pos.x -= velocity;
 
                 if (projectile.shooterType == EnemyType::GHOST) {

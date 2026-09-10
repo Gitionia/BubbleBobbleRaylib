@@ -25,6 +25,8 @@ struct DebugEntityLabelComponent {
     std::string label;
 };
 
+#define UNUSED(x) (void)(x)
+
 #ifdef NDEBUG
 #define DBG_ADD_ENTITY_LABEL(registry, entity, label, number) 
 #else
@@ -49,3 +51,11 @@ struct DebugEntityLabelComponent {
         PRINT_WARN("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
     }
 #endif
+
+
+#ifdef NDEBUG
+#define UNREACHABLE() 
+#else
+#define UNREACHABLE() PRINT_ERROR("Reached unreachable code at {} line {}", __FILE__, __LINE__)
+#endif
+

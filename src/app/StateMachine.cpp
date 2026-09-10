@@ -1,6 +1,6 @@
 #include "StateMachine.h"
 
-StateMachine::StateMachine(SystemRunner &runner, std::shared_ptr<StateMachineState> firstState) 
+StateMachine::StateMachine(std::shared_ptr<StateMachineState> firstState) 
     : currentState(firstState) { }
 
 void StateMachine::Update() {

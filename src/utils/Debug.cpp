@@ -36,12 +36,7 @@ void Debug::DrawCollider(int x, int y, Collider collider, Color color) {
 }
 
 int Debug::GetNumberOfEntities() {
-    int count = 0;
-    for (auto entity : get().registry->view<entt::entity>()) {
-        count++;
-    }
-
-    return count;
+    return get().registry->view<entt::entity>()->size();
 }
 
 void Debug::PrintNumberOfEntities() {

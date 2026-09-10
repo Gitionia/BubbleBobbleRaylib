@@ -109,8 +109,8 @@ void WalkingEnemyBehaviorSystem::Update() {
         bool dragonIsAboveEnemy = dragonPos.Y < pos.y;
         bool dragonIsBelowEnemy = dragonPos.Y > pos.y;
         bool dragonAtSameYPos = dragonPos.Y == pos.y;
-        int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
-        bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
+        // int DRAGON_JUMP_TRIGGER_RADIUS = BP_SIZE(8, 0);
+        // bool dragonIsNear = pos.toVector().Dot(dragonPos) <= DRAGON_JUMP_TRIGGER_RADIUS * DRAGON_JUMP_TRIGGER_RADIUS;
 
         bool lookingAtDragon = sign(dragonPos.X - pos.x) == enemy.walkingDir;
 
@@ -131,7 +131,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         // check if grounded
         bool isGrounded = false;
         if (!actor.isJumping()) {
-            isGrounded = isWalkingActorGrounded(registry, pos, actor);
+            isGrounded = isWalkingActorGrounded(pos, actor);
 
             // If we are grounded, but don't touch the floor, then round y-position
             if (isGrounded && pos.y % BP_SIZE(1, 0) != 0) {
@@ -240,13 +240,13 @@ void WalkingEnemyBehaviorSystem::Update() {
             velx = moveSpeed * enemy.walkingDir;
         }
 
-        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(pos, Colliders::walkingActorCollider);
 
         // start jump (snowmen can't jump)
         if (isGrounded && !actor.isJumping() && !enemy.isFreezing() && !isSnowman) {
 
             if (isMushroom) {
-                if (dragonIsAboveEnemy && Random::Get().Chance(0.84f) || dragonAtSameYPos && Random::Get().Chance(0.92f) || dragonIsBelowEnemy && Random::Get().Chance(0.98f)) {
+                if ((dragonIsAboveEnemy && Random::Get().Chance(0.84f)) || (dragonAtSameYPos && Random::Get().Chance(0.92f)) || (dragonIsBelowEnemy && Random::Get().Chance(0.98f))) {
                     enemy.animator.Reset();
                     enemy.isGapJumping = true;
                     actor.jumpSpeed = GAP_JUMP_SPEED;
@@ -258,12 +258,12 @@ void WalkingEnemyBehaviorSystem::Update() {
                 }
 
             } else {
-                if (shouldGapJump && (dragonIsAboveEnemy && Random::Get().Chance(0.05f) || dragonAtSameYPos && (Random::Get().Chance(0.08f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.015f)))) {
+                if (shouldGapJump && ((dragonIsAboveEnemy && Random::Get().Chance(0.05f)) || (dragonAtSameYPos && Random::Get().Chance(0.08f)) || (dragonIsBelowEnemy && Random::Get().Chance(0.015f)))) {
                     enemy.isGapJumping = true;
                     actor.jumpSpeed = GAP_JUMP_SPEED;
                     actor.jumpFrameCount = GAP_JUMP_FRAME_COUNT;
 
-                } else if (dragonIsAboveEnemy && Random::Get().Chance(0.011f) || dragonAtSameYPos && (Random::Get().Chance(0.005f)) || dragonIsBelowEnemy && (Random::Get().Chance(0.005f))) {
+                } else if ((dragonIsAboveEnemy && Random::Get().Chance(0.011f)) || (dragonAtSameYPos && Random::Get().Chance(0.005f)) || (dragonIsBelowEnemy && Random::Get().Chance(0.005f))) {
                     enemy.isGapJumping = false;
                     enemy.jumpTurnAroundsCount = 3;
                     enemy.setFreezing(FREEZE_FOR_JUMP_DURATION, WalkingEnemyComponent::FREEZE_FOR_JUMP);
@@ -278,7 +278,7 @@ void WalkingEnemyBehaviorSystem::Update() {
         // handle x movement
         if (!enemy.isFreezing()) {
             pos.x += velx;
-            if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
+            if (!actor.ignoreCollisions && collidesWithWall(pos, collider)) {
                 // Round pos.x to full block position
                 pos.x = (pos.x / BP_SIZE(1, 0)) * BP_SIZE(1, 0);
                 if (enemy.walkingDir == -1) {
@@ -298,7 +298,7 @@ void WalkingEnemyBehaviorSystem::Update() {
 
                     // check if enemy is in 2 space gap, in that case don't flip direction
                     pos.x -= velx;
-                    if (collidesWithWall(registry, pos, collider)) {
+                    if (collidesWithWall(pos, collider)) {
                         enemy.walkingDir *= -1;
                     }
                     pos.x += velx;

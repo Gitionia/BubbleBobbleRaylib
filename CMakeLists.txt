@@ -139,6 +139,12 @@ target_compile_definitions(BubbleBobbleRaylib PRIVATE
         $<$<CONFIG:Debug>:DEBUG_TOOLS=1>
 )
 
+# enabling all errors
+target_compile_options(BubbleBobbleRaylib PRIVATE
+  $<$<CXX_COMPILER_ID:MSVC>:/W4 /WX>
+  $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wall -Wextra -Wpedantic -Werror>
+)
+
 add_subdirectory("deps/entt-master")
 target_link_libraries(BubbleBobbleRaylib PRIVATE EnTT::EnTT)
 

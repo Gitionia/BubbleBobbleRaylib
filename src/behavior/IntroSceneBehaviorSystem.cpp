@@ -27,7 +27,7 @@ void IntroSceneBehaviorSystem::Setup() {
                                          "JOURNEY TO THE CAVE OF MONSTERS!\n",
                                          "            GOOD LUCK!          "};
 
-    for (int i = 0; i < texts.size(); i++) {
+    for (size_t i = 0; i < texts.size(); i++) {
         int yOffset = i * 32;
         textEntities.at(i) = EntityFactory::CreateConstantUIText({32, 32 + yOffset}, texts.at(i), RED, 32, -4);
     }

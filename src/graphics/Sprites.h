@@ -14,5 +14,5 @@ void LoadSprites();
 void UnloadSprites();
 
 SpriteHandle GetSpriteHandle(const std::string &name);
-SpriteHandle GetSpriteHandleChecked(const std::string &name);
+std::optional<SpriteHandle> GetSpriteHandleChecked(const std::string &name);
 const Sprite &GetSprite(SpriteHandle handle);

@@ -32,7 +32,7 @@ Vector2Int posToTileCoords(int x, int y) {
     return {xPosToTileCoord(x), yPosToTileCoord(y)};
 }
 
-bool collidesWithWall(entt::registry &registry, const Position &position, const Collider &collider) {
+bool collidesWithWall(const Position &position, const Collider &collider) {
     Vector2Int pos = position.toVector();
     for (int x = xPosToTileCoord(collider.left(pos)); x <= xPosToTileCoord(collider.right(pos) - 1); x++) {
         for (int y = yPosToTileCoord(collider.top(pos)); y <= yPosToTileCoord(collider.bottem(pos) - 1); y++) {
@@ -191,8 +191,6 @@ Vector2Int toDirection(LevelTileType type) {
 }
 
 Vector2Int getAirflowDirection(const Collider &col, const Vector2Int &pos) {
-    Vector2Int tileCoords = posToTileCoords(pos.X, pos.Y);
-
     Vector2Int dir = Vector2Int::Zero();
 
     for (int x = xPosToTileCoord(col.left(pos)); x <= xPosToTileCoord(col.right(pos)); x++) {

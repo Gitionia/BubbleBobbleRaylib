@@ -57,8 +57,6 @@ void DragonBehaviorSystem::Update() {
             continue;
         }
 
-        const int JUMP_FRAME_COUNT = 5 * (int)(UNITS_PER_BLOCK * 1.2f) / actor.jumpSpeed;
-
         int inputDir = Input::GetXAxis(dragonInfo.color);
         bool inputJump = Input::IsKeyDown(Key::Jump, dragonInfo.color);
         bool inputFire = Input::IsKeyDown(Key::Fire, dragonInfo.color);
@@ -94,18 +92,18 @@ void DragonBehaviorSystem::Update() {
             dragon.bubbleShootDelay--;
         }
 
-        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::walkingActorCollider);
+        actor.ignoreCollisions = shouldWalkingActorIgnoreCollisions(pos, Colliders::walkingActorCollider);
 
         // walking
         pos.x += velx;
-        if (!actor.ignoreCollisions && collidesWithWall(registry, pos, collider)) {
+        if (!actor.ignoreCollisions && collidesWithWall(pos, collider)) {
             pos.x -= velx;
         }
 
         // check if is grounded
         bool isGrounded = false;
         if (!actor.isJumping()) {
-            isGrounded = isWalkingActorGrounded(registry, pos, actor);
+            isGrounded = isWalkingActorGrounded(pos, actor);
         }
 
         // start jump

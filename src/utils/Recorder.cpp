@@ -51,7 +51,7 @@ void Recording::ReadFromFile(const std::string &filepath) {
 }
 
 InputSimulator::InputSimulator(Mode mode, std::string filepath)
-    : mode(mode), filepath(filepath), recording(mode == NO_RECORD ? false : true) {
+    : recording(mode == NO_RECORD ? false : true), mode(mode), filepath(filepath) {
     
     if (mode == REPLAY) {
         recording.ReadFromFile(filepath);
@@ -80,7 +80,7 @@ void InputSimulator::Update() {
 
     } else if (mode == REPLAY) {
         for (int key = 0; key < Recording::KEY_COUNT; key++) {
-            int bufferIndex = key + recording.frameIndex * Recording::KEY_COUNT;
+            size_t bufferIndex = key + recording.frameIndex * Recording::KEY_COUNT;
             if (bufferIndex >= recording.data.size()) {
                 PRINT_WARN("Finished using input recording! Switching to live input.");
                 exceededRecording = true;

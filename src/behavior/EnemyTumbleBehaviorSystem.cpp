@@ -4,16 +4,12 @@
 #include "../ecs/Components.h"
 #include "../graphics/Animations.h"
 #include "../level/Level.h"
-#include "../level/Physics.h"
-#include "../level/Items.h"
 #include "WalkingActorUtils.h"
 
 void EnemyTumbleBehaviorSystem::Init() {
 }
 
 void EnemyTumbleBehaviorSystem::Update() {
-
-    const Collider &collider = Colliders::walkingActorCollider;
 
     auto view = registry.view<Position, EnemyTumbleComponent, RenderData>();
     for (auto entity : view) {
@@ -45,7 +41,7 @@ void EnemyTumbleBehaviorSystem::Update() {
             enemy.isFalling = true;
 
             if (enemy.ignoreCollision) {
-                enemy.ignoreCollision = shouldWalkingActorIgnoreCollisions(registry, pos, Colliders::fullActorCollider);
+                enemy.ignoreCollision = shouldWalkingActorIgnoreCollisions(pos, Colliders::fullActorCollider);
             }
         }
 
@@ -61,7 +57,7 @@ void EnemyTumbleBehaviorSystem::Update() {
                 .jumpFrameCount = 0
             };
 
-            if (isWalkingActorGrounded(registry, pos, dummyComponent)) {
+            if (isWalkingActorGrounded(pos, dummyComponent)) {
                 // pos.y will overshoot desired y-position on a block
                 pos.y = (pos.y / UNITS_PER_BLOCK) * UNITS_PER_BLOCK;
                 

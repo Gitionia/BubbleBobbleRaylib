@@ -34,7 +34,7 @@ static void makeBubbleFloatingAndWaiting(entt::registry &registry, entt::entity 
     c.popFrame = POPABLE_DELAY_IN_FLOATING_FRAME_COUNT;
 }
 
-bool wallGapExists(entt::registry &registry, const Position &pos, const Collider &col, int dir) {
+bool wallGapExists(const Position &pos, const Collider &col, int dir) {
 
     Position posToCheck = pos;
     // make pos.x even in the shooting direction
@@ -44,7 +44,7 @@ bool wallGapExists(entt::registry &registry, const Position &pos, const Collider
 
     for (int distance = 0; distance <= BP_SIZE(2, 8); distance += 2) {
         posToCheck.x = pos.x + distance * dir;
-        if (!collidesWithWall(registry, posToCheck, col)) {
+        if (!collidesWithWall(posToCheck, col)) {
             return true;
         }
     }
@@ -70,9 +70,9 @@ void BubbleShootBehaviorSystem::Update() {
         }
 
         if (bubble.state == BubbleShootComponent::NONE) {
-            if (collidesWithWall(registry, pos, col)) {
+            if (collidesWithWall(pos, col)) {
 
-                if (!wallGapExists(registry, pos, col, bubble.shootDirection)) {
+                if (!wallGapExists(pos, col, bubble.shootDirection)) {
                     bubble.state = BubbleShootComponent::IGNORE_COLLISION_WAIT;
                     bubble.ignoreCollision = true;
 
@@ -90,7 +90,7 @@ void BubbleShootBehaviorSystem::Update() {
             }
 
         } else if (bubble.state == BubbleShootComponent::IGNORE_COLLISION_SHOOT && bubble.ignoreCollision) {
-            bubble.ignoreCollision = collidesWithWall(registry, pos, col);
+            bubble.ignoreCollision = collidesWithWall(pos, col);
         }
 
         if (bubble.state == BubbleShootComponent::IGNORE_COLLISION_WAIT) {
@@ -106,7 +106,7 @@ void BubbleShootBehaviorSystem::Update() {
             bubble.shootFrame--;
             if (bubble.shootFrame == 0) {
 
-                if (collidesWithWall(registry, pos, col)) {
+                if (collidesWithWall(pos, col)) {
                     pos.x -= dx;
                     pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
                 }
@@ -114,7 +114,7 @@ void BubbleShootBehaviorSystem::Update() {
                 Defer(entity, &makeBubbleFloating, Floating);
             }
             // if hits wall (and no ignore collision shoot), enable jumpable delay and popable delay
-            else if (!bubble.ignoreCollision && collidesWithWall(registry, pos, col)) {
+            else if (!bubble.ignoreCollision && collidesWithWall(pos, col)) {
                 pos.x -= dx;
                 pos.x += calculateMovementToRoundedPosition(pos, col, bubble.shootDirection);
 

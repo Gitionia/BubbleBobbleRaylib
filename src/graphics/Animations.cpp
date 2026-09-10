@@ -22,16 +22,17 @@ void LoadAnimations() {
         std::vector<SpriteHandle> animationFrames;
         while (continueAdding) {
             std::string animName = animationBaseName + "-" + std::to_string(animationFrames.size() + 1);
-            SpriteHandle sprite = GetSpriteHandleChecked(animName);
+            std::optional<SpriteHandle> sprite = GetSpriteHandleChecked(animName);
 
-            if (sprite == -1) {
+            if (!sprite.has_value()) {
                 continueAdding = false;
             } else {
-                animationFrames.push_back(sprite);
+                animationFrames.push_back(sprite.value());
             }
         }
 
-        animations.insert({animationBaseName, {animationFrames, animationBaseName, framesPerSprite}});
+        Animation anim {animationFrames, animationBaseName, framesPerSprite};
+        animations.insert({animationBaseName, anim});
     }
 }
 
