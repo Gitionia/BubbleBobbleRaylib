@@ -29,8 +29,7 @@ Application::Application(const ApplicationParameters &parameters)
       fileLogger(spdlog::basic_logger_mt("file", "logs/log.txt")),
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
-      stateMachine(std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)),
-      inputSimulator(nullptr) {
+      stateMachine(std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)) {
 
 
         InputSimulator::Mode recorderMode;
@@ -42,7 +41,7 @@ Application::Application(const ApplicationParameters &parameters)
         recorderMode = parameters.recordedFilePath.empty() ? InputSimulator::RECORD : InputSimulator::REPLAY;
         recordingFilePath = std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
 #endif
-        inputSimulator = std::make_shared<InputSimulator>(recorderMode, recordingFilePath);
+        inputSimulator->Init(recorderMode, recordingFilePath);
     
 
 #ifdef NDEBUG

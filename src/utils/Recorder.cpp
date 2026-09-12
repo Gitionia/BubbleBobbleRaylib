@@ -3,7 +3,7 @@
 #include "raylib.h"
 #include <cstdint>
 
-Recording::Recording(bool reserveSpace) {
+void Recording::Init(bool reserveSpace) {
     if (reserveSpace) {
         data.reserve(BUFFER_SIZE);
     }
@@ -50,12 +50,17 @@ void Recording::ReadFromFile(const std::string &filepath) {
     frameIndex = 0;
 }
 
-InputSimulator::InputSimulator(Mode mode, std::string filepath)
-    : recording(mode == NO_RECORD ? false : true), mode(mode), filepath(filepath) {
-    
+void InputSimulator::Init(Mode mode, std::string filepath) {
+    // We don't do anything if we set NO_RECORD
+    if (mode == RECORD || mode == REPLAY) {
+        recording.Init();
+    }
     if (mode == REPLAY) {
         recording.ReadFromFile(filepath);
     }
+
+    this->mode = mode;
+    this->filepath = filepath;
 }
 
 void InputSimulator::SaveRecording() {

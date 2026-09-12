@@ -2,7 +2,7 @@
 
 struct Recording {
   public:
-    Recording(bool reserveSpace);
+    void Init();
 
     void SaveToFile(const std::string &filepath);
     void ReadFromFile(const std::string &filepath);
@@ -25,7 +25,7 @@ class InputSimulator {
         REPLAY
     };
 
-    InputSimulator(Mode mode, std::string filepath = "");
+    void Init(Mode mode, std::string filepath = "");
     void SaveRecording();
 
     void Update();
