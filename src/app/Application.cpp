@@ -22,31 +22,7 @@
 
 static StateMachine *g_stateMachine;
 static EventSystem *g_eventSystem;
-void update();
-
-static InputSimulator::Mode inputSimulationModeChooser(const std::string &path) {
-#ifdef NDEBUG
-    return InputSimulator::NO_RECORD;
-#else
-    if (path.empty()) {
-        return InputSimulator::RECORD;
-    } else {
-        return InputSimulator::REPLAY;
-    }
-#endif
-}
-
-static std::string inputRecorderFileChooser(const std::string &path) {
-#ifdef NDEBUG
-    return "";
-#else
-    if (path.empty()) {
-        return std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
-    } else {
-        return path;
-    }
-#endif
-}
+static void update();
 
 Application::Application(const ApplicationParameters &parameters)
     : stdoutLogger(spdlog::stdout_color_mt("console")),
@@ -54,7 +30,20 @@ Application::Application(const ApplicationParameters &parameters)
       window(parameters.width, parameters.height, parameters.title),
       systemRunner(registry, eventSystem),
       stateMachine(std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)),
-      inputSimulator(std::make_shared<InputSimulator>(inputSimulationModeChooser(parameters.recordedFilePath), inputRecorderFileChooser(parameters.recordedFilePath))) {
+      inputSimulator(nullptr) {
+
+
+        InputSimulator::Mode recorderMode;
+        std::string recordingFilePath;
+#ifdef NDEBUG
+        recorderMode = InputSimulator::NO_RECORD;
+        recordingFilePath = "";
+#else
+        recorderMode = parameters.recordedFilePath.empty() ? InputSimulator::RECORD : InputSimulator::REPLAY;
+        recordingFilePath = std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
+#endif
+        inputSimulator = std::make_shared<InputSimulator>(recorderMode, recordingFilePath);
+    
 
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;

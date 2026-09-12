@@ -14,7 +14,6 @@ static void printHelp() {
 
 int main(int argc, char **argv) {
     ApplicationParameters params = ParseApplicationParametersAndPrintErrors(argc, argv);
-    // params.recordedFilePath = "./recordedInput/.input";
 
     if (params.printHelp) {
         printHelp();
