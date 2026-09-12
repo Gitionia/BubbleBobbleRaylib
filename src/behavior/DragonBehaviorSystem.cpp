@@ -31,9 +31,9 @@ void DragonBehaviorSystem::Update() {
         auto [pos, actor, dragon, dragonInfo, renderData] = view.get(entity);
 
 #ifdef DEBUG_TOOLS
-        if (Input::IsKeyPressed(KEY_U)) {
+        if (::IsKeyPressed(KEY_U)) {
             dragon.invincibilityFramesLeft = 60 * 30;
-        } else if (Input::IsKeyPressed(KEY_Y)) {
+        } else if (::IsKeyPressed(KEY_Y)) {
             dragon.invincibilityFramesLeft = 60 * 1000;
         }
 #endif

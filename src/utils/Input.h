@@ -22,8 +22,7 @@ class Input {
     static void UpdateTouchInput();
 
     static bool IsKeyDown(Key key, DragonColor playerColor);
-    static bool IsKeyDown(int key);
-    static bool IsKeyPressed(int key);
+    static int IsNumberKeyDown();
     static bool AnyKeyPressed();
     static int GetXAxis(DragonColor color);
     static int GetYAxis();

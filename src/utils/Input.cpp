@@ -29,14 +29,6 @@ void Input::UpdateTouchInput() {
     }
 }
 
-bool Input::IsKeyDown(int key) {
-    return inputSimulator->IsKeyDown(key);
-}
-
-bool Input::IsKeyPressed(int key) {
-    return inputSimulator->IsKeyPressed(key);
-}
-
 bool Input::IsKeyDown(Key key, DragonColor playerColor) {
     if (useTouchInput) {
         for (int i = 0; i < touchCount; i++) {
@@ -88,6 +80,17 @@ bool Input::IsKeyDown(Key key, DragonColor playerColor) {
 bool Input::AnyKeyPressed() {
     return GetKeyPressed() != 0 || GetGamepadButtonPressed() != 0 || GetTouchPointCount() > 0;
 }
+
+int Input::IsNumberKeyDown() {
+    if (inputSimulator->IsKeyDown(KEY_ONE)) {
+        return 1;
+    } else if (inputSimulator->IsKeyDown(KEY_TWO)) {
+        return 2;
+    } else {
+        return -1;
+    }
+}
+
 
 int Input::GetXAxis(DragonColor color) {
 

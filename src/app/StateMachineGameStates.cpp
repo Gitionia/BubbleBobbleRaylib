@@ -76,64 +76,63 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         waitingForCounterToStartNewLevel = false;
     }
 
-    if (Input::IsKeyDown(KEY_ONE)) {
-        if (playerCount != 1) {
+    int newPlayerCount = std::min(Input::IsNumberKeyDown(), 2);
+    if (newPlayerCount != playerCount) {
+        if (newPlayerCount == 1) {
             runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
 
             eventSystem.Notify((entt::entity)0, DESTROY_ADDITIONAL_PLAYER, 0);
             runner.UpdateSystems();
             runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
-        }
 
-        playerCount = 1;
-        Input::SetInputConfiguration(InputConfiguration::SINGLEPLAYER);
-    } else if (Input::IsKeyDown(KEY_TWO)) {
-        if (playerCount != 2) {
+            playerCount = 1;
+            Input::SetInputConfiguration(InputConfiguration::SINGLEPLAYER);
+        } else if (newPlayerCount == 2) {
             runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::LEVEL_INSTANTIATION);
 
             eventSystem.Notify((entt::entity)0, INSTANTIATE_ADDITIONAL_PLAYER, 0);
             runner.UpdateSystems();
             runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::GAMEPLAY | SystemTypeFlags::RENDERING);
-        }
 
-        playerCount = 2;
-        Input::SetInputConfiguration(InputConfiguration::MULTIPLAYER);
+            playerCount = 2;
+            Input::SetInputConfiguration(InputConfiguration::MULTIPLAYER);
+        }
     }
 
 #ifdef DEBUG_TOOLS
-    if (Input::IsKeyPressed(KEY_N)) {
+    if (::IsKeyPressed(KEY_N)) {
         level++;
         StartLevel();
     }
-    if (Input::IsKeyPressed(KEY_M)) {
+    if (::IsKeyPressed(KEY_M)) {
         level--;
         StartLevel();
     }
-    if (Input::IsKeyPressed(KEY_Q)) {
+    if (::IsKeyPressed(KEY_Q)) {
         level = 101;
         StartLevel();
 
-    } else if (Input::IsKeyPressed(KEY_W)) {
+    } else if (::IsKeyPressed(KEY_W)) {
         level = 1;
         StartLevel();
 
-    } else if (Input::IsKeyPressed(KEY_E)) {
+    } else if (::IsKeyPressed(KEY_E)) {
         StartLevel();
     }
 
-    if (Input::IsKeyPressed(KEY_P)) {
+    if (::IsKeyPressed(KEY_P)) {
         SetTargetFPS(2);
 
-    } else if (Input::IsKeyPressed(KEY_I)) {
+    } else if (::IsKeyPressed(KEY_I)) {
         SetTargetFPS(600);
 
-    } else if (Input::IsKeyPressed(KEY_O)) {
+    } else if (::IsKeyPressed(KEY_O)) {
         SetTargetFPS(TARGET_FPS);
     }
-    if (Input::IsKeyPressed(KEY_F)) {
+    if (::IsKeyPressed(KEY_F)) {
         ToggleFullscreen();
     }
-    if (Input::IsKeyPressed(KEY_B)) {
+    if (::IsKeyPressed(KEY_B)) {
         ToggleBorderlessWindowed();
     }
 #endif
