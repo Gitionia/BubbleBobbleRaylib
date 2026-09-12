@@ -20,8 +20,8 @@
 #include <emscripten/emscripten.h>
 #endif
 
-static StateMachine *g_stateMachine;
-static EventSystem *g_eventSystem;
+static StateMachine *s_stateMachine;
+static EventSystem *s_eventSystem;
 static void update();
 
 Application::Application(const ApplicationParameters &parameters)
@@ -75,8 +75,8 @@ Application::Application(const ApplicationParameters &parameters)
 
     systemRunner.Init();
 
-    g_stateMachine = &stateMachine;
-    g_eventSystem = &eventSystem;
+    s_stateMachine = &stateMachine;
+    s_eventSystem = &eventSystem;
 }
 
 Application::~Application() {
@@ -109,9 +109,9 @@ void update() {
 #endif
 
     Input::UpdateTouchInput();
-    g_stateMachine->Update();
+    s_stateMachine->Update();
     UpdateAudio();
-    g_eventSystem->Clear();
+    s_eventSystem->Clear();
 
 #ifdef PROFILE
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();

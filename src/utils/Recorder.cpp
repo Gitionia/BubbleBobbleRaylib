@@ -3,10 +3,8 @@
 #include "raylib.h"
 #include <cstdint>
 
-void Recording::Init(bool reserveSpace) {
-    if (reserveSpace) {
-        data.reserve(BUFFER_SIZE);
-    }
+void Recording::Init() {
+    data.reserve(BUFFER_SIZE);
 }
 
 void Recording::SaveToFile(const std::string &filepath) {
