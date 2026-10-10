@@ -1,12 +1,10 @@
 #include "MenuBehaviorSystem.h"
 
 #include "../../gui/GUIFactory.h"
-#include "entt/entity/fwd.hpp"
-#include <cstdint>
 
 void MenuBehaviorSystem::Setup() {
-    button1Player = GUIFactory::CreateButton(150, 150, 400, 50, "1 Player Start", PINK);
-    button2Players = GUIFactory::CreateButton(150, 200, 400, 50, "2 Player Start", PINK);
+    button1Player = GUIFactory::CreateButtonAutoSize(150, 150, "1 Player Start", PINK, BLACK, PINK);
+    button2Players = GUIFactory::CreateButtonAutoSize(150, 200, "2 Player Start", PINK, BLACK, PINK);
     buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
 
     eventSystem.Notify(entt::null, SET_GUI_FOCUS_TO_ENTITY, (int64_t)buttonGroup);

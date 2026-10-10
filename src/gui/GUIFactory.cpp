@@ -2,7 +2,16 @@
 
 #include "../ecs/Components.h"
 
-entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const char *text, Color color, int fontSize, int spacing) {
+entt::entity GUIFactory::CreateButtonAutoSize(int x, int y, const char *text, Color unfocusedColor,Color focusedColor, Color backGroundColor, int fontSize, int spacing) {
+    int backgroundOffsetX = -fontSize / 4;
+    int backgroundOffsetY = -fontSize / 4;
+    int width = (fontSize + spacing) / 2 * strlen(text) - 2 * backgroundOffsetX;
+    int height = fontSize;
+    return CreateButton(x, y, width, height, backgroundOffsetX, backgroundOffsetY, text, unfocusedColor, focusedColor, backGroundColor, fontSize, spacing);
+}
+
+
+entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, int backgroundOffsetX, int backgroundOffsetY, const char *text, Color unfocusedColor,Color focusedColor, Color backGroundColor, int fontSize, int spacing) {
     entt::registry *registry = get().registry;
     entt::entity e = registry->create();
 
@@ -10,7 +19,7 @@ entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const
     DBG_ADD_ENTITY_LABEL(registry, e, "GUI-Button-Entity", debugEntityLabelNumber++);
 
     registry->emplace<Position>(e, x, y);
-    registry->emplace<GUIButton>(e, width, height, text, color, fontSize, spacing);
+    registry->emplace<GUIButton>(e, width, height, backgroundOffsetX, backgroundOffsetY, text, unfocusedColor, focusedColor, backGroundColor, fontSize, spacing);
     
     return e;
 }

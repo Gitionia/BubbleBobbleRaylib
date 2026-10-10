@@ -91,7 +91,7 @@ void GUIBehaviorSystem::Update() {
         }
     }
 
-    if (Input::IsKeyDown(Key::Fire, DRAGON_GREEN)) {
+    if (Input::IsKeyDown(Key::Fire, DRAGON_GREEN) || IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
         if (group->IsFocusedIndexValid()) {
             entt::entity buttonEntity = group->Buttons.at(group->FocusedButtonIndex);
             GUIButton *button = registry.try_get<GUIButton>(buttonEntity);

@@ -76,9 +76,10 @@ void RendererSystem::renderGUI() {
         auto [pos, button] = view.get(entity);
 
         if (!button.IsFocused) {
-            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.Color);
+            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.UnfocusedColor);
         } else {
-            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, YELLOW);
+            DrawRectangle((pos.x + button.BackgroundOffsetX) * SCALING_FACTOR, (pos.y + button.BackgroundOffsetY) * SCALING_FACTOR, button.Width * SCALING_FACTOR, button.Height * SCALING_FACTOR, button.BackgroundColor);
+            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.FocusedColor);
         }
     }
 }

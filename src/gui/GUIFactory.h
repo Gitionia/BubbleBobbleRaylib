@@ -1,12 +1,15 @@
 #pragma once
 
-#include "entt/entity/entity.hpp"
-#include "entt/entity/fwd.hpp"
 struct GUIButton {
     int Width;
     int Height;
+    int BackgroundOffsetX;
+    int BackgroundOffsetY;
     std::string Text;
-    struct Color Color;
+    Color UnfocusedColor;
+    Color FocusedColor;
+    Color BackgroundColor;
+
     int FontSize;
     int Spacing;
 
@@ -34,17 +37,18 @@ struct GUIButtonGroup {
     }
 
     bool IncreaseFocusIndex(int increase) {
-      if (IsFocusedIndexValid()) {
-        FocusedButtonIndex = (FocusedButtonIndex + increase + Buttons.size()) % Buttons.size();
-        return true;
-      }
-      return false;
+        if (IsFocusedIndexValid()) {
+            FocusedButtonIndex = (FocusedButtonIndex + increase + Buttons.size()) % Buttons.size();
+            return true;
+        }
+        return false;
     }
 };
 
 class GUIFactory {
   public:
-    static entt::entity CreateButton(int x, int y, int width, int height, const char *text, Color color = WHITE, int fontSize = 32, int spacing = 0);
+    static entt::entity CreateButtonAutoSize(int x, int y, const char *text, Color unfocusedColor, Color focusedColor, Color backgroundColor, int fontSize = 32, int spacing = 0);
+    static entt::entity CreateButton(int x, int y, int width, int height, int backgroundOffsetX, int backgroundOffsetY, const char *text, Color unfocusedColor, Color focusedColor, Color backgroundColor, int fontSize = 32, int spacing = 0);
     static entt::entity CreateButtonGroup(const std::vector<entt::entity> &buttons, GUILayout layout);
 
   private:
