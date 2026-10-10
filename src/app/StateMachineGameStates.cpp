@@ -19,7 +19,11 @@ void GameplayState::OnEnter() {
     eventSystem.Notify((entt::entity)0, INSTANTIATE_LEVEL, level);
     if (playerCount > 1) {
         eventSystem.Notify((entt::entity)0, INSTANTIATE_ADDITIONAL_PLAYER, 0);
+        Input::SetInputConfiguration(InputConfiguration::MULTIPLAYER);
+    } else {
+        Input::SetInputConfiguration(InputConfiguration::SINGLEPLAYER);
     }
+
     eventSystem.Notify((entt::entity)0, INSTANTIATE_GAME_UI, level);
     runner.UpdateSystems();
 
