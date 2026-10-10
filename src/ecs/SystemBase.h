@@ -28,14 +28,22 @@ class SystemBase {
 
     SystemBase(entt::registry &registry, EventSystem &eventSystem, int typeFlags);
     virtual ~SystemBase() = default;
+    // Is called once after libraries have been initialized.
+    // Can be used to get references to resources
     virtual void Init() {}
+    // Is called before Update() gets called and can be used to create entities.
+    // A System can be Setup multiple times without having to be destroyed.
     virtual void Setup() {}
+    // Is called usually when a state is exited and a system needs clean up objects that were
+    // created in Setup()
+    virtual void CleanUp() {}
 
     void BaseUpdate();
 
     void SetEnabledIfMatchesAnyFlag(int flags);
 
     bool IsEnabled();
+    void SetEnabled(bool enabled);
 
   protected:
     virtual void Update() = 0;

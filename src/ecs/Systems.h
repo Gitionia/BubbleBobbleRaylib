@@ -6,7 +6,7 @@
 
 class SystemRunner {
   public:
-    explicit SystemRunner(entt::registry &registry, EventSystem& eventSystem);
+    explicit SystemRunner(entt::registry &registry, EventSystem &eventSystem);
     ~SystemRunner() = default;
 
     void Init();
@@ -17,7 +17,10 @@ class SystemRunner {
     void OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags);
 
     template <typename T>
-    std::shared_ptr<SystemBase> CreateSystem();
+    std::shared_ptr<SystemBase> CreateSystem() {
+        std::shared_ptr<T> system = std::make_shared<T>(registry, eventSystem);
+        return system;
+    }
 
     std::shared_ptr<SystemBase> GetRendererSystem();
 
@@ -27,8 +30,7 @@ class SystemRunner {
 
   private:
     entt::registry &registry;
-    EventSystem& eventSystem;
+    EventSystem &eventSystem;
     std::vector<std::shared_ptr<SystemBase>> systems;
     std::shared_ptr<SystemBase> rendererSystem;
 };
-

@@ -4,11 +4,10 @@
 #include "EventSystem.h"
 #include "StateMachine.h"
 
-
 class GameplayState : public StateMachineState {
   public:
-    GameplayState(SystemRunner &runner, EventSystem &eventSystem, int level)
-        : StateMachineState(runner, eventSystem), level(level) {}
+    GameplayState(SystemRunner &runner, EventSystem &eventSystem, int level, int playerCount)
+        : StateMachineState(runner, eventSystem), level(level), playerCount(playerCount) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
@@ -45,14 +44,15 @@ class VictorySceneState : public StateMachineState {
 
 class IntroSceneState : public StateMachineState {
   public:
-    IntroSceneState(SystemRunner &runner, EventSystem &eventSystem, int level)
-        : StateMachineState(runner, eventSystem), level(level) {}
+    IntroSceneState(SystemRunner &runner, EventSystem &eventSystem, int level, int playerCount)
+        : StateMachineState(runner, eventSystem), level(level), playerCount(playerCount) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
 
   private:
     int level;
+    int playerCount;
 };
 
 class MenuScreenState : public StateMachineState {
@@ -62,13 +62,11 @@ class MenuScreenState : public StateMachineState {
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
+    void OnExit() override;
 
   private:
     std::shared_ptr<SystemBase> renderSystem = nullptr;
-
-    entt::entity button1Player;
-    entt::entity button2Players;
-    entt::entity buttonGroup;
+    std::shared_ptr<SystemBase> menuSystem = nullptr;
 
     int level;
 };

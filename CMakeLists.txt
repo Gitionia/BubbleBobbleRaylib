@@ -95,6 +95,8 @@ add_executable(BubbleBobbleRaylib
         src/behavior/WalkingActorUtils.cpp
         src/behavior/TitleScreenSystem.h
         src/behavior/TitleScreenSystem.cpp
+        src/behavior/menu/MenuBehaviorSystem.h
+        src/behavior/menu/MenuBehaviorSystem.cpp
         src/graphics/Sprites.cpp
         src/graphics/RendererSystem.h
         src/graphics/Window.cpp

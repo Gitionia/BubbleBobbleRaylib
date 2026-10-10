@@ -5,8 +5,8 @@
 #include "../gui/GUIFactory.h"
 
 #include "../audio/Audio.h"
+#include "../behavior/menu/MenuBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
-#include "../behavior/DragonBehaviorSystem.h"
 
 
 void GameplayState::OnEnter() {
@@ -191,7 +191,7 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
 
         StopMusicStream(GetMusic("intro-theme"));
 
-        return std::make_shared<GameplayState>(runner, eventSystem, level);
+        return std::make_shared<GameplayState>(runner, eventSystem, level, playerCount);
 
     } else {
         return nullptr;
@@ -199,36 +199,31 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
 }
 
 void MenuScreenState::OnEnter() {
-    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING);
-    runner.SetupOnlyEnabledSystems();
-
-    button1Player = GUIFactory::CreateButton(150, 150, 400, 50, "1 Player Start", PINK);
-    button2Players = GUIFactory::CreateButton(150, 200, 400, 50, "2 Player Start", PINK);
-    buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
-
     renderSystem = runner.GetRendererSystem();
-    // renderSystem.reset();
-    // renderSystem = runner.GetRendererSystem();
+    renderSystem->Setup();
+    menuSystem = runner.CreateSystem<MenuBehaviorSystem>();
+    menuSystem->Init();
+    menuSystem->SetEnabled(true);
+    menuSystem->Setup();
 }
 
 std::shared_ptr<StateMachineState> MenuScreenState::Update() {
 
-    runner.UpdateSystems();
-    // runner.UpdateSingleSystem<GUIBehaviorSystem>();
-    // runner.UpdateSingleSystem<RendererSystem>();
-    if (GUI::IsButtonPressed(button1Player)) {
-        PRINT_CRITICAL("Start single player");
-        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
-    } else if (GUI::IsButtonPressed((button2Players))) {
-        PRINT_CRITICAL("Start multi player");
-        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
-    } else {
-        if (IsKeyPressed(KEY_SPACE)) {
-            return std::make_shared<IntroSceneState>(runner, eventSystem, level);
-        }
+    renderSystem->BaseUpdate();
+    menuSystem->BaseUpdate();
 
+    if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);
+    } else if (eventSystem.ReadEvent(MENU_BUTTON_MULTIPLAYER_START_WAS_PRESSED).size()) {
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level, 2);
+    } else {
         return nullptr;
     }
+}
+
+void MenuScreenState::OnExit() {
+    menuSystem->CleanUp();
+    Debug::PrintNumberOfEntities();
 }
 
 void TitleScreenState::OnEnter() {

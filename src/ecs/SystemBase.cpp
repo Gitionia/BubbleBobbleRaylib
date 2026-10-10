@@ -55,3 +55,6 @@ void SystemBase::SetEnabledIfMatchesAnyFlag(int flags) {
 bool SystemBase::IsEnabled() {
     return enabled;
 }
+void SystemBase::SetEnabled(bool enabled) {
+    this->enabled = enabled;
+}

@@ -85,11 +85,6 @@ void SystemRunner::OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags) {
     }
 }
 
-template <typename T>
-std::shared_ptr<SystemBase> SystemRunner::CreateSystem() {
-    std::shared_ptr<T> system = std::make_shared<T>(registry, eventSystem);
-    return system;
-}
 
 template <typename T>
 std::shared_ptr<SystemBase> SystemRunner::registerSystem() {
