@@ -7,8 +7,7 @@
 void MenuBehaviorSystem::Setup() {
     button1Player = GUIFactory::CreateButton(150, 150, 400, 50, "1 Player Start", PINK);
     button2Players = GUIFactory::CreateButton(150, 200, 400, 50, "2 Player Start", PINK);
-    buttonTest = GUIFactory::CreateButton(150, 250, 400, 50, "Test", PINK);
-    buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players, buttonTest}, GUILayout::VERTICAL);
+    buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
 
     eventSystem.Notify(entt::null, SET_GUI_FOCUS_TO_ENTITY, (int64_t)buttonGroup);
 }

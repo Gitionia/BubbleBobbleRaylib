@@ -19,5 +19,6 @@ class GUIBehaviorSystem : public SystemBase {
     void updateFocusOfGUIButtonGroup();
 
   private:
-    entt::entity focusedGUIElement = entt::null;
+    entt::entity guiButtonGroup = entt::null;
+    entt::entity pressedGUIButton = entt::null;
 };
