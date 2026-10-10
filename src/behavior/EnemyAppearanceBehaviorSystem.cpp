@@ -1,5 +1,6 @@
 #include "EnemyAppearanceBehaviorSystem.h"
-#include "entt/entity/fwd.hpp"
+
+#include "../ecs/Components.h"
 
 void removeAppearanceComponent(entt::registry& registry, entt::entity e) {
     registry.remove<EnemyAppearanceComponent>(e);

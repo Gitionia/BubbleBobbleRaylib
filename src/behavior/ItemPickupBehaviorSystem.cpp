@@ -2,8 +2,9 @@
 #include "../audio/Audio.h"
 #include "../level/GameModifiers.h"
 #include "../level/Physics.h"
-#include "raylib.h"
-#include <cstdint>
+
+#include "../ecs/EntityFactory.h"
+#include "../ecs/Components.h"
 
 const Sound *ItemPickupBehaviorSystem::getRandomItemPickupSound() {
     int i = Random::Get().Range(0,2);

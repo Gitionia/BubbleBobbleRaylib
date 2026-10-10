@@ -1,8 +1,5 @@
 #pragma once
 
-#include "entt/entity/fwd.hpp"
-#include <memory>
-#include <vector>
 enum EventType {
     POINTS_GAINED,
     ALL_ENEMIES_DEFEATED,

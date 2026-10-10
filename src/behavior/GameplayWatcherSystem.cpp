@@ -1,5 +1,6 @@
 #include "GameplayWatcherSystem.h"
-#include "entt/entity/fwd.hpp"
+
+#include "../ecs/Components.h"
 
 void GameplayWatcherSystem::Update() {
     auto view = registry.view<EnemyTag>();

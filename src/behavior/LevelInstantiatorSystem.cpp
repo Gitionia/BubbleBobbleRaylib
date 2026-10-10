@@ -1,7 +1,6 @@
 #include "LevelInstantiatorSystem.h"
 #include "../level/Physics.h"
-#include "entt/entity/fwd.hpp"
-#include <string>
+#include "../ecs/EntityFactory.h"
 
 void LevelInstantiatorSystem::Update() {
     if (eventSystem.ReadEvent(DELETE_GAMEPLAY).size()) {

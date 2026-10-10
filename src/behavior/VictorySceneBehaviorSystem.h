@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
-#include "entt/entity/fwd.hpp"
 
 class VictorySceneBehaviorSystem : public SystemBase {
     SYSTEM_DEF(VictorySceneBehaviorSystem, SystemTypeFlags::VICTORY_SCENE)

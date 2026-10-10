@@ -1,8 +1,7 @@
 #include "IntroSceneBehaviorSystem.h"
-#include "entt/entity/fwd.hpp"
 
 #include "../app/WindowConfig.h"
-#include <cmath>
+#include "../ecs/EntityFactory.h"
 
 void IntroSceneBehaviorSystem::Init() {
 }

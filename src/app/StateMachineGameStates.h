@@ -4,13 +4,6 @@
 #include "EventSystem.h"
 #include "StateMachine.h"
 
-#include "../audio/Audio.h"
-#include "../level/Level.h"
-#include "../level/Physics.h"
-
-#include "../ecs/Components.h"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
 
 class GameplayState : public StateMachineState {
   public:
@@ -71,6 +64,8 @@ class MenuScreenState : public StateMachineState {
     std::shared_ptr<StateMachineState> Update() override;
 
   private:
+    std::shared_ptr<SystemBase> renderSystem = nullptr;
+
     entt::entity button1Player;
     entt::entity button2Players;
     entt::entity buttonGroup;

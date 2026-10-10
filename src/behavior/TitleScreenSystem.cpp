@@ -1,7 +1,6 @@
 #include "TitleScreenSystem.h"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
-#include <cstdint>
+
+#include "../ecs/EntityFactory.h"
 
 void TitleScreenSystem::Setup() {
     title = EntityFactory::CreateSimpleSprite({80 - 50, 0}, -1, GetSpriteHandle("TitleScreen-NewTitle"), WHITE, {2, 2});

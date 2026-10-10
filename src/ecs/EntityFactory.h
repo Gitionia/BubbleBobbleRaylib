@@ -4,7 +4,6 @@
 #include "../level/Level.h"
 #include "Components.h"
 #include "../level/Enemies.h"
-#include "entt/entity/fwd.hpp"
 
 class EntityFactory {
   public:

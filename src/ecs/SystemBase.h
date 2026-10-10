@@ -1,7 +1,5 @@
 #pragma once
 
-#include "EntityFactory.h"
-
 #include "../app/EventSystem.h"
 
 namespace SystemTypeFlags {

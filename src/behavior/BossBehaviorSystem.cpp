@@ -1,6 +1,7 @@
 #include "BossBehaviorSystem.h"
 
 #include "../level/Physics.h"
+#include "../ecs/EntityFactory.h"
 
 void BossBehaviorSystem::Update() {
     auto view = registry.view<Position, BossComponent, RenderData>(entt::exclude<BubbleFloatComponent, BubblePopComponent>);

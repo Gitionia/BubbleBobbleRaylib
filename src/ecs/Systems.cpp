@@ -24,6 +24,7 @@
 #include "../graphics/RendererSystem.h"
 #include "../level/GameModifiers.h"
 #include "SystemBase.h"
+#include <memory>
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     : registry(registry), eventSystem(eventSystem) {
@@ -50,7 +51,7 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<IntroSceneBehaviorSystem>();
     registerSystem<VictorySceneBehaviorSystem>();
     registerSystem<GameModifierData>();
-    registerSystem<RendererSystem>();
+    rendererSystem = registerSystem<RendererSystem>();
 }
 
 void SystemRunner::Init() {
@@ -92,6 +93,12 @@ std::shared_ptr<SystemBase> SystemRunner::CreateSystem() {
 }
 
 template <typename T>
-void SystemRunner::registerSystem() {
-    systems.push_back(CreateSystem<T>());
+std::shared_ptr<SystemBase> SystemRunner::registerSystem() {
+    std::shared_ptr<SystemBase> system = CreateSystem<T>();
+    systems.push_back(system);
+    return system;
+}
+
+std::shared_ptr<SystemBase> SystemRunner::GetRendererSystem() {
+    return rendererSystem;
 }

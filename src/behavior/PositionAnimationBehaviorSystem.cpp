@@ -1,5 +1,7 @@
 #include "PositionAnimationBehaviorSystem.h"
 
+#include "../ecs/Components.h"
+
 void PositionAnimationBehaviorSystem::Update() {
     auto view = registry.view<Position, PositionAnimationComponent>();
 

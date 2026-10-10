@@ -8,7 +8,6 @@
 #include "../level/Items.h"
 #include "../utils/AnimatedObjects.h"
 #include "ComponentUtils.h"
-#include "entt/entity/fwd.hpp"
 
 struct Position {
     int x, y;

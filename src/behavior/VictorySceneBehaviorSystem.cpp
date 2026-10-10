@@ -1,8 +1,8 @@
 #include "VictorySceneBehaviorSystem.h"
 
 #include "../app/WindowConfig.h"
-#include "raylib.h"
-#include <cstddef>
+
+#include "../ecs/EntityFactory.h"
 
 void VictorySceneBehaviorSystem::Init() {
 }

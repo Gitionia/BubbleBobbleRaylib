@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
-#include "entt/entity/fwd.hpp"
 
 class IntroSceneBehaviorSystem : public SystemBase {
     SYSTEM_DEF(IntroSceneBehaviorSystem, SystemTypeFlags::INTRO_SCENE)

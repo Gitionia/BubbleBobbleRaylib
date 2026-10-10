@@ -4,6 +4,11 @@
 
 #include "../gui/GUIFactory.h"
 
+#include "../audio/Audio.h"
+#include "../graphics/RendererSystem.h"
+#include "../behavior/DragonBehaviorSystem.h"
+
+
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
     PlayMusicStream(*mainThemeMusic);
@@ -200,6 +205,10 @@ void MenuScreenState::OnEnter() {
     button1Player = GUIFactory::CreateButton(150, 150, 400, 50, "1 Player Start", PINK);
     button2Players = GUIFactory::CreateButton(150, 200, 400, 50, "2 Player Start", PINK);
     buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
+
+    renderSystem = runner.GetRendererSystem();
+    // renderSystem.reset();
+    // renderSystem = runner.GetRendererSystem();
 }
 
 std::shared_ptr<StateMachineState> MenuScreenState::Update() {

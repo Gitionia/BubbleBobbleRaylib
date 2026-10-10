@@ -3,7 +3,6 @@
 #include "../app/EventSystem.h"
 
 #include "../ecs/SystemBase.h"
-#include <memory>
 
 class SystemRunner {
   public:
@@ -20,13 +19,16 @@ class SystemRunner {
     template <typename T>
     std::shared_ptr<SystemBase> CreateSystem();
 
+    std::shared_ptr<SystemBase> GetRendererSystem();
+
   private:
     template <typename T>
-    void registerSystem();
+    std::shared_ptr<SystemBase> registerSystem();
 
   private:
     entt::registry &registry;
     EventSystem& eventSystem;
     std::vector<std::shared_ptr<SystemBase>> systems;
+    std::shared_ptr<SystemBase> rendererSystem;
 };
 
