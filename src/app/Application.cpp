@@ -20,6 +20,7 @@
 
 static StateMachine *s_stateMachine;
 static EventSystem *s_eventSystem;
+static bool s_isRunning = true;
 static void update();
 
 Application::Application(const ApplicationParameters &parameters)
@@ -30,18 +31,16 @@ Application::Application(const ApplicationParameters &parameters)
       stateMachine(std::make_shared<TitleScreenState>(systemRunner, eventSystem, parameters.level)),
       inputSimulator(std::make_shared<InputSimulator>()) {
 
-
-        InputSimulator::Mode recorderMode;
-        std::string recordingFilePath;
+    InputSimulator::Mode recorderMode;
+    std::string recordingFilePath;
 #ifdef NDEBUG
-        recorderMode = InputSimulator::NO_RECORD;
-        recordingFilePath = "";
+    recorderMode = InputSimulator::NO_RECORD;
+    recordingFilePath = "";
 #else
-        recorderMode = parameters.recordedFilePath.empty() ? InputSimulator::RECORD : InputSimulator::REPLAY;
-        recordingFilePath = std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
+    recorderMode = parameters.recordedFilePath.empty() ? InputSimulator::RECORD : InputSimulator::REPLAY;
+    recordingFilePath = std::format("./recordedInput/log-{}.input", GetCurrentTimeStamp());
 #endif
-        inputSimulator->Init(recorderMode, recordingFilePath);
-    
+    inputSimulator->Init(recorderMode, recordingFilePath);
 
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
@@ -56,6 +55,10 @@ Application::Application(const ApplicationParameters &parameters)
     Debug::get().setRegistry(registry);
 
     window.Init();
+
+#ifdef NDEBUG
+    SetExitKey(0);
+#endif
 
     if (!InitAudio()) {
         PRINT_CRITICAL("Audio Device could not be initialized! Trying to run without Audio");
@@ -94,7 +97,7 @@ void Application::Run() {
 #ifdef PLATFORM_WEB
     emscripten_set_main_loop(update, 0, true);
 #else
-    while (window.IsOpen()) {
+    while (s_isRunning) {
         inputSimulator->Update();
         update();
     }
@@ -104,6 +107,13 @@ void Application::Run() {
 /// Main Loop
 void update() {
 
+#ifdef PLATFORM_WEB
+    if (!s_isRunning) {
+        emscripten_cancel_main_loop();
+        exit(0);
+    }
+#endif
+
 // #define PROFILE
 #ifdef PROFILE
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -111,7 +121,11 @@ void update() {
 
     Input::UpdateTouchInput();
     s_stateMachine->Update();
+
     UpdateAudio();
+    if (s_eventSystem->ReadEvent(REQUEST_APPLICATION_QUIT).size() || WindowShouldClose() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Q))) {
+        s_isRunning = false;
+    }
     s_eventSystem->Clear();
 
 #ifdef PROFILE
