@@ -2,8 +2,6 @@
 
 #include "../ecs/Systems.h"
 #include "EventSystem.h"
-#include "entt/entity/fwd.hpp"
-#include <memory>
 
 class StateMachineState {
   public:

@@ -1,5 +1,4 @@
 #include "EventSystem.h"
-#include <vector>
 
 EventSystem::EventSystem() {
     for (int i = 0; i < EventType_Count; i++) {

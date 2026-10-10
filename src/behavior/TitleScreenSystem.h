@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
-#include <memory>
 
 class TitleScreenSystem : public SystemBase {
     SYSTEM_DEF(TitleScreenSystem, SystemTypeFlags::TITLE_SCREEN)

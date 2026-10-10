@@ -1,7 +1,5 @@
 #include "Recorder.h"
 #include "Log.h"
-#include "raylib.h"
-#include <cstdint>
 
 void Recording::Init() {
     data.reserve(BUFFER_SIZE);

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "../ecs/SystemBase.h"
-#include <array>
-#include <cstddef>
 
 enum class ModifierTypes {
 

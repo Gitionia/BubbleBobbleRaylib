@@ -2,7 +2,6 @@
 
 #include "../level/Dragons.h"
 #include "Recorder.h"
-#include <memory>
 
 enum class Key {
     None,

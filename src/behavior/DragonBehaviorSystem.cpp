@@ -9,7 +9,6 @@
 #include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
-#include "raylib.h"
 
 void makeDragonHit(entt::registry &registry, entt::entity e) {
     DragonColor color = registry.get<DragonInfoComponent>(e).color;

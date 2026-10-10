@@ -2,7 +2,6 @@
 
 #include "../ecs/Components.h"
 #include "Level.h"
-#include "entt/entity/fwd.hpp"
 
 void setPhysicsColliderData(const LevelLayout &level);
 

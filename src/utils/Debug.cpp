@@ -1,7 +1,6 @@
 #include "Debug.h"
 
 #include "../ecs/Components.h"
-#include "raylib.h"
 
 struct DebugDrawTag;
 struct Position;

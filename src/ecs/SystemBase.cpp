@@ -1,7 +1,6 @@
 #include "SystemBase.h"
 
 #include "Components.h"
-#include "entt/entity/fwd.hpp"
 
 void SystemBase::BaseInit() {
     for (auto vector : deferedEntityCollections) {

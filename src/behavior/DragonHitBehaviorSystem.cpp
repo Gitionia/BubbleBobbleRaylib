@@ -3,7 +3,6 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../graphics/Animations.h"
-#include "entt/entity/fwd.hpp"
 
 static void makeNewGreenDragon(entt::registry &registry, entt::entity e) {
     UNUSED(registry);

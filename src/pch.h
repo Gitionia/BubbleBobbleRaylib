@@ -16,6 +16,7 @@
 #include <format>
 #include <vector>
 #include <array>
+#include <algorithm>
 
 #include "entt/entt.hpp"
 #include "nlohmann/json.hpp"

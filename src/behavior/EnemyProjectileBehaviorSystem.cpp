@@ -6,7 +6,6 @@
 #include "../level/Level.h"
 #include "../level/Physics.h"
 #include "WalkingActorUtils.h"
-#include "entt/entity/fwd.hpp"
 
 static void makeProjectileDestroyed(entt::registry &registry, entt::entity e) {
     registry.emplace<EnemyProjectileInDestroyedAnimationTag>(e);

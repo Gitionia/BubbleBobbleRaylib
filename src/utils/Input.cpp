@@ -1,7 +1,6 @@
 #include "Input.h"
 #include "Recorder.h"
 #include "Utilities.h"
-#include "raylib.h"
 
 
 static std::shared_ptr<InputSimulator> inputSimulator;

@@ -3,7 +3,6 @@
 #include "../app/Config.h"
 #include "Enemies.h"
 #include "Level.h"
-#include "entt/entity/fwd.hpp"
 
 static const LevelTilemap *tiles = nullptr;
 static const LevelTilemap *airflow = nullptr;

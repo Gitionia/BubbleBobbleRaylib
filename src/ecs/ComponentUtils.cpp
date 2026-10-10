@@ -2,7 +2,6 @@
 
 #include "../audio/Audio.h"
 #include "Components.h"
-#include "entt/entity/fwd.hpp"
 
 static const Sound *getEnemyBubblePopSound(int index) {
     static std::array<const Sound *, 3> sounds{};

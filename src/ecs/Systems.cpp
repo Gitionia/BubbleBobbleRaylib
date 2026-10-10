@@ -24,7 +24,6 @@
 #include "../graphics/RendererSystem.h"
 #include "../level/GameModifiers.h"
 #include "SystemBase.h"
-#include <memory>
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     : registry(registry), eventSystem(eventSystem) {

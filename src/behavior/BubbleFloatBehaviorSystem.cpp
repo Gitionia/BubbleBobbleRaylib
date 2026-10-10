@@ -5,7 +5,6 @@
 #include "../ecs/Components.h"
 #include "../ecs/EntityFactory.h"
 #include "../level/Physics.h"
-#include <algorithm>
 
 enum DeferValues {
     PopFromLifeTime = 0,

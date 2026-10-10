@@ -1,5 +1,4 @@
 #include "Level.h"
-#include <cstddef>
 
 LevelTilemap::LevelTilemap()
     : data(SIZE) {

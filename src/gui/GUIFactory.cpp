@@ -1,5 +1,4 @@
 #include "GUIFactory.h"
-#include "entt/entity/fwd.hpp"
 
 #include "../ecs/Components.h"
 
