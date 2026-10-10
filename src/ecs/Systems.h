@@ -3,11 +3,13 @@
 #include "../app/EventSystem.h"
 
 #include "../ecs/SystemBase.h"
+#include <memory>
 
 class SystemRunner {
   public:
     explicit SystemRunner(entt::registry &registry, EventSystem& eventSystem);
-    ~SystemRunner();
+    ~SystemRunner() = default;
+
     void Init();
     void SetupAllSystems();
     void SetupOnlyEnabledSystems();
@@ -15,11 +17,16 @@ class SystemRunner {
 
     void OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags);
 
+    template <typename T>
+    std::shared_ptr<SystemBase> CreateSystem();
+
   private:
     template <typename T>
-    void registerSystem(entt::registry &registry, EventSystem& eventSystem);
+    void registerSystem();
 
   private:
     entt::registry &registry;
-    std::vector<SystemBase *> systems;
+    EventSystem& eventSystem;
+    std::vector<std::shared_ptr<SystemBase>> systems;
 };
+

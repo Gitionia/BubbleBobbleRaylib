@@ -214,6 +214,10 @@ std::shared_ptr<StateMachineState> MenuScreenState::Update() {
         PRINT_CRITICAL("Start multi player");
         return std::make_shared<IntroSceneState>(runner, eventSystem, level);
     } else {
+        if (IsKeyPressed(KEY_SPACE)) {
+            return std::make_shared<IntroSceneState>(runner, eventSystem, level);
+        }
+
         return nullptr;
     }
 }

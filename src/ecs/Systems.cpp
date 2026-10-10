@@ -26,53 +26,47 @@
 #include "SystemBase.h"
 
 SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
-    : registry(registry) {
+    : registry(registry), eventSystem(eventSystem) {
 
-    registerSystem<EnemyAppearanceBehaviorSystem>(registry, eventSystem);
-    registerSystem<WalkingEnemyBehaviorSystem>(registry, eventSystem);
-    registerSystem<BossBehaviorSystem>(registry, eventSystem);
-    registerSystem<EnemyProjectileBehaviorSystem>(registry, eventSystem);
-    registerSystem<FlyingEnemyBehaviorSystem>(registry, eventSystem);
-    registerSystem<PopEnemyBubbleSystem>(registry, eventSystem);
-    registerSystem<EnemyTumbleBehaviorSystem>(registry, eventSystem);
-    registerSystem<DragonBehaviorSystem>(registry, eventSystem);
-    registerSystem<DragonHitBehaviorSystem>(registry, eventSystem);
-    registerSystem<WalkingActorBehaviorSystem>(registry, eventSystem);
-    registerSystem<BubbleShootBehaviorSystem>(registry, eventSystem);
-    registerSystem<BubbleFloatBehaviorSystem>(registry, eventSystem);
-    registerSystem<BubblePopBehaviorSystem>(registry, eventSystem);
-    registerSystem<ItemPickupBehaviorSystem>(registry, eventSystem);
-    registerSystem<PositionAnimationBehaviorSystem>(registry, eventSystem);
-    registerSystem<GameplayUISystem>(registry, eventSystem);
-    registerSystem<GameplayWatcherSystem>(registry, eventSystem);
-    registerSystem<LevelInstantiatorSystem>(registry, eventSystem);
-    registerSystem<TitleScreenSystem>(registry, eventSystem);
-    registerSystem<IntroSceneBehaviorSystem>(registry, eventSystem);
-    registerSystem<VictorySceneBehaviorSystem>(registry, eventSystem);
-    registerSystem<GameModifierData>(registry, eventSystem);
-    registerSystem<RendererSystem>(registry, eventSystem);
-}
-
-SystemRunner::~SystemRunner() {
-    for (SystemBase *system : systems) {
-        delete system;
-    }
+    registerSystem<EnemyAppearanceBehaviorSystem>();
+    registerSystem<WalkingEnemyBehaviorSystem>();
+    registerSystem<BossBehaviorSystem>();
+    registerSystem<EnemyProjectileBehaviorSystem>();
+    registerSystem<FlyingEnemyBehaviorSystem>();
+    registerSystem<PopEnemyBubbleSystem>();
+    registerSystem<EnemyTumbleBehaviorSystem>();
+    registerSystem<DragonBehaviorSystem>();
+    registerSystem<DragonHitBehaviorSystem>();
+    registerSystem<WalkingActorBehaviorSystem>();
+    registerSystem<BubbleShootBehaviorSystem>();
+    registerSystem<BubbleFloatBehaviorSystem>();
+    registerSystem<BubblePopBehaviorSystem>();
+    registerSystem<ItemPickupBehaviorSystem>();
+    registerSystem<PositionAnimationBehaviorSystem>();
+    registerSystem<GameplayUISystem>();
+    registerSystem<GameplayWatcherSystem>();
+    registerSystem<LevelInstantiatorSystem>();
+    registerSystem<TitleScreenSystem>();
+    registerSystem<IntroSceneBehaviorSystem>();
+    registerSystem<VictorySceneBehaviorSystem>();
+    registerSystem<GameModifierData>();
+    registerSystem<RendererSystem>();
 }
 
 void SystemRunner::Init() {
-    for (SystemBase *system : systems) {
+    for (auto system : systems) {
         system->Init();
     }
 }
 
 void SystemRunner::SetupAllSystems() {
-    for (SystemBase *system : systems) {
+    for (auto system : systems) {
         system->Setup();
     }
 }
 
 void SystemRunner::SetupOnlyEnabledSystems() {
-    for (SystemBase *system : systems) {
+    for (auto system : systems) {
         if (system->IsEnabled()) {
             system->Setup();
         }
@@ -80,19 +74,24 @@ void SystemRunner::SetupOnlyEnabledSystems() {
 }
 
 void SystemRunner::UpdateSystems() const {
-    for (SystemBase *system : systems) {
+    for (auto system : systems) {
         system->BaseUpdate();
     }
 }
 
 void SystemRunner::OnlyHaveSystemsEnabledThatMatchAnyFlag(int flags) {
-    for (SystemBase *system : systems) {
+    for (auto system : systems) {
         system->SetEnabledIfMatchesAnyFlag(flags);
     }
 }
 
 template <typename T>
-void SystemRunner::registerSystem(entt::registry &registry, EventSystem &eventSystem) {
-    T *system = new T(registry, eventSystem);
-    systems.push_back(system);
+std::shared_ptr<SystemBase> SystemRunner::CreateSystem() {
+    std::shared_ptr<T> system = std::make_shared<T>(registry, eventSystem);
+    return system;
+}
+
+template <typename T>
+void SystemRunner::registerSystem() {
+    systems.push_back(CreateSystem<T>());
 }
