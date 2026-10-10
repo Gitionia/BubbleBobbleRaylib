@@ -135,6 +135,8 @@ add_executable(BubbleBobbleRaylib
         src/utils/Input.h
         src/utils/Random.h
         src/utils/Utilities.h
+        src/network/OnlineLeaderboard.h
+        src/network/OnlineLeaderboard.cpp
         src/gui/GUIFactory.h
         src/gui/GUIFactory.cpp
 
@@ -165,6 +167,8 @@ target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 add_subdirectory("deps/spdlog-1.16")
 target_link_libraries(BubbleBobbleRaylib PRIVATE spdlog::spdlog)
 
+add_subdirectory("deps/curlpp")
+target_link_libraries(BubbleBobbleRaylib PRIVATE curlpp)
 
 add_custom_target(Copy_Resources
         COMMAND ${CMAKE_COMMAND} -E copy_directory

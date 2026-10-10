@@ -19,6 +19,9 @@ class LeaderboardInputBehaviorSystem : public SystemBase {
         CancelSend = 2
     };
 
+    int score = -1;
+    int levelReached;
+
     State state = NoYes;
     std::shared_ptr<std::string> nameString;
 

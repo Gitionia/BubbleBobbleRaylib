@@ -12,6 +12,7 @@
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
+#include "../network/OnlineLeaderboard.h"
 #include "../gui/GUIFactory.h"
 
 #ifdef PLATFORM_WEB
@@ -79,6 +80,8 @@ Application::Application(const ApplicationParameters &parameters)
 
     systemRunner.Init();
 
+    InitCurl();
+
     s_stateMachine = &stateMachine;
     s_eventSystem = &eventSystem;
 }
@@ -90,6 +93,8 @@ Application::~Application() {
     UnloadSprites();
 
     inputSimulator->SaveRecording();
+
+    CleanupCurl();
 }
 
 void Application::Run() {

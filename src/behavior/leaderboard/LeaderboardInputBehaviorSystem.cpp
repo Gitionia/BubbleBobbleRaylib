@@ -1,17 +1,12 @@
 #include "LeaderboardInputBehaviorSystem.h"
 
 #include "../../gui/GUIFactory.h"
-#include "entt/entity/entity.hpp"
-#include "raylib.h"
-#include <cctype>
-#include <cstdint>
-#include <memory>
-#include <string>
+#include "../../network/OnlineLeaderboard.h"
 
 void LeaderboardInputBehaviorSystem::Setup() {
 
-    int levelReached = -1;
-    int score = -1;
+    levelReached = -1;
+    score = -1;
 
     auto levelReachedEvents = eventSystem.ReadEvent(SEND_LEVEL_REACHED_FOR_LEADERBOARD_INPUT);
     if (levelReachedEvents.size()) {
@@ -106,7 +101,10 @@ void LeaderboardInputBehaviorSystem::Update() {
             eventSystem.Notify(entt::null, SET_FOCUSED_GUI_BUTTON, 1);
 
         } else if (GUI::IsButtonPressed(sendButton)) {
-            // Send
+
+            if (score >= 0 && levelReached >= 0) {
+                SendScoreToLeaderboard(*nameString, score, levelReached);
+            }
             eventSystem.Notify(entt::null, EXIT_LEADERBOARD_INPUT_SCREEN, 0);
         }
     }
