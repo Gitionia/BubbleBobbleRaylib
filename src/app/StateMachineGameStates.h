@@ -31,8 +31,8 @@ class GameplayState : public StateMachineState {
 
 class VictorySceneState : public StateMachineState {
   public:
-    VictorySceneState(SystemRunner &runner, EventSystem &eventSystem)
-        : StateMachineState(runner, eventSystem) {}
+    VictorySceneState(SystemRunner &runner, EventSystem &eventSystem, int levelReached, int score)
+        : StateMachineState(runner, eventSystem), levelReached(levelReached), score(score) {}
 
     void OnEnter() override;
     std::shared_ptr<StateMachineState> Update() override;
@@ -40,6 +40,9 @@ class VictorySceneState : public StateMachineState {
   private:
     int counter = 0;
     constexpr static int COUNTER_TILL_CAN_EXIT = 60 * 10;
+
+    int levelReached;
+    int score;
 };
 
 class IntroSceneState : public StateMachineState {

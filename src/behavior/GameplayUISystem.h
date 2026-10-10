@@ -9,8 +9,10 @@ class GameplayUISystem : public SystemBase {
     void Init() override;
     void Update() override;
 
+  public:
+    inline static int points = 0;
+
   private:
-    int points = 0;
     entt::entity scoreEntity = entt::null;
 
     int level = 1;

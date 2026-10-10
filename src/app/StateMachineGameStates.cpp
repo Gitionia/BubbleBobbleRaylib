@@ -9,8 +9,7 @@
 #include "../behavior/leaderboard/LeaderboardInputBehaviorSystem.h"
 #include "../behavior/menu/MenuBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
-#include "entt/entity/entity.hpp"
-#include "raylib.h"
+#include "../behavior/GameplayUISystem.h"
 
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
@@ -72,7 +71,10 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
             runner.UpdateSystems();
 
             StopMusicStream(GetMusic("main-theme"));
-            return std::make_shared<VictorySceneState>(runner, eventSystem);
+
+            int score = GameplayUISystem::points;
+            int levelReached = level;
+            return std::make_shared<VictorySceneState>(runner, eventSystem, levelReached, score);
         }
     }
 
@@ -169,7 +171,7 @@ std::shared_ptr<StateMachineState> VictorySceneState::Update() {
 
         StopMusicStream(GetMusic("victory-theme"));
 
-        return std::make_shared<TitleScreenState>(runner, eventSystem);
+        return std::make_shared<InputForLeaderboardState>(runner, eventSystem, levelReached, score);
 
     } else {
         return nullptr;
@@ -257,10 +259,6 @@ std::shared_ptr<StateMachineState> MenuScreenState::Update() {
     guiSystem->BaseUpdate();
 
     if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
-        if (true) {
-            return std::make_shared<InputForLeaderboardState>(runner, eventSystem, 4, 87670);
-        }
-
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);
     } else if (eventSystem.ReadEvent(MENU_BUTTON_MULTIPLAYER_START_WAS_PRESSED).size()) {
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 2);
