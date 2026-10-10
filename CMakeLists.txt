@@ -129,6 +129,8 @@ add_executable(BubbleBobbleRaylib
         src/utils/Input.h
         src/utils/Random.h
         src/utils/Utilities.h
+        src/gui/GUIFactory.h
+        src/gui/GUIFactory.cpp
 
 )
 

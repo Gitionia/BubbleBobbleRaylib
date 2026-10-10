@@ -1,10 +1,8 @@
 #include "StateMachineGameStates.h"
 #include "EventSystem.h"
 #include "StateMachine.h"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
-#include <cstddef>
-#include <memory>
+
+#include "../gui/GUIFactory.h"
 
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
@@ -195,6 +193,31 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
     }
 }
 
+void MenuScreenState::OnEnter() {
+    runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING);
+    runner.SetupOnlyEnabledSystems();
+
+    button1Player = GUIFactory::CreateButton(200, 200, 400, 50, "1 Player Start");
+    button2Players = GUIFactory::CreateButton(200, 400, 400, 50, "2 Player Start");
+    buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
+}
+
+std::shared_ptr<StateMachineState> MenuScreenState::Update() {
+
+    runner.UpdateSystems();
+    // runner.UpdateSingleSystem<GUIBehaviorSystem>();
+    // runner.UpdateSingleSystem<RendererSystem>();
+    if (GUI::IsButtonPressed(button1Player)) {
+        PRINT_CRITICAL("Start single player");
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
+    } else if (GUI::IsButtonPressed((button2Players))) {
+        PRINT_CRITICAL("Start multi player");
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
+    } else {
+        return nullptr;
+    }
+}
+
 void TitleScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING | SystemTypeFlags::TITLE_SCREEN);
     runner.SetupOnlyEnabledSystems();
@@ -212,7 +235,7 @@ std::shared_ptr<StateMachineState> TitleScreenState::Update() {
 
         StopSound(GetSound("title-screen-musicsound"));
 
-        return std::make_shared<IntroSceneState>(runner, eventSystem, level);
+        return std::make_shared<MenuScreenState>(runner, eventSystem, level);
 
     } else {
         runner.UpdateSystems();

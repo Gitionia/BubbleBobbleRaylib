@@ -62,6 +62,22 @@ class IntroSceneState : public StateMachineState {
     int level;
 };
 
+class MenuScreenState : public StateMachineState {
+  public:
+    MenuScreenState(SystemRunner &runner, EventSystem &eventSystem, int level)
+        : StateMachineState(runner, eventSystem), level(level) {}
+
+    void OnEnter() override;
+    std::shared_ptr<StateMachineState> Update() override;
+
+  private:
+    entt::entity button1Player;
+    entt::entity button2Players;
+    entt::entity buttonGroup;
+
+    int level;
+};
+
 class TitleScreenState : public StateMachineState {
   public:
     TitleScreenState(SystemRunner &runner, EventSystem &eventSystem, int level = 1)

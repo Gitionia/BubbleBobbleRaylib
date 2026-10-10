@@ -9,12 +9,10 @@
 #include "EventSystem.h"
 #include "StateMachine.h"
 #include "StateMachineGameStates.h"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
 #include "spdlog/sinks/basic_file_sink.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
-#include <memory>
-#include <string>
+
+#include "../gui/GUIFactory.h"
 
 #ifdef PLATFORM_WEB
 #include <emscripten/emscripten.h>
@@ -66,6 +64,8 @@ Application::Application(const ApplicationParameters &parameters)
     Input::Init(inputSimulator);
 
     EntityFactory::get().setRegistry(registry);
+    GUIFactory::get().setRegistry(registry);
+    GUI::get().setRegistry(registry);
     SystemBase::BaseInit();
 
     Random::Get().Init();
