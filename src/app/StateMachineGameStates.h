@@ -67,6 +67,7 @@ class MenuScreenState : public StateMachineState {
   private:
     std::shared_ptr<SystemBase> renderSystem = nullptr;
     std::shared_ptr<SystemBase> menuSystem = nullptr;
+    std::shared_ptr<SystemBase> guiSystem = nullptr;
 
     int level;
 };

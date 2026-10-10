@@ -11,7 +11,7 @@ entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const
 
     registry->emplace<Position>(e, x, y);
     registry->emplace<GUIButton>(e, width, height, text, color, fontSize, spacing);
-
+    
     return e;
 }
 
@@ -21,7 +21,7 @@ entt::entity GUIFactory::CreateButtonGroup(const std::vector<entt::entity> &butt
 
     static int debugEntityLabelNumber = 0;
     DBG_ADD_ENTITY_LABEL(registry, e, "GUI-ButtonGroup-Entity", debugEntityLabelNumber++);
-
+    
     registry->emplace<GUIButtonGroup>(e, layout, buttons);
 
     return e;

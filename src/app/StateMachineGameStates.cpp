@@ -6,8 +6,9 @@
 
 #include "../audio/Audio.h"
 #include "../behavior/menu/MenuBehaviorSystem.h"
+#include "../behavior/gui/GUIBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
-
+#include "entt/entity/entity.hpp"
 
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
@@ -202,15 +203,20 @@ void MenuScreenState::OnEnter() {
     renderSystem = runner.GetRendererSystem();
     renderSystem->Setup();
     menuSystem = runner.CreateSystem<MenuBehaviorSystem>();
-    menuSystem->Init();
     menuSystem->SetEnabled(true);
+    menuSystem->Init();
     menuSystem->Setup();
+    guiSystem = runner.CreateSystem<GUIBehaviorSystem>();
+    guiSystem->SetEnabled(true);
+    guiSystem->Init();
+    guiSystem->Setup();
 }
 
 std::shared_ptr<StateMachineState> MenuScreenState::Update() {
 
     renderSystem->BaseUpdate();
     menuSystem->BaseUpdate();
+    guiSystem->BaseUpdate();
 
     if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);

@@ -75,7 +75,11 @@ void RendererSystem::renderGUI() {
     for (auto entity : view) {
         auto [pos, button] = view.get(entity);
 
-        DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.Color);
+        if (!button.IsFocused) {
+            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.Color);
+        } else {
+            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, YELLOW);
+        }
     }
 }
 

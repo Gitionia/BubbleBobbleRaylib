@@ -97,6 +97,8 @@ add_executable(BubbleBobbleRaylib
         src/behavior/TitleScreenSystem.cpp
         src/behavior/menu/MenuBehaviorSystem.h
         src/behavior/menu/MenuBehaviorSystem.cpp
+        src/behavior/gui/GUIBehaviorSystem.h
+        src/behavior/gui/GUIBehaviorSystem.cpp
         src/graphics/Sprites.cpp
         src/graphics/RendererSystem.h
         src/graphics/Window.cpp

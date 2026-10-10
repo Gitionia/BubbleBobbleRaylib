@@ -1,5 +1,7 @@
 #pragma once
 
+#include "entt/entity/entity.hpp"
+#include "entt/entity/fwd.hpp"
 struct GUIButton {
     int Width;
     int Height;
@@ -17,9 +19,27 @@ enum class GUILayout {
     VERTICAL = 1,
 };
 
+enum class GUIElementType {
+    BUTTON,
+    GROUP
+};
+
 struct GUIButtonGroup {
     GUILayout Layout;
     const std::vector<entt::entity> Buttons;
+    int FocusedButtonIndex = 0;
+
+    bool IsFocusedIndexValid() {
+        return FocusedButtonIndex >= 0 && FocusedButtonIndex < Buttons.size();
+    }
+
+    bool IncreaseFocusIndex(int increase) {
+      if (IsFocusedIndexValid()) {
+        FocusedButtonIndex = (FocusedButtonIndex + increase + Buttons.size()) % Buttons.size();
+        return true;
+      }
+      return false;
+    }
 };
 
 class GUIFactory {
