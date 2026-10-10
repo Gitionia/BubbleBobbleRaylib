@@ -71,15 +71,36 @@ void RendererSystem::Update() {
 }
 
 void RendererSystem::renderGUI() {
-    auto view = registry.view<Position, GUIButton>();
-    for (auto entity : view) {
-        auto [pos, button] = view.get(entity);
+    // Render buttons
+    {
+        auto view = registry.view<Position, GUIButton>();
+        for (auto entity : view) {
+            auto [pos, button] = view.get(entity);
 
-        if (!button.IsFocused) {
-            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.UnfocusedColor);
-        } else {
-            DrawRectangle((pos.x + button.BackgroundOffsetX) * SCALING_FACTOR, (pos.y + button.BackgroundOffsetY) * SCALING_FACTOR, button.Width * SCALING_FACTOR, button.Height * SCALING_FACTOR, button.BackgroundColor);
-            DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.FocusedColor);
+            if (!button.IsFocused) {
+                DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.UnfocusedColor);
+            } else {
+                DrawRectangle((pos.x + button.BackgroundOffsetX) * SCALING_FACTOR, (pos.y + button.BackgroundOffsetY) * SCALING_FACTOR, button.Width * SCALING_FACTOR, button.Height * SCALING_FACTOR, button.BackgroundColor);
+                DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.FocusedColor);
+            }
+        }
+    }
+    // Render dynamic text
+    {
+        auto view = registry.view<Position, GUIDynamicText>();
+        for (auto entity : view) {
+            auto [pos, data] = view.get(entity);
+
+            DrawTextEx(font, data.Text->c_str(), pos.toRLVector() * SCALING_FACTOR, data.FontSize, data.Spacing, data.TextColor);
+        }
+    }
+    // Render static text
+    {
+        auto view = registry.view<Position, GUIStaticText>();
+        for (auto entity : view) {
+            auto [pos, data] = view.get(entity);
+
+            DrawTextEx(font, data.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, data.FontSize, data.Spacing, data.TextColor);
         }
     }
 }

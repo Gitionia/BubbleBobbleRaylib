@@ -8,7 +8,7 @@ void MenuBehaviorSystem::Setup() {
     buttonQuit = GUIFactory::CreateButtonAutoSize(150, 250, "Quit", PINK, BLACK, PINK);
     buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players, buttonQuit}, GUILayout::VERTICAL);
 
-    eventSystem.Notify(entt::null, SET_GUI_FOCUS_TO_ENTITY, (int64_t)buttonGroup);
+    eventSystem.Notify(entt::null, SET_ACTIVE_GUI_BUTTON_GROUP, (int64_t)buttonGroup);
 }
 
 void MenuBehaviorSystem::Update() {

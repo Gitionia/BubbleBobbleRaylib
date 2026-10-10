@@ -22,9 +22,18 @@ enum class GUILayout {
     VERTICAL = 1,
 };
 
-enum class GUIElementType {
-    BUTTON,
-    GROUP
+struct GUIDynamicText {
+    std::shared_ptr<std::string> Text;
+    Color TextColor;
+    int FontSize;
+    int Spacing;
+};
+
+struct GUIStaticText {
+    std::string Text;
+    Color TextColor;
+    int FontSize;
+    int Spacing;
 };
 
 struct GUIButtonGroup {
@@ -50,6 +59,8 @@ class GUIFactory {
     static entt::entity CreateButtonAutoSize(int x, int y, const char *text, Color unfocusedColor, Color focusedColor, Color backgroundColor, int fontSize = 32, int spacing = 0);
     static entt::entity CreateButton(int x, int y, int width, int height, int backgroundOffsetX, int backgroundOffsetY, const char *text, Color unfocusedColor, Color focusedColor, Color backgroundColor, int fontSize = 32, int spacing = 0);
     static entt::entity CreateButtonGroup(const std::vector<entt::entity> &buttons, GUILayout layout);
+    static entt::entity CreateDynamicText(int x, int y, std::shared_ptr<std::string> text, Color color, int fontSize = 32, int spacing = 0);
+    static entt::entity CreateStaticText(int x, int y, const std::string& text, Color color, int fontSize = 32, int spacing = 0);
 
   private:
     static GUIFactory &get();

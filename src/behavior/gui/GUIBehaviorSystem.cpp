@@ -3,31 +3,41 @@
 #include "../../ecs/Components.h"
 #include "../../gui/GUIFactory.h"
 #include "entt/entity/entity.hpp"
-#include "entt/entity/fwd.hpp"
-#include "raylib.h"
-#include <cstdint>
 
 void GUIBehaviorSystem::Setup() {
-    std::vector<Event> events = eventSystem.ReadEvent(SET_GUI_FOCUS_TO_ENTITY);
-    if (!events.empty()) {
-        guiButtonGroup = (entt::entity)events.at(0).data;
+    setFocusedGUIButtonGroupFromEventSystem();
+}
 
-        if (!registry.valid(guiButtonGroup)) {
-            guiButtonGroup = entt::null;
-        }
-    }
+void GUIBehaviorSystem::setFocusedGUIButtonGroupFromEventSystem() {
+    {
+        const std::vector<Event> &events = eventSystem.ReadEvent(SET_ACTIVE_GUI_BUTTON_GROUP);
+        if (!events.empty()) {
+            if (registry.valid(guiButtonGroup)) {
+                unfocusAllButtonsInButtonGroup();
+            }
 
-    // Try find any Button group
-    if (guiButtonGroup == entt::null) {
-        auto view = registry.view<GUIButtonGroup>();
-        for (auto entity : view) {
-            PRINT_WARN("No root GUI element was specified! Setting it now to {}", (uint64_t)entity);
-            guiButtonGroup = entity;
-            break;
+            guiButtonGroup = (entt::entity)events.at(0).data;
+
+            if (!registry.valid(guiButtonGroup)) {
+                guiButtonGroup = entt::null;
+            }
         }
     }
 
     if (guiButtonGroup != entt::null) {
+        const std::vector<Event> &events = eventSystem.ReadEvent(SET_FOCUSED_GUI_BUTTON);
+        if (!events.empty()) {
+
+            if (registry.any_of<GUIButtonGroup>(guiButtonGroup)) {
+                GUIButtonGroup &group = registry.get<GUIButtonGroup>(guiButtonGroup);
+                group.FocusedButtonIndex = (int)events.at(0).data;
+
+                if (!group.IsFocusedIndexValid()) {
+                    group.FocusedButtonIndex = 0;
+                }
+            }
+        }
+
         updateFocusOfGUIButtonGroup();
     }
 }
@@ -52,6 +62,23 @@ void GUIBehaviorSystem::updateFocusOfGUIButtonGroup() {
     }
 }
 
+void GUIBehaviorSystem::unfocusAllButtonsInButtonGroup() {
+    if (registry.any_of<GUIButtonGroup>(guiButtonGroup)) {
+        GUIButtonGroup &group = registry.get<GUIButtonGroup>(guiButtonGroup);
+
+        group.FocusedButtonIndex = 0;
+
+        for (int i = 0; i < group.Buttons.size(); i++) {
+            entt::entity buttonEntity = group.Buttons.at(i);
+
+            GUIButton *button = registry.try_get<GUIButton>(buttonEntity);
+            if (button) {
+                button->IsFocused = false;
+            }
+        }
+    }
+}
+
 void GUIBehaviorSystem::Update() {
     if (pressedGUIButton != entt::null) {
         GUIButton *button = registry.try_get<GUIButton>(pressedGUIButton);
@@ -61,14 +88,22 @@ void GUIBehaviorSystem::Update() {
         }
     }
 
+    setFocusedGUIButtonGroupFromEventSystem();
+
     if (guiButtonGroup == entt::null) {
-        PRINT_WARN("No ButtonGroup is focused! Not simulating GUI");
         return;
     }
 
     GUIButtonGroup *group = registry.try_get<GUIButtonGroup>(guiButtonGroup);
     if (!group)
         return;
+
+    if (eventSystem.ReadEvent(UNFOCUS_GUI_BUTTON_GROUP).size()) {
+        unfocusAllButtonsInButtonGroup();
+        guiButtonGroup = entt::null;
+        return;
+    }
+
     if (group->Layout == GUILayout::VERTICAL) {
         if (IsKeyPressed(KEY_DOWN)) {
             if (group->IncreaseFocusIndex(1)) {
@@ -91,7 +126,7 @@ void GUIBehaviorSystem::Update() {
         }
     }
 
-    if (Input::IsKeyDown(Key::Fire, DRAGON_GREEN) || IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
+    if (Input::IsKeyDown(Key::Jump, DRAGON_GREEN) || IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
         if (group->IsFocusedIndexValid()) {
             entt::entity buttonEntity = group->Buttons.at(group->FocusedButtonIndex);
             GUIButton *button = registry.try_get<GUIButton>(buttonEntity);

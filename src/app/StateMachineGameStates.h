@@ -55,6 +55,24 @@ class IntroSceneState : public StateMachineState {
     int playerCount;
 };
 
+class InputForLeaderboardState : public StateMachineState {
+  public:
+    InputForLeaderboardState(SystemRunner &runner, EventSystem &eventSystem, int levelReached, int score)
+        : StateMachineState(runner, eventSystem), levelReached(levelReached), score(score) {}
+
+    void OnEnter() override;
+    std::shared_ptr<StateMachineState> Update() override;
+    void OnExit() override;
+
+  private:
+    std::shared_ptr<SystemBase> renderSystem = nullptr;
+    std::shared_ptr<SystemBase> leaderboardInputSystem = nullptr;
+    std::shared_ptr<SystemBase> guiSystem = nullptr;
+
+    int levelReached;
+    int score;
+};
+
 class MenuScreenState : public StateMachineState {
   public:
     MenuScreenState(SystemRunner &runner, EventSystem &eventSystem, int level)

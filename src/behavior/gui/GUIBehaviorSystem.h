@@ -16,6 +16,8 @@ class GUIBehaviorSystem : public SystemBase {
     void Update() override;
 
   private:
+    void setFocusedGUIButtonGroupFromEventSystem();
+    void unfocusAllButtonsInButtonGroup();
     void updateFocusOfGUIButtonGroup();
 
   private:

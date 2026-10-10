@@ -5,10 +5,12 @@
 #include "../gui/GUIFactory.h"
 
 #include "../audio/Audio.h"
-#include "../behavior/menu/MenuBehaviorSystem.h"
 #include "../behavior/gui/GUIBehaviorSystem.h"
+#include "../behavior/leaderboard/LeaderboardInputBehaviorSystem.h"
+#include "../behavior/menu/MenuBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
 #include "entt/entity/entity.hpp"
+#include "raylib.h"
 
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
@@ -203,6 +205,38 @@ std::shared_ptr<StateMachineState> IntroSceneState::Update() {
     }
 }
 
+void InputForLeaderboardState::OnEnter() {
+    renderSystem = runner.GetRendererSystem();
+    renderSystem->Setup();
+    eventSystem.Notify(entt::null, SEND_LEVEL_REACHED_FOR_LEADERBOARD_INPUT, levelReached);
+    eventSystem.Notify(entt::null, SEND_SCORE_FOR_LEADERBOARD_INPUT, score);
+    leaderboardInputSystem = runner.CreateSystem<LeaderboardInputBehaviorSystem>();
+    leaderboardInputSystem->SetEnabled(true);
+    leaderboardInputSystem->Init();
+    leaderboardInputSystem->Setup();
+    guiSystem = runner.CreateSystem<GUIBehaviorSystem>();
+    guiSystem->SetEnabled(true);
+    guiSystem->Init();
+    guiSystem->Setup();
+}
+
+std::shared_ptr<StateMachineState> InputForLeaderboardState::Update() {
+
+    renderSystem->BaseUpdate();
+    leaderboardInputSystem->BaseUpdate();
+    guiSystem->BaseUpdate();
+
+    if (eventSystem.ReadEvent(EXIT_LEADERBOARD_INPUT_SCREEN).size()) {
+        return std::make_shared<TitleScreenState>(runner, eventSystem);
+    }
+    return nullptr;
+}
+
+void InputForLeaderboardState::OnExit() {
+    leaderboardInputSystem->CleanUp();
+    Debug::PrintNumberOfEntities();
+}
+
 void MenuScreenState::OnEnter() {
     renderSystem = runner.GetRendererSystem();
     renderSystem->Setup();
@@ -223,6 +257,10 @@ std::shared_ptr<StateMachineState> MenuScreenState::Update() {
     guiSystem->BaseUpdate();
 
     if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
+        if (true) {
+            return std::make_shared<InputForLeaderboardState>(runner, eventSystem, 4, 87670);
+        }
+
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);
     } else if (eventSystem.ReadEvent(MENU_BUTTON_MULTIPLAYER_START_WAS_PRESSED).size()) {
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 2);
