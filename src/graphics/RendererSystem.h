@@ -18,6 +18,7 @@ class RendererSystem : public SystemBase {
     void renderAllWithTag();
 
     void renderFontText();
+    void renderGUI();
 
     template <typename ColliderType>
     void debugDrawColliders(Color color);

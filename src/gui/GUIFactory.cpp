@@ -3,7 +3,7 @@
 
 #include "../ecs/Components.h"
 
-entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const char *text) {
+entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const char *text, Color color, int fontSize, int spacing) {
     entt::registry *registry = get().registry;
     entt::entity e = registry->create();
 
@@ -11,7 +11,7 @@ entt::entity GUIFactory::CreateButton(int x, int y, int width, int height, const
     DBG_ADD_ENTITY_LABEL(registry, e, "GUI-Button-Entity", debugEntityLabelNumber++);
 
     registry->emplace<Position>(e, x, y);
-    registry->emplace<GUIButton>(e, width, height, text);
+    registry->emplace<GUIButton>(e, width, height, text, color, fontSize, spacing);
 
     return e;
 }

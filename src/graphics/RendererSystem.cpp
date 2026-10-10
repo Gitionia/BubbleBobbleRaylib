@@ -3,7 +3,7 @@
 #include "../ecs/Components.h"
 
 #include "../app/WindowConfig.h"
-#include "raylib.h"
+#include "../gui/GUIFactory.h"
 
 void RendererSystem::Init() {
     renderTexture = LoadRenderTexture(TARGET_WINDOW_WIDTH, TARGET_WINDOW_HEIGHT);
@@ -33,6 +33,8 @@ void RendererSystem::Update() {
     renderAllWithTag<SimpleAnimatedSpriteTag>();
 
     renderFontText();
+
+    renderGUI();
 
     drawDebugShapes();
 
@@ -66,6 +68,15 @@ void RendererSystem::Update() {
     Rectangle dest = {(width - usedWidth) / 2, 0, usedWidth, usedHeight};
     DrawTexturePro(renderTexture.texture, src, dest, {0, 0}, 0, WHITE);
     EndDrawing();
+}
+
+void RendererSystem::renderGUI() {
+    auto view = registry.view<Position, GUIButton>();
+    for (auto entity : view) {
+        auto [pos, button] = view.get(entity);
+
+        DrawTextEx(font, button.Text.c_str(), pos.toRLVector() * SCALING_FACTOR, button.FontSize, button.Spacing, button.Color);
+    }
 }
 
 void RendererSystem::renderFontText() {

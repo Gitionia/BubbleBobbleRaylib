@@ -197,8 +197,8 @@ void MenuScreenState::OnEnter() {
     runner.OnlyHaveSystemsEnabledThatMatchAnyFlag(SystemTypeFlags::RENDERING);
     runner.SetupOnlyEnabledSystems();
 
-    button1Player = GUIFactory::CreateButton(200, 200, 400, 50, "1 Player Start");
-    button2Players = GUIFactory::CreateButton(200, 400, 400, 50, "2 Player Start");
+    button1Player = GUIFactory::CreateButton(150, 150, 400, 50, "1 Player Start", PINK);
+    button2Players = GUIFactory::CreateButton(150, 200, 400, 50, "2 Player Start", PINK);
     buttonGroup = GUIFactory::CreateButtonGroup({button1Player, button2Players}, GUILayout::VERTICAL);
 }
 

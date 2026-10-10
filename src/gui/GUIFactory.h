@@ -1,11 +1,12 @@
 #pragma once
 
-#include "entt/entity/fwd.hpp"
-#include <vector>
 struct GUIButton {
     int Width;
     int Height;
     std::string Text;
+    struct Color Color;
+    int FontSize;
+    int Spacing;
 
     bool IsFocused = false;
     bool IsPressed = false;
@@ -23,7 +24,7 @@ struct GUIButtonGroup {
 
 class GUIFactory {
   public:
-    static entt::entity CreateButton(int x, int y, int width, int height, const char *text);
+    static entt::entity CreateButton(int x, int y, int width, int height, const char *text, Color color = WHITE, int fontSize = 32, int spacing = 0);
     static entt::entity CreateButtonGroup(const std::vector<entt::entity> &buttons, GUILayout layout);
 
   private:
