@@ -14,6 +14,7 @@ logs
 recordedInput
 
 buildRaylibWeb
+.idea
 .vs
 .cache
 CMakeUserPresets.json
