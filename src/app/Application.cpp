@@ -46,7 +46,7 @@ Application::Application(const ApplicationParameters &parameters)
 #ifdef NDEBUG
     auto logLevel = spdlog::level::err;
 #else
-    auto logLevel = spdlog::level::info;
+    auto logLevel = spdlog::level::debug;
 #endif
     stdoutLogger->set_level(logLevel);
     fileLogger->set_level(logLevel);
@@ -139,7 +139,7 @@ void update() {
 #ifdef PROFILE
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count();
-    PRINT_INFO("FPS: {}, Frame Time: {}µs", 1000000 / elapsed, elapsed);
+    PRINT_DEBUG("FPS: {}, Frame Time: {}µs", 1000000 / elapsed, elapsed);
 #endif
 }
 

@@ -9,13 +9,13 @@ void Recording::SaveToFile(const std::string &filepath) {
     std::ofstream file(filepath, std::ios::binary);
 
     if (!file) {
-        PRINT_WARN("Could not save input recording to {}", filepath);
+        PRINT_DEBUG("Could not save input recording to {}", filepath);
         return;
     }
 
     file.write(reinterpret_cast<const char *>(data.data()), data.size());
 
-    PRINT_INFO("Saved recording to {}", filepath);
+    PRINT_DEBUG("Saved recording to {}", filepath);
     
     file.close();
 }
@@ -24,7 +24,7 @@ void Recording::ReadFromFile(const std::string &filepath) {
     std::ifstream file(filepath, std::ios::binary | std::ios::ate);
 
     if (!file) {
-        PRINT_ERROR("Could not read input recording from {}", filepath);
+        PRINT_DEBUG("Could not read input recording from {}", filepath);
         return;
     }
 
@@ -32,14 +32,14 @@ void Recording::ReadFromFile(const std::string &filepath) {
     file.seekg(0, std::ios::beg);
 
     if (size <= 0) {
-        PRINT_ERROR("Input recording at {} has no elements", filepath);
+        PRINT_DEBUG("Input recording at {} has no elements", filepath);
         return;
     }
 
     data.resize(size);
     file.read(reinterpret_cast<char *>(data.data()), size);
 
-    PRINT_INFO("Read recording from {}", filepath);
+    PRINT_DEBUG("Read recording from {}", filepath);
 
     file.close();
 
@@ -83,7 +83,7 @@ void InputSimulator::Update() {
         for (int key = 0; key < Recording::KEY_COUNT; key++) {
             size_t bufferIndex = key + recording.frameIndex * Recording::KEY_COUNT;
             if (bufferIndex >= recording.data.size()) {
-                PRINT_WARN("Finished using input recording! Switching to live input.");
+                PRINT_DEBUG("Finished using input recording! Switching to live input.");
                 exceededRecording = true;
                 break;
             }

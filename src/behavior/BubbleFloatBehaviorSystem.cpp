@@ -62,7 +62,7 @@ void BubbleFloatBehaviorSystem::Update() {
             bubbleRepelDirection.IntegerNormalize();
         }
 
-        // PRINT_INFO("Bubble {} has leader {}", (int)entity, bubble.leader.getLeader());
+        // PRINT_DEBUG("Bubble {} has leader {}", (int)entity, bubble.leader.getLeader());
 
         const int BUBBLE_REPEL_SPEED = 2;
         Vector2Int velocity = airflowVelocity.Add(BUBBLE_REPEL_SPEED * bubbleRepelDirection.X, BUBBLE_REPEL_SPEED * bubbleRepelDirection.Y);

@@ -40,7 +40,7 @@ int Debug::GetNumberOfEntities() {
 
 void Debug::PrintNumberOfEntities() {
 #ifdef DEBUG_TOOLS
-    PRINT_INFO("Number of entities: {}", GetNumberOfEntities());
+    PRINT_DEBUG("Number of entities: {}", GetNumberOfEntities());
 #endif
 }
 
@@ -48,7 +48,7 @@ void Debug::PrintAllDebuggingLabels() {
 #ifdef DEBUG_TOOLS
     for (auto entity : get().registry->view<DebugEntityLabelComponent>()) {
         auto debugLabel = get().registry->get<DebugEntityLabelComponent>(entity);
-        PRINT_INFO("Entity: {}", debugLabel.label);
+        PRINT_DEBUG("Entity: {}", debugLabel.label);
     }
     PrintNumberOfEntities();
 #endif
@@ -56,7 +56,7 @@ void Debug::PrintAllDebuggingLabels() {
 
 void Debug::PrintMousePosition() {
 #ifdef DEBUG_TOOLS
-    PRINT_INFO("X: {}, Y: {}", GetMousePosition().x, GetMousePosition().y);
+    PRINT_DEBUG("X: {}, Y: {}", GetMousePosition().x, GetMousePosition().y);
 #endif
 }
 

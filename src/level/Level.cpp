@@ -218,13 +218,13 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                         level.containsBoss = property.find("value").value();
 
                     } else {
-                        PRINT_ERROR("Unexpected property {} at {} in Tiles layer", std::string(property.find("name").value()), filepath.c_str());
+                        PRINT_WARN("Unexpected property {} at {} in Tiles layer", std::string(property.find("name").value()), filepath.c_str());
                     }
                 }
             }
 
             if (colorRight.empty() || colorBottem.empty()) {
-                PRINT_ERROR("Shade Colors of Level at {} is missing!", filepath.c_str());
+                PRINT_WARN("Shade Colors of Level at {} is missing!", filepath.c_str());
                 level.SetColors(BLACK, BLACK);
             } else {
                 level.SetColors(parseColors(colorRight), parseColors(colorBottem));
@@ -258,7 +258,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                     if (property.find("name").value() == "FlipAlongXAxis") {
                         shouldFlipAlongXAxis = property.find("value").value();
                     } else {
-                        PRINT_ERROR("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
+                        PRINT_WARN("Unexpected property {} at {} in Airflow layer", std::string(property.find("name").value()), filepath.c_str());
                     }
                 }
             }
@@ -300,7 +300,7 @@ LevelLayout LevelLayout::LoadLevel(const std::string &filepath) {
                         shouldFlipAlongXAxis = property.find("value").value();
 
                     } else {
-                        PRINT_ERROR("Unexpected property {} at {} in Enemy layer", std::string(property.find("name").value()), filepath.c_str());
+                        PRINT_WARN("Unexpected property {} at {} in Enemy layer", std::string(property.find("name").value()), filepath.c_str());
                     }
                 }
             }

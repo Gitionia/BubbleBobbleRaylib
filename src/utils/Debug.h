@@ -38,7 +38,7 @@ struct DebugEntityLabelComponent {
 #else
 #define DBG_ASSERT(x)                                                   \
     if (!(x)) {                                                         \
-        PRINT_ERROR("Assert failed at {} line {}", __FILE__, __LINE__); \
+        PRINT_DEBUG("Assert failed at {} line {}", __FILE__, __LINE__); \
         exit(0);                                                        \
     }
 #endif
@@ -48,7 +48,7 @@ struct DebugEntityLabelComponent {
 #else
 #define DBG_CHECK(x, msg)                                                                           \
     if (!(x)) {                                                                                     \
-        PRINT_WARN("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
+        PRINT_DEBUG("Check failed at {} line {}. Continuing. Message {}", __FILE__, __LINE__, msg); \
     }
 #endif
 
@@ -56,6 +56,6 @@ struct DebugEntityLabelComponent {
 #ifdef NDEBUG
 #define UNREACHABLE() 
 #else
-#define UNREACHABLE() PRINT_ERROR("Reached unreachable code at {} line {}", __FILE__, __LINE__)
+#define UNREACHABLE() PRINT_DEBUG("Reached unreachable code at {} line {}", __FILE__, __LINE__)
 #endif
 

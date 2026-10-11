@@ -28,7 +28,7 @@ EnemyType GetEnemyTypeFromTile(LevelTileType tile) {
     case LevelTileType::ENEMY_WITCH_RIGHT:
         return EnemyType::WITCH;
     default:
-        PRINT_ERROR("Tried to convert non-enemy tile into enemy tile. Maybe a level tilemap is incorrect?");
+        PRINT_WARN("Tried to convert non-enemy tile into enemy tile. Maybe a level tilemap is incorrect?");
         return EnemyType::CAN;
     }
 }
@@ -55,7 +55,7 @@ Direction GetEnemyDirectionFromTile(LevelTileType tile) {
     case LevelTileType::ENEMY_WITCH_RIGHT:
         return Direction::Right;
     default:
-        PRINT_ERROR("Tried to get direction of non-enemy tile. Maybe a level tilemap is incorrect?");
+        PRINT_WARN("Tried to get direction of non-enemy tile. Maybe a level tilemap is incorrect?");
         return Direction::Left;
     }
 }
@@ -105,7 +105,7 @@ const char *GetEnemyAnimationName(EnemyType enemyType, EnemyAnimationType animat
         case EnemyType::PURPLE_GHOST:
         case EnemyType::PIG:
         case EnemyType::MUSHROOM:
-            PRINT_ERROR("Enemy {} has no shooting animation {}:{}", (int)enemyType, __FILE__, __LINE__);
+            PRINT_DEBUG("Enemy {} has no shooting animation {}:{}", (int)enemyType, __FILE__, __LINE__);
             return "Ghost-Shoot";
         }
         break;
@@ -174,7 +174,7 @@ const char *GetEnemyProjectileAnimationName(EnemyType shooterEnemy) {
         return "Projectile-Snowman";
 
     default:
-        PRINT_ERROR("Projectile of enemy of type {} has no animation");
+        PRINT_DEBUG("Projectile of enemy of type {} has no animation");
         return GetEnemyProjectileAnimationName(EnemyType::GHOST);
     }
 }

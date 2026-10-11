@@ -36,7 +36,7 @@ void WalkingEnemyBehaviorSystem::Update() {
     }
 
     if (!foundDragon) {
-        PRINT_WARN("Walking enemy did not find dragon position");
+        PRINT_DEBUG("Walking enemy did not find dragon position");
     }
 
     auto view = registry.view<Position, WalkingActorComponent, WalkingEnemyComponent, EnemyInfoComponent, RenderData>(entt::exclude<EnemyAppearanceComponent, BubbleFloatComponent, BubblePopComponent>);

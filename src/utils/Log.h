@@ -20,3 +20,13 @@
         spdlog::get("console")->critical(__VA_ARGS__); \
         spdlog::get("file")->critical(__VA_ARGS__);    \
     } while (0)
+
+#ifdef NDEBUG
+#define PRINT_DEBUG(...)
+#else
+#define PRINT_DEBUG(...)                            \
+    do {                                            \
+        spdlog::get("console")->debug(__VA_ARGS__); \
+        spdlog::get("file")->debug(__VA_ARGS__);    \
+    } while (0)
+#endif

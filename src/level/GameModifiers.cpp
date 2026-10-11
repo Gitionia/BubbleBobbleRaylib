@@ -18,7 +18,7 @@ void GameModifierData::Update() {
         if (event.data >= 0 && event.data < (int)ModifierTypes::Count) {
             g_modifierValues.at(event.data) = true;
 
-            PRINT_INFO("Picked up Modifier {}", event.data);
+            PRINT_DEBUG("Picked up Modifier {}", event.data);
         }
     }
 

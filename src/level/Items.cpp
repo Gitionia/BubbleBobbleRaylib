@@ -31,7 +31,7 @@ const char *GetItemSpriteName(ItemType item) {
     case ItemType::Door:
         return "Item-Door";
     default:
-        PRINT_ERROR("Invalid enum value for ItemType");
+        PRINT_DEBUG("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetItemSpriteName(ItemType::Banana);
     }
@@ -63,7 +63,7 @@ int GetItemPoints(ItemType item) {
     case ItemType::Wand:
         return 0;
     default:
-        PRINT_ERROR("Invalid enum value for ItemType");
+        PRINT_DEBUG("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetItemPoints(ItemType::Banana);
     }
@@ -103,7 +103,7 @@ const char *GetPointTextSpriteNameFromItemType(ItemType item) {
         DBG_CHECK(false, "Item has no points and doesn't spawn a point text");
         return GetPointTextSpriteNameFromItemType(ItemType::Banana);
     default:
-        PRINT_ERROR("Invalid enum value for ItemType");
+        PRINT_DEBUG("Invalid enum value for ItemType");
         DBG_ASSERT(false);
         return GetPointTextSpriteNameFromItemType(ItemType::Banana);
     }
