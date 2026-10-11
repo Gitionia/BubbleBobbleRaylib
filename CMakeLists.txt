@@ -22,7 +22,7 @@ message(STATUS "Compiler cxx flags:" ${CMAKE_CXX_FLAGS})
 
 
 if(EMSCRIPTEN)
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s GL_ENABLE_GET_PROC_ADDRESS=1 -s EXPORTED_RUNTIME_METHODS=HEAPF32 --preload-file res -s FORCE_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_GLFW=3 -s ASSERTIONS=1 -s WASM=1 -s GL_ENABLE_GET_PROC_ADDRESS=1 -s EXPORTED_RUNTIME_METHODS=HEAPF32 --preload-file res -s FORCE_FILESYSTEM=1 -s ALLOW_MEMORY_GROWTH -s NO_DISABLE_EXCEPTION_CATCHING -s FETCH=1")
         set(CMAKE_EXECUTABLE_SUFFIX ".html") # This line is used to set your executable to build with the emscripten html template so that you can directly open it.
 endif()
 
@@ -167,8 +167,10 @@ target_link_libraries(BubbleBobbleRaylib PRIVATE nlohmann_json::nlohmann_json)
 add_subdirectory("deps/spdlog-1.16")
 target_link_libraries(BubbleBobbleRaylib PRIVATE spdlog::spdlog)
 
-#add_subdirectory("deps/curlpp")
-#target_link_libraries(BubbleBobbleRaylib PRIVATE curlpp)
+if (NOT EMSCRIPTEN)
+        find_package(OpenSSL REQUIRED)
+        target_link_libraries(BubbleBobbleRaylib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+endif()
 
 add_custom_target(Copy_Resources
         COMMAND ${CMAKE_COMMAND} -E copy_directory
