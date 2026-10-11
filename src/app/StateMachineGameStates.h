@@ -18,7 +18,7 @@ class GameplayState : public StateMachineState {
   private:
     const Music *mainThemeMusic;
     int level = 1;
-    static constexpr int BOSS_LEVEL = 60;
+    static constexpr int BOSS_LEVEL = 35;
     static constexpr int PREVIOUS_TO_BOSS_LEVEL = BOSS_LEVEL - 1;
     bool isStoryLevel();
 
