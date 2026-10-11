@@ -48,6 +48,44 @@ bool GameplayState::isStoryLevel() {
 
 std::shared_ptr<StateMachineState> GameplayState::Update() {
 
+#ifdef DEBUG_TOOLS
+    if (::IsKeyPressed(KEY_N)) {
+        level++;
+        StartLevel();
+    }
+    if (::IsKeyPressed(KEY_M)) {
+        level--;
+        StartLevel();
+    }
+    if (::IsKeyPressed(KEY_Q)) {
+        level = 101;
+        StartLevel();
+
+    } else if (::IsKeyPressed(KEY_W)) {
+        level = 1;
+        StartLevel();
+
+    } else if (::IsKeyPressed(KEY_E)) {
+        StartLevel();
+    }
+
+    if (::IsKeyPressed(KEY_P)) {
+        SetTargetFPS(2);
+
+    } else if (::IsKeyPressed(KEY_I)) {
+        SetTargetFPS(600);
+
+    } else if (::IsKeyPressed(KEY_O)) {
+        SetTargetFPS(TARGET_FPS);
+    }
+    if (::IsKeyPressed(KEY_F)) {
+        ToggleFullscreen();
+    }
+    if (::IsKeyPressed(KEY_B)) {
+        ToggleBorderlessWindowed();
+    }
+#endif
+
     runner.UpdateSystems();
 
     if (eventSystem.ReadEvent(ALL_ENEMIES_DEFEATED).size()) {
@@ -111,44 +149,6 @@ std::shared_ptr<StateMachineState> GameplayState::Update() {
         }
     }
 
-#ifdef DEBUG_TOOLS
-    if (::IsKeyPressed(KEY_N)) {
-        level++;
-        StartLevel();
-    }
-    if (::IsKeyPressed(KEY_M)) {
-        level--;
-        StartLevel();
-    }
-    if (::IsKeyPressed(KEY_Q)) {
-        level = 101;
-        StartLevel();
-
-    } else if (::IsKeyPressed(KEY_W)) {
-        level = 1;
-        StartLevel();
-
-    } else if (::IsKeyPressed(KEY_E)) {
-        StartLevel();
-    }
-
-    if (::IsKeyPressed(KEY_P)) {
-        SetTargetFPS(2);
-
-    } else if (::IsKeyPressed(KEY_I)) {
-        SetTargetFPS(600);
-
-    } else if (::IsKeyPressed(KEY_O)) {
-        SetTargetFPS(TARGET_FPS);
-    }
-    if (::IsKeyPressed(KEY_F)) {
-        ToggleFullscreen();
-    }
-    if (::IsKeyPressed(KEY_B)) {
-        ToggleBorderlessWindowed();
-    }
-#endif
-
     return nullptr;
 }
 
@@ -162,7 +162,7 @@ void VictorySceneState::OnEnter() {
 std::shared_ptr<StateMachineState> VictorySceneState::Update() {
 
     bool canExit = counter > COUNTER_TILL_CAN_EXIT && Input::AnyKeyPressed();
-    
+
     runner.UpdateSystems();
     counter++;
 

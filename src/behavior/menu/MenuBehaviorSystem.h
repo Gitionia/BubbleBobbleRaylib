@@ -14,6 +14,9 @@ class MenuBehaviorSystem : public SystemBase {
   private:
     entt::entity button1Player;
     entt::entity button2Players;
+    entt::entity buttonOpenLeaderboard;
+    entt::entity leaderboardGUIText;
+    entt::entity urlGUIText;
     entt::entity buttonQuit;
     entt::entity buttonGroup;
 };
