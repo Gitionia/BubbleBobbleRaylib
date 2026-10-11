@@ -1,5 +1,6 @@
 #include "LeaderboardInputBehaviorSystem.h"
 
+#include "../../ecs/Components.h"
 #include "../../gui/GUIFactory.h"
 #include "../../network/OnlineLeaderboard.h"
 
@@ -26,21 +27,25 @@ void LeaderboardInputBehaviorSystem::Setup() {
         infoGUIText[3] = GUIFactory::CreateStaticText(260, 100, "Score: " + std::to_string(score), WHITE);
     }
 
-    noButton = GUIFactory::CreateButtonAutoSize(140, 150, "No", WHITE, BLACK, PINK);
-    yesButton = GUIFactory::CreateButtonAutoSize(300, 150, "Yes", WHITE, BLACK, PINK);
+    noButton = GUIFactory::CreateButtonAutoSize(100, 150, "No", WHITE, BLACK, PINK);
+    yesButton = GUIFactory::CreateButtonAutoSize(180, 150, "Yes", WHITE, BLACK, PINK);
     noYesButtonGroup = GUIFactory::CreateButtonGroup({noButton, yesButton}, GUILayout::HORIZONTAL);
 
     eventSystem.Notify(entt::null, SET_ACTIVE_GUI_BUTTON_GROUP, (int64_t)noYesButtonGroup);
 
-    nameInfoGUIText = GUIFactory::CreateStaticText(120, 220, "Name: ", GRAY);
+    nameInfoGUIText = GUIFactory::CreateStaticText(100, 220, "Name: ", GRAY);
 
     nameString = std::make_shared<std::string>("_");
     nameString->reserve(4);
-    playerNameGUIText = GUIFactory::CreateDynamicText(150, 250, nameString, GRAY);
+    playerNameGUIText = GUIFactory::CreateDynamicText(200, 220, nameString, GRAY);
 
-    cancelButton = GUIFactory::CreateButtonAutoSize(140, 320, "Cancel", WHITE, BLACK, PINK);
-    sendButton = GUIFactory::CreateButtonAutoSize(300, 320, "Send", WHITE, BLACK, PINK);
+    cancelButton = GUIFactory::CreateButtonAutoSize(100, 320, "Cancel", WHITE, BLACK, PINK);
+    sendButton = GUIFactory::CreateButtonAutoSize(240, 320, "Send", WHITE, BLACK, PINK);
     cancelSendButtonGroup = GUIFactory::CreateButtonGroup({cancelButton, sendButton}, GUILayout::HORIZONTAL);
+
+    successGUIText = GUIFactory::CreateStaticText(100, 1320, "Successfully sent to", YELLOW);
+    notSuccessGUIText = GUIFactory::CreateStaticText(110, 1320, "Could not send to", YELLOW);
+    endLeaderboardGUIText = GUIFactory::CreateStaticText(150, 1340, "leaderboard", YELLOW);
 }
 
 void LeaderboardInputBehaviorSystem::Update() {
@@ -85,10 +90,11 @@ void LeaderboardInputBehaviorSystem::Update() {
             }
         }
         if (nameString->size() == 3 && nameString->at(2) != '_') {
-            state = CancelSend;
+            state = CancelOrSend;
             eventSystem.Notify(entt::null, SET_ACTIVE_GUI_BUTTON_GROUP, (int64_t)cancelSendButtonGroup);
         }
-    } else if (state == CancelSend) {
+
+    } else if (state == CancelOrSend) {
         if (GUI::IsButtonPressed(cancelButton)) {
             state = NoYes;
             registry.get<GUIStaticText>(nameInfoGUIText).TextColor = GRAY;
@@ -101,11 +107,60 @@ void LeaderboardInputBehaviorSystem::Update() {
 
         } else if (GUI::IsButtonPressed(sendButton)) {
 
-            if (score >= 0 && levelReached >= 0) {
-                SendScoreToLeaderboard(*nameString, score, levelReached);
+            sendTimeOut = 120;
+            httpResult = SendScoreToLeaderboard(*nameString, score, levelReached);
+            state = SendWaiting;
+            eventSystem.Notify(entt::null, UNFOCUS_GUI_BUTTON_GROUP, 0);
+        }
+
+    } else if (state == SendWaiting) {
+
+        if (sendTimeOut > 0) {
+            sendTimeOut--;
+        }
+        
+        bool finished = false;
+        bool success = false;
+
+        if (sendTimeOut <= 10) {
+            finished = true;
+            success = false;
+        } else if (httpResult->IsCompleted) {
+            finished = true;
+            success = httpResult->Result == HttpRequestResult::SUCCESSFUL;
+        }
+
+        if (finished) {
+            if (success) {
+                registry.get<Position>(successGUIText).y -= 1000;
+            } else {
+                registry.get<Position>(notSuccessGUIText).y -= 1000;
             }
+
+            registry.get<Position>(endLeaderboardGUIText).y -= 1000;
+            registry.get<Position>(sendButton).y += 1000;
+            registry.get<Position>(cancelButton).y += 1000;
+    
+            timerTillCanExit = 120;
+            state = DisplaySendStatusButCantExitYet;
+        }
+
+    } else if (state == DisplaySendStatusButCantExitYet) {
+        if (timerTillCanExit > 0) {
+            timerTillCanExit--;
+        }
+        if (!Input::AnyKeyPressed() && timerTillCanExit <= 1) {
+            state = DisplaySendStatusCanExit;
+        }
+
+    } else if (state == DisplaySendStatusCanExit) {
+        if (Input::AnyKeyPressed()) {
             eventSystem.Notify(entt::null, EXIT_LEADERBOARD_INPUT_SCREEN, 0);
         }
+
+    } else {
+        // invalid state! Exit leader board screen
+        eventSystem.Notify(entt::null, EXIT_LEADERBOARD_INPUT_SCREEN, 0);
     }
 }
 
@@ -123,4 +178,8 @@ void LeaderboardInputBehaviorSystem::CleanUp() {
     registry.destroy(cancelButton);
     registry.destroy(sendButton);
     registry.destroy(cancelSendButtonGroup);
+
+    registry.destroy(successGUIText);
+    registry.destroy(notSuccessGUIText);
+    registry.destroy(endLeaderboardGUIText);
 }

@@ -1,15 +1,17 @@
 #include "OnlineLeaderboard.h"
 
-static bool SendPostRequest(std::string json);
+static std::shared_ptr<HttpRequestResult> SendPostRequest(std::string json);
 
-bool SendScoreToLeaderboard(const std::string &playerName, int score, int level_reached) {
+std::shared_ptr<HttpRequestResult> SendScoreToLeaderboard(const std::string &playerName, int score, int level_reached) {
     if (playerName.size() != 3)
-        return false;
+        return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotSuccessful());
 
     for (char c : playerName) {
-        if (!std::isupper(c) && !std::isdigit(c))
-            return false;
+        if (!std::isupper(c) && !std::isdigit(c)) {
+            return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotSuccessful());
+        }
     }
+
     const std::string jsonPayload = std::format(R"({{
         "player_name": "{}",
         "score": "{}",
@@ -27,7 +29,7 @@ bool SendScoreToLeaderboard(const std::string &playerName, int score, int level_
 
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 #include "httplib.h"
-static bool SendPostRequest(std::string json) {
+static std::shared_ptr<HttpRequestResult> SendPostRequest(std::string json) {
 
     try {
         httplib::Client cli("https://mxknbbdufcrdzsoaugdc.supabase.co/");
@@ -42,19 +44,20 @@ static bool SendPostRequest(std::string json) {
         auto res = cli.Post("/rest/v1/leaderboard", headers, json, "application/json");
         if (res.error() == httplib::Error::Success) {
             PRINT_INFO("Successfully sent to leaderboard");
-            return true;
+            return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateSuccessful());
 
         } else if (res.error() == httplib::Error::Unknown) {
             PRINT_ERROR("Could not send to leaderboard, due to unknown reason");
-            return false;
+            return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotSuccessful());
+
         } else {
             PRINT_ERROR("Could not send to leaderboard!");
-            return false;
+            return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotSuccessful());
         }
 
     } catch (std::exception e) {
         PRINT_ERROR("Could not send to leaderboard. Exception: {}", e.what());
-        return false;
+        return std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotSuccessful());
     }
 }
 
@@ -65,24 +68,32 @@ static bool SendPostRequest(std::string json) {
 
 struct RequestData {
     std::string json;
+    std::shared_ptr<HttpRequestResult> result;
 };
+
+static RequestData s_requestData = {"", nullptr};
 
 static void on_success(emscripten_fetch_t *fetch) {
 
+    s_requestData.result->SetSuccessful(true);
+    s_requestData.result = nullptr;
+    s_requestData.json = "";
+
     PRINT_INFO("Successfully sent to leaderboard. HTTP status: {}", fetch->status);
-    RequestData *request = static_cast<RequestData *>(fetch->userData);
     emscripten_fetch_close(fetch);
-    delete request;
 }
 
 static void on_error(emscripten_fetch_t *fetch) {
+
+    s_requestData.result->SetSuccessful(false);
+    s_requestData.result = nullptr;
+    s_requestData.json = "";
+
     PRINT_ERROR("Could not send to leaderboard. HTTP status: {}", fetch->status);
-    RequestData *request = static_cast<RequestData *>(fetch->userData);
     emscripten_fetch_close(fetch);
-    delete request;
 }
 
-static bool SendPostRequest(std::string json) {
+static std::shared_ptr<HttpRequestResult> SendPostRequest(std::string json) {
 
     const char *url = "https://mxknbbdufcrdzsoaugdc.supabase.co/rest/v1/leaderboard";
     static const char *headers[] = {
@@ -94,8 +105,8 @@ static bool SendPostRequest(std::string json) {
         "Accept", "application/json",
         nullptr};
 
-    RequestData *requestData = new RequestData();
-    requestData->json = json;
+    s_requestData.json = json;
+    s_requestData.result = std::make_shared<HttpRequestResult>(HttpRequestResult::CreateNotCompleted());
 
     emscripten_fetch_attr_t attr;
     emscripten_fetch_attr_init(&attr);
@@ -103,17 +114,16 @@ static bool SendPostRequest(std::string json) {
     std::strcpy(attr.requestMethod, "POST");
 
     attr.attributes = EMSCRIPTEN_FETCH_LOAD_TO_MEMORY;
-    attr.requestData = requestData->json.c_str();
-    attr.requestDataSize = requestData->json.size();
+    attr.requestData = s_requestData.json.c_str();
+    attr.requestDataSize = s_requestData.json.size();
     attr.requestHeaders = headers;
 
-    attr.userData = requestData;
     attr.onsuccess = on_success;
     attr.onerror = on_error;
 
     emscripten_fetch(&attr, url);
 
-    return 0;
+    return s_requestData.result;
 }
 
 #endif

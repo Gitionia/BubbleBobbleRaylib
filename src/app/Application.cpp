@@ -93,7 +93,7 @@ Application::~Application() {
     inputSimulator->SaveRecording();
 
     PRINT_INFO("Cleaned up Application");
-    PRINT_INFO("Exiting now...");
+    PRINT_INFO("Exiting now");
 }
 
 void Application::Run() {
