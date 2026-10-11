@@ -140,6 +140,9 @@ add_executable(BubbleBobbleRaylib
         src/gui/GUIFactory.h
         src/gui/GUIFactory.cpp
 
+#httplib
+        deps/cpp-httplib/httplib.h
+        deps/cpp-httplib/httplib.cpp
 )
 
 target_precompile_headers(BubbleBobbleRaylib PUBLIC src/pch.h)

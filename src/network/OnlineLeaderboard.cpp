@@ -28,7 +28,7 @@ std::shared_ptr<HttpRequestResult> SendScoreToLeaderboard(const std::string &pla
 #ifdef PLATFORM_DESKTOP
 
 #define CPPHTTPLIB_OPENSSL_SUPPORT
-#include "httplib.h"
+#include "../../deps/cpp-httplib/httplib.h"
 static std::shared_ptr<HttpRequestResult> SendPostRequest(std::string json) {
 
     try {
