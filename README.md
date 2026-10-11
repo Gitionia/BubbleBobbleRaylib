@@ -16,7 +16,6 @@ Used libraries are:
 - entt
 - nlohmann json
 - spdlog
-- curlpp
 
 
 
