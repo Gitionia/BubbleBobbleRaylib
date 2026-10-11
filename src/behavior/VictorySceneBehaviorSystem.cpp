@@ -87,7 +87,6 @@ void VictorySceneBehaviorSystem::Update() {
 
         DBG_CHECK(Debug::GetNumberOfEntities() == 0, std::format("There should be no entities after deleting the victory scene, but there are {}!", Debug::GetNumberOfEntities()));
 
-        PRINT_INFO("{}", counter);
     } else {
         counter++;
         if (counter > COUNTER_TILL_ENTITIES_MOVE && counter < COUNTER_WHEN_ENTITIES_STOP && counter % 2 == 0) {

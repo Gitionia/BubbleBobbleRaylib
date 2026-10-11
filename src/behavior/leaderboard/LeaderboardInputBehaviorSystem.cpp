@@ -90,7 +90,6 @@ void LeaderboardInputBehaviorSystem::Update() {
         }
     } else if (state == CancelSend) {
         if (GUI::IsButtonPressed(cancelButton)) {
-            PRINT_INFO("Pressed cancel");
             state = NoYes;
             registry.get<GUIStaticText>(nameInfoGUIText).TextColor = GRAY;
             registry.get<GUIDynamicText>(playerNameGUIText).TextColor = GRAY;

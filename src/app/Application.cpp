@@ -80,8 +80,6 @@ Application::Application(const ApplicationParameters &parameters)
 
     systemRunner.Init();
 
-    InitCurl();
-
     s_stateMachine = &stateMachine;
     s_eventSystem = &eventSystem;
 }
@@ -94,7 +92,6 @@ Application::~Application() {
 
     inputSimulator->SaveRecording();
 
-    CleanupCurl();
     PRINT_INFO("Cleaned up Application");
     PRINT_INFO("Exiting now...");
 }
@@ -131,7 +128,6 @@ void update() {
     UpdateAudio();
     bool shouldClose = s_eventSystem->ReadEvent(REQUEST_APPLICATION_QUIT).size() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Q));
     #ifndef PLATFORM_WEB
-    PRINT_INFO("Using WindowShouldClose()");
     shouldClose = shouldClose || WindowShouldClose();
     #endif
     
