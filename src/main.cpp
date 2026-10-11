@@ -23,4 +23,6 @@ int main(int argc, char **argv) {
         Application app(params);
         app.Run();
     }
+
+    return 0;
 }

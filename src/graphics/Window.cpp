@@ -28,10 +28,6 @@ Window::~Window() {
     CloseWindow();
 }
 
-bool Window::IsOpen() {
-    return !WindowShouldClose();
-}
-
 void Window::Init() {
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(width, height, title);

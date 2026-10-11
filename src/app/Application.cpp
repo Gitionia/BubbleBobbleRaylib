@@ -95,6 +95,8 @@ Application::~Application() {
     inputSimulator->SaveRecording();
 
     CleanupCurl();
+    PRINT_INFO("Cleaned up Application");
+    PRINT_INFO("Exiting now...");
 }
 
 void Application::Run() {
@@ -115,7 +117,6 @@ void update() {
 #ifdef PLATFORM_WEB
     if (!s_isRunning) {
         emscripten_cancel_main_loop();
-        exit(0);
     }
 #endif
 
@@ -128,7 +129,13 @@ void update() {
     s_stateMachine->Update();
 
     UpdateAudio();
-    if (s_eventSystem->ReadEvent(REQUEST_APPLICATION_QUIT).size() || WindowShouldClose() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Q))) {
+    bool shouldClose = s_eventSystem->ReadEvent(REQUEST_APPLICATION_QUIT).size() || (IsKeyDown(KEY_LEFT_CONTROL) && IsKeyDown(KEY_Q));
+    #ifndef PLATFORM_WEB
+    PRINT_INFO("Using WindowShouldClose()");
+    shouldClose = shouldClose || WindowShouldClose();
+    #endif
+    
+    if (shouldClose) {
         s_isRunning = false;
     }
     s_eventSystem->Clear();

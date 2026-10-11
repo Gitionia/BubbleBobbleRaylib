@@ -1,6 +1,5 @@
 #pragma once
 
-#include <curl/curl.h>
 
 bool InitCurl();
 void CleanupCurl();

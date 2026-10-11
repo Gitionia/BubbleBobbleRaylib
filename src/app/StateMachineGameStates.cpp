@@ -254,9 +254,9 @@ void MenuScreenState::OnEnter() {
 
 std::shared_ptr<StateMachineState> MenuScreenState::Update() {
 
-    renderSystem->BaseUpdate();
     menuSystem->BaseUpdate();
     guiSystem->BaseUpdate();
+    renderSystem->BaseUpdate();
 
     if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);

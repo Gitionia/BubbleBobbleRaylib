@@ -1,5 +1,8 @@
 #include "OnlineLeaderboard.h"
 
+#if 0
+#include <curl/curl.h>
+
 static CURL *curl;
 
 static size_t WriteCallback(void *contents, size_t size, size_t nmemb,
@@ -83,3 +86,16 @@ bool InitCurl() {
 void CleanupCurl() {
     curl_global_cleanup();
 }
+
+#else
+bool SendScoreToLeaderboard(const std::string &playerName, int score, int level_reached) {
+    return false;
+}
+
+bool InitCurl() {
+    return false;
+}
+
+void CleanupCurl() {
+}
+#endif
