@@ -45,10 +45,10 @@ SystemRunner::SystemRunner(entt::registry &registry, EventSystem &eventSystem)
     registerSystem<PositionAnimationBehaviorSystem>();
     registerSystem<GameplayUISystem>();
     registerSystem<GameplayWatcherSystem>();
+    registerSystem<VictorySceneBehaviorSystem>();
     registerSystem<LevelInstantiatorSystem>();
     registerSystem<TitleScreenSystem>();
     registerSystem<IntroSceneBehaviorSystem>();
-    registerSystem<VictorySceneBehaviorSystem>();
     registerSystem<GameModifierData>();
     rendererSystem = registerSystem<RendererSystem>();
 }

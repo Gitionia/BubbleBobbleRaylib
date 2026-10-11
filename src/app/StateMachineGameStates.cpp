@@ -5,11 +5,11 @@
 #include "../gui/GUIFactory.h"
 
 #include "../audio/Audio.h"
+#include "../behavior/GameplayUISystem.h"
 #include "../behavior/gui/GUIBehaviorSystem.h"
 #include "../behavior/leaderboard/LeaderboardInputBehaviorSystem.h"
 #include "../behavior/menu/MenuBehaviorSystem.h"
 #include "../graphics/RendererSystem.h"
-#include "../behavior/GameplayUISystem.h"
 
 void GameplayState::OnEnter() {
     mainThemeMusic = &GetMusic("main-theme");
@@ -161,11 +161,12 @@ void VictorySceneState::OnEnter() {
 
 std::shared_ptr<StateMachineState> VictorySceneState::Update() {
 
+    bool canExit = counter > COUNTER_TILL_CAN_EXIT && Input::AnyKeyPressed();
+    
     runner.UpdateSystems();
-
     counter++;
 
-    if (counter > COUNTER_TILL_CAN_EXIT && Input::AnyKeyPressed()) {
+    if (canExit) {
         eventSystem.Notify((entt::entity)0, DELETE_VICTORY_SCENE, 0);
         runner.UpdateSystems();
 
@@ -259,7 +260,7 @@ std::shared_ptr<StateMachineState> MenuScreenState::Update() {
     renderSystem->BaseUpdate();
 
     if (eventSystem.ReadEvent(MENU_BUTTON_SINGLEPLAYER_START_WAS_PRESSED).size()) {
-        return std::make_shared<InputForLeaderboardState>(runner, eventSystem, level, 1);
+        return std::make_shared<IntroSceneState>(runner, eventSystem, level, 1);
     } else if (eventSystem.ReadEvent(MENU_BUTTON_MULTIPLAYER_START_WAS_PRESSED).size()) {
         return std::make_shared<IntroSceneState>(runner, eventSystem, level, 2);
     } else {
