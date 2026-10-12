@@ -1,5 +1,5 @@
 # Bubble Bobble
-This is a fan remake of the game [Bubble Bobble](https://en.wikipedia.org/wiki/Bubble_Bobble_(video_game)) written in c++ using raylib.
+This is a fan remake of Bubble Bobble written in c++ using raylib.
 Note that I do not *own* any of the assets (sprites, audio and fonts, see Credit.txt for sources) included in this repository.
 You can play the game in the browser on [itch.io](https://itchybeee.itch.io/bubble-bobble).
 There exists also a [leaderboard page](https://gitionia.github.io/bubble-bobble-raylib-online/leaderboard/). 
