@@ -7,7 +7,7 @@ There exists also a [leaderboard page](https://gitionia.github.io/bubble-bobble-
 <img width="2104" height="1794" alt="Screenshot from 2026-04-02 22-21-06" src="https://github.com/user-attachments/assets/b324bfe6-dc68-4899-8111-191c58f141e6" />
 
 ## Download
-This game supports Linux, Windows and Web. There is a debug and a release, which you can download at [releases](https://github.com/Gitionia/BubbleBobbleRaylib/releases). The debug version has some shortcuts (see Editor section) that are useful, if you want to create your own levels and quickly test them. The release version runs faster and has shortcuts disabled.
+This game supports Linux, Windows and Web. There is a debug and a release version, which you can download at [releases](https://github.com/Gitionia/BubbleBobbleRaylib/releases). The debug version has some shortcuts (see Editor section) that are useful, if you want to create your own levels and quickly test them. The release version runs faster and has shortcuts disabled.
 
 ## Notes
 This project includes the first 33 levels of the original game (with maybe more to come). It includes all the original enemies and implements almost all of the core gameplay mechanics, such as bubble jumping and spawning items, of the original game.
