@@ -10,9 +10,9 @@ There exists also a [leaderboard page](https://gitionia.github.io/bubble-bobble-
 This game supports Linux, Windows and Web. There is a debug and a release version, which you can download at [releases](https://github.com/Gitionia/BubbleBobbleRaylib/releases). The debug version has some shortcuts (see Editor section) that are useful, if you want to create your own levels and quickly test them. The release version runs faster and has shortcuts disabled.
 
 ## Notes
-This project includes the first 33 levels of the original game (with maybe more to come). It includes all the original enemies and implements almost all of the core gameplay mechanics, such as bubble jumping and spawning items, of the original game.
+The game has currently 35 levels and includes all the original enemies, though not all are actually used in the current levels. Almost all of the core gameplay mechanics are implemented, such as bubble jumping and spawning items, however some elements are missing, such as extend letters.
 
-Used libraries are:
+These libraries were used:
 - raylib
 - entt
 - nlohmann json
@@ -40,8 +40,8 @@ BubbleBobbleRaylib --levelFile <path/to/LevelXYZ.json>     # the path is optiona
   - e: restarts the level
   - some others
 
-- There is a custom commands within *Tiled* (File > Commands > Create New Level) that copies the LevelTemplate.json as a new level. 
-- There are also commands to run the game normally or start from the current level. However, to use them for the non source code version, you will need to change the paths for the executable to this ./BubbleBobbleRaylib-\<debug or release\>-\<linux or windows\> and the working directory to %projectpath/../
+- There is a custom commands within *Tiled* (File > Commands > Create New Level) that copy-pastes the LevelTemplate.json as a new level. 
+- There are also commands to run the game normally or start from the current level. It only works well for the source code version. For the non source code version try changing the paths for the executable to "./BubbleBobbleRaylib-\<debug or release\>-\<linux or windows\>" and the working directory to "%projectpath/../"
     
 <img width="2552" height="1602" alt="image" src="https://github.com/user-attachments/assets/8f358ca0-359b-4086-bd8e-bfd73413874a" />
 
