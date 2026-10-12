@@ -9,8 +9,9 @@ void MenuBehaviorSystem::Setup() {
     button2Players = GUIFactory::CreateButtonAutoSize(xButtonLeft, 150, "2 Player Start", PINK, BLACK, PINK);
 
     buttonOpenLeaderboard = GUIFactory::CreateButtonAutoSize(xButtonLeft, 200, "Open Online Leaderboard", PINK, BLACK, PINK);
-    leaderboardGUIText = GUIFactory::CreateStaticText(xButtonLeft, 230, "Opens url in browser", WHITE, 16, 0);
-    urlGUIText = GUIFactory::CreateStaticText(xButtonLeft, 246, "https://gitionia.github.io/bubble-bobble-raylib-online/", WHITE, 16, 0);
+    leaderboardGUIText = GUIFactory::CreateStaticText(xButtonLeft, 230, "Opens url in the browser:", WHITE, 16, 0);
+    urlGUIText[0] = GUIFactory::CreateStaticText(xButtonLeft, 246, "https://gitionia.github.io/bubble-bobble", WHITE, 16, 0);
+    urlGUIText[1] = GUIFactory::CreateStaticText(xButtonLeft + 30, 262, "-raylib-online/leaderboard", WHITE, 16, 0);
 
 // Hide quit button on web version, because you can't easily quit emscripten
 #ifdef PLATFORM_DESKTOP
@@ -29,7 +30,7 @@ void MenuBehaviorSystem::Update() {
     } else if (GUI::IsButtonPressed((button2Players))) {
         eventSystem.Notify((entt::entity)0, MENU_BUTTON_MULTIPLAYER_START_WAS_PRESSED, 0);
     }else if (GUI::IsButtonPressed((buttonOpenLeaderboard))) {
-        OpenURL("https://gitionia.github.io/bubble-bobble-raylib-online/");
+        OpenURL("https://gitionia.github.io/bubble-bobble-raylib-online/leaderboard");
 
 #ifdef PLATFORM_DESKTOP
     } else if (GUI::IsButtonPressed((buttonQuit))) {
@@ -44,7 +45,8 @@ void MenuBehaviorSystem::CleanUp() {
     registry.destroy(button2Players);
     registry.destroy(buttonOpenLeaderboard);
     registry.destroy(leaderboardGUIText);
-    registry.destroy(urlGUIText);
+    registry.destroy(urlGUIText[0]);
+    registry.destroy(urlGUIText[1]);
 
 #ifdef PLATFORM_DESKTOP
     registry.destroy(buttonQuit);

@@ -16,7 +16,7 @@ class MenuBehaviorSystem : public SystemBase {
     entt::entity button2Players;
     entt::entity buttonOpenLeaderboard;
     entt::entity leaderboardGUIText;
-    entt::entity urlGUIText;
+    std::array<entt::entity, 2> urlGUIText;
     entt::entity buttonQuit;
     entt::entity buttonGroup;
 };

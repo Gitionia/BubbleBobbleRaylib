@@ -23,7 +23,7 @@ std::shared_ptr<HttpRequestResult> SendScoreToLeaderboard(const std::string &pla
 }
 
 #define API_KEY "sb_publishable_hSz_v651D6k2Y9JMah6XHw_Un4Jr1C0"
-#define BEARER "Bearer" API_KEY
+#define BEARER "Bearer " API_KEY
 
 #ifdef PLATFORM_DESKTOP
 
