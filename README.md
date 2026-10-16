@@ -2,7 +2,7 @@
 This is a fan remake of Bubble Bobble written in c++ using raylib.
 Note that I do not *own* any of the assets (sprites, audio and fonts, see Credit.txt for sources) included in this repository.
 You can play the game in the browser on [itch.io](https://itchybeee.itch.io/bubble-bobble).
-There exists also a [leaderboard page](https://gitionia.github.io/bubble-bobble-raylib-online/leaderboard/). 
+There exists also a [leaderboard page](https://gitionia.github.io/bubble-bobble-raylib-online/leaderboard/), more information about it [here](https://github.com/Gitionia/bubble-bobble-raylib-online). 
 
 <img width="2104" height="1794" alt="Screenshot from 2026-04-02 22-21-06" src="https://github.com/user-attachments/assets/b324bfe6-dc68-4899-8111-191c58f141e6" />
 
